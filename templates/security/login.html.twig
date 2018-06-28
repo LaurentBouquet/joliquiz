@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>Sign in</h1>
+
+    {{ form_start(form) }}
+
+        {{ form_row(form.username, {'id': 'username', 'full_name': '_username'}) }}
+        {{ form_row(form.plainPassword, {'id': 'password', 'full_name': '_password'}) }}
+
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+
+        <button class="btn btn-primary" type="submit"><i class="fas fa-sign-in-alt"></i> Login</button>
+
+    {{ form_end(form) }}
+
+{% endblock %}
