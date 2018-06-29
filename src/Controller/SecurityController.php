@@ -48,7 +48,8 @@ class SecurityController extends Controller
 
             $this->addFlash('success', sprintf('User "%s" is registred.', $user->getUsername()));
 
-            $message = (new \Swift_Message('Hello Email'))
+            /*
+            $message = (new \Swift_Message('[JoliQuiz] Please, confirm your email address.'))
                 ->setFrom('calagan.dev@gmail.com')
                 ->setTo($user->getEmail())
                 ->setBody(
@@ -59,20 +60,19 @@ class SecurityController extends Controller
                     ),
                     'text/html'
                 )
-                /*
-                 * If you also want to include a plaintext version of the message
-                ->addPart(
-                    $this->renderView(
-                        'emails/registration.txt.twig',
-                        array('name' => $name)
-                    ),
-                    'text/plain'
-                )
-                */
+                // //If you also want to include a plaintext version of the message
+                // ->addPart(
+                //     $this->renderView(
+                //         'emails/registration.txt.twig',
+                //         array('name' => $name)
+                //     ),
+                //     'text/plain'
+                // )
             ;
             $mailer->send($message);
 
-            $this->addFlash('success', sprintf('Please XXXX confirm your email address,  "%s" is registred.', $user->getUsername()));
+            $this->addFlash('success', sprintf('Please confirm your email address "%s".', $user->getEmail()));
+            */
 
             return $this->redirectToRoute('login');
         }

@@ -46,6 +46,9 @@
               </li>
           {% else %}
               <li>
+                  <a class="nav-link {% if '/register' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('register') }}">{{'Sign up'|trans}}</a>
+              </li>
+              <li>
                   <a class="nav-link {% if '/login' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('login') }}">{{'Sign in'|trans}}</a>
               </li>
           {% endif %}
