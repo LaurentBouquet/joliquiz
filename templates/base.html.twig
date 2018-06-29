@@ -31,28 +31,35 @@
       </button>
 
       <div class="collapse navbar-collapse" id="navbar">
-      <ul class="navbar-nav mr-right">
-          {% if is_granted('ROLE_USER') %}
-              <li>
-                  <div class="nav-link disabled">
-                      <i class="fas fa-user"></i>
-                      {% if app.user %}
-                          <strong>{{ app.user.username }}</strong>
-                      {% endif %}
-                  </div>
-              </li>
-              <li>
-                  <a class="nav-link" href="{{ path('logout') }}">{{'Logout'|trans}}</a>
-              </li>
-          {% else %}
-              <li>
-                  <a class="nav-link {% if '/register' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('register') }}">{{'Sign up'|trans}}</a>
-              </li>
-              <li>
-                  <a class="nav-link {% if '/login' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('login') }}">{{'Sign in'|trans}}</a>
-              </li>
-          {% endif %}
-      </ul>
+          <ul class="navbar-nav mr-auto">
+              {% if is_granted('ROLE_SUPER_ADMIN') %}
+                  <li>
+                      <a class="nav-link {% if '/user/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('user_index') }}">{{'Users'|trans}}</a>
+                  </li>
+              {% endif %}
+          </ul>
+          <ul class="navbar-nav mr-right">
+              {% if is_granted('ROLE_USER') %}
+                  <li>
+                      <div class="nav-link disabled">
+                          <i class="fas fa-user"></i>
+                          {% if app.user %}
+                              <strong>{{ app.user.username }}</strong>
+                          {% endif %}
+                      </div>
+                  </li>
+                  <li>
+                      <a class="nav-link" href="{{ path('logout') }}">{{'Logout'|trans}}</a>
+                  </li>
+              {% else %}
+                  <li>
+                      <a class="nav-link {% if '/register' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('register') }}">{{'Sign up'|trans}}</a>
+                  </li>
+                  <li>
+                      <a class="nav-link {% if '/login' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('login') }}">{{'Sign in'|trans}}</a>
+                  </li>
+              {% endif %}
+          </ul>
       </div>
 
     </nav>
