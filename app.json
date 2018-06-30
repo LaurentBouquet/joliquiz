@@ -18,7 +18,7 @@
         }
     }],
     "scripts": {
-        "postdeploy": "heroku-postdeploy.sh"
+        "postdeploy": "./heroku-postdeploy.sh"
     },
     "env": {
         "APP_ENV": {
