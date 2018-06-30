@@ -17,7 +17,7 @@
         }
     }],
     "scripts": {
-        "postdeploy": "psql --file joliquiz-initial-prod-data.dump.sql ${DATABASE_URL}"
+        "initial-data": "psql --file joliquiz-initial-prod-data.dump.sql $DATABASE_URL"
     },
     "env": {
         "APP_ENV": {
