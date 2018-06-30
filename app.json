@@ -24,5 +24,5 @@
             "description": "Set the Symfony environment (prod, dev or test)",
             "value": "prod"
         }
-    }
+    } 
 }
