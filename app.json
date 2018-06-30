@@ -6,6 +6,7 @@
     "keywords": ["php",
         "symfony",
         "quiz",
+        "quizapp",
         "student",
         "teacher",
         "examination"
@@ -17,7 +18,7 @@
         }
     }],
     "scripts": {
-        "initial-data": "psql --file joliquiz-initial-prod-data.dump.sql $DATABASE_URL"
+        "postdeploy": "heroku-postdeploy.sh"
     },
     "env": {
         "APP_ENV": {
