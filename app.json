@@ -10,19 +10,19 @@
         "teacher",
         "examination"
     ],
-    "scripts": {
-        "postdeploy": "psql --file joliquiz-initial-prod-data.dump.sql $DATABASE_URL"
-    },
     "addons": [{
         "plan": "heroku-postgresql",
         "options": {
             "version": "9.5"
         }
     }],
+    "scripts": {
+        "postdeploy": "psql --file joliquiz-initial-prod-data.dump.sql ${DATABASE_URL}"
+    },
     "env": {
         "APP_ENV": {
             "description": "Set the Symfony environment (prod, dev or test)",
             "value": "prod"
         }
-    } 
+    }
 }
