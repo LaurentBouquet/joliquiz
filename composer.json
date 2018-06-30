@@ -67,8 +67,7 @@
             "@auto-scripts"
         ],
         "compile": [
-            "php bin/console doctrine:migrations:migrate",
-            "pg:backups:restore joliquiz-initial-prod-data.dump.sql"
+            "php bin/console doctrine:migrations:migrate"
         ]
     },
     "conflict": {
