@@ -3,9 +3,8 @@
 echo "$ENV_DIR";
 
 for e in $(ls $ENV_DIR); do
-  echo "$e=$(cat $env_dir/$e)"
-  export "$e=$(cat $env_dir/$e)"
-  :
+  echo "$e=$(cat $ENV_DIR/$e)"
+  export "$e=$(cat $ENV_DIR/$e)"
 done
 
 # env;
