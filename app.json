@@ -17,9 +17,14 @@
             "version": "9.5"
         }
     }],
-    "buildpacks": {
+    "buildpacks": [
+        {
+        "url": "https://github.com/heroku/heroku-buildpack-php.git"
+        },
+        {
         "url": "https://github.com/weibeld/heroku-buildpack-run.git"
-    },
+        }
+    ],
     "env": {
         "APP_ENV": {
             "description": "Set the Symfony environment (prod, dev or test)",
