@@ -5,7 +5,7 @@
   # echo "$e=$(cat $ENV_DIR/$e)"
   # export "$e=$(cat $ENV_DIR/$e)"
 # done
-export DATABASE_URL=cat $ENV_DIR/DATABASE_URL
+export DATABASE_URL=$(cat $ENV_DIR/DATABASE_URL)
 
 # env;
 # config;
