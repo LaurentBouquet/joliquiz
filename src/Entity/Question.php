@@ -33,6 +33,13 @@ class Question
      */
     private $created_at;
 
+
+    public function __construct()
+    {
+        $this->setCreatedAt(new \DateTime());
+        $this->setUpdatedAt(new \DateTime());
+    }
+
     /**
      * @ORM\Column(type="datetime")
      */

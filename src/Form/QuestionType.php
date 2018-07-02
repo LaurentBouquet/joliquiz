@@ -14,8 +14,8 @@ class QuestionType extends AbstractType
         $builder
             ->add('text')
             ->add('multiple')
-            ->add('created_at')
-            ->add('updated_at')
+            // ->add('created_at')
+            // ->add('updated_at')
         ;
     }
 
