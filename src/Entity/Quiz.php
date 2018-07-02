@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Table;
 
@@ -48,12 +50,26 @@ class Quiz
      */
     private $updated_at;
 
+    // /**
+    //  * @var Category One or more category(ies) of this quiz.
+    //  *
+    //  * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="quizzes")
+    //  * @ORM\JoinColumn()
+    //  */
+    // private $categories;
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="quizzes")
+     */
+    private $categories;
+
 
     public function __construct()
     {
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
         $this->setActive(true);
+        $this->setNumberOfQuestions(10);
+        $this->categories = new ArrayCollection();
     }
 
     public function getId()
@@ -129,6 +145,32 @@ class Quiz
     public function setUpdatedAt(\DateTimeInterface $updated_at): self
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Category[]
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        if ($this->categories->contains($category)) {
+            $this->categories->removeElement($category);
+        }
 
         return $this;
     }

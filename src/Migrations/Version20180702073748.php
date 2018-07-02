@@ -26,7 +26,6 @@ final class Version20180702073748 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
-        $this->addSql('CREATE SCHEMA public');
         $this->addSql('ALTER SEQUENCE tbl_user_id_seq INCREMENT BY 1');
         $this->addSql('ALTER SEQUENCE tbl_category_id_seq INCREMENT BY 1');
         $this->addSql('DROP SEQUENCE tbl_answer_id_seq CASCADE');
