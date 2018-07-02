@@ -32,6 +32,11 @@
 
       <div class="collapse navbar-collapse" id="navbar">
           <ul class="navbar-nav mr-auto">
+              {% if is_granted('ROLE_USER') %}
+                  <li>
+                      <a class="nav-link {% if '/category/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('category_index') }}">{{'Category'|trans}}</a>
+                  </li>
+              {% endif %}
               {% if is_granted('ROLE_SUPER_ADMIN') %}
                   <li>
                       <a class="nav-link {% if '/user/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('user_index') }}">{{'Users'|trans}}</a>
