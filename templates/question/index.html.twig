@@ -11,8 +11,7 @@
                 <th>Id</th>
                 <th>Text</th>
                 <th>Multiple</th>
-                <th>Created_at</th>
-                <th>Updated_at</th>
+                <th>Categories</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -22,8 +21,11 @@
                 <td>{{ question.id }}</td>
                 <td>{{ question.text }}</td>
                 <td>{{ question.multiple ? 'Yes' : 'No' }}</td>
-                <td>{{ question.createdAt ? question.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ question.updatedAt ? question.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                  {% for category in question.categories %}
+                     - {{ category.longname }} <br>
+                  {% endfor %}
+                </td>
                 <td>
                     <a href="{{ path('question_show', {'id': question.id}) }}">show</a>
                     <a href="{{ path('question_edit', {'id': question.id}) }}">edit</a>

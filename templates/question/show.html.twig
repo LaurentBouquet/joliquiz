@@ -20,6 +20,14 @@
                 <td>{{ question.multiple ? 'Yes' : 'No' }}</td>
             </tr>
             <tr>
+                <th>Categories</th>
+                <td>
+                  {% for category in question.categories %}
+                     - {{ category.longname }} <br>
+                  {% endfor %}
+                </td>
+            </tr>
+            <tr>
                 <th>Created_at</th>
                 <td>{{ question.createdAt ? question.createdAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>

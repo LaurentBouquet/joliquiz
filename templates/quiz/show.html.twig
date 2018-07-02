@@ -28,6 +28,14 @@
                 <td>{{ quiz.active ? 'Yes' : 'No' }}</td>
             </tr>
             <tr>
+                <th>Categories</th>
+                <td>
+                  {% for category in quiz.categories %}
+                     - {{ category.longname }} <br>
+                  {% endfor %}
+                </td>
+            </tr>
+            <tr>
                 <th>Created_at</th>
                 <td>{{ quiz.createdAt ? quiz.createdAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
