@@ -19,6 +19,13 @@ class AnswerRepository extends ServiceEntityRepository
         parent::__construct($registry, Answer::class);
     }
 
+    public function findAll()
+    {
+        $builder = $this->createQueryBuilder('a');
+        $builder->orderBy('a.text', 'ASC');
+        return $builder->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Answer[] Returns an array of Answer objects
 //     */
