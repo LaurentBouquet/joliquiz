@@ -63,8 +63,11 @@ class QuizController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
 
+            $quiz->setUpdatedAt(new \DateTime());
+
+            $this->getDoctrine()->getManager()->flush();    
+            
             return $this->redirectToRoute('quiz_edit', ['id' => $quiz->getId()]);
         }
 

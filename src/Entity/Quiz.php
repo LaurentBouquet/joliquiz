@@ -48,6 +48,14 @@ class Quiz
      */
     private $updated_at;
 
+
+    public function __construct()
+    {
+        $this->setCreatedAt(new \DateTime());
+        $this->setUpdatedAt(new \DateTime());
+        $this->setActive(true);
+    }
+
     public function getId()
     {
         return $this->id;

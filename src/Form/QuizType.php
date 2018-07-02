@@ -16,8 +16,8 @@ class QuizType extends AbstractType
             ->add('summary')
             ->add('number_of_questions')
             ->add('active')
-            ->add('created_at')
-            ->add('updated_at')
+            // ->add('created_at')
+            // ->add('updated_at')
         ;
     }
 
