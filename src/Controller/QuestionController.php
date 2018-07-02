@@ -63,6 +63,9 @@ class QuestionController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $question->setUpdatedAt(new \DateTime());
+            
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('question_edit', ['id' => $question->getId()]);
