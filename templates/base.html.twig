@@ -34,6 +34,9 @@
           <ul class="navbar-nav mr-auto">
               {% if is_granted('ROLE_USER') %}
                   <li>
+                      <a class="nav-link {% if '/quiz/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('quiz_index') }}">{{'Quiz'|trans}}</a>
+                  </li>
+                  <li>
                       <a class="nav-link {% if '/question/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('question_index') }}">{{'Question'|trans}}</a>
                   </li>
                   <li>
