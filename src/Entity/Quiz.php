@@ -8,10 +8,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Table;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\QuestionRepository")
- * @ORM\Table(name="tbl_question")
+ * @ORM\Entity(repositoryClass="App\Repository\QuizRepository")
+ * @ORM\Table(name="tbl_quiz")
  */
-class Question
+class Quiz
 {
     /**
      * @ORM\Id()
@@ -21,71 +21,106 @@ class Question
     private $id;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string", length=255)
      */
-    private $text;
+    private $title;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $summary;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $number_of_questions;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $multiple;
+    private $active;
 
     /**
      * @ORM\Column(type="datetime")
      */
     private $created_at;
 
-
-    public function __construct()
-    {
-        $this->setCreatedAt(new \DateTime());
-        $this->setUpdatedAt(new \DateTime());
-        $this->categories = new ArrayCollection();
-        $this->answers = new ArrayCollection();
-    }
-
     /**
      * @ORM\Column(type="datetime")
      */
     private $updated_at;
 
+    // /**
+    //  * @var Category One or more category(ies) of this quiz.
+    //  *
+    //  * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="quizzes")
+    //  * @ORM\JoinColumn()
+    //  */
+    // private $categories;
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="questions")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="quizzes")
      */
     private $categories;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Answer", mappedBy="question", orphanRemoval=true)
-     */
-    private $answers;
 
-
+    public function __construct()
+    {
+        $this->setCreatedAt(new \DateTime());
+        $this->setUpdatedAt(new \DateTime());
+        $this->setActive(true);
+        $this->setNumberOfQuestions(10);
+        $this->categories = new ArrayCollection();
+    }
 
     public function getId()
     {
         return $this->id;
     }
 
-    public function getText(): ?string
+    public function getTitle(): ?string
     {
-        return $this->text;
+        return $this->title;
     }
 
-    public function setText(string $text): self
+    public function setTitle(string $title): self
     {
-        $this->text = $text;
+        $this->title = $title;
 
         return $this;
     }
 
-    public function getMultiple(): ?bool
+    public function getSummary(): ?string
     {
-        return $this->multiple;
+        return $this->summary;
     }
 
-    public function setMultiple(bool $multiple): self
+    public function setSummary(?string $summary): self
     {
-        $this->multiple = $multiple;
+        $this->summary = $summary;
+
+        return $this;
+    }
+
+    public function getNumberOfQuestions(): ?int
+    {
+        return $this->number_of_questions;
+    }
+
+    public function setNumberOfQuestions(int $number_of_questions): self
+    {
+        $this->number_of_questions = $number_of_questions;
+
+        return $this;
+    }
+
+    public function getActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): self
+    {
+        $this->active = $active;
 
         return $this;
     }
@@ -139,36 +174,4 @@ class Question
 
         return $this;
     }
-
-    /**
-     * @return Collection|Answer[]
-     */
-    public function getAnswers(): Collection
-    {
-        return $this->answers;
-    }
-
-    public function addAnswer(Answer $answer): self
-    {
-        if (!$this->answers->contains($answer)) {
-            $this->answers[] = $answer;
-            $answer->setQuestion($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAnswer(Answer $answer): self
-    {
-        if ($this->answers->contains($answer)) {
-            $this->answers->removeElement($answer);
-            // set the owning side to null (unless already changed)
-            if ($answer->getQuestion() === $this) {
-                $answer->setQuestion(null);
-            }
-        }
-
-        return $this;
-    }
-
 }

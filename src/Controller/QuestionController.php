@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Answer;
 use App\Entity\Question;
 use App\Form\QuestionType;
 use App\Repository\QuestionRepository;
@@ -29,12 +30,19 @@ class QuestionController extends Controller
     public function new(Request $request): Response
     {
         $question = new Question();
+
+
         $form = $this->createForm(QuestionType::class, $question);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($question);
+
+            foreach ($question->getAnswers() as $answer) {
+                $em->persist($answer);
+            }
+
             $em->flush();
 
             return $this->redirectToRoute('question_index');
@@ -65,8 +73,14 @@ class QuestionController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $question->setUpdatedAt(new \DateTime());
-            
-            $this->getDoctrine()->getManager()->flush();
+
+            $em = $this->getDoctrine()->getManager();
+
+            foreach ($question->getAnswers() as $answer) {
+                $em->persist($answer);
+            }
+
+            $em->flush();
 
             return $this->redirectToRoute('question_edit', ['id' => $question->getId()]);
         }

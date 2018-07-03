@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Table;
 
@@ -13,7 +15,7 @@ class Answer
 {
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -27,6 +29,17 @@ class Answer
      * @ORM\Column(type="boolean")
      */
     private $correct;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Question", inversedBy="answers")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $question;
+
+    public function __construct()
+    {
+        $this->questions = new ArrayCollection();
+    }
 
     public function getId()
     {
@@ -56,4 +69,17 @@ class Answer
 
         return $this;
     }
+
+    public function getQuestion(): ?Question
+    {
+        return $this->question;
+    }
+
+    public function setQuestion(?Question $question): self
+    {
+        $this->question = $question;
+
+        return $this;
+    }
+
 }
