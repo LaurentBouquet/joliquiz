@@ -11,3 +11,7 @@
 
     {{ include('question/_delete_form.html.twig') }}
 {% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/question.js') }}" type="text/javascript"></script>
+{% endblock %}

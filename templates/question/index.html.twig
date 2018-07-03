@@ -12,6 +12,7 @@
                 <th>Text</th>
                 <th>Multiple</th>
                 <th>Categories</th>
+                <th>Answers</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -24,6 +25,11 @@
                 <td>
                   {% for category in question.categories %}
                      - {{ category.longname }} <br>
+                  {% endfor %}
+                </td>
+                <td>
+                  {% for answer in question.answers %}
+                     {% if answer.correct %}+{% else %}-{% endif %} {{ answer.text }} <br>
                   {% endfor %}
                 </td>
                 <td>

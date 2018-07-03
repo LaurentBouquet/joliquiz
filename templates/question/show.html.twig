@@ -28,6 +28,14 @@
                 </td>
             </tr>
             <tr>
+                <th>Answers</th>
+                <td>
+                  {% for answer in question.answers %}
+                     {% if answer.correct %}+{% else %}-{% endif %} {{ answer.text }} <br>
+                  {% endfor %}
+                </td>
+            </tr>
+            <tr>
                 <th>Created_at</th>
                 <td>{{ question.createdAt ? question.createdAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>

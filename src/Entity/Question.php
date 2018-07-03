@@ -41,6 +41,7 @@ class Question
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
         $this->categories = new ArrayCollection();
+        $this->answers = new ArrayCollection();
     }
 
     /**
@@ -52,6 +53,13 @@ class Question
      * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="questions")
      */
     private $categories;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Answer", mappedBy="question", orphanRemoval=true)
+     */
+    private $answers;
+
+
 
     public function getId()
     {
@@ -131,4 +139,36 @@ class Question
 
         return $this;
     }
+
+    /**
+     * @return Collection|Answer[]
+     */
+    public function getAnswers(): Collection
+    {
+        return $this->answers;
+    }
+
+    public function addAnswer(Answer $answer): self
+    {
+        if (!$this->answers->contains($answer)) {
+            $this->answers[] = $answer;
+            $answer->setQuestion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnswer(Answer $answer): self
+    {
+        if ($this->answers->contains($answer)) {
+            $this->answers->removeElement($answer);
+            // set the owning side to null (unless already changed)
+            if ($answer->getQuestion() === $this) {
+                $answer->setQuestion(null);
+            }
+        }
+
+        return $this;
+    }
+
 }
