@@ -10,7 +10,6 @@
             <tr>
                 <th>Id</th>
                 <th>Text</th>
-                <th>Multiple</th>
                 <th>Categories</th>
                 <th>Answers</th>
                 <th>actions</th>
@@ -21,7 +20,6 @@
             <tr>
                 <td>{{ question.id }}</td>
                 <td>{{ question.text }}</td>
-                <td>{{ question.multiple ? 'Yes' : 'No' }}</td>
                 <td>
                   {% for category in question.categories %}
                      - {{ category.longname }} <br>

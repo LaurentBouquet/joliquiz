@@ -17,7 +17,6 @@ class QuestionType extends AbstractType
     {
         $builder
             ->add('text')
-            ->add('multiple')
             ->add('categories', EntityType::class, array(
                 'class' => Category::class,
                 'choice_label' => 'longname',

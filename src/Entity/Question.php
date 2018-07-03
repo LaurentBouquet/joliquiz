@@ -26,11 +26,6 @@ class Question
     private $text;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $multiple;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $created_at;
@@ -38,7 +33,6 @@ class Question
 
     public function __construct()
     {
-        $this->multiple = false;
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
         $this->categories = new ArrayCollection();
@@ -75,18 +69,6 @@ class Question
     public function setText(string $text): self
     {
         $this->text = $text;
-
-        return $this;
-    }
-
-    public function getMultiple(): ?bool
-    {
-        return $this->multiple;
-    }
-
-    public function setMultiple(bool $multiple): self
-    {
-        $this->multiple = $multiple;
 
         return $this;
     }
