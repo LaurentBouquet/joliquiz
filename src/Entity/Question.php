@@ -38,6 +38,7 @@ class Question
 
     public function __construct()
     {
+        $this->multiple = false;
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
         $this->categories = new ArrayCollection();

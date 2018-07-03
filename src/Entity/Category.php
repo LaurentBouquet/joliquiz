@@ -49,10 +49,14 @@ class Category
      */
     private $questions;
 
-    public function __construct()
+    public function __construct($shortname = null)
     {
         $this->quizzes = new ArrayCollection();
         $this->questions = new ArrayCollection();
+        if ($shortname) {
+            $this->shortname = $shortname;
+            $this->longname = $shortname;
+        }
     }
 
     public function getId()
