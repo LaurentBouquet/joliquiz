@@ -95,7 +95,7 @@ EOT
         }
 
         if ($result) {
-            $io->success(sprintf('Import from "%s" file finished!', $file));
+            $io->success(sprintf('Import from "%s" file completed!', $file));
         }
     }
 

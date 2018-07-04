@@ -4,12 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Quiz;
 use App\Entity\Question;
+use App\Entity\Workout;
 use App\Form\QuizType;
 use App\Repository\QuizRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @Route("/quiz")
@@ -20,14 +22,26 @@ class QuizController extends Controller
     /**
      * @Route("/{id}/workout", name="quiz_workout", methods="GET")
      */
-    public function workout(Request $request, Quiz $quiz): Response
+    public function workout(Request $request, Quiz $quiz, UserInterface $user = null): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
 
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository(Question::Class);
-        $question = $repository->findOneByRandomCategories($quiz->getCategories());
 
+        $questionRepository = $em->getRepository(Question::Class);
+        $question = $questionRepository->findOneByRandomCategories($quiz->getCategories());
+
+        $workoutRepository = $em->getRepository(Workout::Class);
+        $workout = new Workout();
+        $workout->setStudent($user);
+        $workout->setQuiz($quiz);
+        $workout->setStartedAt(new \DateTime());
+        $workout->setEndedAt(new \DateTime());
+        $workout->setNumberOfQuestions(1);
+        $em->persist($workout);
+
+        $em->flush();
+        
         return $this->render('quiz/workout.html.twig',
             [
                 'quiz' => $quiz,

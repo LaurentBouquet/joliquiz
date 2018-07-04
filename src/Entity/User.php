@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\Column;
@@ -77,12 +79,18 @@ class User implements UserInterface, \Serializable
      */
     private $roles;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Workout", mappedBy="student", orphanRemoval=true)
+     */
+    private $workouts;
+
 
 
     public function __construct()
     {
         $this->roles = array('ROLE_USER');
         $this->isActive = true;
+        $this->workouts = new ArrayCollection();
     }
 
     public function getId()
@@ -205,6 +213,37 @@ class User implements UserInterface, \Serializable
                 // we don't need a salt because bcrypt do this internally (algorithm: bcrypt in security.yaml).
                 // $this->salt
             ) = unserialize($serialized, ['allowed_classes' => false]);
+    }
+
+    /**
+     * @return Collection|Workout[]
+     */
+    public function getWorkouts(): Collection
+    {
+        return $this->workouts;
+    }
+
+    public function addWorkout(Workout $workout): self
+    {
+        if (!$this->workouts->contains($workout)) {
+            $this->workouts[] = $workout;
+            $workout->setStudent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWorkout(Workout $workout): self
+    {
+        if ($this->workouts->contains($workout)) {
+            $this->workouts->removeElement($workout);
+            // set the owning side to null (unless already changed)
+            if ($workout->getStudent() === $this) {
+                $workout->setStudent(null);
+            }
+        }
+
+        return $this;
     }
 
 }
