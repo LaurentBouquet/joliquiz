@@ -11,8 +11,10 @@
                 <th>Id</th>
                 <th>Text</th>
                 <th>Categories</th>
-                <th>Answers</th>
-                <th>actions</th>
+                {% if is_granted('ROLE_TEACHER') %}
+                    <th>Answers</th>
+                    <th>actions</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -25,15 +27,17 @@
                      - {{ category.shortname }} <br>
                   {% endfor %}
                 </td>
-                <td>
-                  {% for answer in question.answers %}
-                     {% if answer.correct %}+{% else %}-{% endif %} {{ answer.text }} <br>
-                  {% endfor %}
-                </td>
-                <td>
-                    <a href="{{ path('question_show', {'id': question.id}) }}">show</a>
-                    <a href="{{ path('question_edit', {'id': question.id}) }}">edit</a>
-                </td>
+                {% if is_granted('ROLE_TEACHER') %}
+                    <td>
+                      {% for answer in question.answers %}
+                         {% if answer.correct %}+{% else %}-{% endif %} {{ answer.text }} <br>
+                      {% endfor %}
+                    </td>
+                    <td>
+                        <a href="{{ path('question_show', {'id': question.id}) }}">show</a>
+                        <a href="{{ path('question_edit', {'id': question.id}) }}">edit</a>
+                    </td>
+                {% endif %}
             </tr>
         {% else %}
             <tr>
@@ -43,5 +47,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('question_new') }}">Create new</a>
+    {% if is_granted('ROLE_TEACHER') %}
+        <a href="{{ path('question_new') }}">Create new</a>
+    {% endif %}
 {% endblock %}

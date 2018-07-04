@@ -8,18 +8,20 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                <!-- <th>Id</th> -->
                 <th>Title</th>
                 <th>Questions</th>
                 <th>Categories</th>
-                <th>Active</th>
-                <th>actions</th>
+                {% if is_granted('ROLE_TEACHER') %}
+                    <th>Active</th>
+                    <th>actions</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
         {% for quiz in quizzes %}
             <tr>
-                <td>{{ quiz.id }}</td>
+                <!-- <td>{{ quiz.id }}</td> -->
                 <td>{{ quiz.title }}</td>
                 <td>{{ quiz.numberOfQuestions }}</td>
                 <td>
@@ -27,11 +29,13 @@
                      - {{ category.longname }} <br>
                   {% endfor %}
                 </td>
-                <td>{{ quiz.active ? 'Yes' : 'No' }}</td>
-                <td>
-                    <a href="{{ path('quiz_show', {'id': quiz.id}) }}">show</a>
-                    <a href="{{ path('quiz_edit', {'id': quiz.id}) }}">edit</a>
-                </td>
+                {% if is_granted('ROLE_TEACHER') %}
+                    <td>{{ quiz.active ? 'Yes' : 'No' }}</td>
+                    <td>
+                        <a href="{{ path('quiz_show', {'id': quiz.id}) }}">show</a>
+                        <a href="{{ path('quiz_edit', {'id': quiz.id}) }}">edit</a>
+                    </td>
+                {% endif %}
             </tr>
         {% else %}
             <tr>
@@ -41,5 +45,8 @@
         </tbody>
     </table>
 
-    <a href="{{ path('quiz_new') }}">Create new</a>
+    {% if is_granted('ROLE_TEACHER') %}
+        <a href="{{ path('quiz_new') }}">Create new</a>
+    {% endif %}
+
 {% endblock %}

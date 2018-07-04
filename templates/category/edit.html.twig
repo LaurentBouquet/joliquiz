@@ -5,7 +5,9 @@
 {% block body %}
     <h1>Edit Category</h1>
 
-    {{ include('category/_form.html.twig', {'button_label': 'Update'}) }}
+    {% if is_granted('ROLE_TEACHER') %}
+        {{ include('category/_form.html.twig', {'button_label': 'Update'}) }}
+    {% endif %}
 
     <a href="{{ path('category_index') }}">back to list</a>
 

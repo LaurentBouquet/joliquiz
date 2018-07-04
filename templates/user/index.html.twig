@@ -13,7 +13,9 @@
                 <th>Email</th>
                 <th>IsActive</th>
                 <th>Roles</th>
-                <th>actions</th>
+                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                    <th>actions</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -24,10 +26,12 @@
                 <td>{{ user.email }}</td>
                 <td>{{ user.isActive ? 'Yes' : 'No' }}</td>
                 <td>{{ user.roles ? user.roles|join(', ') : '' }}</td>
-                <td>
-                    <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
-                </td>
+                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                    <td>
+                        <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
+                        <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+                    </td>
+                {% endif %}
             </tr>
         {% else %}
             <tr>
@@ -37,5 +41,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('user_new') }}">Create new</a>
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <a href="{{ path('user_new') }}">Create new</a>
+    {% endif %}
 {% endblock %}

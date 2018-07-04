@@ -5,7 +5,9 @@
 {% block body %}
     <h1>Edit Answer</h1>
 
-    {{ include('answer/_form.html.twig', {'button_label': 'Update'}) }}
+    {% if is_granted('ROLE_TEACHER') %}
+        {{ include('answer/_form.html.twig', {'button_label': 'Update'}) }}
+    {% endif %}
 
     <a href="{{ path('answer_index') }}">back to list</a>
 

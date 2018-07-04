@@ -1,5 +1,7 @@
-<form method="post" action="{{ path('answer_delete', {'id': answer.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-    <input type="hidden" name="_method" value="DELETE">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ answer.id) }}">
-    <button class="btn">Delete</button>
-</form>
+{% if is_granted('ROLE_TEACHER') %}
+    <form method="post" action="{{ path('answer_delete', {'id': answer.id}) }}" onsubmit="return confirm('Are you sure you want to delete this answer?');">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ answer.id) }}">
+        <button class="btn">Delete</button>
+    </form>
+{% endif %}

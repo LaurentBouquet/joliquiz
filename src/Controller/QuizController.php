@@ -20,6 +20,8 @@ class QuizController extends Controller
      */
     public function index(QuizRepository $quizRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
+
         return $this->render('quiz/index.html.twig', ['quizzes' => $quizRepository->findAll()]);
     }
 
@@ -28,6 +30,8 @@ class QuizController extends Controller
      */
     public function new(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
+
         $quiz = new Quiz();
         $form = $this->createForm(QuizType::class, $quiz);
         $form->handleRequest($request);
@@ -51,6 +55,8 @@ class QuizController extends Controller
      */
     public function show(Quiz $quiz): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
+
         return $this->render('quiz/show.html.twig', ['quiz' => $quiz]);
     }
 
@@ -59,6 +65,8 @@ class QuizController extends Controller
      */
     public function edit(Request $request, Quiz $quiz): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
+
         $form = $this->createForm(QuizType::class, $quiz);
         $form->handleRequest($request);
 
@@ -66,8 +74,8 @@ class QuizController extends Controller
 
             $quiz->setUpdatedAt(new \DateTime());
 
-            $this->getDoctrine()->getManager()->flush();    
-            
+            $this->getDoctrine()->getManager()->flush();
+
             return $this->redirectToRoute('quiz_edit', ['id' => $quiz->getId()]);
         }
 
@@ -82,6 +90,8 @@ class QuizController extends Controller
      */
     public function delete(Request $request, Quiz $quiz): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
+
         if ($this->isCsrfTokenValid('delete'.$quiz->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($quiz);

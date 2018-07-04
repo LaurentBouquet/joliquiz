@@ -5,7 +5,9 @@
 {% block body %}
     <h1>Edit User</h1>
 
-    {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
+    {% endif %}
 
     <a href="{{ path('user_index') }}">back to list</a>
 

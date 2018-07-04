@@ -48,7 +48,9 @@
 
     <a href="{{ path('quiz_index') }}">back to list</a>
 
-    <a href="{{ path('quiz_edit', {'id': quiz.id}) }}">edit</a>
+    {% if is_granted('ROLE_TEACHER') %}
+        <a href="{{ path('quiz_edit', {'id': quiz.id}) }}">edit</a>
+    {% endif %}
 
     {{ include('quiz/_delete_form.html.twig') }}
 {% endblock %}

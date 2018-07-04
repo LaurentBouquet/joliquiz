@@ -20,6 +20,8 @@ class CategoryController extends Controller
      */
     public function index(CategoryRepository $categoryRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
+        
         return $this->render('category/index.html.twig', ['categories' => $categoryRepository->findAll()]);
     }
 
@@ -28,6 +30,8 @@ class CategoryController extends Controller
      */
     public function new(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
+        
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
@@ -51,6 +55,8 @@ class CategoryController extends Controller
      */
     public function show(Category $category): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
+        
         return $this->render('category/show.html.twig', ['category' => $category]);
     }
 
@@ -59,6 +65,8 @@ class CategoryController extends Controller
      */
     public function edit(Request $request, Category $category): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
+        
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
@@ -79,6 +87,8 @@ class CategoryController extends Controller
      */
     public function delete(Request $request, Category $category): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
+        
         if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($category);

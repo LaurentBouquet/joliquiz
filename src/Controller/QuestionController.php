@@ -21,6 +21,8 @@ class QuestionController extends Controller
      */
     public function index(QuestionRepository $questionRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
+
         return $this->render('question/index.html.twig', ['questions' => $questionRepository->findAll()]);
     }
 
@@ -29,8 +31,9 @@ class QuestionController extends Controller
      */
     public function new(Request $request): Response
     {
-        $question = new Question();
+        $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
+        $question = new Question();
 
         $form = $this->createForm(QuestionType::class, $question);
         $form->handleRequest($request);
@@ -59,6 +62,8 @@ class QuestionController extends Controller
      */
     public function show(Question $question): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
+
         return $this->render('question/show.html.twig', ['question' => $question]);
     }
 
@@ -67,6 +72,8 @@ class QuestionController extends Controller
      */
     public function edit(Request $request, Question $question): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
+
         $form = $this->createForm(QuestionType::class, $question);
         $form->handleRequest($request);
 
@@ -96,6 +103,8 @@ class QuestionController extends Controller
      */
     public function delete(Request $request, Question $question): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
+
         if ($this->isCsrfTokenValid('delete'.$question->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($question);
