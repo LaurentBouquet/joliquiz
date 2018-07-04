@@ -26,22 +26,34 @@ class QuizController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
 
+
+        //////////////
+        // TODO mettre ces opérations d'historique dans un service
         $em = $this->getDoctrine()->getManager();
 
         $questionRepository = $em->getRepository(Question::Class);
         $question = $questionRepository->findOneByRandomCategories($quiz->getCategories());
 
         $workoutRepository = $em->getRepository(Workout::Class);
-        $workout = new Workout();
-        $workout->setStudent($user);
-        $workout->setQuiz($quiz);
-        $workout->setStartedAt(new \DateTime());
+        $workout = $workoutRepository->findLastNotCompletedByStudent($user);
+        if (!$workout) {
+            $workout = new Workout();
+            $workout->setStudent($user);
+            $workout->setQuiz($quiz);
+            $workout->setStartedAt(new \DateTime());
+            $numberOfQuestions = 0;
+        }
+        else {
+            $numberOfQuestions = $workout->getNumberOfQuestions();
+        }
+        $numberOfQuestions++;
         $workout->setEndedAt(new \DateTime());
-        $workout->setNumberOfQuestions(1);
+        $workout->setNumberOfQuestions($numberOfQuestions);
         $em->persist($workout);
 
         $em->flush();
-        
+        //////////////
+
         return $this->render('quiz/workout.html.twig',
             [
                 'quiz' => $quiz,

@@ -19,6 +19,20 @@ class WorkoutRepository extends ServiceEntityRepository
         parent::__construct($registry, Workout::class);
     }
 
+
+    public function findLastNotCompletedByStudent($user): ?Workout
+    {
+        return $this->createQueryBuilder('w')
+            ->andWhere('w.completed = :completed')
+            ->andWhere('w.student = :student')
+            ->setParameter('completed', false)
+            ->setParameter('student', $user)
+            ->orderBy('w.ended_at', 'DESC')
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
 //    /**
 //     * @return Workout[] Returns an array of Workout objects
 //     */
