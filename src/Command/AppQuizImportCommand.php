@@ -17,16 +17,16 @@ class AppQuizImportCommand extends DoctrineCommand
 {
     protected static $defaultName = 'app:quiz-import';
 
-    protected $container;
-    //$this->container = $container;
+    protected $em;
 
     protected function configure()
     {
         $this
             ->setDescription('Imports quizzes from another software')
             ->addArgument('file', InputArgument::REQUIRED, 'Quiz data file')
+            ->addArgument('silent', InputArgument::OPTIONAL, 'No confirmation')
             ->addOption('format', '-f', InputOption::VALUE_REQUIRED, 'Quiz data file format')
-            ->addOption('category', '-c', InputOption::VALUE_OPTIONAL, 'Category to class imported questions')
+            ->addOption('category', '-c', InputOption::VALUE_OPTIONAL, 'Category (shortname) to class imported questions')
             ->setHelp(<<<EOT
 The <info>%command.name%</info> imports quizzes from another software:
 
@@ -34,7 +34,9 @@ The <info>%command.name%</info> imports quizzes from another software:
 
 For example, to import 'certificationy' data from '/home/user/architecture.yml' file:
 
-  <info>php %command.full_name% --format certificationy --category 'Symfony 3' /home/user/architecture.yml</info>
+  <info>php %command.full_name% --format certificationy /home/user/architecture.yml</info>
+or
+  <info>php %command.full_name% --format certificationy --category 'Symfony 3' /home/user/architecture.yml silent</info>
 
 EOT
         );
@@ -42,31 +44,44 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        /** @var $doctrine \Doctrine\Common\Persistence\ManagerRegistry */
+        $doctrine = $this->getContainer()->get('doctrine');
+        $this->em = $doctrine->getManager();
+
         $io = new SymfonyStyle($input, $output);
         $file = $input->getArgument('file');
+        $silent = $input->getArgument('silent');
         $format = $input->getOption('format');
         $category = $input->getOption('category');
 
         if ($file) {
-            $io->note(sprintf('Import data from file: "%s"', $file));
+            if (!$silent) {
+                $io->note(sprintf('Import data from file: "%s"', $file));
+            }
         }
         else {
             throw new \LogicException(sprintf("The file must be provided. Pass --help to see options."));
         }
 
         if ($format) {
-            $io->note(sprintf('Import format: "%s"', $format));
+            if (!$silent) {
+                $io->note(sprintf('Import format: "%s"', $format));
+            }
         }
         else {
             throw new \LogicException(sprintf("The format must be provided. Pass --help to see options."));
         }
 
         if ($category) {
-            $io->note(sprintf('Class imported questions into category: "%s"', $category));
+            if (!$silent) {
+                $io->note(sprintf('Class imported questions into category: "%s"', $category));
+            }
         }
 
-        if (!$io->confirm('<question>Careful, data will be inserted in the database. Do you want to continue y/N ?</question>', false)) {
-            return;
+        if (!$silent) {
+            if (!$io->confirm('<question>Careful, data will be inserted in the database. Do you want to continue y/N ?</question>', false)) {
+                return;
+            }
         }
 
         switch ($format) {
@@ -84,20 +99,29 @@ EOT
         }
     }
 
+    protected function getCategory($category) {
+        $repository = $this->em->getRepository(Category::Class);
+
+        $persistedCategory = $repository->findOneByShortname($category);
+
+        if ($persistedCategory) {
+            return $persistedCategory;
+        } else {
+            $joliquizCategory = new Category($category);
+            $this->em->persist($joliquizCategory);
+            return $joliquizCategory;
+        }
+    }
+
     protected function importCertificationy($io, $format, $file, $secondCategory=null) {
-        /** @var $doctrine \Doctrine\Common\Persistence\ManagerRegistry */
-        $doctrine = $this->getContainer()->get('doctrine');
-        $em = $doctrine->getManager();
 
         $data = Yaml::parseFile($file);
         $questions = $data['questions'];
         $category = $data['category'];
 
-        $joliquizCategory = new Category($category);
-        $em->persist($joliquizCategory);
+        $joliquizCategory = $this->getCategory($category);
         if ($secondCategory) {
-            $joliquizSecondCategory = new Category($secondCategory);
-            $em->persist($joliquizSecondCategory);
+            $joliquizSecondCategory = $this->getCategory($secondCategory);
         }
 
         foreach ($questions as $question) {
@@ -115,7 +139,7 @@ EOT
                 $joliquizAnswer = new Answer();
                 $joliquizAnswer->setText($answer['value']);
                 $joliquizAnswer->setCorrect($answer['correct']);
-                $em->persist($joliquizAnswer);
+                $this->em->persist($joliquizAnswer);
                 $joliquizQuestion->addAnswer($joliquizAnswer);
             }
 
@@ -127,10 +151,10 @@ EOT
             //$questions[] = new Question($item['question'], $item['category'], $answers, $help);
             */
 
-            $em->persist($joliquizQuestion);
+            $this->em->persist($joliquizQuestion);
         }
 
-        $em->flush();
+        $this->em->flush();
 
         if ($secondCategory) {
             $io->note(sprintf('Importing %s question(s) in category "%s" and category "%s".', count($questions), $category, $secondCategory));

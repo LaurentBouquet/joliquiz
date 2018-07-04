@@ -16,21 +16,21 @@ class CategoryFixtures extends Fixture
     {
         // SYMFONY_REFERENCE
         $category = new Category();
-        $category->setShortname('Symf');
-        $category->setLongname('Symfony');
+        $category->setShortname('Symfony');
+        $category->setLongname('Symfony (all versions)');
         $manager->persist($category);
         $this->addReference(self::SYMFONY_REFERENCE, $category);
 
         // SYMFONY_V3_REFERENCE
         $category = new Category();
-        $category->setShortname('Symf3');
+        $category->setShortname('Symfony3');
         $category->setLongname('Symfony version 3');
         $manager->persist($category);
         $this->addReference(self::SYMFONY_V3_REFERENCE, $category);
 
         // SYMFONY_V4_REFERENCE
         $category = new Category();
-        $category->setShortname('Symf4');
+        $category->setShortname('Symfony4');
         $category->setLongname('Symfony version 4');
         $manager->persist($category);
         $this->addReference(self::SYMFONY_V4_REFERENCE, $category);
