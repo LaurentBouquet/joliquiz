@@ -14,7 +14,9 @@
                 <th>Categories</th>
                 {% if is_granted('ROLE_TEACHER') %}
                     <th>Active</th>
-                    <th>actions</th>
+                {% endif %}
+                {% if is_granted('ROLE_USER') %}
+                    <th>Actions</th>
                 {% endif %}
             </tr>
         </thead>
@@ -34,7 +36,14 @@
                     <td>
                         <a href="{{ path('quiz_show', {'id': quiz.id}) }}">show</a>
                         <a href="{{ path('quiz_edit', {'id': quiz.id}) }}">edit</a>
+                        <a href="{{ path('quiz_start', {'id': quiz.id}) }}">start</a>
                     </td>
+                {% else %}
+                    {% if is_granted('ROLE_USER') %}
+                    <td>
+                        <a href="{{ path('quiz_start', {'id': quiz.id}) }}">start</a>
+                    </td>
+                    {% endif %}
                 {% endif %}
             </tr>
         {% else %}

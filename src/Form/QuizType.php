@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Quiz;
 use App\Entity\Category;
+use App\Repository\CategoryRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,6 +21,9 @@ class QuizType extends AbstractType
             ->add('active')
             ->add('categories', EntityType::class, array(
                 'class' => Category::class,
+                'query_builder' => function (CategoryRepository $er) {
+                    return $er->createQueryBuilder('c')->orderBy('c.shortname', 'ASC');
+                 },
                 'choice_label' => 'longname',
                 'multiple' => true
             ))

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Quiz;
+use App\Entity\Question;
 use App\Form\QuizType;
 use App\Repository\QuizRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -15,6 +16,36 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class QuizController extends Controller
 {
+
+    /**
+     * @Route("/{id}/workout", name="quiz_workout", methods="GET")
+     */
+    public function workout(Request $request, Quiz $quiz): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
+
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository(Question::Class);
+        $question = $repository->findOneByRandomCategories($quiz->getCategories());
+
+        return $this->render('quiz/workout.html.twig',
+            [
+                'quiz' => $quiz,
+                'question' => $question
+            ]
+        );
+    }
+
+    /**
+     * @Route("/{id}/start", name="quiz_start", methods="GET")
+     */
+    public function start(Request $request, Quiz $quiz): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
+
+        return $this->render('quiz/start.html.twig', ['quiz' => $quiz]);
+    }
+
     /**
      * @Route("/", name="quiz_index", methods="GET")
      */
