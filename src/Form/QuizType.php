@@ -14,22 +14,18 @@ class QuizType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('title')
-            ->add('summary')
-            ->add('number_of_questions')
-            ->add('active')
-            ->add('categories', EntityType::class, array(
+        $builder->add('title');
+        $builder->add('summary');
+        $builder->add('number_of_questions');
+        $builder->add('active');
+        $builder->add('categories', EntityType::class, array(
                 'class' => Category::class,
                 'query_builder' => function (CategoryRepository $er) {
                     return $er->createQueryBuilder('c')->orderBy('c.shortname', 'ASC');
                  },
                 'choice_label' => 'longname',
                 'multiple' => true
-            ))
-        // ->add('created_at')
-        // ->add('updated_at')
-        ;
+            ));
     }
 
     public function configureOptions(OptionsResolver $resolver)

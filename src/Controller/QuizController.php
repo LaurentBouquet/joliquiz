@@ -7,6 +7,7 @@ use App\Entity\Question;
 use App\Entity\Workout;
 use App\Entity\QuestionHistory;
 use App\Form\QuizType;
+use App\Form\QuestionType;
 use App\Repository\QuizRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,6 +28,7 @@ class QuizController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
 
+        $questionNumber = 0;
 
         //////////////
         // TODO mettre ces opérations d'historique dans un service
@@ -42,14 +44,14 @@ class QuizController extends Controller
             $workout->setStudent($user);
             $workout->setQuiz($quiz);
             $workout->setStartedAt(new \DateTime());
-            $numberOfQuestions = 0;
+            $questionNumber = 0;
         }
         else {
-            $numberOfQuestions = $workout->getNumberOfQuestions();
+            $questionNumber = $workout->getNumberOfQuestions();
         }
-        $numberOfQuestions++;
+        $questionNumber++;
         $workout->setEndedAt(new \DateTime());
-        $workout->setNumberOfQuestions($numberOfQuestions);
+        $workout->setNumberOfQuestions($questionNumber);
         $em->persist($workout);
 
         $questionHistoryRepository = $em->getRepository(QuestionHistory::Class);
@@ -60,6 +62,11 @@ class QuizController extends Controller
         $questionHistoryRepository->setCompleted(false);
         $em->persist($questionHistoryRepository);
 
+        $form = $this->createForm(QuestionType::class, $question, array('form_type'=>'student'));
+        $form->handleRequest($request);
+
+        // if ($form->isSubmitted() && $form->isValid()) {
+        // }
 
         $em->flush();
         //////////////
@@ -67,7 +74,9 @@ class QuizController extends Controller
         return $this->render('quiz/workout.html.twig',
             [
                 'quiz' => $quiz,
-                'question' => $question
+                'question' => $question,
+                'questionNumber' => $questionNumber,
+                'form' => $form->createView(),
             ]
         );
     }

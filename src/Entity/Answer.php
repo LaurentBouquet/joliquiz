@@ -31,6 +31,12 @@ class Answer
     private $correct;
 
     /**
+     * This field will not be persisted
+     * It is used to store the answer given by student (type="boolean") in the form
+     */
+    private $correct_given = false;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Question", inversedBy="answers")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -66,6 +72,18 @@ class Answer
     public function setCorrect(bool $correct): self
     {
         $this->correct = $correct;
+
+        return $this;
+    }
+
+    public function getCorrectGiven(): ?bool
+    {
+        return $this->correct_given;
+    }
+
+    public function setCorrectGiven(bool $correct_given): self
+    {
+        $this->correct_given = $correct_given;
 
         return $this;
     }

@@ -35,7 +35,7 @@ class QuestionController extends Controller
 
         $question = new Question();
 
-        $form = $this->createForm(QuestionType::class, $question);
+        $form = $this->createForm(QuestionType::class, $question, array('form_type'=>'teacher'));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -74,7 +74,7 @@ class QuestionController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
-        $form = $this->createForm(QuestionType::class, $question);
+        $form = $this->createForm(QuestionType::class, $question, array('form_type'=>'teacher'));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -94,7 +94,7 @@ class QuestionController extends Controller
 
         return $this->render('question/edit.html.twig', [
             'question' => $question,
-            'form' => $form->createView(),
+            'form' => $form->createView(),            
         ]);
     }
 

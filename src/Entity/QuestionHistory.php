@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -47,6 +49,16 @@ class QuestionHistory
      * @ORM\Column(type="dateinterval", nullable=true)
      */
     private $duration;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\AnswerHistory", mappedBy="question_history", orphanRemoval=true)
+     */
+    private $answersHistory;
+
+    public function __construct()
+    {
+        $this->answersHistory = new ArrayCollection();
+    }
 
     public function getId()
     {
@@ -121,6 +133,37 @@ class QuestionHistory
     public function setDuration(?\DateInterval $duration): self
     {
         $this->duration = $duration;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AnswerHistory[]
+     */
+    public function getAnswersHistory(): Collection
+    {
+        return $this->answersHistory;
+    }
+
+    public function addAnswersHistory(AnswerHistory $answersHistory): self
+    {
+        if (!$this->answersHistory->contains($answersHistory)) {
+            $this->answersHistory[] = $answersHistory;
+            $answersHistory->setQuestionHistory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnswersHistory(AnswerHistory $answersHistory): self
+    {
+        if ($this->answersHistory->contains($answersHistory)) {
+            $this->answersHistory->removeElement($answersHistory);
+            // set the owning side to null (unless already changed)
+            if ($answersHistory->getQuestionHistory() === $this) {
+                $answersHistory->setQuestionHistory(null);
+            }
+        }
 
         return $this;
     }

@@ -33,7 +33,7 @@ class AnswerController extends Controller
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
         $answer = new Answer();
-        $form = $this->createForm(AnswerType::class, $answer);
+        $form = $this->createForm(AnswerType::class, $answer, array('form_type' => 'teacher'));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -67,7 +67,7 @@ class AnswerController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
-        $form = $this->createForm(AnswerType::class, $answer);
+        $form = $this->createForm(AnswerType::class, $answer, array('form_type' => 'teacher'));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

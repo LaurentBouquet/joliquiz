@@ -5,30 +5,11 @@
 {% block body %}
     <h1>Quiz "{{ quiz.title }}"</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Number</th>
-                <td>{{ question.id }}</td>
-            </tr>
-            <tr>
-                <th>Text</th>
-                <td>{{ question.text }}</td>
-            </tr>
-            <tr>
-                <th>Answers</th>
-                <td>
-                  {% for answer in question.answers %}
-                     {{ answer.text }} <br>
-                  {% endfor %}
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {% if is_granted('ROLE_USER') %}
+            <a href="{{ path('quiz_workout', {'id': quiz.id}) }}">next</a>
+        {% endif %}
+    {{ form_end(form) }}
 
-    {% if is_granted('ROLE_USER') %}
-        <a href="{{ path('quiz_workout', {'id': quiz.id}) }}">next</a>
-    {% endif %}
-
-    {{ include('quiz/_delete_form.html.twig') }}
 {% endblock %}
