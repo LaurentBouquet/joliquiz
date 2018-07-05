@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Table;
 
@@ -50,10 +52,16 @@ class Workout
      */
     private $completed;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\QuestionHistory", mappedBy="workout", orphanRemoval=true)
+     */
+    private $questionsHistory;
+
 
     public function __construct()
     {
         $this->completed = false;
+        $this->questionsHistory = new ArrayCollection();
     }
 
 
@@ -130,6 +138,37 @@ class Workout
     public function setCompleted(bool $completed): self
     {
         $this->completed = $completed;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|QuestionHistory[]
+     */
+    public function getQuestionsHistory(): Collection
+    {
+        return $this->questionsHistory;
+    }
+
+    public function addQuestionsHistory(QuestionHistory $questionsHistory): self
+    {
+        if (!$this->questionsHistory->contains($questionsHistory)) {
+            $this->questionsHistory[] = $questionsHistory;
+            $questionsHistory->setWorkout($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuestionsHistory(QuestionHistory $questionsHistory): self
+    {
+        if ($this->questionsHistory->contains($questionsHistory)) {
+            $this->questionsHistory->removeElement($questionsHistory);
+            // set the owning side to null (unless already changed)
+            if ($questionsHistory->getWorkout() === $this) {
+                $questionsHistory->setWorkout(null);
+            }
+        }
 
         return $this;
     }

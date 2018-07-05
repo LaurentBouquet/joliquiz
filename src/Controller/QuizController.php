@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Quiz;
 use App\Entity\Question;
 use App\Entity\Workout;
+use App\Entity\QuestionHistory;
 use App\Form\QuizType;
 use App\Repository\QuizRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -50,6 +51,15 @@ class QuizController extends Controller
         $workout->setEndedAt(new \DateTime());
         $workout->setNumberOfQuestions($numberOfQuestions);
         $em->persist($workout);
+
+        $questionHistoryRepository = $em->getRepository(QuestionHistory::Class);
+        $questionHistoryRepository = new QuestionHistory();
+        $questionHistoryRepository->setWorkout($workout);
+        $questionHistoryRepository->setDateTime(new \DateTimeImmutable());
+        $questionHistoryRepository->setQuestionText($question->getText());
+        $questionHistoryRepository->setCompleted(false);
+        $em->persist($questionHistoryRepository);
+
 
         $em->flush();
         //////////////
