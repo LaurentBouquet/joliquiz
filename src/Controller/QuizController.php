@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Quiz;
 use App\Entity\Question;
 use App\Entity\Workout;
+use App\Entity\AnswerHistory;
 use App\Entity\QuestionHistory;
 use App\Form\QuizType;
 use App\Form\QuestionType;
@@ -14,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * @Route("/quiz")
@@ -22,57 +24,91 @@ class QuizController extends Controller
 {
 
     /**
-     * @Route("/{id}/workout", name="quiz_workout", methods="GET")
+     * @Route("/{id}/workout", name="quiz_workout", methods="POST")
      */
-    public function workout(Request $request, Quiz $quiz, UserInterface $user = null): Response
+    public function workout(Request $request, Workout $workout, EntityManagerInterface $em, UserInterface $user = null): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
 
-        $questionNumber = 0;
-
         //////////////
         // TODO mettre ces opérations d'historique dans un service
-        $em = $this->getDoctrine()->getManager();
 
-        $questionRepository = $em->getRepository(Question::Class);
-        $question = $questionRepository->findOneByRandomCategories($quiz->getCategories());
+        // // vérifier qu'il n'ait pas de triche
+        // $workoutRepository = $em->getRepository(Workout::Class);
+        // $workoutInDatabase = $workoutRepository->findLastNotCompletedByStudent($user);
+        // if ($workout != $workoutInDatabase) {
+        //     throw $this->createNotFoundException();
+        // }
 
-        $workoutRepository = $em->getRepository(Workout::Class);
-        $workout = $workoutRepository->findLastNotCompletedByStudent($user);
-        if (!$workout) {
-            $workout = new Workout();
-            $workout->setStudent($user);
-            $workout->setQuiz($quiz);
-            $workout->setStartedAt(new \DateTime());
-            $questionNumber = 0;
-        }
-        else {
-            $questionNumber = $workout->getNumberOfQuestions();
-        }
-        $questionNumber++;
+        // Mettre à jour date-heure de fin et n° de la dernière question
+        $questionNumber = $workout->getNumberOfQuestions() + 1;
         $workout->setEndedAt(new \DateTime());
         $workout->setNumberOfQuestions($questionNumber);
         $em->persist($workout);
 
+
+        // Relire (dans la BD) la question posée
         $questionHistoryRepository = $em->getRepository(QuestionHistory::Class);
-        $questionHistoryRepository = new QuestionHistory();
-        $questionHistoryRepository->setWorkout($workout);
-        $questionHistoryRepository->setDateTime(new \DateTimeImmutable());
-        $questionHistoryRepository->setQuestionText($question->getText());
-        $questionHistoryRepository->setCompleted(false);
-        $em->persist($questionHistoryRepository);
+        $questionRepository = $em->getRepository(Question::Class);
+        $lastQuestionHistory = $questionHistoryRepository->findLastByWorkout($workout);
+        if ($lastQuestionHistory) {
+            $lastQuestion = $questionRepository->findOneById($lastQuestionHistory->getQuestionId());
+            $form = $this->createForm(QuestionType::class, $lastQuestion, array('form_type'=>'student'));
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                dump($lastQuestion->getText());
+                foreach ($lastQuestion->getAnswers() as $key => $lastAnswer) {
+                    dump($lastAnswer->getId());
+                    dump($lastAnswer->getWorkoutCorrectGiven());
+                    // // Mémoriser l'historique des réponses
+                    // $newAnswerHistory = new AnswerHistory();
+                    // $newAnswerHistory->setQuestionHistory($lastQuestionHistory);
+                    // $newAnswerHistory->setDateTime(new \DateTimeImmutable());
+                    // $newAnswerHistory->setAnswerId($Answer->getId());
+                    // $newAnswerHistory->setAnswerText($Answer->getText());
+                    // $em->persist($newAnswerHistory);
+
+                }
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // Tirer une question au hazard
+        $quiz = $workout->getQuiz();
+        $question = $questionRepository->findOneByRandomCategories($quiz->getCategories());
+        // Mémoriser l'historique de la nouvelle question posée
+        $newQuestionHistory = new QuestionHistory();
+        $newQuestionHistory->setWorkout($workout);
+        $newQuestionHistory->setDateTime(new \DateTimeImmutable());
+        $newQuestionHistory->setQuestionId($question->getId());
+        $newQuestionHistory->setQuestionText($question->getText());
+        $newQuestionHistory->setCompleted(false);
+        $em->persist($newQuestionHistory);
+        $em->flush();
+        // dump($newQuestionHistory);
+        dump($question->getText());
+        foreach ($question->getAnswers() as $key => $answer) {
+            dump($answer->getWorkoutCorrectGiven());
+        }
+        //////////////
+
 
         $form = $this->createForm(QuestionType::class, $question, array('form_type'=>'student'));
-        $form->handleRequest($request);
-
-        // if ($form->isSubmitted() && $form->isValid()) {
-        // }
-
-        $em->flush();
-        //////////////
 
         return $this->render('quiz/workout.html.twig',
             [
+                'id' => $workout->getId(),
                 'quiz' => $quiz,
                 'question' => $question,
                 'questionNumber' => $questionNumber,
@@ -84,11 +120,26 @@ class QuizController extends Controller
     /**
      * @Route("/{id}/start", name="quiz_start", methods="GET")
      */
-    public function start(Request $request, Quiz $quiz): Response
+    public function start(Request $request, Quiz $quiz, EntityManagerInterface $em, UserInterface $user = null): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
 
-        return $this->render('quiz/start.html.twig', ['quiz' => $quiz]);
+        $workoutRepository = $em->getRepository(Workout::Class);
+        $workout = new Workout();
+        $workout->setStudent($user);
+        $workout->setQuiz($quiz);
+        $workout->setStartedAt(new \DateTime());
+        $workout->setEndedAt(new \DateTime());
+        $workout->setNumberOfQuestions(0);
+        $em->persist($workout);
+        $em->flush();
+
+        return $this->render('quiz/start.html.twig',
+            [
+                'id' => $workout->getId(),
+                'quiz' => $quiz,
+            ]
+        );
     }
 
     /**
@@ -104,7 +155,7 @@ class QuizController extends Controller
     /**
      * @Route("/new", name="quiz_new", methods="GET|POST")
      */
-    public function new(Request $request): Response
+    public function new(Request $request, EntityManagerInterface $em): Response
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
@@ -113,7 +164,7 @@ class QuizController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            //$em = $this->getDoctrine()->getManager();
             $em->persist($quiz);
             $em->flush();
 
@@ -164,12 +215,12 @@ class QuizController extends Controller
     /**
      * @Route("/{id}", name="quiz_delete", methods="DELETE")
      */
-    public function delete(Request $request, Quiz $quiz): Response
+    public function delete(Request $request, Quiz $quiz, EntityManagerInterface $em): Response
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
         if ($this->isCsrfTokenValid('delete'.$quiz->getId(), $request->request->get('_token'))) {
-            $em = $this->getDoctrine()->getManager();
+            //$em = $this->getDoctrine()->getManager();
             $em->remove($quiz);
             $em->flush();
         }

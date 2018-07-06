@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * @Route("/answer")
@@ -28,7 +29,7 @@ class AnswerController extends Controller
     /**
      * @Route("/new", name="answer_new", methods="GET|POST")
      */
-    public function new(Request $request): Response
+    public function new(Request $request, EntityManagerInterface $em): Response
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
@@ -37,7 +38,7 @@ class AnswerController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            //$em = $this->getDoctrine()->getManager();
             $em->persist($answer);
             $em->flush();
 
@@ -85,12 +86,12 @@ class AnswerController extends Controller
     /**
      * @Route("/{id}", name="answer_delete", methods="DELETE")
      */
-    public function delete(Request $request, Answer $answer): Response
+    public function delete(Request $request, Answer $answer, EntityManagerInterface $em): Response
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
         if ($this->isCsrfTokenValid('delete'.$answer->getId(), $request->request->get('_token'))) {
-            $em = $this->getDoctrine()->getManager();
+            //$em = $this->getDoctrine()->getManager();
             $em->remove($answer);
             $em->flush();
         }

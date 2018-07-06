@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Answer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -16,6 +17,9 @@ class AnswerType extends AbstractType
     {
         switch ($options['form_type']) {
             case 'student':
+                $builder->add('workout_correct_given', HiddenType::class, array(
+                    'data' => 0,
+                ));
                 $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
                     $answerText = ' ';
                     $answer = $event->getData();
@@ -23,8 +27,10 @@ class AnswerType extends AbstractType
                     if ($answer) {
                         $answerText = $answer->getText();
                     }
-                    $form->add('correct_given', CheckboxType::class, array(
+                    $form->add('workout_correct_given', CheckboxType::class, array(
                         'label' => $answerText,
+                        'required' => false,
+                        'false_values' => array(0)
                     ));
                 });
                 break;

@@ -31,6 +31,11 @@ class QuestionHistory
     private $workout;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $question_id;
+
+    /**
      * @ORM\Column(type="text")
      */
     private $question_text;
@@ -50,10 +55,12 @@ class QuestionHistory
      */
     private $duration;
 
+
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\AnswerHistory", mappedBy="question_history", orphanRemoval=true)
      */
     private $answersHistory;
+
 
     public function __construct()
     {
@@ -85,6 +92,18 @@ class QuestionHistory
     public function setWorkout(?Workout $workout): self
     {
         $this->workout = $workout;
+
+        return $this;
+    }
+
+    public function getQuestionId(): ?int
+    {
+        return $this->question_id;
+    }
+
+    public function setQuestionId(int $question_id): self
+    {
+        $this->question_id = $question_id;
 
         return $this;
     }

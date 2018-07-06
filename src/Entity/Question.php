@@ -55,7 +55,6 @@ class Question
     private $answers;
 
 
-
     public function getId()
     {
         return $this->id;

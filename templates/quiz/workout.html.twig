@@ -3,12 +3,12 @@
 {% block title %}Quiz{% endblock %}
 
 {% block body %}
-    <h1>Quiz "{{ quiz.title }}"</h1>
+    <h1>Quiz "{{ quiz.title }}" ({{ questionNumber }}/{{ quiz.numberOfQuestions }})</h1>
 
     {{ form_start(form) }}
         {{ form_widget(form) }}
         {% if is_granted('ROLE_USER') %}
-            <a href="{{ path('quiz_workout', {'id': quiz.id}) }}">next</a>
+            <button class="btn">{{ button_label|default('Next') }}</button>
         {% endif %}
     {{ form_end(form) }}
 

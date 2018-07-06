@@ -32,11 +32,6 @@
 
       <div class="collapse navbar-collapse" id="navbar">
           <ul class="navbar-nav mr-auto">
-
-              <li>
-                  <a class="nav-link {% if '/answer/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('answer_index') }}">{{'answers'|trans}}</a>
-              </li>
-
               {% if is_granted('ROLE_USER') %}
                   <li>
                       <a class="nav-link {% if '/quiz/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('quiz_index') }}">{{'Quizzes'|trans}}</a>

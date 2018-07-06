@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * @Route("/question")
@@ -29,7 +30,7 @@ class QuestionController extends Controller
     /**
      * @Route("/new", name="question_new", methods="GET|POST")
      */
-    public function new(Request $request): Response
+    public function new(Request $request, EntityManagerInterface $em): Response
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
@@ -39,7 +40,7 @@ class QuestionController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            //$em = $this->getDoctrine()->getManager();
             $em->persist($question);
 
             foreach ($question->getAnswers() as $answer) {
@@ -70,7 +71,7 @@ class QuestionController extends Controller
     /**
      * @Route("/{id}/edit", name="question_edit", methods="GET|POST")
      */
-    public function edit(Request $request, Question $question): Response
+    public function edit(Request $request, Question $question, EntityManagerInterface $em): Response
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
@@ -81,7 +82,7 @@ class QuestionController extends Controller
 
             $question->setUpdatedAt(new \DateTime());
 
-            $em = $this->getDoctrine()->getManager();
+            //$em = $this->getDoctrine()->getManager();
 
             foreach ($question->getAnswers() as $answer) {
                 $em->persist($answer);
@@ -94,19 +95,19 @@ class QuestionController extends Controller
 
         return $this->render('question/edit.html.twig', [
             'question' => $question,
-            'form' => $form->createView(),            
+            'form' => $form->createView(),
         ]);
     }
 
     /**
      * @Route("/{id}", name="question_delete", methods="DELETE")
      */
-    public function delete(Request $request, Question $question): Response
+    public function delete(Request $request, Question $question, EntityManagerInterface $em): Response
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
         if ($this->isCsrfTokenValid('delete'.$question->getId(), $request->request->get('_token'))) {
-            $em = $this->getDoctrine()->getManager();
+            //$em = $this->getDoctrine()->getManager();
             $em->remove($question);
             $em->flush();
         }

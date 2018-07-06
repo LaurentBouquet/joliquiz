@@ -16,7 +16,6 @@ class QuestionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        dump($options['form_type']);
         switch ($options['form_type']) {
             case 'student':
                 $builder->add('text', TextType::class, array(
