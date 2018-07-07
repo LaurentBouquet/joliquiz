@@ -68,12 +68,24 @@ class Quiz
      */
     private $workouts;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $show_result_question;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $show_result_quiz;
+
 
     public function __construct()
     {
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
         $this->setActive(true);
+        $this->setShowResultQuestion(false);
+        $this->setShowResultQuiz(false);
         $this->setNumberOfQuestions(10);
         $this->categories = new ArrayCollection();
         $this->workouts = new ArrayCollection();
@@ -209,6 +221,30 @@ class Quiz
                 $workout->setQuiz(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getShowResultQuestion(): ?bool
+    {
+        return $this->show_result_question;
+    }
+
+    public function setShowResultQuestion(bool $show_result_question): self
+    {
+        $this->show_result_question = $show_result_question;
+
+        return $this;
+    }
+
+    public function getShowResultQuiz(): ?bool
+    {
+        return $this->show_result_quiz;
+    }
+
+    public function setShowResultQuiz(bool $show_result_quiz): self
+    {
+        $this->show_result_quiz = $show_result_quiz;
 
         return $this;
     }

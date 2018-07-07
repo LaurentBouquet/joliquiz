@@ -32,6 +32,7 @@ class QuizType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Quiz::class,
+            'form_type' => 'student',
         ]);
     }
 }

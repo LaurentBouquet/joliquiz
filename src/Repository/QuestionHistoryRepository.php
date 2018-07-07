@@ -20,17 +20,29 @@ class QuestionHistoryRepository extends ServiceEntityRepository
     }
 
 
-    public function findLastByWorkout($workout): ?QuestionHistory
-    {
-        return $this->createQueryBuilder('qh')
-            ->andWhere('qh.workout = :workout')
-            ->setParameter('workout', $workout)
-            ->orderBy('qh.date_time', 'DESC')
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
+        public function findLastByWorkout($workout): ?QuestionHistory
+        {
+            return $this->createQueryBuilder('qh')
+                ->andWhere('qh.workout = :workout')
+                ->setParameter('workout', $workout)
+                ->orderBy('qh.date_time', 'DESC')
+                ->setMaxResults(1)
+                ->getQuery()
+                ->getOneOrNullResult()
+            ;
+        }
+
+        public function findAllByWorkout($workout)
+        {
+            return $this->createQueryBuilder('qh')
+                ->andWhere('qh.workout = :workout')
+                ->setParameter('workout', $workout)
+                // ->orderBy('qh.date_time', 'DESC')
+                ->getQuery()
+                ->getResult()
+            ;
+        }
+
 
 
 //    /**

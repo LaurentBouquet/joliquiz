@@ -26,22 +26,27 @@ class QuestionRepository extends ServiceEntityRepository
         return $builder->getQuery()->getResult();
     }
 
-    public function findOneByRandomCategories($categories): ?Question
+    public function findOneRandomByCategories($categories): ?Question
     {
         $builder = $this->createQueryBuilder('q');
         $builder->innerJoin('q.categories', 'categories');
         $builder->andWhere($builder->expr()->in('categories', ':categories'))->setParameter('categories', $categories);
 
-        //TODO ajouter and question not in questionsDejaPosées (liste obtenue par un select dans tbl_history)
-
-        // $builder->setMaxResults(1);
-        // $question = $builder->getQuery()->getOneOrNullResult();
         $questions = $builder->getQuery()->getResult();
         $question = $questions[rand(1, sizeof($questions))-1];
 
         return $question;
     }
 
+    public function countByCategories($categories): int
+    {
+        $builder = $this->createQueryBuilder('q');
+        $builder->innerJoin('q.categories', 'categories');
+        $builder->andWhere($builder->expr()->in('categories', ':categories'))->setParameter('categories', $categories);
+
+        $questions = $builder->getQuery()->getResult();
+        return sizeof($questions);
+    }
 //    /**
 //     * @return Question[] Returns an array of Question objects
 //     */
