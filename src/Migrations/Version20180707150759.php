@@ -8,7 +8,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20180707145851 extends AbstractMigration
+final class Version20180707150759 extends AbstractMigration
 {
     public function up(Schema $schema) : void
     {
@@ -27,9 +27,9 @@ final class Version20180707145851 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_577B239A1E27F6BF ON tbl_answer (question_id)');
         $this->addSql('CREATE TABLE tbl_category (id INT NOT NULL, shortname VARCHAR(50) NOT NULL, longname VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE tbl_question (id INT NOT NULL, text TEXT NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
-        $this->addSql('CREATE TABLE tbl_queston_category (question_id INT NOT NULL, category_id INT NOT NULL, PRIMARY KEY(question_id, category_id))');
-        $this->addSql('CREATE INDEX IDX_483BDA3F1E27F6BF ON tbl_queston_category (question_id)');
-        $this->addSql('CREATE INDEX IDX_483BDA3F12469DE2 ON tbl_queston_category (category_id)');
+        $this->addSql('CREATE TABLE tbl_question_category (question_id INT NOT NULL, category_id INT NOT NULL, PRIMARY KEY(question_id, category_id))');
+        $this->addSql('CREATE INDEX IDX_DB45675F1E27F6BF ON tbl_question_category (question_id)');
+        $this->addSql('CREATE INDEX IDX_DB45675F12469DE2 ON tbl_question_category (category_id)');
         $this->addSql('CREATE TABLE tbl_workout (id INT NOT NULL, student_id INT NOT NULL, quiz_id INT NOT NULL, started_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, ended_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, number_of_questions INT NOT NULL, completed BOOLEAN NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_3FCCF306CB944F1A ON tbl_workout (student_id)');
         $this->addSql('CREATE INDEX IDX_3FCCF306853CD175 ON tbl_workout (quiz_id)');
@@ -49,8 +49,8 @@ final class Version20180707145851 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_9E994D3B79D11BDA ON tbl_history_answer (question_history_id)');
         $this->addSql('COMMENT ON COLUMN tbl_history_answer.date_time IS \'(DC2Type:datetime_immutable)\'');
         $this->addSql('ALTER TABLE tbl_answer ADD CONSTRAINT FK_577B239A1E27F6BF FOREIGN KEY (question_id) REFERENCES tbl_question (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
-        $this->addSql('ALTER TABLE tbl_queston_category ADD CONSTRAINT FK_483BDA3F1E27F6BF FOREIGN KEY (question_id) REFERENCES tbl_question (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
-        $this->addSql('ALTER TABLE tbl_queston_category ADD CONSTRAINT FK_483BDA3F12469DE2 FOREIGN KEY (category_id) REFERENCES tbl_category (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->addSql('ALTER TABLE tbl_question_category ADD CONSTRAINT FK_DB45675F1E27F6BF FOREIGN KEY (question_id) REFERENCES tbl_question (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->addSql('ALTER TABLE tbl_question_category ADD CONSTRAINT FK_DB45675F12469DE2 FOREIGN KEY (category_id) REFERENCES tbl_category (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE tbl_workout ADD CONSTRAINT FK_3FCCF306CB944F1A FOREIGN KEY (student_id) REFERENCES tbl_user (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE tbl_workout ADD CONSTRAINT FK_3FCCF306853CD175 FOREIGN KEY (quiz_id) REFERENCES tbl_quiz (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE tbl_quiz_category ADD CONSTRAINT FK_C91A858F853CD175 FOREIGN KEY (quiz_id) REFERENCES tbl_quiz (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
@@ -64,10 +64,10 @@ final class Version20180707145851 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
-        $this->addSql('ALTER TABLE tbl_queston_category DROP CONSTRAINT FK_483BDA3F12469DE2');
+        $this->addSql('ALTER TABLE tbl_question_category DROP CONSTRAINT FK_DB45675F12469DE2');
         $this->addSql('ALTER TABLE tbl_quiz_category DROP CONSTRAINT FK_C91A858F12469DE2');
         $this->addSql('ALTER TABLE tbl_answer DROP CONSTRAINT FK_577B239A1E27F6BF');
-        $this->addSql('ALTER TABLE tbl_queston_category DROP CONSTRAINT FK_483BDA3F1E27F6BF');
+        $this->addSql('ALTER TABLE tbl_question_category DROP CONSTRAINT FK_DB45675F1E27F6BF');
         $this->addSql('ALTER TABLE tbl_history_question DROP CONSTRAINT FK_FCD2A776A6CCCFC9');
         $this->addSql('ALTER TABLE tbl_workout DROP CONSTRAINT FK_3FCCF306853CD175');
         $this->addSql('ALTER TABLE tbl_quiz_category DROP CONSTRAINT FK_C91A858F853CD175');
@@ -84,7 +84,7 @@ final class Version20180707145851 extends AbstractMigration
         $this->addSql('DROP TABLE tbl_answer');
         $this->addSql('DROP TABLE tbl_category');
         $this->addSql('DROP TABLE tbl_question');
-        $this->addSql('DROP TABLE tbl_queston_category');
+        $this->addSql('DROP TABLE tbl_question_category');
         $this->addSql('DROP TABLE tbl_workout');
         $this->addSql('DROP TABLE tbl_quiz');
         $this->addSql('DROP TABLE tbl_quiz_category');
