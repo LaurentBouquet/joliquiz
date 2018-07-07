@@ -26,9 +26,6 @@ class QuestionType extends AbstractType
                     'label' => false,
                     'entry_type' => AnswerType::class,
                     'entry_options' => array('label' => false, 'form_type' => $options['form_type']),
-                    'allow_add' => true,
-                    'allow_delete' => true,
-                    'by_reference' => false,
                 ));
                 break;
             case 'teacher':

@@ -27,6 +27,32 @@ class AnswerHistory
      */
     private $answer_id;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\QuestionHistory", inversedBy="answersHistory")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $question_history;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $answer_text;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $answer_correct;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $correct_given;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $answer_succes;
+
     public function getId()
     {
         return $this->id;
@@ -52,6 +78,66 @@ class AnswerHistory
     public function setAnswerId(int $answer_id): self
     {
         $this->answer_id = $answer_id;
+
+        return $this;
+    }
+
+    public function getQuestionHistory(): ?QuestionHistory
+    {
+        return $this->question_history;
+    }
+
+    public function setQuestionHistory(?QuestionHistory $question_history): self
+    {
+        $this->question_history = $question_history;
+
+        return $this;
+    }
+
+    public function getAnswerText(): ?string
+    {
+        return $this->answer_text;
+    }
+
+    public function setAnswerText(string $answer_text): self
+    {
+        $this->answer_text = $answer_text;
+
+        return $this;
+    }
+
+    public function getAnswerCorrect(): ?bool
+    {
+        return $this->answer_correct;
+    }
+
+    public function setAnswerCorrect(bool $answer_correct): self
+    {
+        $this->answer_correct = $answer_correct;
+
+        return $this;
+    }
+
+    public function getCorrectGiven(): ?bool
+    {
+        return $this->correct_given;
+    }
+
+    public function setCorrectGiven(bool $correct_given): self
+    {
+        $this->correct_given = $correct_given;
+
+        return $this;
+    }
+
+    public function getAnswerSucces(): ?bool
+    {
+        return $this->answer_succes;
+    }
+
+    public function setAnswerSucces(bool $answer_succes): self
+    {
+        $this->answer_succes = $answer_succes;
 
         return $this;
     }

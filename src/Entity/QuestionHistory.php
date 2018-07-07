@@ -55,7 +55,6 @@ class QuestionHistory
      */
     private $duration;
 
-
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\AnswerHistory", mappedBy="question_history", orphanRemoval=true)
      */

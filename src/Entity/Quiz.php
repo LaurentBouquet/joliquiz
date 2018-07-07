@@ -59,6 +59,7 @@ class Quiz
     // private $categories;
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="quizzes")
+     * @ORM\JoinTable(name="tbl_quiz_category")
      */
     private $categories;
 

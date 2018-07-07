@@ -58,15 +58,18 @@ class QuizController extends Controller
             if ($form->isSubmitted() && $form->isValid()) {
                 dump($lastQuestion->getText());
                 foreach ($lastQuestion->getAnswers() as $key => $lastAnswer) {
-                    dump($lastAnswer->getId());
+                    dump($lastAnswer->getText());
                     dump($lastAnswer->getWorkoutCorrectGiven());
-                    // // Mémoriser l'historique des réponses
-                    // $newAnswerHistory = new AnswerHistory();
-                    // $newAnswerHistory->setQuestionHistory($lastQuestionHistory);
-                    // $newAnswerHistory->setDateTime(new \DateTimeImmutable());
-                    // $newAnswerHistory->setAnswerId($Answer->getId());
-                    // $newAnswerHistory->setAnswerText($Answer->getText());
-                    // $em->persist($newAnswerHistory);
+                    // Mémoriser l'historique des réponses
+                    $newAnswerHistory = new AnswerHistory();
+                    $newAnswerHistory->setQuestionHistory($lastQuestionHistory);
+                    $newAnswerHistory->setDateTime(new \DateTimeImmutable());
+                    $newAnswerHistory->setAnswerId($lastAnswer->getId());
+                    $newAnswerHistory->setAnswerText($lastAnswer->getText());
+                    $newAnswerHistory->setAnswerCorrect($lastAnswer->getCorrect());
+                    $newAnswerHistory->setCorrectGiven($lastAnswer->getWorkoutCorrectGiven());
+                    $newAnswerHistory->setAnswerSucces($lastAnswer->getWorkoutCorrectGiven() == $lastAnswer->getCorrect());
+                    $em->persist($newAnswerHistory);
 
                 }
             }
@@ -99,6 +102,7 @@ class QuizController extends Controller
         // dump($newQuestionHistory);
         dump($question->getText());
         foreach ($question->getAnswers() as $key => $answer) {
+            dump($answer->getText());
             dump($answer->getWorkoutCorrectGiven());
         }
         //////////////

@@ -46,6 +46,7 @@ class Question
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="questions")
+     * @ORM\JoinTable(name="tbl_queston_category")     
      */
     private $categories;
 
