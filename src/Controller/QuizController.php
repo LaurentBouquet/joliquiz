@@ -40,9 +40,8 @@ class QuizController extends Controller
         //     throw $this->createNotFoundException();
         // }
 
-        // Update end date-time
-        $workout->setEndedAt(new \DateTime());
         $questionNumber = $workout->getNumberOfQuestions();
+        $quiz = $workout->getQuiz();
 
         // Re-read (from the database) the previous question
         $questionHistoryRepository = $em->getRepository(QuestionHistory::Class);
@@ -51,14 +50,13 @@ class QuizController extends Controller
         if ($lastQuestionHistory) {
             $currentQuestionResult = false;
             $lastQuestion = $questionRepository->findOneById($lastQuestionHistory->getQuestionId());
-            $form = $this->createForm(QuestionType::class, $lastQuestion, array('form_type'=>'student'));
+            $form = $this->createForm(QuestionType::class, $lastQuestion, array('form_type'=>'student_questioning'));
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 foreach ($lastQuestion->getAnswers() as $key => $lastAnswer) {
                     // Save answers history
                     $newAnswerHistory = new AnswerHistory();
                     $newAnswerHistory->setQuestionHistory($lastQuestionHistory);
-                    $newAnswerHistory->setDateTime(new \DateTimeImmutable());
                     $newAnswerHistory->setAnswerId($lastAnswer->getId());
                     $newAnswerHistory->setAnswerText($lastAnswer->getText());
                     $newAnswerHistory->setAnswerCorrect($lastAnswer->getCorrect());
@@ -69,17 +67,38 @@ class QuizController extends Controller
                 }
             }
             $lastQuestionHistory->setQuestionSuccess($currentQuestionResult);
-            $lastQuestionHistory->setDuration(date_diff($newAnswerHistory->getDateTime(), $lastQuestionHistory->getDateTime()));
             $em->persist($lastQuestionHistory);
+
+            if (!$lastQuestionHistory->getEndedAt()) {
+                $lastQuestionHistory->setEndedAt(new \DateTime());
+                $lastQuestionHistory->setDuration(date_diff($lastQuestionHistory->getEndedAt(), $lastQuestionHistory->getStartedAt()));
+                $em->persist($lastQuestionHistory);
+                $workout->setEndedAt(new \DateTime());
+                $em->persist($workout);
+                $em->flush();
+
+                if ($quiz->getShowResultQuestion()) {
+                    $form = $this->createForm(QuestionType::class, $lastQuestion, array('form_type'=>'student_marking'));
+                    return $this->render('quiz/workout.html.twig',
+                        [
+                            'id' => $workout->getId(),
+                            'quiz' => $quiz,
+                            'question' => $lastQuestion,
+                            'questionNumber' => $questionNumber,
+                            'form' => $form->createView(),
+                        ]
+                    );
+                }
+            }
+
         }
 
-        $quiz = $workout->getQuiz();
 
         // Check if enough questions for this quiz
         $questionsCount = $questionRepository->countByCategories($quiz->getCategories());
         if ($questionsCount < $quiz->getNumberOfQuestions()) {
             $this->addFlash('danger', 'Not enough questions for this quiz');
-            $form = $this->createForm(QuizType::class, $quiz, array('form_type'=>'student'));
+            $form = $this->createForm(QuizType::class, $quiz, array('form_type'=>'student_questioning'));
             return $this->render('quiz/end.html.twig',
                 [
                     'id' => $workout->getId(),
@@ -89,11 +108,10 @@ class QuizController extends Controller
             );
         }
 
+        // Next question
         if ($questionNumber < $quiz->getNumberOfQuestions()) {
-            // Next question
             $questionNumber++;
             $workout->setNumberOfQuestions($questionNumber);
-            $em->persist($workout);
 
             $questionHasBeenPosted = true;
             while ($questionHasBeenPosted) {
@@ -112,7 +130,7 @@ class QuizController extends Controller
             // Save the history of the new question
             $newQuestionHistory = new QuestionHistory();
             $newQuestionHistory->setWorkout($workout);
-            $newQuestionHistory->setDateTime(new \DateTimeImmutable());
+            $newQuestionHistory->setStartedAt(new \DateTime());
             $newQuestionHistory->setQuestionId($nextQuestion->getId());
             $newQuestionHistory->setQuestionText($nextQuestion->getText());
             $newQuestionHistory->setCompleted(false);
@@ -121,7 +139,7 @@ class QuizController extends Controller
 
             $em->flush();
 
-            $form = $this->createForm(QuestionType::class, $nextQuestion, array('form_type'=>'student'));
+            $form = $this->createForm(QuestionType::class, $nextQuestion, array('form_type'=>'student_questioning'));
 
             return $this->render('quiz/workout.html.twig',
                 [
@@ -135,7 +153,7 @@ class QuizController extends Controller
 
         } else {
             // Quiz is completed then display end
-            $form = $this->createForm(QuizType::class, $quiz, array('form_type'=>'student'));
+            $form = $this->createForm(QuizType::class, $quiz, array('form_type'=>'student_questioning'));
 
             return $this->render('quiz/end.html.twig',
                 [
@@ -145,7 +163,6 @@ class QuizController extends Controller
                 ]
             );
         }
-
     }
 
     /**
@@ -160,7 +177,7 @@ class QuizController extends Controller
         $workout->setStudent($user);
         $workout->setQuiz($quiz);
         $workout->setStartedAt(new \DateTime());
-        $workout->setEndedAt(new \DateTime());
+        // $workout->setEndedAt(new \DateTime());
         $workout->setNumberOfQuestions(0);
         $em->persist($workout);
         $em->flush();

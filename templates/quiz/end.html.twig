@@ -15,10 +15,12 @@
                   {% endfor %}
                 </td>
             </tr>
+            {% if quiz.summary %}
             <tr>
                 <th>Summary</th>
                 <td>{{ quiz.summary }}</td>
             </tr>
+            {% endif %}
             <tr>
                 <th>Number of questions</th>
                 <td>{{ quiz.numberOfQuestions }}</td>

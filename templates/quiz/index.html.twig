@@ -8,10 +8,10 @@
     <table class="table">
         <thead>
             <tr>
-                <!-- <th>Id</th> -->
                 <th>Title</th>
                 <th>Questions</th>
                 <th>Categories</th>
+                <th>Result after question</th>
                 {% if is_granted('ROLE_TEACHER') %}
                     <th>Active</th>
                 {% endif %}
@@ -23,7 +23,6 @@
         <tbody>
         {% for quiz in quizzes %}
             <tr>
-                <!-- <td>{{ quiz.id }}</td> -->
                 <td>{{ quiz.title }}</td>
                 <td>{{ quiz.numberOfQuestions }}</td>
                 <td>
@@ -31,6 +30,7 @@
                      - {{ category.longname }} <br>
                   {% endfor %}
                 </td>
+                <td>{{ quiz.showResultQuestion ? 'Yes' : 'No' }}</td>
                 {% if is_granted('ROLE_TEACHER') %}
                     <td>{{ quiz.active ? 'Yes' : 'No' }}</td>
                     <td>

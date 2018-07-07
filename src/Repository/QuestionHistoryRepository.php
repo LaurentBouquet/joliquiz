@@ -25,7 +25,7 @@ class QuestionHistoryRepository extends ServiceEntityRepository
             return $this->createQueryBuilder('qh')
                 ->andWhere('qh.workout = :workout')
                 ->setParameter('workout', $workout)
-                ->orderBy('qh.date_time', 'DESC')
+                ->orderBy('qh.started_at', 'DESC')
                 ->setMaxResults(1)
                 ->getQuery()
                 ->getOneOrNullResult()

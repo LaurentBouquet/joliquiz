@@ -26,7 +26,7 @@ class WorkoutRepository extends ServiceEntityRepository
             ->andWhere('w.completed = :completed')
             ->andWhere('w.student = :student')
             ->setParameter('completed', false)
-            ->setParameter('student', $user)
+            ->setParameter('student_questioning', $user)
             ->orderBy('w.ended_at', 'DESC')
             ->getQuery()
             ->getOneOrNullResult()
