@@ -26,7 +26,9 @@ class AnswerType extends AbstractType
             case 'student_marking':
                 $builder->add('workout_correct_given', CheckboxType::class, array(
                     'label' => false,
-                    // 'text_property' => 'text',
+                    'text_property' => 'text',
+                    'correct_given_property' => 'workout_correct_given',
+                    'correct_property' => 'correct',
                     'required' => false,
                 ));
                 break;

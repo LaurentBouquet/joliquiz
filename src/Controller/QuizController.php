@@ -41,6 +41,7 @@ class QuizController extends Controller
         // }
 
         $questionNumber = $workout->getNumberOfQuestions();
+        $questionResult = 0;
         $quiz = $workout->getQuiz();
 
         // Re-read (from the database) the previous question
@@ -48,7 +49,7 @@ class QuizController extends Controller
         $questionRepository = $em->getRepository(Question::Class);
         $lastQuestionHistory = $questionHistoryRepository->findLastByWorkout($workout);
         if ($lastQuestionHistory) {
-            $currentQuestionResult = false;
+            $currentQuestionResult = +1;
             $lastQuestion = $questionRepository->findOneById($lastQuestionHistory->getQuestionId());
             $form = $this->createForm(QuestionType::class, $lastQuestion, array('form_type'=>'student_questioning'));
             $form->handleRequest($request);
@@ -62,11 +63,15 @@ class QuizController extends Controller
                     $newAnswerHistory->setAnswerCorrect($lastAnswer->getCorrect());
                     $newAnswerHistory->setCorrectGiven($lastAnswer->getWorkoutCorrectGiven());
                     $currentAnswerResult = $lastAnswer->getWorkoutCorrectGiven() == $lastAnswer->getCorrect();
+                    if (!$currentAnswerResult) {
+                        $currentQuestionResult = -1;
+                    }
                     $newAnswerHistory->setAnswerSucces($currentAnswerResult);
                     $em->persist($newAnswerHistory);
                 }
             }
-            $lastQuestionHistory->setQuestionSuccess($currentQuestionResult);
+            $lastQuestionHistory->setQuestionSuccess($currentQuestionResult==+1);
+            $questionResult = $currentQuestionResult;
             $em->persist($lastQuestionHistory);
 
             if (!$lastQuestionHistory->getEndedAt()) {
@@ -77,6 +82,7 @@ class QuizController extends Controller
                 $em->persist($workout);
                 $em->flush();
 
+                dump($questionResult);
                 if ($quiz->getShowResultQuestion()) {
                     $form = $this->createForm(QuestionType::class, $lastQuestion, array('form_type'=>'student_marking'));
                     return $this->render('quiz/workout.html.twig',
@@ -85,6 +91,7 @@ class QuizController extends Controller
                             'quiz' => $quiz,
                             'question' => $lastQuestion,
                             'questionNumber' => $questionNumber,
+                            'questionResult' => $questionResult,
                             'form' => $form->createView(),
                         ]
                     );
@@ -141,12 +148,14 @@ class QuizController extends Controller
 
             $form = $this->createForm(QuestionType::class, $nextQuestion, array('form_type'=>'student_questioning'));
 
+            dump($questionResult);
             return $this->render('quiz/workout.html.twig',
                 [
                     'id' => $workout->getId(),
                     'quiz' => $quiz,
                     'question' => $nextQuestion,
                     'questionNumber' => $questionNumber,
+                    'questionResult' => 0,
                     'form' => $form->createView(),
                 ]
             );
