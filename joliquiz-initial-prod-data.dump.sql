@@ -1323,6 +1323,685 @@ COPY public.tbl_category (id, shortname, longname) FROM stdin;
 --
 
 COPY public.tbl_history_answer (id, question_history_id, answer_id, answer_text, answer_correct, correct_given, answer_succes) FROM stdin;
+1	1	287	@Acme:TestBundle:Question/Item/list.html.twig	f	f	t
+2	1	286	@Acme:TestBundle:Question:Item/list.html.twig	f	f	t
+3	1	285	@AcmeTestBundle:Question/Item/list.html.twig	f	f	t
+4	1	284	@AcmeTestBundle:Question:Item:list.html.twig	f	f	t
+5	1	283	@AcmeTestBundle:Question:Item/list.html.twig	t	f	f
+6	1	287	@Acme:TestBundle:Question/Item/list.html.twig	f	f	t
+7	1	286	@Acme:TestBundle:Question:Item/list.html.twig	f	f	t
+8	1	285	@AcmeTestBundle:Question/Item/list.html.twig	f	f	t
+9	1	284	@AcmeTestBundle:Question:Item:list.html.twig	f	f	t
+10	1	283	@AcmeTestBundle:Question:Item/list.html.twig	t	f	f
+11	2	290	sensio_distribution.security_checker	t	f	f
+12	2	289	sensio_framework_extra.PSR7.http_message_factory	f	f	t
+13	2	288	fos_user.listener.email_confirmation	t	f	f
+14	2	290	sensio_distribution.security_checker	t	f	f
+15	2	289	sensio_framework_extra.PSR7.http_message_factory	f	f	t
+16	2	288	fos_user.listener.email_confirmation	t	f	f
+17	3	282	MyTestCommandConsole.php	f	f	t
+18	3	281	MyTestConsoleCommand.php	t	f	f
+19	3	280	CommandMyTest.php	f	f	t
+20	3	279	MyTestCommand.php	t	f	f
+25	4	324	Both are valid	f	f	t
+26	4	323	file_get_contents("/path/to/file.yml")	t	f	f
+27	4	322	"/path/to/file.yml"	f	f	t
+28	5	168	when random function receives a number it treats it as the top value of the random series it outputs	t	f	f
+29	5	167	random function when passed a string splits the string and outputs a single character	t	f	f
+30	5	166	random filter when used without arguments is like mt_rand	f	f	t
+31	5	165	first and last functions are great to extract the first and the last element of an array	f	f	t
+32	5	164	first and last functions work in the same way as the random filter	f	f	t
+33	6	730	SF-	f	f	t
+34	6	729	SYMFONY-	f	f	t
+35	6	728	SF__	f	f	t
+36	6	727	SYMFONY__	t	f	f
+37	7	86	private: true	f	f	t
+38	7	85	public: false	t	f	f
+39	7	84	scope: private	f	f	t
+40	7	83	type: private	f	f	t
+41	8	377	php app/console config:dump-reference AcmeBundle	t	f	f
+42	8	376	php app/console config:dump AcmeBundle	t	f	f
+43	8	375	php app/console config:dump-reference acme	t	f	f
+44	8	374	php app/console dump:config acme	f	f	t
+45	9	460	$client->redirectAll()	f	f	t
+46	9	459	$client->followRedirects()	t	f	f
+47	9	458	$client->followRedirect()	t	f	f
+48	9	457	$client->redirect()	f	f	t
+49	10	478	XML-RPC and REST	f	f	t
+50	10	477	Corba and XML-RPC	f	f	t
+51	10	476	REST and SOAP	f	f	t
+52	10	475	SOAP and XML-RPC	t	f	f
+53	11	764	$event->isStop()	f	f	t
+54	11	763	$event->isPropagationStop()	f	f	t
+55	11	762	$event->isStopped()	f	f	t
+56	11	761	$event->isPropagationStopped()	t	f	f
+57	12	550	View data	f	f	t
+58	12	549	Request data	f	f	t
+59	12	548	Normalized data	f	f	t
+60	12	547	Model data	t	f	f
+61	13	242	ensure="https"	f	f	t
+62	13	241	protocol="https"	f	f	t
+63	13	240	https="true"	f	f	t
+64	13	239	schemes="https"	t	f	f
+65	14	290	sensio_distribution.security_checker	t	f	f
+66	14	289	sensio_framework_extra.PSR7.http_message_factory	f	f	t
+67	14	288	fos_user.listener.email_confirmation	t	f	f
+68	14	290	sensio_distribution.security_checker	t	f	f
+69	14	289	sensio_framework_extra.PSR7.http_message_factory	f	f	t
+70	14	288	fos_user.listener.email_confirmation	t	f	f
+71	15	287	@Acme:TestBundle:Question/Item/list.html.twig	f	f	t
+72	15	286	@Acme:TestBundle:Question:Item/list.html.twig	f	f	t
+73	15	285	@AcmeTestBundle:Question/Item/list.html.twig	f	f	t
+74	15	284	@AcmeTestBundle:Question:Item:list.html.twig	f	f	t
+75	15	283	@AcmeTestBundle:Question:Item/list.html.twig	t	f	f
+76	15	287	@Acme:TestBundle:Question/Item/list.html.twig	f	f	t
+77	15	286	@Acme:TestBundle:Question:Item/list.html.twig	f	f	t
+78	15	285	@AcmeTestBundle:Question/Item/list.html.twig	f	f	t
+79	15	284	@AcmeTestBundle:Question:Item:list.html.twig	f	f	t
+80	15	283	@AcmeTestBundle:Question:Item/list.html.twig	t	f	f
+81	16	282	MyTestCommandConsole.php	f	f	t
+82	16	281	MyTestConsoleCommand.php	t	f	f
+83	16	280	CommandMyTest.php	f	f	t
+84	16	279	MyTestCommand.php	t	f	f
+89	17	287	@Acme:TestBundle:Question/Item/list.html.twig	f	f	t
+90	17	286	@Acme:TestBundle:Question:Item/list.html.twig	f	f	t
+91	17	285	@AcmeTestBundle:Question/Item/list.html.twig	f	f	t
+92	17	284	@AcmeTestBundle:Question:Item:list.html.twig	f	f	t
+93	17	283	@AcmeTestBundle:Question:Item/list.html.twig	t	f	f
+94	17	287	@Acme:TestBundle:Question/Item/list.html.twig	f	f	t
+95	17	286	@Acme:TestBundle:Question:Item/list.html.twig	f	f	t
+96	17	285	@AcmeTestBundle:Question/Item/list.html.twig	f	f	t
+97	17	284	@AcmeTestBundle:Question:Item:list.html.twig	f	f	t
+98	17	283	@AcmeTestBundle:Question:Item/list.html.twig	t	f	f
+99	18	290	sensio_distribution.security_checker	t	f	f
+100	18	289	sensio_framework_extra.PSR7.http_message_factory	f	f	t
+101	18	288	fos_user.listener.email_confirmation	t	f	f
+102	18	290	sensio_distribution.security_checker	t	f	f
+103	18	289	sensio_framework_extra.PSR7.http_message_factory	f	f	t
+104	18	288	fos_user.listener.email_confirmation	t	f	f
+105	19	282	MyTestCommandConsole.php	f	f	t
+106	19	281	MyTestConsoleCommand.php	t	f	f
+107	19	280	CommandMyTest.php	f	f	t
+108	19	279	MyTestCommand.php	t	f	f
+113	20	282	MyTestCommandConsole.php	f	f	t
+114	20	281	MyTestConsoleCommand.php	t	f	f
+115	20	280	CommandMyTest.php	f	f	t
+116	20	279	MyTestCommand.php	t	f	f
+117	21	287	@Acme:TestBundle:Question/Item/list.html.twig	f	f	t
+118	21	286	@Acme:TestBundle:Question:Item/list.html.twig	f	f	t
+119	21	285	@AcmeTestBundle:Question/Item/list.html.twig	f	f	t
+120	21	284	@AcmeTestBundle:Question:Item:list.html.twig	f	f	t
+121	21	283	@AcmeTestBundle:Question:Item/list.html.twig	t	f	f
+122	21	287	@Acme:TestBundle:Question/Item/list.html.twig	f	f	t
+123	21	286	@Acme:TestBundle:Question:Item/list.html.twig	f	f	t
+124	21	285	@AcmeTestBundle:Question/Item/list.html.twig	f	f	t
+125	21	284	@AcmeTestBundle:Question:Item:list.html.twig	f	f	t
+126	21	283	@AcmeTestBundle:Question:Item/list.html.twig	t	f	f
+127	22	290	sensio_distribution.security_checker	t	f	f
+128	22	289	sensio_framework_extra.PSR7.http_message_factory	f	f	t
+129	22	288	fos_user.listener.email_confirmation	t	f	f
+133	23	282	MyTestCommandConsole.php	f	f	t
+134	23	281	MyTestConsoleCommand.php	t	f	f
+135	23	280	CommandMyTest.php	f	f	t
+136	23	279	MyTestCommand.php	t	f	f
+137	23	282	MyTestCommandConsole.php	f	f	t
+138	23	281	MyTestConsoleCommand.php	t	f	f
+139	23	280	CommandMyTest.php	f	f	t
+140	23	279	MyTestCommand.php	t	f	f
+141	24	290	sensio_distribution.security_checker	t	f	f
+142	24	289	sensio_framework_extra.PSR7.http_message_factory	f	f	t
+143	24	288	fos_user.listener.email_confirmation	t	f	f
+144	24	290	sensio_distribution.security_checker	t	f	f
+145	24	289	sensio_framework_extra.PSR7.http_message_factory	f	f	t
+146	24	288	fos_user.listener.email_confirmation	t	f	f
+147	25	287	@Acme:TestBundle:Question/Item/list.html.twig	f	f	t
+148	25	286	@Acme:TestBundle:Question:Item/list.html.twig	f	f	t
+149	25	285	@AcmeTestBundle:Question/Item/list.html.twig	f	f	t
+150	25	284	@AcmeTestBundle:Question:Item:list.html.twig	f	f	t
+151	25	283	@AcmeTestBundle:Question:Item/list.html.twig	t	f	f
+157	26	287	@Acme:TestBundle:Question/Item/list.html.twig	f	f	t
+158	26	286	@Acme:TestBundle:Question:Item/list.html.twig	f	f	t
+159	26	285	@AcmeTestBundle:Question/Item/list.html.twig	f	f	t
+160	26	284	@AcmeTestBundle:Question:Item:list.html.twig	f	f	t
+161	26	283	@AcmeTestBundle:Question:Item/list.html.twig	t	f	f
+162	26	287	@Acme:TestBundle:Question/Item/list.html.twig	f	f	t
+163	26	286	@Acme:TestBundle:Question:Item/list.html.twig	f	f	t
+164	26	285	@AcmeTestBundle:Question/Item/list.html.twig	f	f	t
+165	26	284	@AcmeTestBundle:Question:Item:list.html.twig	f	f	t
+166	26	283	@AcmeTestBundle:Question:Item/list.html.twig	t	f	f
+167	27	282	MyTestCommandConsole.php	f	f	t
+168	27	281	MyTestConsoleCommand.php	t	f	f
+169	27	280	CommandMyTest.php	f	f	t
+170	27	279	MyTestCommand.php	t	f	f
+171	27	282	MyTestCommandConsole.php	f	f	t
+172	27	281	MyTestConsoleCommand.php	t	f	f
+173	27	280	CommandMyTest.php	f	f	t
+174	27	279	MyTestCommand.php	t	f	f
+175	28	290	sensio_distribution.security_checker	t	f	f
+176	28	289	sensio_framework_extra.PSR7.http_message_factory	f	t	f
+177	28	288	fos_user.listener.email_confirmation	t	f	f
+181	29	328	DialogHelper	t	t	t
+182	29	327	FileHelper	t	f	f
+183	29	326	TableHelper	f	t	f
+184	29	325	QuestionHelper	f	f	t
+185	30	520	$form->request($request)	f	t	f
+186	30	519	$form->handle($request)	f	f	t
+187	30	518	$form->handleRequest($request)	t	t	t
+188	30	517	$form->bindRequest($request)	f	f	t
+189	32	290	sensio_distribution.security_checker	t	t	t
+190	32	289	sensio_framework_extra.PSR7.http_message_factory	f	f	t
+191	32	288	fos_user.listener.email_confirmation	t	t	t
+192	32	290	sensio_distribution.security_checker	t	t	t
+193	32	289	sensio_framework_extra.PSR7.http_message_factory	f	f	t
+194	32	288	fos_user.listener.email_confirmation	t	t	t
+195	33	287	@Acme:TestBundle:Question/Item/list.html.twig	f	f	t
+196	33	286	@Acme:TestBundle:Question:Item/list.html.twig	f	t	f
+197	33	285	@AcmeTestBundle:Question/Item/list.html.twig	f	f	t
+198	33	284	@AcmeTestBundle:Question:Item:list.html.twig	f	t	f
+199	33	283	@AcmeTestBundle:Question:Item/list.html.twig	t	f	f
+200	33	287	@Acme:TestBundle:Question/Item/list.html.twig	f	f	t
+201	33	286	@Acme:TestBundle:Question:Item/list.html.twig	f	t	f
+202	33	285	@AcmeTestBundle:Question/Item/list.html.twig	f	f	t
+203	33	284	@AcmeTestBundle:Question:Item:list.html.twig	f	t	f
+204	33	283	@AcmeTestBundle:Question:Item/list.html.twig	t	f	f
+205	34	282	MyTestCommandConsole.php	f	f	t
+206	34	281	MyTestConsoleCommand.php	t	t	t
+207	34	280	CommandMyTest.php	f	t	f
+208	34	279	MyTestCommand.php	t	f	f
+217	35	290	sensio_distribution.security_checker	t	f	f
+218	35	289	sensio_framework_extra.PSR7.http_message_factory	f	f	t
+219	35	288	fos_user.listener.email_confirmation	t	f	f
+220	35	290	sensio_distribution.security_checker	t	f	f
+221	35	289	sensio_framework_extra.PSR7.http_message_factory	f	f	t
+222	35	288	fos_user.listener.email_confirmation	t	f	f
+223	36	282	MyTestCommandConsole.php	f	f	t
+224	36	281	MyTestConsoleCommand.php	t	f	f
+225	36	280	CommandMyTest.php	f	f	t
+226	36	279	MyTestCommand.php	t	f	f
+227	37	290	sensio_distribution.security_checker	t	f	f
+228	37	289	sensio_framework_extra.PSR7.http_message_factory	f	f	t
+229	37	288	fos_user.listener.email_confirmation	t	f	f
+230	37	290	sensio_distribution.security_checker	t	f	f
+231	37	289	sensio_framework_extra.PSR7.http_message_factory	f	f	t
+700	103	562	timestamp	f	f	t
+232	37	288	fos_user.listener.email_confirmation	t	f	f
+233	38	287	@Acme:TestBundle:Question/Item/list.html.twig	f	f	t
+234	38	286	@Acme:TestBundle:Question:Item/list.html.twig	f	f	t
+235	38	285	@AcmeTestBundle:Question/Item/list.html.twig	f	f	t
+236	38	284	@AcmeTestBundle:Question:Item:list.html.twig	f	f	t
+237	38	283	@AcmeTestBundle:Question:Item/list.html.twig	t	f	f
+238	39	290	sensio_distribution.security_checker	t	f	f
+239	39	289	sensio_framework_extra.PSR7.http_message_factory	f	f	t
+240	39	288	fos_user.listener.email_confirmation	t	f	f
+241	39	290	sensio_distribution.security_checker	t	f	f
+242	39	289	sensio_framework_extra.PSR7.http_message_factory	f	f	t
+243	39	288	fos_user.listener.email_confirmation	t	f	f
+244	40	287	@Acme:TestBundle:Question/Item/list.html.twig	f	f	t
+245	40	286	@Acme:TestBundle:Question:Item/list.html.twig	f	f	t
+246	40	285	@AcmeTestBundle:Question/Item/list.html.twig	f	f	t
+247	40	284	@AcmeTestBundle:Question:Item:list.html.twig	f	f	t
+248	40	283	@AcmeTestBundle:Question:Item/list.html.twig	t	f	f
+249	40	287	@Acme:TestBundle:Question/Item/list.html.twig	f	f	t
+250	40	286	@Acme:TestBundle:Question:Item/list.html.twig	f	f	t
+251	40	285	@AcmeTestBundle:Question/Item/list.html.twig	f	f	t
+252	40	284	@AcmeTestBundle:Question:Item:list.html.twig	f	f	t
+253	40	283	@AcmeTestBundle:Question:Item/list.html.twig	t	f	f
+254	41	282	MyTestCommandConsole.php	f	f	t
+255	41	281	MyTestConsoleCommand.php	t	f	f
+256	41	280	CommandMyTest.php	f	f	t
+257	41	279	MyTestCommand.php	t	f	f
+262	42	290	sensio_distribution.security_checker	t	f	f
+263	42	289	sensio_framework_extra.PSR7.http_message_factory	f	f	t
+264	42	288	fos_user.listener.email_confirmation	t	f	f
+265	43	287	@Acme:TestBundle:Question/Item/list.html.twig	f	f	t
+266	43	286	@Acme:TestBundle:Question:Item/list.html.twig	f	f	t
+267	43	285	@AcmeTestBundle:Question/Item/list.html.twig	f	f	t
+268	43	284	@AcmeTestBundle:Question:Item:list.html.twig	f	f	t
+269	43	283	@AcmeTestBundle:Question:Item/list.html.twig	t	f	f
+270	43	287	@Acme:TestBundle:Question/Item/list.html.twig	f	f	t
+271	43	286	@Acme:TestBundle:Question:Item/list.html.twig	f	f	t
+272	43	285	@AcmeTestBundle:Question/Item/list.html.twig	f	f	t
+273	43	284	@AcmeTestBundle:Question:Item:list.html.twig	f	f	t
+274	43	283	@AcmeTestBundle:Question:Item/list.html.twig	t	f	f
+275	44	282	MyTestCommandConsole.php	f	f	t
+276	44	281	MyTestConsoleCommand.php	t	f	f
+277	44	280	CommandMyTest.php	f	f	t
+278	44	279	MyTestCommand.php	t	f	f
+283	45	282	MyTestCommandConsole.php	f	f	t
+284	45	281	MyTestConsoleCommand.php	t	f	f
+285	45	280	CommandMyTest.php	f	f	t
+286	45	279	MyTestCommand.php	t	f	f
+287	45	282	MyTestCommandConsole.php	f	f	t
+288	45	281	MyTestConsoleCommand.php	t	f	f
+289	45	280	CommandMyTest.php	f	f	t
+290	45	279	MyTestCommand.php	t	f	f
+291	46	287	@Acme:TestBundle:Question/Item/list.html.twig	f	f	t
+292	46	286	@Acme:TestBundle:Question:Item/list.html.twig	f	f	t
+293	46	285	@AcmeTestBundle:Question/Item/list.html.twig	f	f	t
+294	46	284	@AcmeTestBundle:Question:Item:list.html.twig	f	f	t
+295	46	283	@AcmeTestBundle:Question:Item/list.html.twig	t	f	f
+296	46	287	@Acme:TestBundle:Question/Item/list.html.twig	f	f	t
+297	46	286	@Acme:TestBundle:Question:Item/list.html.twig	f	f	t
+298	46	285	@AcmeTestBundle:Question/Item/list.html.twig	f	f	t
+299	46	284	@AcmeTestBundle:Question:Item:list.html.twig	f	f	t
+300	46	283	@AcmeTestBundle:Question:Item/list.html.twig	t	f	f
+301	47	290	sensio_distribution.security_checker	t	f	f
+302	47	289	sensio_framework_extra.PSR7.http_message_factory	f	f	t
+303	47	288	fos_user.listener.email_confirmation	t	f	f
+307	48	282	MyTestCommandConsole.php	f	f	t
+308	48	281	MyTestConsoleCommand.php	t	f	f
+309	48	280	CommandMyTest.php	f	f	t
+310	48	279	MyTestCommand.php	t	f	f
+311	48	282	MyTestCommandConsole.php	f	f	t
+312	48	281	MyTestConsoleCommand.php	t	f	f
+313	48	280	CommandMyTest.php	f	f	t
+314	48	279	MyTestCommand.php	t	f	f
+315	49	287	@Acme:TestBundle:Question/Item/list.html.twig	f	f	t
+316	49	286	@Acme:TestBundle:Question:Item/list.html.twig	f	t	f
+317	49	285	@AcmeTestBundle:Question/Item/list.html.twig	f	f	t
+318	49	284	@AcmeTestBundle:Question:Item:list.html.twig	f	f	t
+319	49	283	@AcmeTestBundle:Question:Item/list.html.twig	t	f	f
+320	49	287	@Acme:TestBundle:Question/Item/list.html.twig	f	f	t
+321	49	286	@Acme:TestBundle:Question:Item/list.html.twig	f	t	f
+322	49	285	@AcmeTestBundle:Question/Item/list.html.twig	f	f	t
+323	49	284	@AcmeTestBundle:Question:Item:list.html.twig	f	f	t
+324	49	283	@AcmeTestBundle:Question:Item/list.html.twig	t	f	f
+325	50	290	sensio_distribution.security_checker	t	f	f
+326	50	289	sensio_framework_extra.PSR7.http_message_factory	f	f	t
+327	50	288	fos_user.listener.email_confirmation	t	t	t
+331	51	287	@Acme:TestBundle:Question/Item/list.html.twig	f	f	t
+332	51	286	@Acme:TestBundle:Question:Item/list.html.twig	f	f	t
+333	51	285	@AcmeTestBundle:Question/Item/list.html.twig	f	f	t
+334	51	284	@AcmeTestBundle:Question:Item:list.html.twig	f	f	t
+335	51	283	@AcmeTestBundle:Question:Item/list.html.twig	t	f	f
+336	52	282	MyTestCommandConsole.php	f	t	f
+337	52	281	MyTestConsoleCommand.php	t	f	f
+338	52	280	CommandMyTest.php	f	t	f
+339	52	279	MyTestCommand.php	t	f	f
+340	52	282	MyTestCommandConsole.php	f	t	f
+341	52	281	MyTestConsoleCommand.php	t	f	f
+342	52	280	CommandMyTest.php	f	t	f
+343	52	279	MyTestCommand.php	t	f	f
+344	53	290	sensio_distribution.security_checker	t	t	t
+345	53	289	sensio_framework_extra.PSR7.http_message_factory	f	f	t
+346	53	288	fos_user.listener.email_confirmation	t	t	t
+350	54	282	MyTestCommandConsole.php	f	t	f
+351	54	281	MyTestConsoleCommand.php	t	f	f
+352	54	280	CommandMyTest.php	f	f	t
+353	54	279	MyTestCommand.php	t	f	f
+354	54	282	MyTestCommandConsole.php	f	t	f
+355	54	281	MyTestConsoleCommand.php	t	f	f
+356	54	280	CommandMyTest.php	f	f	t
+357	54	279	MyTestCommand.php	t	f	f
+358	55	287	@Acme:TestBundle:Question/Item/list.html.twig	f	f	t
+359	55	286	@Acme:TestBundle:Question:Item/list.html.twig	f	t	f
+360	55	285	@AcmeTestBundle:Question/Item/list.html.twig	f	f	t
+361	55	284	@AcmeTestBundle:Question:Item:list.html.twig	f	f	t
+362	55	283	@AcmeTestBundle:Question:Item/list.html.twig	t	f	f
+363	55	287	@Acme:TestBundle:Question/Item/list.html.twig	f	f	t
+364	55	286	@Acme:TestBundle:Question:Item/list.html.twig	f	t	f
+365	55	285	@AcmeTestBundle:Question/Item/list.html.twig	f	f	t
+366	55	284	@AcmeTestBundle:Question:Item:list.html.twig	f	f	t
+367	55	283	@AcmeTestBundle:Question:Item/list.html.twig	t	f	f
+368	56	290	sensio_distribution.security_checker	t	f	f
+369	56	289	sensio_framework_extra.PSR7.http_message_factory	f	f	t
+370	56	288	fos_user.listener.email_confirmation	t	t	t
+374	57	364	command	f	t	f
+375	57	363	console	f	f	t
+376	57	362	console.command	t	f	f
+377	57	361	command.console	f	f	t
+378	58	655	XmlResponse	f	f	t
+379	58	654	BinaryFileResponse	t	f	f
+380	58	653	StreamResponse	f	f	t
+381	58	652	JsonResponse	t	f	f
+382	59	368	php app/console doctrine:mapping:import --all	f	f	t
+383	59	367	php app/console doctrine:mapping:info --all	f	t	f
+384	59	366	php app/console doctrine:mapping:import	f	f	t
+385	59	365	php app/console doctrine:mapping:info	t	f	f
+386	60	65	$container->getService('my.service')	f	f	t
+387	60	64	$container->retrieveDefinition('my.service')	f	t	f
+388	60	63	$container->findDefinition('my.service')	t	f	f
+389	60	62	$container->getDefinition('my.service')	t	f	f
+390	62	282	MyTestCommandConsole.php	f	t	f
+391	62	281	MyTestConsoleCommand.php	t	f	f
+392	62	280	CommandMyTest.php	f	f	t
+393	62	279	MyTestCommand.php	t	f	f
+394	62	282	MyTestCommandConsole.php	f	t	f
+395	62	281	MyTestConsoleCommand.php	t	f	f
+396	62	280	CommandMyTest.php	f	f	t
+397	62	279	MyTestCommand.php	t	f	f
+398	63	287	@Acme:TestBundle:Question/Item/list.html.twig	f	f	t
+399	63	286	@Acme:TestBundle:Question:Item/list.html.twig	f	t	f
+400	63	285	@AcmeTestBundle:Question/Item/list.html.twig	f	f	t
+401	63	284	@AcmeTestBundle:Question:Item:list.html.twig	f	f	t
+402	63	283	@AcmeTestBundle:Question:Item/list.html.twig	t	f	f
+403	63	287	@Acme:TestBundle:Question/Item/list.html.twig	f	f	t
+404	63	286	@Acme:TestBundle:Question:Item/list.html.twig	f	t	f
+405	63	285	@AcmeTestBundle:Question/Item/list.html.twig	f	f	t
+406	63	284	@AcmeTestBundle:Question:Item:list.html.twig	f	f	t
+407	63	283	@AcmeTestBundle:Question:Item/list.html.twig	t	f	f
+408	64	290	sensio_distribution.security_checker	t	f	f
+409	64	289	sensio_framework_extra.PSR7.http_message_factory	f	f	t
+410	64	288	fos_user.listener.email_confirmation	t	f	f
+414	65	287	@Acme:TestBundle:Question/Item/list.html.twig	f	t	f
+415	65	286	@Acme:TestBundle:Question:Item/list.html.twig	f	f	t
+416	65	285	@AcmeTestBundle:Question/Item/list.html.twig	f	t	f
+417	65	284	@AcmeTestBundle:Question:Item:list.html.twig	f	f	t
+418	65	283	@AcmeTestBundle:Question:Item/list.html.twig	t	t	t
+419	65	287	@Acme:TestBundle:Question/Item/list.html.twig	f	t	f
+420	65	286	@Acme:TestBundle:Question:Item/list.html.twig	f	f	t
+421	65	285	@AcmeTestBundle:Question/Item/list.html.twig	f	t	f
+422	65	284	@AcmeTestBundle:Question:Item:list.html.twig	f	f	t
+423	65	283	@AcmeTestBundle:Question:Item/list.html.twig	t	t	t
+424	66	290	sensio_distribution.security_checker	t	f	f
+425	66	289	sensio_framework_extra.PSR7.http_message_factory	f	t	f
+426	66	288	fos_user.listener.email_confirmation	t	f	f
+427	66	290	sensio_distribution.security_checker	t	f	f
+428	66	289	sensio_framework_extra.PSR7.http_message_factory	f	t	f
+429	66	288	fos_user.listener.email_confirmation	t	f	f
+430	67	282	MyTestCommandConsole.php	f	f	t
+431	67	281	MyTestConsoleCommand.php	t	f	f
+432	67	280	CommandMyTest.php	f	f	t
+433	67	279	MyTestCommand.php	t	t	t
+438	68	290	sensio_distribution.security_checker	t	f	f
+439	68	289	sensio_framework_extra.PSR7.http_message_factory	f	t	f
+440	68	288	fos_user.listener.email_confirmation	t	f	f
+441	68	290	sensio_distribution.security_checker	t	f	f
+442	68	289	sensio_framework_extra.PSR7.http_message_factory	f	t	f
+443	68	288	fos_user.listener.email_confirmation	t	f	f
+444	69	282	MyTestCommandConsole.php	f	f	t
+445	69	281	MyTestConsoleCommand.php	t	f	f
+446	69	280	CommandMyTest.php	f	t	f
+447	69	279	MyTestCommand.php	t	f	f
+448	69	282	MyTestCommandConsole.php	f	f	t
+449	69	281	MyTestConsoleCommand.php	t	f	f
+450	69	280	CommandMyTest.php	f	t	f
+451	69	279	MyTestCommand.php	t	f	f
+452	70	287	@Acme:TestBundle:Question/Item/list.html.twig	f	f	t
+453	70	286	@Acme:TestBundle:Question:Item/list.html.twig	f	f	t
+454	70	285	@AcmeTestBundle:Question/Item/list.html.twig	f	f	t
+455	70	284	@AcmeTestBundle:Question:Item:list.html.twig	f	t	f
+456	70	283	@AcmeTestBundle:Question:Item/list.html.twig	t	f	f
+462	71	290	sensio_distribution.security_checker	t	f	f
+463	71	289	sensio_framework_extra.PSR7.http_message_factory	f	t	f
+464	71	288	fos_user.listener.email_confirmation	t	f	f
+465	71	290	sensio_distribution.security_checker	t	f	f
+466	71	289	sensio_framework_extra.PSR7.http_message_factory	f	t	f
+467	71	288	fos_user.listener.email_confirmation	t	f	f
+468	72	282	MyTestCommandConsole.php	f	f	t
+469	72	281	MyTestConsoleCommand.php	t	t	t
+470	72	280	CommandMyTest.php	f	f	t
+471	72	279	MyTestCommand.php	t	f	f
+472	72	282	MyTestCommandConsole.php	f	f	t
+473	72	281	MyTestConsoleCommand.php	t	t	t
+474	72	280	CommandMyTest.php	f	f	t
+475	72	279	MyTestCommand.php	t	f	f
+476	73	287	@Acme:TestBundle:Question/Item/list.html.twig	f	f	t
+477	73	286	@Acme:TestBundle:Question:Item/list.html.twig	f	t	f
+478	73	285	@AcmeTestBundle:Question/Item/list.html.twig	f	f	t
+479	73	284	@AcmeTestBundle:Question:Item:list.html.twig	f	f	t
+480	73	283	@AcmeTestBundle:Question:Item/list.html.twig	t	f	f
+486	74	287	@Acme:TestBundle:Question/Item/list.html.twig	f	t	f
+487	74	286	@Acme:TestBundle:Question:Item/list.html.twig	f	t	f
+488	74	285	@AcmeTestBundle:Question/Item/list.html.twig	f	t	f
+489	74	284	@AcmeTestBundle:Question:Item:list.html.twig	f	t	f
+490	74	283	@AcmeTestBundle:Question:Item/list.html.twig	t	t	t
+491	74	287	@Acme:TestBundle:Question/Item/list.html.twig	f	t	f
+492	74	286	@Acme:TestBundle:Question:Item/list.html.twig	f	t	f
+493	74	285	@AcmeTestBundle:Question/Item/list.html.twig	f	t	f
+494	74	284	@AcmeTestBundle:Question:Item:list.html.twig	f	t	f
+495	74	283	@AcmeTestBundle:Question:Item/list.html.twig	t	t	t
+496	75	282	MyTestCommandConsole.php	f	f	t
+497	75	281	MyTestConsoleCommand.php	t	f	f
+498	75	280	CommandMyTest.php	f	t	f
+499	75	279	MyTestCommand.php	t	f	f
+500	75	282	MyTestCommandConsole.php	f	f	t
+501	75	281	MyTestConsoleCommand.php	t	f	f
+502	75	280	CommandMyTest.php	f	t	f
+503	75	279	MyTestCommand.php	t	f	f
+504	76	290	sensio_distribution.security_checker	t	f	f
+505	76	289	sensio_framework_extra.PSR7.http_message_factory	f	t	f
+506	76	288	fos_user.listener.email_confirmation	t	f	f
+510	77	290	sensio_distribution.security_checker	t	t	t
+511	77	289	sensio_framework_extra.PSR7.http_message_factory	f	f	t
+512	77	288	fos_user.listener.email_confirmation	t	t	t
+513	77	290	sensio_distribution.security_checker	t	t	t
+514	77	289	sensio_framework_extra.PSR7.http_message_factory	f	f	t
+515	77	288	fos_user.listener.email_confirmation	t	t	t
+516	78	287	@Acme:TestBundle:Question/Item/list.html.twig	f	t	f
+517	78	286	@Acme:TestBundle:Question:Item/list.html.twig	f	f	t
+518	78	285	@AcmeTestBundle:Question/Item/list.html.twig	f	f	t
+519	78	284	@AcmeTestBundle:Question:Item:list.html.twig	f	f	t
+520	78	283	@AcmeTestBundle:Question:Item/list.html.twig	t	f	f
+521	78	287	@Acme:TestBundle:Question/Item/list.html.twig	f	t	f
+522	78	286	@Acme:TestBundle:Question:Item/list.html.twig	f	f	t
+523	78	285	@AcmeTestBundle:Question/Item/list.html.twig	f	f	t
+524	78	284	@AcmeTestBundle:Question:Item:list.html.twig	f	f	t
+525	78	283	@AcmeTestBundle:Question:Item/list.html.twig	t	f	f
+526	79	282	MyTestCommandConsole.php	f	f	t
+527	79	281	MyTestConsoleCommand.php	t	f	f
+528	79	280	CommandMyTest.php	f	t	f
+529	79	279	MyTestCommand.php	t	f	f
+534	80	282	MyTestCommandConsole.php	f	f	t
+535	80	281	MyTestConsoleCommand.php	t	f	f
+536	80	280	CommandMyTest.php	f	f	t
+537	80	279	MyTestCommand.php	t	t	t
+538	80	282	MyTestCommandConsole.php	f	f	t
+539	80	281	MyTestConsoleCommand.php	t	f	f
+540	80	280	CommandMyTest.php	f	f	t
+541	80	279	MyTestCommand.php	t	t	t
+542	81	287	@Acme:TestBundle:Question/Item/list.html.twig	f	f	t
+543	81	286	@Acme:TestBundle:Question:Item/list.html.twig	f	f	t
+544	81	285	@AcmeTestBundle:Question/Item/list.html.twig	f	f	t
+545	81	284	@AcmeTestBundle:Question:Item:list.html.twig	f	f	t
+546	81	283	@AcmeTestBundle:Question:Item/list.html.twig	t	t	t
+547	81	287	@Acme:TestBundle:Question/Item/list.html.twig	f	f	t
+548	81	286	@Acme:TestBundle:Question:Item/list.html.twig	f	f	t
+549	81	285	@AcmeTestBundle:Question/Item/list.html.twig	f	f	t
+550	81	284	@AcmeTestBundle:Question:Item:list.html.twig	f	f	t
+551	81	283	@AcmeTestBundle:Question:Item/list.html.twig	t	t	t
+552	82	290	sensio_distribution.security_checker	t	t	t
+553	82	289	sensio_framework_extra.PSR7.http_message_factory	f	f	t
+554	82	288	fos_user.listener.email_confirmation	t	t	t
+558	83	702	sendOff()	f	f	t
+559	83	701	fire()	f	f	t
+560	83	700	send()	f	f	t
+561	83	699	dispatch()	t	t	t
+562	83	702	sendOff()	f	f	t
+563	83	701	fire()	f	f	t
+564	83	700	send()	f	f	t
+565	83	699	dispatch()	t	t	t
+566	84	884	supportsClass($class)	t	f	f
+567	84	883	getUser($username)	f	t	f
+568	84	882	refreshUser(UserInterface $user)	t	t	t
+569	84	881	loadUser($username)	f	t	f
+570	84	880	loadUserByUsername($username)	t	t	t
+571	84	884	supportsClass($class)	t	f	f
+572	84	883	getUser($username)	f	t	f
+573	84	882	refreshUser(UserInterface $user)	t	t	t
+574	84	881	loadUser($username)	f	t	f
+575	84	880	loadUserByUsername($username)	t	t	t
+576	85	82	arguments: ['mailer.transport']	f	t	f
+577	85	81	arguments: ['%mailer.transport%']	t	f	f
+578	85	80	arguments: ['@mailer.transport']	f	f	t
+579	85	82	arguments: ['mailer.transport']	f	t	f
+580	85	81	arguments: ['%mailer.transport%']	t	f	f
+581	85	80	arguments: ['@mailer.transport']	f	f	t
+582	86	443	phpunit	f	f	t
+583	86	442	phpunit -c	f	f	t
+584	86	441	phpunit app/	f	f	t
+585	86	440	phpunit -c app/	t	f	f
+586	86	443	phpunit	f	f	t
+587	86	442	phpunit -c	f	f	t
+588	86	441	phpunit app/	f	f	t
+589	86	440	phpunit -c app/	t	f	f
+590	87	780	Symfony\\Component\\Config\\Definition\\Builder\\Builder	f	f	t
+591	87	779	Symfony\\Component\\Config\\Definition\\Builder\\NodeBuilder	f	t	f
+592	87	778	Symfony\\Component\\Config\\Definition\\Builder\\HierarchyBuilder	f	f	t
+593	87	777	Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder	t	f	f
+594	87	780	Symfony\\Component\\Config\\Definition\\Builder\\Builder	f	f	t
+595	87	779	Symfony\\Component\\Config\\Definition\\Builder\\NodeBuilder	f	f	t
+596	87	778	Symfony\\Component\\Config\\Definition\\Builder\\HierarchyBuilder	f	f	t
+597	87	777	Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder	t	f	f
+598	88	163	none of these options	t	f	f
+599	88	162	setPriority(), getPriority()	f	t	f
+600	88	161	isValid()	f	t	f
+601	88	160	setArguments, getArguments	f	f	t
+602	88	163	none of these options	t	f	f
+603	88	162	setPriority(), getPriority()	f	f	t
+604	88	161	isValid()	f	f	t
+605	88	160	setArguments, getArguments	f	f	t
+606	89	499	implements	f	f	t
+607	89	498	incomplete	f	f	t
+608	89	497	protected	f	f	t
+609	89	496	final	f	f	t
+610	89	495	abstract	t	t	t
+611	89	499	implements	f	f	t
+612	89	498	incomplete	f	f	t
+613	89	497	protected	f	f	t
+614	89	496	final	f	f	t
+615	89	495	abstract	t	f	f
+616	90	855	negative	f	f	t
+617	90	854	positive	f	f	t
+618	90	853	unanimous	t	f	f
+619	90	852	consensus	t	f	f
+620	90	851	affirmative	t	f	f
+621	90	855	negative	f	f	t
+622	90	854	positive	f	f	t
+623	90	853	unanimous	t	f	f
+624	90	852	consensus	t	f	f
+625	90	851	affirmative	t	f	f
+626	91	578	$builder->add('extra', null, ['validation' => false]	f	f	t
+627	91	577	$builder->add('extra', 'hidden', ['mapped' => false])	t	t	t
+628	91	576	$builder->add('extra', null, ['mapped' => false])	t	f	f
+629	91	578	$builder->add('extra', null, ['validation' => false]	f	f	t
+630	91	577	$builder->add('extra', 'hidden', ['mapped' => false])	t	f	f
+631	91	576	$builder->add('extra', null, ['mapped' => false])	t	f	f
+632	92	393	php app/console doctrine:fixtures:import	f	f	t
+633	92	392	php app/console doctrine:fixtures	f	f	t
+634	92	391	php app/console doctrine:load:fixtures	f	f	t
+635	92	390	php app/console doctrine:fixtures:load	t	f	f
+640	93	74	appDevDebugContainer	f	f	t
+641	93	73	appDevDebugProjectServiceContainer	f	f	t
+642	93	72	appDevProjectContainer.php	f	f	t
+643	93	71	appDevDebugProjectContainer.php	t	f	f
+644	94	796	public function load(ContainerBuilder $container, array $config)	f	t	f
+645	94	795	public function load(ContainerBuilder $container, array $configs)	f	f	t
+646	94	794	public function load(array $config, ContainerBuilder $container)	f	f	t
+647	94	793	public function load(array $configs, ContainerBuilder $container)	t	f	f
+648	94	796	public function load(ContainerBuilder $container, array $config)	f	f	t
+649	94	795	public function load(ContainerBuilder $container, array $configs)	f	f	t
+650	94	794	public function load(array $config, ContainerBuilder $container)	f	f	t
+651	94	793	public function load(array $configs, ContainerBuilder $container)	t	f	f
+652	95	568	False	t	t	t
+653	95	567	True	f	f	t
+654	95	568	False	t	f	f
+655	95	567	True	f	f	t
+656	96	510	False	f	f	t
+657	96	509	True	t	t	t
+658	96	510	False	f	f	t
+659	96	509	True	t	f	f
+660	97	494	function $$foo() {...}	f	f	t
+661	97	493	function %foo() {...}	f	f	t
+662	97	492	function $foo() {...}	f	f	t
+663	97	491	function &foo() {...}	t	t	t
+664	97	494	function $$foo() {...}	f	f	t
+665	97	493	function %foo() {...}	f	f	t
+666	97	492	function $foo() {...}	f	f	t
+667	97	491	function &foo() {...}	t	f	f
+668	98	228	False	f	f	t
+669	98	227	True	t	t	t
+670	98	228	False	f	f	t
+671	98	227	True	t	f	f
+672	99	627	$response->mustBeRevalidated()	f	t	f
+673	99	626	$response->getRevalidated()	f	f	t
+674	99	625	$response->isRevalidated()	f	f	t
+675	99	624	$response->mustRevalidate()	t	f	f
+676	99	627	$response->mustBeRevalidated()	f	f	t
+677	99	626	$response->getRevalidated()	f	f	t
+678	99	625	$response->isRevalidated()	f	f	t
+679	99	624	$response->mustRevalidate()	t	f	f
+680	100	210	Cookie	f	f	t
+681	100	209	Cache-Control	t	f	f
+682	100	208	ETag	f	f	t
+683	100	207	Last-Modified	f	f	t
+684	100	206	Expires	t	f	f
+685	100	210	Cookie	f	f	t
+686	100	209	Cache-Control	t	f	f
+687	100	208	ETag	f	f	t
+688	100	207	Last-Modified	f	f	t
+689	100	206	Expires	t	f	f
+690	101	79	arguments: ['app.mailer']	f	f	t
+691	101	78	arguments: ['%app.mailer%']	f	f	t
+692	101	77	arguments: ['@app.mailer']	t	f	f
+693	101	79	arguments: ['app.mailer']	f	f	t
+694	101	78	arguments: ['%app.mailer%']	f	f	t
+695	101	77	arguments: ['@app.mailer']	t	f	f
+696	102	474	False	t	f	f
+697	102	473	True	f	t	f
+701	103	561	time	t	t	t
+702	103	560	datetime	t	t	t
+703	103	559	date	t	t	t
+704	103	562	timestamp	f	f	t
+705	103	561	time	t	f	f
+706	103	560	datetime	t	f	f
+707	103	559	date	t	f	f
+708	104	611	FormEvents::SET_DATA	t	t	t
+709	104	610	FormEvents::POST_SUBMIT	f	t	f
+710	104	609	FormEvents::SUBMIT	f	f	t
+711	104	608	FormEvents::PRE_SET_DATA	f	f	t
+712	104	611	FormEvents::SET_DATA	t	f	f
+713	104	610	FormEvents::POST_SUBMIT	f	f	t
+714	104	609	FormEvents::SUBMIT	f	f	t
+715	104	608	FormEvents::PRE_SET_DATA	f	f	t
+716	105	278	True	f	t	f
+717	105	277	False	t	f	f
+718	105	278	True	f	f	t
+719	105	277	False	t	f	f
+720	106	566	Add an annotation in model	t	t	t
+721	106	565	Invoke $formBuilder->setConstraints() method	f	t	f
+722	106	564	Passing constraint instance in $this->createFormBuilder()	f	t	f
+723	106	563	Using option 'constraints' in $formBuilder->add()	t	t	t
+724	106	566	Add an annotation in model	t	f	f
+725	106	565	Invoke $formBuilder->setConstraints() method	f	f	t
+726	106	564	Passing constraint instance in $this->createFormBuilder()	f	f	t
+727	106	563	Using option 'constraints' in $formBuilder->add()	t	f	f
+728	107	583	form_row(form)	f	f	t
+729	107	582	render_form(form)	f	f	t
+730	107	581	form_fields(form)	f	f	t
+731	107	580	form_render(form)	f	t	f
+732	107	579	form_widget(form)	t	f	f
+733	107	583	form_row(form)	f	f	t
+734	107	582	render_form(form)	f	f	t
+735	107	581	form_fields(form)	f	f	t
+736	107	580	form_render(form)	f	f	t
+737	107	579	form_widget(form)	t	f	f
+738	108	253	FrameworkBundle:Template:template	t	f	f
+739	108	252	FrameworkBundle:Template:render	f	f	t
+740	108	251	FrameworkBundle:Template:action	f	f	t
+741	108	250	FrameworkBundle:Controller:template	f	t	f
+742	108	253	FrameworkBundle:Template:template	t	f	f
+743	108	252	FrameworkBundle:Template:render	f	f	t
+744	108	251	FrameworkBundle:Template:action	f	f	t
+745	108	250	FrameworkBundle:Controller:template	f	f	t
+746	109	884	supportsClass($class)	t	f	f
+747	109	883	getUser($username)	f	t	f
+748	109	882	refreshUser(UserInterface $user)	t	f	f
+749	109	881	loadUser($username)	f	f	t
+750	109	880	loadUserByUsername($username)	t	t	t
+751	109	884	supportsClass($class)	t	f	f
+752	109	883	getUser($username)	f	f	t
+753	109	882	refreshUser(UserInterface $user)	t	f	f
+754	109	881	loadUser($username)	f	f	t
+755	109	880	loadUserByUsername($username)	t	f	f
+756	110	246	_locale, _format and another one.	f	f	t
+757	110	245	_controller, _locale, _format	t	t	t
+758	110	244	_route, _controller, _action	f	f	t
+759	110	243	_controller, _locale, _schemes	f	f	t
+760	110	246	_locale, _format and another one.	f	f	t
+761	110	245	_controller, _locale, _format	t	f	f
+762	110	244	_route, _controller, _action	f	f	t
+763	110	243	_controller, _locale, _schemes	f	f	t
 \.
 
 
@@ -1331,6 +2010,117 @@ COPY public.tbl_history_answer (id, question_history_id, answer_id, answer_text,
 --
 
 COPY public.tbl_history_question (id, workout_id, question_id, question_text, completed, question_success, duration, started_at, ended_at) FROM stdin;
+1	1	74	How to render properly template located in src/Acme/TestBundle/Resources/views/Question/Item/list.html.twig?	f	f	-P00Y00M00DT00H00M23S                                                                                                                                                                                                                                          	2018-07-07 23:52:06	2018-07-07 23:52:29
+2	1	75	Service naming conventions: select all valid services identifiers	f	f	-P00Y00M00DT00H00M01S                                                                                                                                                                                                                                          	2018-07-07 23:52:31	2018-07-07 23:52:32
+3	1	73	Using Console, what is the correct filename for a command?	f	f	-P00Y00M00DT00H00M01S                                                                                                                                                                                                                                          	2018-07-07 23:52:33	2018-07-07 23:52:34
+4	2	85	[SF3] What can be placed in ????? to be valid?\n\n  use Symfony\\Component\\Yaml\\Yaml;\n\n  $value = Yaml::parse(?????);\n	f	f	-P00Y00M00DT00H00M01S                                                                                                                                                                                                                                          	2018-07-07 23:52:38	2018-07-07 23:52:39
+5	2	42	In Twig this statement is valid:	f	f	-P00Y00M00DT00H00M01S                                                                                                                                                                                                                                          	2018-07-07 23:52:39	2018-07-07 23:52:40
+6	2	188	What is the prefix of environment variables used by Symfony?	f	f	-P00Y00M00DT00H00M01S                                                                                                                                                                                                                                          	2018-07-07 23:52:40	2018-07-07 23:52:41
+7	2	22	How to define a service as private ?	f	f	-P00Y00M00DT00H00M01S                                                                                                                                                                                                                                          	2018-07-07 23:52:41	2018-07-07 23:52:42
+8	2	98	How do you display complete configuration of a bundle ?	f	f	-P00Y00M00DT00H00M01S                                                                                                                                                                                                                                          	2018-07-07 23:52:42	2018-07-07 23:52:43
+9	2	119	Using the Crawler client, how to follow a redirection ?	f	f	+P00Y00M00DT00H00M00S                                                                                                                                                                                                                                          	2018-07-07 23:52:43	2018-07-07 23:52:43
+10	2	124	Which web services are supported natively in PHP?	f	f	-P00Y00M00DT00H00M01S                                                                                                                                                                                                                                          	2018-07-07 23:52:43	2018-07-07 23:52:44
+11	2	196	How do you detect if an Event was stopped during runtime?	f	f	-P00Y00M00DT00H00M01S                                                                                                                                                                                                                                          	2018-07-07 23:52:44	2018-07-07 23:52:45
+12	2	143	What data is inside FormEvent object at FormEvents::PRE_SET_DATA?	f	f	+P00Y00M00DT00H00M00S                                                                                                                                                                                                                                          	2018-07-07 23:52:45	2018-07-07 23:52:45
+13	2	62	Using XML, how to ensure that a route is accessed via HTTPS?	f	f	-P00Y00M00DT00H00M01S                                                                                                                                                                                                                                          	2018-07-07 23:52:45	2018-07-07 23:52:46
+14	3	75	Service naming conventions: select all valid services identifiers	f	f	-P00Y00M00DT00H00M01S                                                                                                                                                                                                                                          	2018-07-08 10:16:15	2018-07-08 10:16:16
+15	3	74	How to render properly template located in src/Acme/TestBundle/Resources/views/Question/Item/list.html.twig?	f	f	-P00Y00M00DT00H00M02S                                                                                                                                                                                                                                          	2018-07-08 10:21:24	2018-07-08 10:21:26
+16	3	73	Using Console, what is the correct filename for a command?	f	f	-P00Y00M00DT00H02M45S                                                                                                                                                                                                                                          	2018-07-08 10:27:38	2018-07-08 10:30:23
+17	4	74	How to render properly template located in src/Acme/TestBundle/Resources/views/Question/Item/list.html.twig?	f	f	-P00Y00M00DT00H00M03S                                                                                                                                                                                                                                          	2018-07-08 10:30:31	2018-07-08 10:30:34
+18	4	75	Service naming conventions: select all valid services identifiers	f	f	-P00Y00M00DT00H00M44S                                                                                                                                                                                                                                          	2018-07-08 10:39:35	2018-07-08 10:40:19
+19	4	73	Using Console, what is the correct filename for a command?	f	f	-P00Y00M00DT00H03M01S                                                                                                                                                                                                                                          	2018-07-08 10:40:36	2018-07-08 10:43:37
+20	5	73	Using Console, what is the correct filename for a command?	f	f	-P00Y00M00DT00H00M33S                                                                                                                                                                                                                                          	2018-07-08 10:44:10	2018-07-08 10:44:43
+21	5	74	How to render properly template located in src/Acme/TestBundle/Resources/views/Question/Item/list.html.twig?	f	f	-P00Y00M00DT00H00M01S                                                                                                                                                                                                                                          	2018-07-08 10:44:45	2018-07-08 10:44:46
+22	5	75	Service naming conventions: select all valid services identifiers	f	f	-P00Y00M00DT00H00M02S                                                                                                                                                                                                                                          	2018-07-08 10:44:47	2018-07-08 10:44:49
+23	6	73	Using Console, what is the correct filename for a command?	f	f	-P00Y00M00DT00H00M01S                                                                                                                                                                                                                                          	2018-07-08 10:44:55	2018-07-08 10:44:56
+24	6	75	Service naming conventions: select all valid services identifiers	f	f	-P00Y00M00DT00H00M02S                                                                                                                                                                                                                                          	2018-07-08 10:44:57	2018-07-08 10:44:59
+25	6	74	How to render properly template located in src/Acme/TestBundle/Resources/views/Question/Item/list.html.twig?	f	f	-P00Y00M00DT00H00M02S                                                                                                                                                                                                                                          	2018-07-08 10:44:59	2018-07-08 10:45:01
+26	7	74	How to render properly template located in src/Acme/TestBundle/Resources/views/Question/Item/list.html.twig?	f	f	-P00Y00M00DT00H00M01S                                                                                                                                                                                                                                          	2018-07-08 10:46:52	2018-07-08 10:46:53
+27	7	73	Using Console, what is the correct filename for a command?	f	f	-P00Y00M00DT00H00M06S                                                                                                                                                                                                                                          	2018-07-08 10:47:32	2018-07-08 10:47:38
+28	7	75	Service naming conventions: select all valid services identifiers	f	f	-P00Y00M00DT00H00M17S                                                                                                                                                                                                                                          	2018-07-08 10:47:39	2018-07-08 10:47:56
+29	8	86	Which helper is not available in the Console component?	f	f	-P00Y00M00DT00H00M03S                                                                                                                                                                                                                                          	2018-07-08 10:48:02	2018-07-08 10:48:05
+30	8	135	Which method allows you to handle the request on a form instance?	f	f	-P00Y00M00DT00H00M03S                                                                                                                                                                                                                                          	2018-07-08 10:48:05	2018-07-08 10:48:08
+31	8	170	Which HTTP status code should for a resource that moved temporarily ?	f	\N	\N	2018-07-08 10:48:08	\N
+32	9	75	Service naming conventions: select all valid services identifiers	f	f	-P00Y00M00DT00H00M03S                                                                                                                                                                                                                                          	2018-07-08 10:48:14	2018-07-08 10:48:17
+33	9	74	How to render properly template located in src/Acme/TestBundle/Resources/views/Question/Item/list.html.twig?	f	f	-P00Y00M00DT00H00M03S                                                                                                                                                                                                                                          	2018-07-08 10:48:18	2018-07-08 10:48:21
+34	9	73	Using Console, what is the correct filename for a command?	f	f	-P00Y00M00DT00H00M02S                                                                                                                                                                                                                                          	2018-07-08 10:48:22	2018-07-08 10:48:24
+35	11	75	Service naming conventions: select all valid services identifiers	f	f	-P00Y00M00DT00H00M01S                                                                                                                                                                                                                                          	2018-07-08 10:55:09	2018-07-08 10:55:10
+36	11	73	Using Console, what is the correct filename for a command?	f	f	-P00Y00M00DT00H00M03S                                                                                                                                                                                                                                          	2018-07-08 10:55:58	2018-07-08 10:56:01
+37	12	75	Service naming conventions: select all valid services identifiers	f	f	-P00Y00M00DT00H00M03S                                                                                                                                                                                                                                          	2018-07-08 10:56:18	2018-07-08 10:56:21
+38	12	74	How to render properly template located in src/Acme/TestBundle/Resources/views/Question/Item/list.html.twig?	f	f	-P00Y00M00DT00H00M02S                                                                                                                                                                                                                                          	2018-07-08 10:57:39	2018-07-08 10:57:41
+39	13	75	Service naming conventions: select all valid services identifiers	f	f	-P00Y00M00DT00H00M01S                                                                                                                                                                                                                                          	2018-07-08 10:58:06	2018-07-08 10:58:07
+40	13	74	How to render properly template located in src/Acme/TestBundle/Resources/views/Question/Item/list.html.twig?	f	f	-P00Y00M00DT00H00M02S                                                                                                                                                                                                                                          	2018-07-08 11:00:57	2018-07-08 11:00:59
+41	13	73	Using Console, what is the correct filename for a command?	f	f	-P00Y00M00DT00H00M02S                                                                                                                                                                                                                                          	2018-07-08 11:02:18	2018-07-08 11:02:20
+42	14	75	Service naming conventions: select all valid services identifiers	f	f	-P00Y00M00DT00H04M10S                                                                                                                                                                                                                                          	2018-07-08 11:05:39	2018-07-08 11:09:49
+43	14	74	How to render properly template located in src/Acme/TestBundle/Resources/views/Question/Item/list.html.twig?	f	f	-P00Y00M00DT00H00M01S                                                                                                                                                                                                                                          	2018-07-08 11:09:50	2018-07-08 11:09:51
+44	14	73	Using Console, what is the correct filename for a command?	f	f	-P00Y00M00DT00H00M01S                                                                                                                                                                                                                                          	2018-07-08 11:09:52	2018-07-08 11:09:53
+45	15	73	Using Console, what is the correct filename for a command?	f	f	-P00Y00M00DT00H07M17S                                                                                                                                                                                                                                          	2018-07-08 11:10:00	2018-07-08 11:17:17
+46	15	74	How to render properly template located in src/Acme/TestBundle/Resources/views/Question/Item/list.html.twig?	f	f	-P00Y00M00DT00H00M21S                                                                                                                                                                                                                                          	2018-07-08 11:17:18	2018-07-08 11:17:39
+47	15	75	Service naming conventions: select all valid services identifiers	f	f	-P00Y00M00DT00H00M18S                                                                                                                                                                                                                                          	2018-07-08 11:17:40	2018-07-08 11:17:58
+48	16	73	Using Console, what is the correct filename for a command?	f	f	-P00Y00M00DT00H00M01S                                                                                                                                                                                                                                          	2018-07-08 11:18:03	2018-07-08 11:18:04
+49	16	74	How to render properly template located in src/Acme/TestBundle/Resources/views/Question/Item/list.html.twig?	f	f	-P00Y00M00DT00H00M02S                                                                                                                                                                                                                                          	2018-07-08 11:18:05	2018-07-08 11:18:07
+50	16	75	Service naming conventions: select all valid services identifiers	f	f	-P00Y00M00DT00H00M02S                                                                                                                                                                                                                                          	2018-07-08 11:18:08	2018-07-08 11:18:10
+51	17	74	How to render properly template located in src/Acme/TestBundle/Resources/views/Question/Item/list.html.twig?	f	f	-P00Y00M00DT00H00M28S                                                                                                                                                                                                                                          	2018-07-08 11:19:00	2018-07-08 11:19:28
+52	17	73	Using Console, what is the correct filename for a command?	f	f	-P00Y00M00DT00H00M05S                                                                                                                                                                                                                                          	2018-07-08 11:19:30	2018-07-08 11:19:35
+53	17	75	Service naming conventions: select all valid services identifiers	f	f	-P00Y00M00DT00H01M34S                                                                                                                                                                                                                                          	2018-07-08 11:19:36	2018-07-08 11:21:10
+54	18	73	Using Console, what is the correct filename for a command?	f	f	-P00Y00M00DT00H00M02S                                                                                                                                                                                                                                          	2018-07-08 11:21:16	2018-07-08 11:21:18
+55	18	74	How to render properly template located in src/Acme/TestBundle/Resources/views/Question/Item/list.html.twig?	f	f	-P00Y00M00DT00H00M02S                                                                                                                                                                                                                                          	2018-07-08 11:21:19	2018-07-08 11:21:21
+56	18	75	Service naming conventions: select all valid services identifiers	f	f	-P00Y00M00DT00H00M02S                                                                                                                                                                                                                                          	2018-07-08 11:21:21	2018-07-08 11:21:23
+57	19	95	Which tag name you should use when you register command as service?	f	f	-P00Y00M00DT00H00M02S                                                                                                                                                                                                                                          	2018-07-08 11:21:28	2018-07-08 11:21:30
+58	19	169	Which Response subclasses are available?	f	f	-P00Y00M00DT00H00M33S                                                                                                                                                                                                                                          	2018-07-08 11:21:30	2018-07-08 11:22:03
+59	19	96	What is the command line to list all known entities by doctrine 2 in your project ?	f	f	-P00Y00M00DT00H00M02S                                                                                                                                                                                                                                          	2018-07-08 11:22:03	2018-07-08 11:22:05
+60	19	16	Using a compiler pass, how do you retrieve a definition of service ?	f	f	-P00Y00M00DT00H00M03S                                                                                                                                                                                                                                          	2018-07-08 11:22:05	2018-07-08 11:22:08
+61	19	70	In order to be able to use render_hinclude(url(...)), we need to add this configuration in ``framework` section:	f	\N	\N	2018-07-08 11:22:08	\N
+62	20	73	Using Console, what is the correct filename for a command?	f	f	-P00Y00M00DT00H00M02S                                                                                                                                                                                                                                          	2018-07-08 11:22:13	2018-07-08 11:22:15
+63	20	74	How to render properly template located in src/Acme/TestBundle/Resources/views/Question/Item/list.html.twig?	f	f	-P00Y00M00DT00H00M02S                                                                                                                                                                                                                                          	2018-07-08 11:22:16	2018-07-08 11:22:18
+64	20	75	Service naming conventions: select all valid services identifiers	f	f	-P00Y00M00DT00H00M16S                                                                                                                                                                                                                                          	2018-07-08 11:22:18	2018-07-08 11:22:34
+65	21	74	How to render properly template located in src/Acme/TestBundle/Resources/views/Question/Item/list.html.twig?	f	f	-P00Y00M00DT00H00M03S                                                                                                                                                                                                                                          	2018-07-08 11:22:39	2018-07-08 11:22:42
+66	21	75	Service naming conventions: select all valid services identifiers	f	f	-P00Y00M00DT00H00M02S                                                                                                                                                                                                                                          	2018-07-08 11:22:43	2018-07-08 11:22:45
+67	21	73	Using Console, what is the correct filename for a command?	f	f	-P00Y00M00DT00H00M02S                                                                                                                                                                                                                                          	2018-07-08 11:22:45	2018-07-08 11:22:47
+68	22	75	Service naming conventions: select all valid services identifiers	f	f	-P00Y00M00DT00H00M02S                                                                                                                                                                                                                                          	2018-07-08 11:23:41	2018-07-08 11:23:43
+69	22	73	Using Console, what is the correct filename for a command?	f	f	-P00Y00M00DT00H00M02S                                                                                                                                                                                                                                          	2018-07-08 11:23:43	2018-07-08 11:23:45
+70	22	74	How to render properly template located in src/Acme/TestBundle/Resources/views/Question/Item/list.html.twig?	f	f	-P00Y00M00DT00H00M02S                                                                                                                                                                                                                                          	2018-07-08 11:23:46	2018-07-08 11:23:48
+71	23	75	Service naming conventions: select all valid services identifiers	f	f	-P00Y00M00DT00H00M03S                                                                                                                                                                                                                                          	2018-07-08 11:23:56	2018-07-08 11:23:59
+72	23	73	Using Console, what is the correct filename for a command?	f	f	-P00Y00M00DT00H00M03S                                                                                                                                                                                                                                          	2018-07-08 11:28:38	2018-07-08 11:28:41
+73	23	74	How to render properly template located in src/Acme/TestBundle/Resources/views/Question/Item/list.html.twig?	f	f	-P00Y00M00DT00H00M02S                                                                                                                                                                                                                                          	2018-07-08 11:29:35	2018-07-08 11:29:37
+74	24	74	How to render properly template located in src/Acme/TestBundle/Resources/views/Question/Item/list.html.twig?	f	f	-P00Y00M00DT00H00M04S                                                                                                                                                                                                                                          	2018-07-08 11:29:45	2018-07-08 11:29:49
+75	24	73	Using Console, what is the correct filename for a command?	f	f	-P00Y00M00DT00H00M02S                                                                                                                                                                                                                                          	2018-07-08 11:33:09	2018-07-08 11:33:11
+76	24	75	Service naming conventions: select all valid services identifiers	f	f	-P00Y00M00DT00H00M02S                                                                                                                                                                                                                                          	2018-07-08 11:35:35	2018-07-08 11:35:37
+77	25	75	Service naming conventions: select all valid services identifiers	f	f	-P00Y00M00DT00H00M31S                                                                                                                                                                                                                                          	2018-07-08 11:42:43	2018-07-08 11:43:14
+78	25	74	How to render properly template located in src/Acme/TestBundle/Resources/views/Question/Item/list.html.twig?	f	f	-P00Y00M00DT00H01M25S                                                                                                                                                                                                                                          	2018-07-08 11:43:34	2018-07-08 11:44:59
+79	25	73	Using Console, what is the correct filename for a command?	f	f	-P00Y00M00DT00H00M11S                                                                                                                                                                                                                                          	2018-07-08 11:48:44	2018-07-08 11:48:55
+80	26	73	Using Console, what is the correct filename for a command?	f	f	-P00Y00M00DT00H00M31S                                                                                                                                                                                                                                          	2018-07-08 11:49:29	2018-07-08 11:50:00
+81	26	74	How to render properly template located in src/Acme/TestBundle/Resources/views/Question/Item/list.html.twig?	f	f	-P00Y00M00DT00H00M13S                                                                                                                                                                                                                                          	2018-07-08 11:50:23	2018-07-08 11:50:36
+82	26	75	Service naming conventions: select all valid services identifiers	f	f	-P00Y00M00DT00H00M07S                                                                                                                                                                                                                                          	2018-07-08 11:50:53	2018-07-08 11:51:00
+83	27	181	Which method from EventDispatcherInterface forwarding an event to all registered listeners?	f	f	-P00Y00M00DT00H00M17S                                                                                                                                                                                                                                          	2018-07-08 11:51:25	2018-07-08 11:51:42
+84	27	224	For implements Symfony\\Component\\Security\\Core\\User\\UserProviderInterface which method you have to define ?	f	f	-P00Y00M00DT00H00M18S                                                                                                                                                                                                                                          	2018-07-08 11:53:50	2018-07-08 11:54:08
+85	27	21	What is the correct syntax to inject a parameter mailer.transport ?	f	f	-P00Y00M00DT00H00M09S                                                                                                                                                                                                                                          	2018-07-08 11:55:14	2018-07-08 11:55:23
+86	27	115	What command used for run all of your application tests by default?	f	f	-P00Y00M00DT00H00M39S                                                                                                                                                                                                                                          	2018-07-08 11:57:42	2018-07-08 11:58:21
+87	27	200	Using Config component, which class is used to define hierarchy of configuration values?	f	f	-P00Y00M00DT00H00M03S                                                                                                                                                                                                                                          	2018-07-08 11:58:22	2018-07-08 11:58:25
+88	27	41	In Twig, all these classes Escaper, Optimizer, SafeAnalysis, Sandbox share common methods :	f	f	-P00Y00M00DT00H00M41S                                                                                                                                                                                                                                          	2018-07-08 11:58:38	2018-07-08 11:59:19
+89	27	129	The ______ keyword is used to indicate an incomplete class or method, which must be further extended and/or implemented in order to be used.	f	f	-P00Y00M00DT00H00M22S                                                                                                                                                                                                                                          	2018-07-08 12:00:54	2018-07-08 12:01:16
+90	27	218	What decision strategy exist ?	f	f	-P00Y00M00DT00H00M24S                                                                                                                                                                                                                                          	2018-07-08 12:06:04	2018-07-08 12:06:28
+91	27	151	How to add an extra field `extra` with the form ?	f	f	-P00Y00M00DT00H00M39S                                                                                                                                                                                                                                          	2018-07-08 12:06:33	2018-07-08 12:07:12
+92	27	103	What is the right command name to load Doctrine fixtures?	f	f	-P00Y00M00DT00H01M27S                                                                                                                                                                                                                                          	2018-07-08 12:07:16	2018-07-08 12:08:43
+93	28	18	As dev environment, what is the name of dumped container ?	f	f	-P00Y00M00DT00H01M11S                                                                                                                                                                                                                                          	2018-07-08 12:09:03	2018-07-08 12:10:14
+94	28	204	What is the correct load() method definition in Symfony\\Component\\DependencyInjection\\Extension\\ExtensionInterface?	f	f	-P00Y00M00DT00H00M25S                                                                                                                                                                                                                                          	2018-07-08 12:10:18	2018-07-08 12:10:43
+95	28	148	Using form component, option "error_bubbling" will include error in current field.	f	f	-P00Y00M00DT00H01M37S                                                                                                                                                                                                                                          	2018-07-08 12:10:46	2018-07-08 12:12:23
+96	28	132	True or False ? A closure is a lambda function that is aware of its surrounding context.	f	f	-P00Y00M00DT00H00M32S                                                                                                                                                                                                                                          	2018-07-08 12:12:38	2018-07-08 12:13:10
+97	28	128	Which of the following function declarations must be used to return a reference?	f	f	-P00Y00M00DT00H01M13S                                                                                                                                                                                                                                          	2018-07-08 12:13:12	2018-07-08 12:14:25
+99	28	162	Which one of these Response methods check if cache must be revalidated?	f	f	-P00Y00M00DT00H00M46S                                                                                                                                                                                                                                          	2018-07-08 12:16:46	2018-07-08 12:17:32
+98	28	58	True or False ? You can use both validation and expiration within the same Response.	f	f	-P00Y00M00DT00H00M10S                                                                                                                                                                                                                                          	2018-07-08 12:16:31	2018-07-08 12:16:41
+100	28	53	Which HTTP headers belongs to expiration cache model?	f	f	-P00Y00M00DT00H02M49S                                                                                                                                                                                                                                          	2018-07-08 12:17:35	2018-07-08 12:20:24
+101	28	20	What is the correct syntax to inject a service app.mailer ?	f	f	-P00Y00M00DT00H00M20S                                                                                                                                                                                                                                          	2018-07-08 12:20:27	2018-07-08 12:20:47
+102	28	123	True or False? It is possible to import all classes from a namespace in PHP.	f	f	-P00Y00M00DT00H00M07S                                                                                                                                                                                                                                          	2018-07-08 12:20:51	2018-07-08 12:20:58
+103	29	146	Which date type exist?	f	f	-P00Y00M00DT00H00M19S                                                                                                                                                                                                                                          	2018-07-08 12:21:06	2018-07-08 12:21:25
+104	29	158	Which form event dont exist?	f	f	-P00Y00M00DT00H03M32S                                                                                                                                                                                                                                          	2018-07-08 12:21:32	2018-07-08 12:25:04
+105	29	72	Event Listeners is use to Regrouping multiple listeners inside a single class ?	f	f	-P00Y00M00DT00H00M17S                                                                                                                                                                                                                                          	2018-07-08 12:25:08	2018-07-08 12:25:25
+106	29	147	How do you bind a constraint to a form field?	f	f	-P00Y00M00DT00H00M33S                                                                                                                                                                                                                                          	2018-07-08 12:25:26	2018-07-08 12:25:59
+107	29	152	How do you render all the form fields in twig ?	f	f	-P00Y00M00DT00H00M13S                                                                                                                                                                                                                                          	2018-07-08 12:26:09	2018-07-08 12:26:22
+108	29	65	Which controller/action allows to render a template without a specific controller?	f	f	-P00Y00M00DT00H00M39S                                                                                                                                                                                                                                          	2018-07-08 12:26:30	2018-07-08 12:27:09
+109	29	224	For implements Symfony\\Component\\Security\\Core\\User\\UserProviderInterface which method you have to define ?	f	f	-P00Y00M00DT00H00M15S                                                                                                                                                                                                                                          	2018-07-08 12:27:13	2018-07-08 12:27:28
+111	29	212	How to force a secure area to use the HTTPS protocol in the security config?	f	\N	\N	2018-07-08 12:28:43	\N
+110	29	63	Three special routing parameters are available in Symfony:	f	f	-P00Y00M00DT00H00M40S                                                                                                                                                                                                                                          	2018-07-08 12:28:00	2018-07-08 12:28:40
 \.
 
 
@@ -2052,8 +2842,8 @@ COPY public.tbl_question_category (question_id, category_id) FROM stdin;
 --
 
 COPY public.tbl_quiz (id, title, summary, number_of_questions, active, created_at, updated_at, show_result_question, show_result_quiz) FROM stdin;
-1	Symfony 3	\N	10	t	2018-07-07 23:49:51	2018-07-07 23:49:51	f	f
 2	Standardization	\N	3	t	2018-07-07 23:50:00	2018-07-07 23:50:00	t	f
+1	Symfony 3	\N	10	t	2018-07-07 23:49:51	2018-07-08 11:51:19	t	f
 \.
 
 
@@ -2084,6 +2874,35 @@ COPY public.tbl_user (id, username, email, password, is_active, roles) FROM stdi
 --
 
 COPY public.tbl_workout (id, student_id, quiz_id, started_at, ended_at, number_of_questions, completed) FROM stdin;
+7	1	2	2018-07-08 10:46:51	2018-07-08 10:47:56	3	f
+1	1	2	2018-07-07 23:50:25	2018-07-07 23:52:34	3	f
+8	1	1	2018-07-08 10:48:01	2018-07-08 10:48:08	3	f
+19	1	1	2018-07-08 11:21:26	2018-07-08 11:22:08	5	f
+9	1	2	2018-07-08 10:48:13	2018-07-08 10:48:24	3	f
+10	1	1	2018-07-08 10:55:05	\N	0	f
+11	1	2	2018-07-08 10:55:08	2018-07-08 10:56:01	2	f
+20	1	2	2018-07-08 11:22:12	2018-07-08 11:22:34	3	f
+2	1	1	2018-07-07 23:52:37	2018-07-07 23:52:46	10	f
+12	1	2	2018-07-08 10:56:17	2018-07-08 10:57:41	2	f
+27	1	1	2018-07-08 11:51:23	2018-07-08 12:08:43	10	f
+3	1	2	2018-07-08 10:16:13	2018-07-08 10:30:23	3	f
+21	1	2	2018-07-08 11:22:37	2018-07-08 11:22:47	3	f
+13	1	2	2018-07-08 10:58:05	2018-07-08 11:02:20	3	f
+4	1	2	2018-07-08 10:30:30	2018-07-08 10:43:37	3	f
+14	1	2	2018-07-08 11:05:38	2018-07-08 11:09:53	3	f
+5	1	2	2018-07-08 10:44:09	2018-07-08 10:44:49	3	f
+22	1	2	2018-07-08 11:23:40	2018-07-08 11:23:48	3	f
+6	1	2	2018-07-08 10:44:54	2018-07-08 10:45:01	3	f
+15	1	2	2018-07-08 11:09:59	2018-07-08 11:17:58	3	f
+23	1	2	2018-07-08 11:23:51	2018-07-08 11:29:37	3	f
+16	1	2	2018-07-08 11:18:02	2018-07-08 11:18:10	3	f
+24	1	2	2018-07-08 11:29:44	2018-07-08 11:35:37	3	f
+17	1	2	2018-07-08 11:18:59	2018-07-08 11:21:10	3	f
+28	1	1	2018-07-08 12:09:02	2018-07-08 12:20:58	10	f
+18	1	2	2018-07-08 11:21:15	2018-07-08 11:21:23	3	f
+25	1	2	2018-07-08 11:42:42	2018-07-08 11:48:55	3	f
+26	1	2	2018-07-08 11:49:27	2018-07-08 11:51:00	3	f
+29	1	1	2018-07-08 12:21:05	2018-07-08 12:28:40	9	f
 \.
 
 
@@ -2105,14 +2924,14 @@ SELECT pg_catalog.setval('public.tbl_category_id_seq', 20, true);
 -- Name: tbl_history_answer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.tbl_history_answer_id_seq', 1, false);
+SELECT pg_catalog.setval('public.tbl_history_answer_id_seq', 763, true);
 
 
 --
 -- Name: tbl_history_question_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.tbl_history_question_id_seq', 1, false);
+SELECT pg_catalog.setval('public.tbl_history_question_id_seq', 111, true);
 
 
 --
@@ -2140,7 +2959,7 @@ SELECT pg_catalog.setval('public.tbl_user_id_seq', 4, true);
 -- Name: tbl_workout_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.tbl_workout_id_seq', 1, false);
+SELECT pg_catalog.setval('public.tbl_workout_id_seq', 29, true);
 
 
 --
