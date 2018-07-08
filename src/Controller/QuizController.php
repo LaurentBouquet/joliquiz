@@ -82,7 +82,6 @@ class QuizController extends Controller
                 $em->persist($workout);
                 $em->flush();
 
-                dump($questionResult);
                 if ($quiz->getShowResultQuestion()) {
                     $form = $this->createForm(QuestionType::class, $lastQuestion, array('form_type'=>'student_marking'));
                     return $this->render('quiz/workout.html.twig',
@@ -148,7 +147,6 @@ class QuizController extends Controller
 
             $form = $this->createForm(QuestionType::class, $nextQuestion, array('form_type'=>'student_questioning'));
 
-            dump($questionResult);
             return $this->render('quiz/workout.html.twig',
                 [
                     'id' => $workout->getId(),
