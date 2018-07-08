@@ -7,10 +7,15 @@
 
 [![Deploy on Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-# Description
+## Description
 Joliquiz is an online quiz software, a PHP web application developed using the Symfony framework (version 4).
 
 Thanks to [Symfony](https://symfony.com/)
+
+
+## Screenshot of a quiz in progress
+
+![Workout page](https://raw.githubusercontent.com/LaurentBouquet/joliquiz/assets/quiz_symf3_question10.png?raw=true)
 
 
 ## Installation
