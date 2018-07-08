@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/LaurentBouquet/joliquiz.svg?branch=master)](https://travis-ci.org/LaurentBouquet/joliquiz)
 [![Build Status](https://semaphoreci.com/api/v1/laurentbouquet/joliquiz/branches/develop/badge.svg)](https://semaphoreci.com/laurentbouquet/joliquiz)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ffbbae0ffc224808a43894742a79df91)](https://www.codacy.com/app/LaurentBouquet/joliquiz?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=LaurentBouquet/joliquiz&amp;utm_campaign=Badge_Grade)
 
 [![Deploy on Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
