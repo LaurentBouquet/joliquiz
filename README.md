@@ -138,7 +138,7 @@ php bin/console server:start
 
 For example, with your browser open this page :  http://127.0.0.1:8000 and GO !
 
-![Workout page](https://raw.githubusercontent.com/LaurentBouquet/joliquiz/assets/home_page.png.png?raw=true)
+![Workout page](https://raw.githubusercontent.com/LaurentBouquet/joliquiz/assets/home_page.png?raw=true)
 
 Here is initial credentials of the student user.
  - Username : user
