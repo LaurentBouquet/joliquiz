@@ -3,7 +3,7 @@
 {% block title %}Quiz{% endblock %}
 
 {% block body %}
-    <h1>Quiz "{{ quiz.title }}" ({{ questionNumber }}/{{ quiz.numberOfQuestions }})</h1>
+    <h1>Quiz "{{ quiz.title }}" ({{ questionNumber }}/{{ quiz.numberOfQuestions }}) {{ (questionResult==1) ? '-> OK' : '' }} {{ (questionResult==-1) ? '-> KO' : '' }}</h1>
 
     {{ form_start(form) }}
         {{ form_widget(form) }}

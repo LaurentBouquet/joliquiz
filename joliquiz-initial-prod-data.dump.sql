@@ -162,20 +162,12 @@ CREATE SEQUENCE public.tbl_category_id_seq
 CREATE TABLE public.tbl_history_answer (
     id integer NOT NULL,
     question_history_id integer NOT NULL,
-    date_time timestamp(0) without time zone NOT NULL,
     answer_id integer NOT NULL,
     answer_text text NOT NULL,
     answer_correct boolean NOT NULL,
     correct_given boolean NOT NULL,
     answer_succes boolean NOT NULL
 );
-
-
---
--- Name: COLUMN tbl_history_answer.date_time; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tbl_history_answer.date_time IS '(DC2Type:datetime_immutable)';
 
 
 --
@@ -197,20 +189,14 @@ CREATE SEQUENCE public.tbl_history_answer_id_seq
 CREATE TABLE public.tbl_history_question (
     id integer NOT NULL,
     workout_id integer NOT NULL,
-    date_time timestamp(0) without time zone NOT NULL,
     question_id integer NOT NULL,
     question_text text NOT NULL,
     completed boolean NOT NULL,
     question_success boolean,
-    duration character(255) DEFAULT NULL::bpchar
+    duration character(255) DEFAULT NULL::bpchar,
+    started_at timestamp(0) without time zone NOT NULL,
+    ended_at timestamp(0) without time zone DEFAULT NULL::timestamp without time zone
 );
-
-
---
--- Name: COLUMN tbl_history_question.date_time; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.tbl_history_question.date_time IS '(DC2Type:datetime_immutable)';
 
 
 --
@@ -277,7 +263,9 @@ CREATE TABLE public.tbl_quiz (
     number_of_questions integer NOT NULL,
     active boolean NOT NULL,
     created_at timestamp(0) without time zone NOT NULL,
-    updated_at timestamp(0) without time zone NOT NULL
+    updated_at timestamp(0) without time zone NOT NULL,
+    show_result_question boolean NOT NULL,
+    show_result_quiz boolean NOT NULL
 );
 
 
@@ -345,7 +333,7 @@ CREATE TABLE public.tbl_workout (
     student_id integer NOT NULL,
     quiz_id integer NOT NULL,
     started_at timestamp(0) without time zone NOT NULL,
-    ended_at timestamp(0) without time zone NOT NULL,
+    ended_at timestamp(0) without time zone DEFAULT NULL::timestamp without time zone,
     number_of_questions integer NOT NULL,
     completed boolean NOT NULL
 );
@@ -368,7 +356,7 @@ CREATE SEQUENCE public.tbl_workout_id_seq
 --
 
 COPY public.migration_versions (version) FROM stdin;
-20180707150759
+20180707214807
 \.
 
 
@@ -1334,7 +1322,7 @@ COPY public.tbl_category (id, shortname, longname) FROM stdin;
 -- Data for Name: tbl_history_answer; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.tbl_history_answer (id, question_history_id, date_time, answer_id, answer_text, answer_correct, correct_given, answer_succes) FROM stdin;
+COPY public.tbl_history_answer (id, question_history_id, answer_id, answer_text, answer_correct, correct_given, answer_succes) FROM stdin;
 \.
 
 
@@ -1342,7 +1330,7 @@ COPY public.tbl_history_answer (id, question_history_id, date_time, answer_id, a
 -- Data for Name: tbl_history_question; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.tbl_history_question (id, workout_id, date_time, question_id, question_text, completed, question_success, duration) FROM stdin;
+COPY public.tbl_history_question (id, workout_id, question_id, question_text, completed, question_success, duration, started_at, ended_at) FROM stdin;
 \.
 
 
@@ -1351,239 +1339,239 @@ COPY public.tbl_history_question (id, workout_id, date_time, question_id, questi
 --
 
 COPY public.tbl_question (id, text, created_at, updated_at) FROM stdin;
-1	Psr-3 LoggerInterface exposes eight methods to write logs to the eight RFC 5424 levels, which level does not exist ?	2018-07-07 17:08:37	2018-07-07 17:08:37
-2	Which methods is not in Psr-3	2018-07-07 17:08:37	2018-07-07 17:08:37
-3	In Psr-3 what delimiter is used for placeholder names ?	2018-07-07 17:08:37	2018-07-07 17:08:37
-4	Which Psr is about autoloading ?	2018-07-07 17:08:37	2018-07-07 17:08:37
-5	According to Psr-2, Which code is correct ?	2018-07-07 17:08:37	2018-07-07 17:08:37
-6	According to Psr-1 methods have to be declared like ?	2018-07-07 17:08:37	2018-07-07 17:08:37
-7	Which Psr is about caching ?	2018-07-07 17:08:37	2018-07-07 17:08:37
-8	Which Psr is deprecated now ?	2018-07-07 17:08:37	2018-07-07 17:08:37
-9	Which line allows to inject the my.custom.service?	2018-07-07 17:08:38	2018-07-07 17:08:38
-10	Which types of injection are available in the component?	2018-07-07 17:08:38	2018-07-07 17:08:38
-11	Using XML, which of these lines are correct to inject a service?	2018-07-07 17:08:38	2018-07-07 17:08:38
-12	Which of these methods are available in ContainerInterface?	2018-07-07 17:08:38	2018-07-07 17:08:38
-13	Using YML, which line allows to inject proxy of the service?	2018-07-07 17:08:38	2018-07-07 17:08:38
-14	Which method from CompilerPassInterface can modify the container here before it is dumped to PHP code?	2018-07-07 17:08:38	2018-07-07 17:08:38
-15	Using Dependency Injection, what is the correct way to override a service class using ContainerBuilder class?	2018-07-07 17:08:38	2018-07-07 17:08:38
-16	Using a compiler pass, how do you retrieve a definition of service ?	2018-07-07 17:08:38	2018-07-07 17:08:38
-17	What are existing compiler pass order ?	2018-07-07 17:08:38	2018-07-07 17:08:38
-18	As dev environment, what is the name of dumped container ?	2018-07-07 17:08:38	2018-07-07 17:08:38
-19	True or false, parameters can also contain array values ?	2018-07-07 17:08:38	2018-07-07 17:08:38
-20	What is the correct syntax to inject a service app.mailer ?	2018-07-07 17:08:38	2018-07-07 17:08:38
-21	What is the correct syntax to inject a parameter mailer.transport ?	2018-07-07 17:08:38	2018-07-07 17:08:38
-22	How to define a service as private ?	2018-07-07 17:08:38	2018-07-07 17:08:38
-23	True or False, With default configuration each time you retrieve the service, you'll get the same instance ?	2018-07-07 17:08:38	2018-07-07 17:08:38
-24	Using Twig, how to render flash messages of key "success" in a template?	2018-07-07 17:08:38	2018-07-07 17:08:38
-25	Using Twig, how to render a text string in uppercase? ("test" must become "TEST")	2018-07-07 17:08:38	2018-07-07 17:08:38
-26	Using Twig, syntax {% block example '' %} is equivalent to {% block example %}{% endblock %}	2018-07-07 17:08:38	2018-07-07 17:08:38
-27	Using Twig, how to declare a variable in a template?	2018-07-07 17:08:38	2018-07-07 17:08:38
-28	In class \\Twig_Extension, which method returns list of functions?	2018-07-07 17:08:38	2018-07-07 17:08:38
-29	Using Twig, which comparison operator is not available?	2018-07-07 17:08:38	2018-07-07 17:08:38
-30	Using Twig, what syntax used to execute statements?	2018-07-07 17:08:38	2018-07-07 17:08:38
-31	Using Twig, how to check if current user has role "ROLE_TEST"?	2018-07-07 17:08:38	2018-07-07 17:08:38
-32	Which Twig syntax allow to get the authenticated user name ?	2018-07-07 17:08:38	2018-07-07 17:08:38
-33	If you want to overwrite the 404 page, what is the relative path of the template to create ?	2018-07-07 17:08:38	2018-07-07 17:08:38
-34	In twig, what do you use if you want to optimize the size of the generated HTML content?	2018-07-07 17:08:38	2018-07-07 17:08:38
-35	In Twig, which other Twig tag works as the old raw tag, for when you want to display code and not be parsed?	2018-07-07 17:08:38	2018-07-07 17:08:38
-36	In Twig, the batch filter:	2018-07-07 17:08:38	2018-07-07 17:08:38
-37	In Twig, when compiling a node tree how can you change the default compiler on your $twig object	2018-07-07 17:08:38	2018-07-07 17:08:38
-38	In Twig which loader can you use to load templates from a database and the filesystem simultaneously?	2018-07-07 17:08:38	2018-07-07 17:08:38
-39	in Twig, name which one is not a method of the Twig_Filter class:	2018-07-07 17:08:38	2018-07-07 17:08:38
-40	In Twig, a visitor priority varies between:	2018-07-07 17:08:38	2018-07-07 17:08:38
-41	In Twig, all these classes Escaper, Optimizer, SafeAnalysis, Sandbox share common methods :	2018-07-07 17:08:38	2018-07-07 17:08:38
-42	In Twig this statement is valid:	2018-07-07 17:08:38	2018-07-07 17:08:38
-43	in Twig, suppose you have an object person	2018-07-07 17:08:38	2018-07-07 17:08:38
-44	In Twig:	2018-07-07 17:08:38	2018-07-07 17:08:38
-45	There is a lesser known templating component with which you can build your own templating system not php and not twig.	2018-07-07 17:08:38	2018-07-07 17:08:38
-46	In Symfony there is a lesser known templating component that is heavily used by Twig.	2018-07-07 17:08:38	2018-07-07 17:08:38
-47	In Twig, how to render a controller asynchronously ?	2018-07-07 17:08:38	2018-07-07 17:08:38
-48	True or false ? path() Twig function generates absolute urls.	2018-07-07 17:08:38	2018-07-07 17:08:38
-49	Using Twig, what syntax used to print the content of a variable ?	2018-07-07 17:08:38	2018-07-07 17:08:38
-50	Using Twig, what syntax used to add comments ?	2018-07-07 17:08:38	2018-07-07 17:08:38
-51	What is the correct way to render a ESI tag using HTML?	2018-07-07 17:08:38	2018-07-07 17:08:38
-52	What is the Twig function to render an ESI?	2018-07-07 17:08:38	2018-07-07 17:08:38
-53	Which HTTP headers belongs to expiration cache model?	2018-07-07 17:08:38	2018-07-07 17:08:38
-54	Which HTTP headers belongs to validation cache model?	2018-07-07 17:08:38	2018-07-07 17:08:38
-55	Which HTTP status code must be returned if the cache is still valid ?	2018-07-07 17:08:38	2018-07-07 17:08:38
-56	True or False ? ESI need to be activated in configuration.	2018-07-07 17:08:38	2018-07-07 17:08:38
-57	According to HTTP/1.1 what is the max value for Expires ?	2018-07-07 17:08:38	2018-07-07 17:08:38
-58	True or False ? You can use both validation and expiration within the same Response.	2018-07-07 17:08:38	2018-07-07 17:08:38
-59	True or False ? Using ETag saves CPU cycles.	2018-07-07 17:08:38	2018-07-07 17:08:38
-60	Using XML or YAML, how to declare a route for a specific domain/host?	2018-07-07 17:08:38	2018-07-07 17:08:38
-61	What variable can be used as controller argument to get the name of the route name?	2018-07-07 17:08:38	2018-07-07 17:08:38
-62	Using XML, how to ensure that a route is accessed via HTTPS?	2018-07-07 17:08:38	2018-07-07 17:08:38
-63	Three special routing parameters are available in Symfony:	2018-07-07 17:08:38	2018-07-07 17:08:38
-64	How to generate absolute URL for a given route in controller ?	2018-07-07 17:08:38	2018-07-07 17:08:38
-65	Which controller/action allows to render a template without a specific controller?	2018-07-07 17:08:38	2018-07-07 17:08:38
-66	What is the LoggerInterface correct namespace?	2018-07-07 17:08:38	2018-07-07 17:08:38
-67	Using a dev environment, what is the correct cached file name of the dependency injection container?	2018-07-07 17:08:38	2018-07-07 17:08:38
-68	Using a dev environment, what is the correct cached file name of the generated configuration routes?	2018-07-07 17:08:38	2018-07-07 17:08:38
-69	Using Symfony\\Component\\Debug\\Debug static class, what is the only method available?	2018-07-07 17:08:38	2018-07-07 17:08:38
-70	In order to be able to use render_hinclude(url(...)), we need to add this configuration in ``framework` section:	2018-07-07 17:08:38	2018-07-07 17:08:38
-71	What is the correct CssSelector class namespace?	2018-07-07 17:08:38	2018-07-07 17:08:38
-72	Event Listeners is use to Regrouping multiple listeners inside a single class ?	2018-07-07 17:08:38	2018-07-07 17:08:38
-73	Using Console, what is the correct filename for a command?	2018-07-07 17:08:39	2018-07-07 17:08:39
-74	How to render properly template located in src/Acme/TestBundle/Resources/views/Question/Item/list.html.twig?	2018-07-07 17:08:39	2018-07-07 17:08:39
-75	Service naming conventions: select all valid services identifiers	2018-07-07 17:08:39	2018-07-07 17:08:39
-76	In order to use validation group, which interface will you implement on your object?	2018-07-07 17:08:39	2018-07-07 17:08:39
-77	Using Validator component, which method is used to validate a value against a constraint?	2018-07-07 17:08:39	2018-07-07 17:08:39
-78	True or False ? All entities have at least 2 validation groups.	2018-07-07 17:08:39	2018-07-07 17:08:39
-79	True or False ? We can also apply constraints on class getters with ``addPropertyConstraint()``	2018-07-07 17:08:39	2018-07-07 17:08:39
-80	True or False ? In Symfony:	2018-07-07 17:08:39	2018-07-07 17:08:39
-81	Which constraints exist?	2018-07-07 17:08:39	2018-07-07 17:08:39
-82	Which annotation are valid ?	2018-07-07 17:08:39	2018-07-07 17:08:39
-83	How to tell the validator to use a specific group ?	2018-07-07 17:08:39	2018-07-07 17:08:39
-84	[SF3] What is the default signal sent by Process component to stop a process ?	2018-07-07 17:08:39	2018-07-07 17:08:39
-85	[SF3] What can be placed in ????? to be valid?\n\n  use Symfony\\Component\\Yaml\\Yaml;\n\n  $value = Yaml::parse(?????);\n	2018-07-07 17:08:39	2018-07-07 17:08:39
-86	Which helper is not available in the Console component?	2018-07-07 17:08:39	2018-07-07 17:08:39
-87	Which event is not available in the Console Component?	2018-07-07 17:08:39	2018-07-07 17:08:39
-88	How to launch Console application in interactive mode?	2018-07-07 17:08:39	2018-07-07 17:08:39
-89	Using Console component, which of these events are available in Symfony\\Component\\Console\\ConsoleEvents?	2018-07-07 17:08:39	2018-07-07 17:08:39
-90	Using Console component, which of these class allows to create custom output styles?	2018-07-07 17:08:39	2018-07-07 17:08:39
-91	What is the console command to create a new bundle?	2018-07-07 17:08:39	2018-07-07 17:08:39
-92	Which argument can be passed to the router:debug command?	2018-07-07 17:08:39	2018-07-07 17:08:39
-93	What is the command to check the syntax of a Twig template?	2018-07-07 17:08:39	2018-07-07 17:08:39
-94	What is the console command to clear cache?	2018-07-07 17:08:39	2018-07-07 17:08:39
-95	Which tag name you should use when you register command as service?	2018-07-07 17:08:39	2018-07-07 17:08:39
-96	What is the command line to list all known entities by doctrine 2 in your project ?	2018-07-07 17:08:39	2018-07-07 17:08:39
-97	What is the command line to validate the doctrine mapping files ?	2018-07-07 17:08:39	2018-07-07 17:08:39
-98	How do you display complete configuration of a bundle ?	2018-07-07 17:08:39	2018-07-07 17:08:39
-99	Descriptors are objects to render documentation on Symfony Console Apps?	2018-07-07 17:08:39	2018-07-07 17:08:39
-100	Does the Symfony Console component needs PHP globals internals variables to work?	2018-07-07 17:08:39	2018-07-07 17:08:39
-101	What is the console command to create a new entity?	2018-07-07 17:08:39	2018-07-07 17:08:39
-102	What is the command to update the database from entities?	2018-07-07 17:08:39	2018-07-07 17:08:39
-103	What is the right command name to load Doctrine fixtures?	2018-07-07 17:08:39	2018-07-07 17:08:39
-104	Symfony Console: which one(s) are valid verbosity levels ?	2018-07-07 17:08:39	2018-07-07 17:08:39
-105	Symfony Console: InputArgument::REQUIRED, InputArgument::OPTIONAL and ... ?	2018-07-07 17:08:39	2018-07-07 17:08:39
-106	Symfony Console: which of the following sentences are true?	2018-07-07 17:08:39	2018-07-07 17:08:39
-107	Which function are mandatory to your command class ?	2018-07-07 17:08:39	2018-07-07 17:08:39
-108	Which Question class are available ?	2018-07-07 17:08:39	2018-07-07 17:08:39
-109	How to Call Other Commands in a command ?	2018-07-07 17:08:39	2018-07-07 17:08:39
-110	Using PHPUnit, which method names are used to share test setup code?	2018-07-07 17:08:39	2018-07-07 17:08:39
-111	How to disable constructor when mocking an object?	2018-07-07 17:08:39	2018-07-07 17:08:39
-112	Which Symfony class offers method to test commands?	2018-07-07 17:08:39	2018-07-07 17:08:39
-113	Using PHPUnit, which method allows to specify a mock response on second call?	2018-07-07 17:08:39	2018-07-07 17:08:39
-114	Using PHPUnit, which method allows you to expect an exception to be thrown?	2018-07-07 17:08:39	2018-07-07 17:08:39
-115	What command used for run all of your application tests by default?	2018-07-07 17:08:39	2018-07-07 17:08:39
-116	Where live functional tests in Symfony (inside a bundle structure)?	2018-07-07 17:08:39	2018-07-07 17:08:39
-117	Using Symfony\\Component\\BrowserKit\\Client which of these methods can be called?	2018-07-07 17:08:39	2018-07-07 17:08:39
-118	Using Swiftmailer, which of these configuration allows to disable email delivery?	2018-07-07 17:08:39	2018-07-07 17:08:39
-119	Using the Crawler client, how to follow a redirection ?	2018-07-07 17:08:39	2018-07-07 17:08:39
-120	What is the short open tag for PHP?	2018-07-07 17:08:39	2018-07-07 17:08:39
-121	Which of these operators is non-associative?	2018-07-07 17:08:39	2018-07-07 17:08:39
-122	Since PHP 5.6+, if function foo() is defined in the namespace Myapp\\Utils\\Bar and your code is in namespace Myapp, what is the correct way to import the foo() function?	2018-07-07 17:08:39	2018-07-07 17:08:39
-123	True or False? It is possible to import all classes from a namespace in PHP.	2018-07-07 17:08:39	2018-07-07 17:08:39
-124	Which web services are supported natively in PHP?	2018-07-07 17:08:39	2018-07-07 17:08:39
-125	Variable names and function names are, respectively:	2018-07-07 17:08:39	2018-07-07 17:08:39
-126	Does PHP support function overloading?	2018-07-07 17:08:39	2018-07-07 17:08:39
-127	Which of the following statements is not true?	2018-07-07 17:08:39	2018-07-07 17:08:39
-128	Which of the following function declarations must be used to return a reference?	2018-07-07 17:08:39	2018-07-07 17:08:39
-129	The ______ keyword is used to indicate an incomplete class or method, which must be further extended and/or implemented in order to be used.	2018-07-07 17:08:39	2018-07-07 17:08:39
-130	According to the PHP Framework Interoperability Group, which PSRs concern best coding practices ?	2018-07-07 17:08:39	2018-07-07 17:08:39
-131	Since PHP 5.4, which functionality allows horizontal composition of behavior ?	2018-07-07 17:08:39	2018-07-07 17:08:39
-132	True or False ? A closure is a lambda function that is aware of its surrounding context.	2018-07-07 17:08:39	2018-07-07 17:08:39
-133	True or False ? A lambda function is a named PHP function that can be stored in a variable.	2018-07-07 17:08:39	2018-07-07 17:08:39
-134	Inside a form type, how to add a "date" field type in an input field?	2018-07-07 17:08:40	2018-07-07 17:08:40
-135	Which method allows you to handle the request on a form instance?	2018-07-07 17:08:40	2018-07-07 17:08:40
-136	From a Form instance, which method can you call to obtain a FormView instance?	2018-07-07 17:08:40	2018-07-07 17:08:40
-137	In a Twig template, which function render a form field?	2018-07-07 17:08:40	2018-07-07 17:08:40
-138	Using Form factory, how to define a CSRF provider?	2018-07-07 17:08:40	2018-07-07 17:08:40
-139	Using Form component, which option can you use into setDefaultOptions() method to define CSRF field name?	2018-07-07 17:08:40	2018-07-07 17:08:40
-140	Using Form component, option csrf_error_message can be use in setDefaultOptions() to define a custom CSRF error message?	2018-07-07 17:08:40	2018-07-07 17:08:40
-141	Using Form component, which option will allow you to specify groups used for validation?	2018-07-07 17:08:40	2018-07-07 17:08:40
-142	Which form event exist?	2018-07-07 17:08:40	2018-07-07 17:08:40
-143	What data is inside FormEvent object at FormEvents::PRE_SET_DATA?	2018-07-07 17:08:40	2018-07-07 17:08:40
-144	What data is inside FormEvent object at FormEvents::PRE_SUBMIT?	2018-07-07 17:08:40	2018-07-07 17:08:40
-145	Which one of these types extends from text?	2018-07-07 17:08:40	2018-07-07 17:08:40
-146	Which date type exist?	2018-07-07 17:08:40	2018-07-07 17:08:40
-147	How do you bind a constraint to a form field?	2018-07-07 17:08:40	2018-07-07 17:08:40
-148	Using form component, option "error_bubbling" will include error in current field.	2018-07-07 17:08:40	2018-07-07 17:08:40
-149	How do you set default value?	2018-07-07 17:08:40	2018-07-07 17:08:40
-150	Your Form class must extends ____ 	2018-07-07 17:08:40	2018-07-07 17:08:40
-151	How to add an extra field `extra` with the form ?	2018-07-07 17:08:40	2018-07-07 17:08:40
-152	How do you render all the form fields in twig ?	2018-07-07 17:08:40	2018-07-07 17:08:40
-153	If you use form_widget() on a single fields, which parts are render ?	2018-07-07 17:08:40	2018-07-07 17:08:40
-154	According to Symfony best practices, where you should add buttons ?	2018-07-07 17:08:40	2018-07-07 17:08:40
-155	Which Field type exist?	2018-07-07 17:08:40	2018-07-07 17:08:40
-156	How to Disable the Validation of Submitted Data	2018-07-07 17:08:40	2018-07-07 17:08:40
-157	What data is inside FormEvent object at FormEvents::POST_SET_DATA?	2018-07-07 17:08:40	2018-07-07 17:08:40
-158	Which form event dont exist?	2018-07-07 17:08:40	2018-07-07 17:08:40
-159	How do you upload a UploadedFile ?	2018-07-07 17:08:40	2018-07-07 17:08:40
-160	How to Use Data Transformers ?	2018-07-07 17:08:40	2018-07-07 17:08:40
-161	Which of these HTTP headers does not exist?	2018-07-07 17:08:40	2018-07-07 17:08:40
-162	Which one of these Response methods check if cache must be revalidated?	2018-07-07 17:08:40	2018-07-07 17:08:40
-163	Using a Response instance, which of these methods are available to check status code?	2018-07-07 17:08:40	2018-07-07 17:08:40
-164	How to access the `foo` GET parameter from Request object $request ?	2018-07-07 17:08:40	2018-07-07 17:08:40
-165	How to access the `bar` POST parameter from Request object $request ?	2018-07-07 17:08:40	2018-07-07 17:08:40
-166	The method getLanguages() from Request object:	2018-07-07 17:08:40	2018-07-07 17:08:40
-167	How to get the Content Type from Request ?	2018-07-07 17:08:40	2018-07-07 17:08:40
-168	How to check if a request has been sent using AJAX ?	2018-07-07 17:08:40	2018-07-07 17:08:40
-169	Which Response subclasses are available?	2018-07-07 17:08:40	2018-07-07 17:08:40
-170	Which HTTP status code should for a resource that moved temporarily ?	2018-07-07 17:08:40	2018-07-07 17:08:40
-171	True or False ? Server returns an 403 HTTP status code when you are not allowed to access a resource	2018-07-07 17:08:40	2018-07-07 17:08:40
-172	Which method exist in Symfony\\Component\\HttpFoundation\\Request ?	2018-07-07 17:08:40	2018-07-07 17:08:40
-173	How can you set status code of Symfony\\Component\\HttpFoundation\\Response	2018-07-07 17:08:40	2018-07-07 17:08:40
-174	To override the 404 error template for HTML page, how should you name the template ?	2018-07-07 17:08:40	2018-07-07 17:08:40
-175	Where are publicly located bundles assets?	2018-07-07 17:08:40	2018-07-07 17:08:40
-176	What is the Symfony mail service transport parameter name?	2018-07-07 17:08:40	2018-07-07 17:08:40
-177	What is the path to set session cookie_lifetime parameter in a project configuration?	2018-07-07 17:08:40	2018-07-07 17:08:40
-178	Which design pattern implements the EventDispatcher component?	2018-07-07 17:08:40	2018-07-07 17:08:40
-179	What is the right parameter path to set a version number for assets?	2018-07-07 17:08:40	2018-07-07 17:08:40
-180	Which method from EventSubscriberInterface return array of events that subscriber wants to listen to?	2018-07-07 17:08:40	2018-07-07 17:08:40
-181	Which method from EventDispatcherInterface forwarding an event to all registered listeners?	2018-07-07 17:08:40	2018-07-07 17:08:40
-182	Which method allows to prevent any other Event listeners from being called?	2018-07-07 17:08:40	2018-07-07 17:08:40
-183	Is it possible to detect if an Event was stopped during runtime?	2018-07-07 17:08:40	2018-07-07 17:08:40
-184	Using FrameworkBundle configuration, what is the correct path to fill proxies IP?	2018-07-07 17:08:40	2018-07-07 17:08:40
-185	Using FrameworkBundle configuration, what is the default framework.templating.assets_version_format value?	2018-07-07 17:08:40	2018-07-07 17:08:40
-186	Using ClassLoader component, which class can be used to autoload a static class map?	2018-07-07 17:08:40	2018-07-07 17:08:40
-187	Instantiating a new Symfony\\Component\\HttpKernel\\Kernel, what is the correct arguments order?	2018-07-07 17:08:40	2018-07-07 17:08:40
-188	What is the prefix of environment variables used by Symfony?	2018-07-07 17:08:40	2018-07-07 17:08:40
-189	In Kernel class, which method do you need to redefine if you want to have multiple configuration files (config_dev.yml, config_test.yml, ...)?	2018-07-07 17:08:40	2018-07-07 17:08:40
-190	According to Symfony best practices, ____ is/are located in _____ file/folder.	2018-07-07 17:08:40	2018-07-07 17:08:40
-191	Where can you find the file `form_table_layout.html.twig` ?	2018-07-07 17:08:40	2018-07-07 17:08:40
-192	If you pass 0 (zero) as third parameter (int $indent) in \\Symfony\\Component\\Yaml\\Yaml::dump, the generated YAML string will be indented with tabs	2018-07-07 17:08:40	2018-07-07 17:08:40
-193	Symfony is released under which license ?	2018-07-07 17:08:40	2018-07-07 17:08:40
-194	Which kernel event exist ?	2018-07-07 17:08:40	2018-07-07 17:08:40
-195	Arguments are resolve before to Call Controller ?	2018-07-07 17:08:40	2018-07-07 17:08:40
-196	How do you detect if an Event was stopped during runtime?	2018-07-07 17:08:40	2018-07-07 17:08:40
-197	What is the method name in the Kernel class to enable bundles?	2018-07-07 17:08:40	2018-07-07 17:08:40
-198	Which method is executed once when bundle is loaded after cache is cleared?	2018-07-07 17:08:40	2018-07-07 17:08:40
-199	Which of these bundles comes with the Symfony Standard Edition?	2018-07-07 17:08:40	2018-07-07 17:08:40
-200	Using Config component, which class is used to define hierarchy of configuration values?	2018-07-07 17:08:40	2018-07-07 17:08:40
-201	Using Config component, which of these configuration node types are available?	2018-07-07 17:08:40	2018-07-07 17:08:40
-202	Using Config component, which of these methods are existing?	2018-07-07 17:08:40	2018-07-07 17:08:40
-203	Which method allows to override bundle in a bundle class?	2018-07-07 17:08:40	2018-07-07 17:08:40
-204	What is the correct load() method definition in Symfony\\Component\\DependencyInjection\\Extension\\ExtensionInterface?	2018-07-07 17:08:40	2018-07-07 17:08:40
-205	Using Symfony dependency injection container, how can you retrieve all bundles list?	2018-07-07 17:08:40	2018-07-07 17:08:40
-206	True or False ? the entry point of a Bundle MUST implement `Symfony\\Component\\HttpKernel\\Bundle\\BundleInterface` interface.	2018-07-07 17:08:40	2018-07-07 17:08:40
-207	According to Symfony best practices, which files files are mandatory in your bundle AcmeNameBundle directory Structure ?	2018-07-07 17:08:40	2018-07-07 17:08:40
-208	Which line is correct to add a security.access_control line?	2018-07-07 17:08:40	2018-07-07 17:08:40
-209	After a login success, what is the parameter name to redirect on referer URL?	2018-07-07 17:08:40	2018-07-07 17:08:40
-210	In Symfony Security component:	2018-07-07 17:08:40	2018-07-07 17:08:40
-211	Is user authenticated in all of security firewalls after a successful login:	2018-07-07 17:08:40	2018-07-07 17:08:40
-212	How to force a secure area to use the HTTPS protocol in the security config?	2018-07-07 17:08:40	2018-07-07 17:08:40
-213	What is the purpose of security encoders in security.yml?	2018-07-07 17:08:40	2018-07-07 17:08:40
-214	Which authentication events exist in the Security component?	2018-07-07 17:08:40	2018-07-07 17:08:40
-215	What does the default strategy `affirmative` of the access decision manager mean?	2018-07-07 17:08:40	2018-07-07 17:08:40
-216	What does the strategy `consensus` of the access decision manager mean?	2018-07-07 17:08:40	2018-07-07 17:08:40
-217	What does the strategy `unanimous` of the access decision manager mean?	2018-07-07 17:08:40	2018-07-07 17:08:40
-218	What decision strategy exist ?	2018-07-07 17:08:40	2018-07-07 17:08:40
-219	How to Restrict Firewalls to a Specific Request Pattern ?	2018-07-07 17:08:40	2018-07-07 17:08:40
-220	Which annotation is valid to check role ?	2018-07-07 17:08:40	2018-07-07 17:08:40
-221	Which default role exist ?	2018-07-07 17:08:40	2018-07-07 17:08:40
-222	How can you deny access to user in your controller ?	2018-07-07 17:08:40	2018-07-07 17:08:40
-223	For implements Symfony\\Component\\Security\\Core\\User\\UserInterface which method you have to define ?	2018-07-07 17:08:40	2018-07-07 17:08:40
-224	For implements Symfony\\Component\\Security\\Core\\User\\UserProviderInterface which method you have to define ?	2018-07-07 17:08:40	2018-07-07 17:08:40
-225	How to perform a redirection on example.org in a controller?	2018-07-07 17:08:41	2018-07-07 17:08:41
-226	Which method(s) can be used to retrieve a service in a controller?	2018-07-07 17:08:41	2018-07-07 17:08:41
-227	Which class may be extended by your controllers?	2018-07-07 17:08:41	2018-07-07 17:08:41
-228	Which of these annotations can be used in a controller?	2018-07-07 17:08:41	2018-07-07 17:08:41
-229	Which of these response objects does not exists?	2018-07-07 17:08:41	2018-07-07 17:08:41
-230	Which class will you use to convert an action parameter?	2018-07-07 17:08:41	2018-07-07 17:08:41
-231	Which controller/action allows to render a template without a specific controller?	2018-07-07 17:08:41	2018-07-07 17:08:41
-232	Which of these variables are available in Controllers?	2018-07-07 17:08:41	2018-07-07 17:08:41
-233	According to this action :\n\n/**\n * @Route("/comment/{postSlug}/new", name = "comment_new")\n *\n */\npublic function newAction(Request $request, Post $post)\n{\n    // ...\n}\n\n\nHow my ParamConverter should be configured to match "postSlug" params with "slug" in Post ?\n	2018-07-07 17:08:41	2018-07-07 17:08:41
+1	Psr-3 LoggerInterface exposes eight methods to write logs to the eight RFC 5424 levels, which level does not exist ?	2018-07-07 23:49:36	2018-07-07 23:49:36
+2	Which methods is not in Psr-3	2018-07-07 23:49:36	2018-07-07 23:49:36
+3	In Psr-3 what delimiter is used for placeholder names ?	2018-07-07 23:49:36	2018-07-07 23:49:36
+4	Which Psr is about autoloading ?	2018-07-07 23:49:36	2018-07-07 23:49:36
+5	According to Psr-2, Which code is correct ?	2018-07-07 23:49:36	2018-07-07 23:49:36
+6	According to Psr-1 methods have to be declared like ?	2018-07-07 23:49:36	2018-07-07 23:49:36
+7	Which Psr is about caching ?	2018-07-07 23:49:36	2018-07-07 23:49:36
+8	Which Psr is deprecated now ?	2018-07-07 23:49:36	2018-07-07 23:49:36
+9	Which line allows to inject the my.custom.service?	2018-07-07 23:49:36	2018-07-07 23:49:36
+10	Which types of injection are available in the component?	2018-07-07 23:49:36	2018-07-07 23:49:36
+11	Using XML, which of these lines are correct to inject a service?	2018-07-07 23:49:36	2018-07-07 23:49:36
+12	Which of these methods are available in ContainerInterface?	2018-07-07 23:49:36	2018-07-07 23:49:36
+13	Using YML, which line allows to inject proxy of the service?	2018-07-07 23:49:36	2018-07-07 23:49:36
+14	Which method from CompilerPassInterface can modify the container here before it is dumped to PHP code?	2018-07-07 23:49:36	2018-07-07 23:49:36
+15	Using Dependency Injection, what is the correct way to override a service class using ContainerBuilder class?	2018-07-07 23:49:36	2018-07-07 23:49:36
+16	Using a compiler pass, how do you retrieve a definition of service ?	2018-07-07 23:49:36	2018-07-07 23:49:36
+17	What are existing compiler pass order ?	2018-07-07 23:49:36	2018-07-07 23:49:36
+18	As dev environment, what is the name of dumped container ?	2018-07-07 23:49:36	2018-07-07 23:49:36
+19	True or false, parameters can also contain array values ?	2018-07-07 23:49:36	2018-07-07 23:49:36
+20	What is the correct syntax to inject a service app.mailer ?	2018-07-07 23:49:36	2018-07-07 23:49:36
+21	What is the correct syntax to inject a parameter mailer.transport ?	2018-07-07 23:49:36	2018-07-07 23:49:36
+22	How to define a service as private ?	2018-07-07 23:49:36	2018-07-07 23:49:36
+23	True or False, With default configuration each time you retrieve the service, you'll get the same instance ?	2018-07-07 23:49:36	2018-07-07 23:49:36
+24	Using Twig, how to render flash messages of key "success" in a template?	2018-07-07 23:49:36	2018-07-07 23:49:36
+25	Using Twig, how to render a text string in uppercase? ("test" must become "TEST")	2018-07-07 23:49:36	2018-07-07 23:49:36
+26	Using Twig, syntax {% block example '' %} is equivalent to {% block example %}{% endblock %}	2018-07-07 23:49:36	2018-07-07 23:49:36
+27	Using Twig, how to declare a variable in a template?	2018-07-07 23:49:36	2018-07-07 23:49:36
+28	In class \\Twig_Extension, which method returns list of functions?	2018-07-07 23:49:36	2018-07-07 23:49:36
+29	Using Twig, which comparison operator is not available?	2018-07-07 23:49:36	2018-07-07 23:49:36
+30	Using Twig, what syntax used to execute statements?	2018-07-07 23:49:36	2018-07-07 23:49:36
+31	Using Twig, how to check if current user has role "ROLE_TEST"?	2018-07-07 23:49:36	2018-07-07 23:49:36
+32	Which Twig syntax allow to get the authenticated user name ?	2018-07-07 23:49:36	2018-07-07 23:49:36
+33	If you want to overwrite the 404 page, what is the relative path of the template to create ?	2018-07-07 23:49:36	2018-07-07 23:49:36
+34	In twig, what do you use if you want to optimize the size of the generated HTML content?	2018-07-07 23:49:36	2018-07-07 23:49:36
+35	In Twig, which other Twig tag works as the old raw tag, for when you want to display code and not be parsed?	2018-07-07 23:49:36	2018-07-07 23:49:36
+36	In Twig, the batch filter:	2018-07-07 23:49:37	2018-07-07 23:49:37
+37	In Twig, when compiling a node tree how can you change the default compiler on your $twig object	2018-07-07 23:49:37	2018-07-07 23:49:37
+38	In Twig which loader can you use to load templates from a database and the filesystem simultaneously?	2018-07-07 23:49:37	2018-07-07 23:49:37
+39	in Twig, name which one is not a method of the Twig_Filter class:	2018-07-07 23:49:37	2018-07-07 23:49:37
+40	In Twig, a visitor priority varies between:	2018-07-07 23:49:37	2018-07-07 23:49:37
+41	In Twig, all these classes Escaper, Optimizer, SafeAnalysis, Sandbox share common methods :	2018-07-07 23:49:37	2018-07-07 23:49:37
+42	In Twig this statement is valid:	2018-07-07 23:49:37	2018-07-07 23:49:37
+43	in Twig, suppose you have an object person	2018-07-07 23:49:37	2018-07-07 23:49:37
+44	In Twig:	2018-07-07 23:49:37	2018-07-07 23:49:37
+45	There is a lesser known templating component with which you can build your own templating system not php and not twig.	2018-07-07 23:49:37	2018-07-07 23:49:37
+46	In Symfony there is a lesser known templating component that is heavily used by Twig.	2018-07-07 23:49:37	2018-07-07 23:49:37
+47	In Twig, how to render a controller asynchronously ?	2018-07-07 23:49:37	2018-07-07 23:49:37
+48	True or false ? path() Twig function generates absolute urls.	2018-07-07 23:49:37	2018-07-07 23:49:37
+49	Using Twig, what syntax used to print the content of a variable ?	2018-07-07 23:49:37	2018-07-07 23:49:37
+50	Using Twig, what syntax used to add comments ?	2018-07-07 23:49:37	2018-07-07 23:49:37
+51	What is the correct way to render a ESI tag using HTML?	2018-07-07 23:49:37	2018-07-07 23:49:37
+52	What is the Twig function to render an ESI?	2018-07-07 23:49:37	2018-07-07 23:49:37
+53	Which HTTP headers belongs to expiration cache model?	2018-07-07 23:49:37	2018-07-07 23:49:37
+54	Which HTTP headers belongs to validation cache model?	2018-07-07 23:49:37	2018-07-07 23:49:37
+55	Which HTTP status code must be returned if the cache is still valid ?	2018-07-07 23:49:37	2018-07-07 23:49:37
+56	True or False ? ESI need to be activated in configuration.	2018-07-07 23:49:37	2018-07-07 23:49:37
+57	According to HTTP/1.1 what is the max value for Expires ?	2018-07-07 23:49:37	2018-07-07 23:49:37
+58	True or False ? You can use both validation and expiration within the same Response.	2018-07-07 23:49:37	2018-07-07 23:49:37
+59	True or False ? Using ETag saves CPU cycles.	2018-07-07 23:49:37	2018-07-07 23:49:37
+60	Using XML or YAML, how to declare a route for a specific domain/host?	2018-07-07 23:49:37	2018-07-07 23:49:37
+61	What variable can be used as controller argument to get the name of the route name?	2018-07-07 23:49:37	2018-07-07 23:49:37
+62	Using XML, how to ensure that a route is accessed via HTTPS?	2018-07-07 23:49:37	2018-07-07 23:49:37
+63	Three special routing parameters are available in Symfony:	2018-07-07 23:49:37	2018-07-07 23:49:37
+64	How to generate absolute URL for a given route in controller ?	2018-07-07 23:49:37	2018-07-07 23:49:37
+65	Which controller/action allows to render a template without a specific controller?	2018-07-07 23:49:37	2018-07-07 23:49:37
+66	What is the LoggerInterface correct namespace?	2018-07-07 23:49:37	2018-07-07 23:49:37
+67	Using a dev environment, what is the correct cached file name of the dependency injection container?	2018-07-07 23:49:37	2018-07-07 23:49:37
+68	Using a dev environment, what is the correct cached file name of the generated configuration routes?	2018-07-07 23:49:37	2018-07-07 23:49:37
+69	Using Symfony\\Component\\Debug\\Debug static class, what is the only method available?	2018-07-07 23:49:37	2018-07-07 23:49:37
+70	In order to be able to use render_hinclude(url(...)), we need to add this configuration in ``framework` section:	2018-07-07 23:49:37	2018-07-07 23:49:37
+71	What is the correct CssSelector class namespace?	2018-07-07 23:49:37	2018-07-07 23:49:37
+72	Event Listeners is use to Regrouping multiple listeners inside a single class ?	2018-07-07 23:49:37	2018-07-07 23:49:37
+73	Using Console, what is the correct filename for a command?	2018-07-07 23:49:37	2018-07-07 23:49:37
+74	How to render properly template located in src/Acme/TestBundle/Resources/views/Question/Item/list.html.twig?	2018-07-07 23:49:37	2018-07-07 23:49:37
+75	Service naming conventions: select all valid services identifiers	2018-07-07 23:49:37	2018-07-07 23:49:37
+76	In order to use validation group, which interface will you implement on your object?	2018-07-07 23:49:37	2018-07-07 23:49:37
+77	Using Validator component, which method is used to validate a value against a constraint?	2018-07-07 23:49:37	2018-07-07 23:49:37
+78	True or False ? All entities have at least 2 validation groups.	2018-07-07 23:49:37	2018-07-07 23:49:37
+79	True or False ? We can also apply constraints on class getters with ``addPropertyConstraint()``	2018-07-07 23:49:37	2018-07-07 23:49:37
+80	True or False ? In Symfony:	2018-07-07 23:49:37	2018-07-07 23:49:37
+81	Which constraints exist?	2018-07-07 23:49:37	2018-07-07 23:49:37
+82	Which annotation are valid ?	2018-07-07 23:49:37	2018-07-07 23:49:37
+83	How to tell the validator to use a specific group ?	2018-07-07 23:49:37	2018-07-07 23:49:37
+84	[SF3] What is the default signal sent by Process component to stop a process ?	2018-07-07 23:49:38	2018-07-07 23:49:38
+85	[SF3] What can be placed in ????? to be valid?\n\n  use Symfony\\Component\\Yaml\\Yaml;\n\n  $value = Yaml::parse(?????);\n	2018-07-07 23:49:38	2018-07-07 23:49:38
+86	Which helper is not available in the Console component?	2018-07-07 23:49:38	2018-07-07 23:49:38
+87	Which event is not available in the Console Component?	2018-07-07 23:49:38	2018-07-07 23:49:38
+88	How to launch Console application in interactive mode?	2018-07-07 23:49:38	2018-07-07 23:49:38
+89	Using Console component, which of these events are available in Symfony\\Component\\Console\\ConsoleEvents?	2018-07-07 23:49:38	2018-07-07 23:49:38
+90	Using Console component, which of these class allows to create custom output styles?	2018-07-07 23:49:38	2018-07-07 23:49:38
+91	What is the console command to create a new bundle?	2018-07-07 23:49:38	2018-07-07 23:49:38
+92	Which argument can be passed to the router:debug command?	2018-07-07 23:49:38	2018-07-07 23:49:38
+93	What is the command to check the syntax of a Twig template?	2018-07-07 23:49:38	2018-07-07 23:49:38
+94	What is the console command to clear cache?	2018-07-07 23:49:38	2018-07-07 23:49:38
+95	Which tag name you should use when you register command as service?	2018-07-07 23:49:38	2018-07-07 23:49:38
+96	What is the command line to list all known entities by doctrine 2 in your project ?	2018-07-07 23:49:38	2018-07-07 23:49:38
+97	What is the command line to validate the doctrine mapping files ?	2018-07-07 23:49:38	2018-07-07 23:49:38
+98	How do you display complete configuration of a bundle ?	2018-07-07 23:49:38	2018-07-07 23:49:38
+99	Descriptors are objects to render documentation on Symfony Console Apps?	2018-07-07 23:49:38	2018-07-07 23:49:38
+100	Does the Symfony Console component needs PHP globals internals variables to work?	2018-07-07 23:49:38	2018-07-07 23:49:38
+101	What is the console command to create a new entity?	2018-07-07 23:49:38	2018-07-07 23:49:38
+102	What is the command to update the database from entities?	2018-07-07 23:49:38	2018-07-07 23:49:38
+103	What is the right command name to load Doctrine fixtures?	2018-07-07 23:49:38	2018-07-07 23:49:38
+104	Symfony Console: which one(s) are valid verbosity levels ?	2018-07-07 23:49:38	2018-07-07 23:49:38
+105	Symfony Console: InputArgument::REQUIRED, InputArgument::OPTIONAL and ... ?	2018-07-07 23:49:38	2018-07-07 23:49:38
+106	Symfony Console: which of the following sentences are true?	2018-07-07 23:49:38	2018-07-07 23:49:38
+107	Which function are mandatory to your command class ?	2018-07-07 23:49:38	2018-07-07 23:49:38
+108	Which Question class are available ?	2018-07-07 23:49:38	2018-07-07 23:49:38
+109	How to Call Other Commands in a command ?	2018-07-07 23:49:38	2018-07-07 23:49:38
+110	Using PHPUnit, which method names are used to share test setup code?	2018-07-07 23:49:38	2018-07-07 23:49:38
+111	How to disable constructor when mocking an object?	2018-07-07 23:49:38	2018-07-07 23:49:38
+112	Which Symfony class offers method to test commands?	2018-07-07 23:49:38	2018-07-07 23:49:38
+113	Using PHPUnit, which method allows to specify a mock response on second call?	2018-07-07 23:49:38	2018-07-07 23:49:38
+114	Using PHPUnit, which method allows you to expect an exception to be thrown?	2018-07-07 23:49:38	2018-07-07 23:49:38
+115	What command used for run all of your application tests by default?	2018-07-07 23:49:38	2018-07-07 23:49:38
+116	Where live functional tests in Symfony (inside a bundle structure)?	2018-07-07 23:49:38	2018-07-07 23:49:38
+117	Using Symfony\\Component\\BrowserKit\\Client which of these methods can be called?	2018-07-07 23:49:38	2018-07-07 23:49:38
+118	Using Swiftmailer, which of these configuration allows to disable email delivery?	2018-07-07 23:49:38	2018-07-07 23:49:38
+119	Using the Crawler client, how to follow a redirection ?	2018-07-07 23:49:38	2018-07-07 23:49:38
+120	What is the short open tag for PHP?	2018-07-07 23:49:38	2018-07-07 23:49:38
+121	Which of these operators is non-associative?	2018-07-07 23:49:38	2018-07-07 23:49:38
+122	Since PHP 5.6+, if function foo() is defined in the namespace Myapp\\Utils\\Bar and your code is in namespace Myapp, what is the correct way to import the foo() function?	2018-07-07 23:49:38	2018-07-07 23:49:38
+123	True or False? It is possible to import all classes from a namespace in PHP.	2018-07-07 23:49:38	2018-07-07 23:49:38
+124	Which web services are supported natively in PHP?	2018-07-07 23:49:38	2018-07-07 23:49:38
+125	Variable names and function names are, respectively:	2018-07-07 23:49:38	2018-07-07 23:49:38
+126	Does PHP support function overloading?	2018-07-07 23:49:38	2018-07-07 23:49:38
+127	Which of the following statements is not true?	2018-07-07 23:49:38	2018-07-07 23:49:38
+128	Which of the following function declarations must be used to return a reference?	2018-07-07 23:49:38	2018-07-07 23:49:38
+129	The ______ keyword is used to indicate an incomplete class or method, which must be further extended and/or implemented in order to be used.	2018-07-07 23:49:38	2018-07-07 23:49:38
+130	According to the PHP Framework Interoperability Group, which PSRs concern best coding practices ?	2018-07-07 23:49:38	2018-07-07 23:49:38
+131	Since PHP 5.4, which functionality allows horizontal composition of behavior ?	2018-07-07 23:49:38	2018-07-07 23:49:38
+132	True or False ? A closure is a lambda function that is aware of its surrounding context.	2018-07-07 23:49:38	2018-07-07 23:49:38
+133	True or False ? A lambda function is a named PHP function that can be stored in a variable.	2018-07-07 23:49:38	2018-07-07 23:49:38
+134	Inside a form type, how to add a "date" field type in an input field?	2018-07-07 23:49:38	2018-07-07 23:49:38
+135	Which method allows you to handle the request on a form instance?	2018-07-07 23:49:38	2018-07-07 23:49:38
+136	From a Form instance, which method can you call to obtain a FormView instance?	2018-07-07 23:49:38	2018-07-07 23:49:38
+137	In a Twig template, which function render a form field?	2018-07-07 23:49:38	2018-07-07 23:49:38
+138	Using Form factory, how to define a CSRF provider?	2018-07-07 23:49:38	2018-07-07 23:49:38
+139	Using Form component, which option can you use into setDefaultOptions() method to define CSRF field name?	2018-07-07 23:49:38	2018-07-07 23:49:38
+140	Using Form component, option csrf_error_message can be use in setDefaultOptions() to define a custom CSRF error message?	2018-07-07 23:49:38	2018-07-07 23:49:38
+141	Using Form component, which option will allow you to specify groups used for validation?	2018-07-07 23:49:38	2018-07-07 23:49:38
+142	Which form event exist?	2018-07-07 23:49:38	2018-07-07 23:49:38
+143	What data is inside FormEvent object at FormEvents::PRE_SET_DATA?	2018-07-07 23:49:38	2018-07-07 23:49:38
+144	What data is inside FormEvent object at FormEvents::PRE_SUBMIT?	2018-07-07 23:49:38	2018-07-07 23:49:38
+145	Which one of these types extends from text?	2018-07-07 23:49:38	2018-07-07 23:49:38
+146	Which date type exist?	2018-07-07 23:49:38	2018-07-07 23:49:38
+147	How do you bind a constraint to a form field?	2018-07-07 23:49:38	2018-07-07 23:49:38
+148	Using form component, option "error_bubbling" will include error in current field.	2018-07-07 23:49:38	2018-07-07 23:49:38
+149	How do you set default value?	2018-07-07 23:49:38	2018-07-07 23:49:38
+150	Your Form class must extends ____ 	2018-07-07 23:49:38	2018-07-07 23:49:38
+151	How to add an extra field `extra` with the form ?	2018-07-07 23:49:38	2018-07-07 23:49:38
+152	How do you render all the form fields in twig ?	2018-07-07 23:49:38	2018-07-07 23:49:38
+153	If you use form_widget() on a single fields, which parts are render ?	2018-07-07 23:49:38	2018-07-07 23:49:38
+154	According to Symfony best practices, where you should add buttons ?	2018-07-07 23:49:38	2018-07-07 23:49:38
+155	Which Field type exist?	2018-07-07 23:49:38	2018-07-07 23:49:38
+156	How to Disable the Validation of Submitted Data	2018-07-07 23:49:38	2018-07-07 23:49:38
+157	What data is inside FormEvent object at FormEvents::POST_SET_DATA?	2018-07-07 23:49:38	2018-07-07 23:49:38
+158	Which form event dont exist?	2018-07-07 23:49:38	2018-07-07 23:49:38
+159	How do you upload a UploadedFile ?	2018-07-07 23:49:38	2018-07-07 23:49:38
+160	How to Use Data Transformers ?	2018-07-07 23:49:38	2018-07-07 23:49:38
+161	Which of these HTTP headers does not exist?	2018-07-07 23:49:39	2018-07-07 23:49:39
+162	Which one of these Response methods check if cache must be revalidated?	2018-07-07 23:49:39	2018-07-07 23:49:39
+163	Using a Response instance, which of these methods are available to check status code?	2018-07-07 23:49:39	2018-07-07 23:49:39
+164	How to access the `foo` GET parameter from Request object $request ?	2018-07-07 23:49:39	2018-07-07 23:49:39
+165	How to access the `bar` POST parameter from Request object $request ?	2018-07-07 23:49:39	2018-07-07 23:49:39
+166	The method getLanguages() from Request object:	2018-07-07 23:49:39	2018-07-07 23:49:39
+167	How to get the Content Type from Request ?	2018-07-07 23:49:39	2018-07-07 23:49:39
+168	How to check if a request has been sent using AJAX ?	2018-07-07 23:49:39	2018-07-07 23:49:39
+169	Which Response subclasses are available?	2018-07-07 23:49:39	2018-07-07 23:49:39
+170	Which HTTP status code should for a resource that moved temporarily ?	2018-07-07 23:49:39	2018-07-07 23:49:39
+171	True or False ? Server returns an 403 HTTP status code when you are not allowed to access a resource	2018-07-07 23:49:39	2018-07-07 23:49:39
+172	Which method exist in Symfony\\Component\\HttpFoundation\\Request ?	2018-07-07 23:49:39	2018-07-07 23:49:39
+173	How can you set status code of Symfony\\Component\\HttpFoundation\\Response	2018-07-07 23:49:39	2018-07-07 23:49:39
+174	To override the 404 error template for HTML page, how should you name the template ?	2018-07-07 23:49:39	2018-07-07 23:49:39
+175	Where are publicly located bundles assets?	2018-07-07 23:49:39	2018-07-07 23:49:39
+176	What is the Symfony mail service transport parameter name?	2018-07-07 23:49:39	2018-07-07 23:49:39
+177	What is the path to set session cookie_lifetime parameter in a project configuration?	2018-07-07 23:49:39	2018-07-07 23:49:39
+178	Which design pattern implements the EventDispatcher component?	2018-07-07 23:49:39	2018-07-07 23:49:39
+179	What is the right parameter path to set a version number for assets?	2018-07-07 23:49:39	2018-07-07 23:49:39
+180	Which method from EventSubscriberInterface return array of events that subscriber wants to listen to?	2018-07-07 23:49:39	2018-07-07 23:49:39
+181	Which method from EventDispatcherInterface forwarding an event to all registered listeners?	2018-07-07 23:49:39	2018-07-07 23:49:39
+182	Which method allows to prevent any other Event listeners from being called?	2018-07-07 23:49:39	2018-07-07 23:49:39
+183	Is it possible to detect if an Event was stopped during runtime?	2018-07-07 23:49:39	2018-07-07 23:49:39
+184	Using FrameworkBundle configuration, what is the correct path to fill proxies IP?	2018-07-07 23:49:39	2018-07-07 23:49:39
+185	Using FrameworkBundle configuration, what is the default framework.templating.assets_version_format value?	2018-07-07 23:49:39	2018-07-07 23:49:39
+186	Using ClassLoader component, which class can be used to autoload a static class map?	2018-07-07 23:49:39	2018-07-07 23:49:39
+187	Instantiating a new Symfony\\Component\\HttpKernel\\Kernel, what is the correct arguments order?	2018-07-07 23:49:39	2018-07-07 23:49:39
+188	What is the prefix of environment variables used by Symfony?	2018-07-07 23:49:39	2018-07-07 23:49:39
+189	In Kernel class, which method do you need to redefine if you want to have multiple configuration files (config_dev.yml, config_test.yml, ...)?	2018-07-07 23:49:39	2018-07-07 23:49:39
+190	According to Symfony best practices, ____ is/are located in _____ file/folder.	2018-07-07 23:49:39	2018-07-07 23:49:39
+191	Where can you find the file `form_table_layout.html.twig` ?	2018-07-07 23:49:39	2018-07-07 23:49:39
+192	If you pass 0 (zero) as third parameter (int $indent) in \\Symfony\\Component\\Yaml\\Yaml::dump, the generated YAML string will be indented with tabs	2018-07-07 23:49:39	2018-07-07 23:49:39
+193	Symfony is released under which license ?	2018-07-07 23:49:39	2018-07-07 23:49:39
+194	Which kernel event exist ?	2018-07-07 23:49:39	2018-07-07 23:49:39
+195	Arguments are resolve before to Call Controller ?	2018-07-07 23:49:39	2018-07-07 23:49:39
+196	How do you detect if an Event was stopped during runtime?	2018-07-07 23:49:39	2018-07-07 23:49:39
+197	What is the method name in the Kernel class to enable bundles?	2018-07-07 23:49:39	2018-07-07 23:49:39
+198	Which method is executed once when bundle is loaded after cache is cleared?	2018-07-07 23:49:39	2018-07-07 23:49:39
+199	Which of these bundles comes with the Symfony Standard Edition?	2018-07-07 23:49:39	2018-07-07 23:49:39
+200	Using Config component, which class is used to define hierarchy of configuration values?	2018-07-07 23:49:39	2018-07-07 23:49:39
+201	Using Config component, which of these configuration node types are available?	2018-07-07 23:49:39	2018-07-07 23:49:39
+202	Using Config component, which of these methods are existing?	2018-07-07 23:49:39	2018-07-07 23:49:39
+203	Which method allows to override bundle in a bundle class?	2018-07-07 23:49:39	2018-07-07 23:49:39
+204	What is the correct load() method definition in Symfony\\Component\\DependencyInjection\\Extension\\ExtensionInterface?	2018-07-07 23:49:39	2018-07-07 23:49:39
+205	Using Symfony dependency injection container, how can you retrieve all bundles list?	2018-07-07 23:49:39	2018-07-07 23:49:39
+206	True or False ? the entry point of a Bundle MUST implement `Symfony\\Component\\HttpKernel\\Bundle\\BundleInterface` interface.	2018-07-07 23:49:39	2018-07-07 23:49:39
+207	According to Symfony best practices, which files files are mandatory in your bundle AcmeNameBundle directory Structure ?	2018-07-07 23:49:39	2018-07-07 23:49:39
+208	Which line is correct to add a security.access_control line?	2018-07-07 23:49:39	2018-07-07 23:49:39
+209	After a login success, what is the parameter name to redirect on referer URL?	2018-07-07 23:49:39	2018-07-07 23:49:39
+210	In Symfony Security component:	2018-07-07 23:49:39	2018-07-07 23:49:39
+211	Is user authenticated in all of security firewalls after a successful login:	2018-07-07 23:49:39	2018-07-07 23:49:39
+212	How to force a secure area to use the HTTPS protocol in the security config?	2018-07-07 23:49:39	2018-07-07 23:49:39
+213	What is the purpose of security encoders in security.yml?	2018-07-07 23:49:39	2018-07-07 23:49:39
+214	Which authentication events exist in the Security component?	2018-07-07 23:49:39	2018-07-07 23:49:39
+215	What does the default strategy `affirmative` of the access decision manager mean?	2018-07-07 23:49:39	2018-07-07 23:49:39
+216	What does the strategy `consensus` of the access decision manager mean?	2018-07-07 23:49:39	2018-07-07 23:49:39
+217	What does the strategy `unanimous` of the access decision manager mean?	2018-07-07 23:49:39	2018-07-07 23:49:39
+218	What decision strategy exist ?	2018-07-07 23:49:39	2018-07-07 23:49:39
+219	How to Restrict Firewalls to a Specific Request Pattern ?	2018-07-07 23:49:39	2018-07-07 23:49:39
+220	Which annotation is valid to check role ?	2018-07-07 23:49:39	2018-07-07 23:49:39
+221	Which default role exist ?	2018-07-07 23:49:39	2018-07-07 23:49:39
+222	How can you deny access to user in your controller ?	2018-07-07 23:49:39	2018-07-07 23:49:39
+223	For implements Symfony\\Component\\Security\\Core\\User\\UserInterface which method you have to define ?	2018-07-07 23:49:39	2018-07-07 23:49:39
+224	For implements Symfony\\Component\\Security\\Core\\User\\UserProviderInterface which method you have to define ?	2018-07-07 23:49:39	2018-07-07 23:49:39
+225	How to perform a redirection on example.org in a controller?	2018-07-07 23:49:39	2018-07-07 23:49:39
+226	Which method(s) can be used to retrieve a service in a controller?	2018-07-07 23:49:39	2018-07-07 23:49:39
+227	Which class may be extended by your controllers?	2018-07-07 23:49:39	2018-07-07 23:49:39
+228	Which of these annotations can be used in a controller?	2018-07-07 23:49:39	2018-07-07 23:49:39
+229	Which of these response objects does not exists?	2018-07-07 23:49:39	2018-07-07 23:49:39
+230	Which class will you use to convert an action parameter?	2018-07-07 23:49:39	2018-07-07 23:49:39
+231	Which controller/action allows to render a template without a specific controller?	2018-07-07 23:49:39	2018-07-07 23:49:39
+232	Which of these variables are available in Controllers?	2018-07-07 23:49:39	2018-07-07 23:49:39
+233	According to this action :\n\n/**\n * @Route("/comment/{postSlug}/new", name = "comment_new")\n *\n */\npublic function newAction(Request $request, Post $post)\n{\n    // ...\n}\n\n\nHow my ParamConverter should be configured to match "postSlug" params with "slug" in Post ?\n	2018-07-07 23:49:39	2018-07-07 23:49:39
 \.
 
 
@@ -2063,8 +2051,9 @@ COPY public.tbl_question_category (question_id, category_id) FROM stdin;
 -- Data for Name: tbl_quiz; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.tbl_quiz (id, title, summary, number_of_questions, active, created_at, updated_at) FROM stdin;
-1	Symfony 3	Questions about all themes of Symfony 3	10	t	2018-07-07 17:09:20	2018-07-07 17:09:20
+COPY public.tbl_quiz (id, title, summary, number_of_questions, active, created_at, updated_at, show_result_question, show_result_quiz) FROM stdin;
+1	Symfony 3	\N	10	t	2018-07-07 23:49:51	2018-07-07 23:49:51	f	f
+2	Standardization	\N	3	t	2018-07-07 23:50:00	2018-07-07 23:50:00	t	f
 \.
 
 
@@ -2074,6 +2063,7 @@ COPY public.tbl_quiz (id, title, summary, number_of_questions, active, created_a
 
 COPY public.tbl_quiz_category (quiz_id, category_id) FROM stdin;
 1	2
+2	10
 \.
 
 
@@ -2082,10 +2072,10 @@ COPY public.tbl_quiz_category (quiz_id, category_id) FROM stdin;
 --
 
 COPY public.tbl_user (id, username, email, password, is_active, roles) FROM stdin;
-1	superadmin	superadmin@domain.tld	$2y$13$Sp/b49sD1PbTBHmAGuqxSO8F9O7OkKj2r9wONtlbeuw3V0d98FAEi	t	a:2:{i:0;s:16:"ROLE_SUPER_ADMIN";i:1;s:9:"ROLE_USER";}
-2	admin	admin@domain.tld	$2y$13$m/QthFTPhbf/bxL0Opq7a.Ur.qwsRQsMnzYAyJT2Z74J6L115PQdK	t	a:2:{i:0;s:10:"ROLE_ADMIN";i:1;s:9:"ROLE_USER";}
-3	teacher	teacher@domain.tld	$2y$13$YXE8Aa6VsZJ11.SPnCIxkeOqQvO.Hr6PBOoj6FZz2iw64Jv/iIhKy	t	a:2:{i:0;s:12:"ROLE_TEACHER";i:1;s:9:"ROLE_USER";}
-4	user	user@domain.tld	$2y$13$aq2oQJQtbfdUXA1T9J1dfe7AXy.Eu5jafMmg14r7.3SnLGDOImShK	t	a:1:{i:0;s:9:"ROLE_USER";}
+1	superadmin	superadmin@domain.tld	$2y$13$U2R8CJmA8Syouc0elysEK.ZpCEh3.KAIOMX4SdQOGQxQe5lKQ/gE6	t	a:2:{i:0;s:16:"ROLE_SUPER_ADMIN";i:1;s:9:"ROLE_USER";}
+2	admin	admin@domain.tld	$2y$13$lwx/zV8/liy8k3cgznNH1eL/Cmpj5wR61sPhu5.QaiA.8Ttc5sl/K	t	a:2:{i:0;s:10:"ROLE_ADMIN";i:1;s:9:"ROLE_USER";}
+3	teacher	teacher@domain.tld	$2y$13$4xmLeL6dmV/BFNkAIU1OK.87pGQt6N8LnRFkiqsojthQTa.2fEnFK	t	a:2:{i:0;s:12:"ROLE_TEACHER";i:1;s:9:"ROLE_USER";}
+4	user	user@domain.tld	$2y$13$O/gyxyL9DDXVjwug9ssGHOPR.z520lXF8R0wn8IAVEqpEDQeqUlOG	t	a:1:{i:0;s:9:"ROLE_USER";}
 \.
 
 
@@ -2136,7 +2126,7 @@ SELECT pg_catalog.setval('public.tbl_question_id_seq', 233, true);
 -- Name: tbl_quiz_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.tbl_quiz_id_seq', 1, true);
+SELECT pg_catalog.setval('public.tbl_quiz_id_seq', 2, true);
 
 
 --

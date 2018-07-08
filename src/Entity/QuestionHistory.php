@@ -20,11 +20,6 @@ class QuestionHistory
     private $id;
 
     /**
-     * @ORM\Column(type="datetime_immutable")
-     */
-    private $date_time;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Workout", inversedBy="questionsHistory")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -60,6 +55,16 @@ class QuestionHistory
      */
     private $answersHistory;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $started_at;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $ended_at;
+
 
     public function __construct()
     {
@@ -69,18 +74,6 @@ class QuestionHistory
     public function getId()
     {
         return $this->id;
-    }
-
-    public function getDateTime(): ?\DateTimeImmutable
-    {
-        return $this->date_time;
-    }
-
-    public function setDateTime(\DateTimeImmutable $date_time): self
-    {
-        $this->date_time = $date_time;
-
-        return $this;
     }
 
     public function getWorkout(): ?Workout
@@ -182,6 +175,30 @@ class QuestionHistory
                 $answersHistory->setQuestionHistory(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStartedAt(): ?\DateTimeInterface
+    {
+        return $this->started_at;
+    }
+
+    public function setStartedAt(\DateTimeInterface $started_at): self
+    {
+        $this->started_at = $started_at;
+
+        return $this;
+    }
+
+    public function getEndedAt(): ?\DateTimeInterface
+    {
+        return $this->ended_at;
+    }
+
+    public function setEndedAt(?\DateTimeInterface $ended_at): self
+    {
+        $this->ended_at = $ended_at;
 
         return $this;
     }

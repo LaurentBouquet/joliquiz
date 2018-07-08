@@ -18,11 +18,6 @@ class AnswerHistory
     private $id;
 
     /**
-     * @ORM\Column(type="datetime_immutable")
-     */
-    private $date_time;
-
-    /**
      * @ORM\Column(type="integer")
      */
     private $answer_id;
@@ -56,18 +51,6 @@ class AnswerHistory
     public function getId()
     {
         return $this->id;
-    }
-
-    public function getDateTime(): ?\DateTimeImmutable
-    {
-        return $this->date_time;
-    }
-
-    public function setDateTime(\DateTimeImmutable $date_time): self
-    {
-        $this->date_time = $date_time;
-
-        return $this;
     }
 
     public function getAnswerId(): ?int

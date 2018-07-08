@@ -17,7 +17,6 @@ class QuizType extends AbstractType
         $builder->add('title');
         $builder->add('summary');
         $builder->add('number_of_questions');
-        $builder->add('active');
         $builder->add('categories', EntityType::class, array(
                 'class' => Category::class,
                 'query_builder' => function (CategoryRepository $er) {
@@ -26,12 +25,15 @@ class QuizType extends AbstractType
                 'choice_label' => 'longname',
                 'multiple' => true
             ));
+        $builder->add('show_result_question');
+        $builder->add('active');
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Quiz::class,
+            'form_type' => 'student_questioning',
         ]);
     }
 }

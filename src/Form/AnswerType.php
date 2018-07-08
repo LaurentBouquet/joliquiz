@@ -16,10 +16,19 @@ class AnswerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         switch ($options['form_type']) {
-            case 'student':
+            case 'student_questioning':
                 $builder->add('workout_correct_given', CheckboxType::class, array(
                     'label' => false,
                     'text_property' => 'text',
+                    'required' => false,
+                ));
+                break;
+            case 'student_marking':
+                $builder->add('workout_correct_given', CheckboxType::class, array(
+                    'label' => false,
+                    'text_property' => 'text',
+                    'correct_given_property' => 'workout_correct_given',
+                    'correct_property' => 'correct',
                     'required' => false,
                 ));
                 break;
@@ -37,7 +46,7 @@ class AnswerType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Answer::class,
-            'form_type' => 'student',
+            'form_type' => 'student_questioning',
         ]);
     }
 }

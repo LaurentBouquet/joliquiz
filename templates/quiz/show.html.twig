@@ -8,24 +8,18 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ quiz.id }}</td>
-            </tr>
-            <tr>
                 <th>Title</th>
                 <td>{{ quiz.title }}</td>
             </tr>
+            {% if quiz.summary %}
             <tr>
                 <th>Summary</th>
                 <td>{{ quiz.summary }}</td>
             </tr>
+            {% endif %}
             <tr>
                 <th>Number_of_questions</th>
                 <td>{{ quiz.numberOfQuestions }}</td>
-            </tr>
-            <tr>
-                <th>Active</th>
-                <td>{{ quiz.active ? 'Yes' : 'No' }}</td>
             </tr>
             <tr>
                 <th>Categories</th>
@@ -34,6 +28,14 @@
                      - {{ category.longname }} <br>
                   {% endfor %}
                 </td>
+            </tr>
+            <tr>
+                <th>Result after question</th>
+                <td>{{ quiz.showResultQuestion ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Active</th>
+                <td>{{ quiz.active ? 'Yes' : 'No' }}</td>
             </tr>
             <tr>
                 <th>Created_at</th>

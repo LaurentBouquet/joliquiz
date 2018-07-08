@@ -33,92 +33,145 @@ class QuizController extends Controller
         //////////////
         // TODO mettre ces opérations d'historique dans un service
 
-        // // vérifier qu'il n'ait pas de triche
+        // Check that he does not cheat
         // $workoutRepository = $em->getRepository(Workout::Class);
         // $workoutInDatabase = $workoutRepository->findLastNotCompletedByStudent($user);
         // if ($workout != $workoutInDatabase) {
         //     throw $this->createNotFoundException();
         // }
 
-        // Mettre à jour date-heure de fin et n° de la dernière question
-        $questionNumber = $workout->getNumberOfQuestions() + 1;
-        $workout->setEndedAt(new \DateTime());
-        $workout->setNumberOfQuestions($questionNumber);
-        $em->persist($workout);
+        $questionNumber = $workout->getNumberOfQuestions();
+        $questionResult = 0;
+        $quiz = $workout->getQuiz();
 
-
-        // Relire (dans la BD) la question posée
+        // Re-read (from the database) the previous question
         $questionHistoryRepository = $em->getRepository(QuestionHistory::Class);
         $questionRepository = $em->getRepository(Question::Class);
         $lastQuestionHistory = $questionHistoryRepository->findLastByWorkout($workout);
         if ($lastQuestionHistory) {
+            $currentQuestionResult = +1;
             $lastQuestion = $questionRepository->findOneById($lastQuestionHistory->getQuestionId());
-            $form = $this->createForm(QuestionType::class, $lastQuestion, array('form_type'=>'student'));
+            $form = $this->createForm(QuestionType::class, $lastQuestion, array('form_type'=>'student_questioning'));
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
-                dump($lastQuestion->getText());
                 foreach ($lastQuestion->getAnswers() as $key => $lastAnswer) {
-                    dump($lastAnswer->getText());
-                    dump($lastAnswer->getWorkoutCorrectGiven());
-                    // Mémoriser l'historique des réponses
+                    // Save answers history
                     $newAnswerHistory = new AnswerHistory();
                     $newAnswerHistory->setQuestionHistory($lastQuestionHistory);
-                    $newAnswerHistory->setDateTime(new \DateTimeImmutable());
                     $newAnswerHistory->setAnswerId($lastAnswer->getId());
                     $newAnswerHistory->setAnswerText($lastAnswer->getText());
                     $newAnswerHistory->setAnswerCorrect($lastAnswer->getCorrect());
                     $newAnswerHistory->setCorrectGiven($lastAnswer->getWorkoutCorrectGiven());
-                    $newAnswerHistory->setAnswerSucces($lastAnswer->getWorkoutCorrectGiven() == $lastAnswer->getCorrect());
+                    $currentAnswerResult = $lastAnswer->getWorkoutCorrectGiven() == $lastAnswer->getCorrect();
+                    if (!$currentAnswerResult) {
+                        $currentQuestionResult = -1;
+                    }
+                    $newAnswerHistory->setAnswerSucces($currentAnswerResult);
                     $em->persist($newAnswerHistory);
-
                 }
             }
+            $lastQuestionHistory->setQuestionSuccess($currentQuestionResult==+1);
+            $questionResult = $currentQuestionResult;
+            $em->persist($lastQuestionHistory);
+
+            if (!$lastQuestionHistory->getEndedAt()) {
+                $lastQuestionHistory->setEndedAt(new \DateTime());
+                $lastQuestionHistory->setDuration(date_diff($lastQuestionHistory->getEndedAt(), $lastQuestionHistory->getStartedAt()));
+                $em->persist($lastQuestionHistory);
+                $workout->setEndedAt(new \DateTime());
+                $em->persist($workout);
+                $em->flush();
+
+                dump($questionResult);
+                if ($quiz->getShowResultQuestion()) {
+                    $form = $this->createForm(QuestionType::class, $lastQuestion, array('form_type'=>'student_marking'));
+                    return $this->render('quiz/workout.html.twig',
+                        [
+                            'id' => $workout->getId(),
+                            'quiz' => $quiz,
+                            'question' => $lastQuestion,
+                            'questionNumber' => $questionNumber,
+                            'questionResult' => $questionResult,
+                            'form' => $form->createView(),
+                        ]
+                    );
+                }
+            }
+
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-        // Tirer une question au hazard
-        $quiz = $workout->getQuiz();
-        $question = $questionRepository->findOneByRandomCategories($quiz->getCategories());
-        // Mémoriser l'historique de la nouvelle question posée
-        $newQuestionHistory = new QuestionHistory();
-        $newQuestionHistory->setWorkout($workout);
-        $newQuestionHistory->setDateTime(new \DateTimeImmutable());
-        $newQuestionHistory->setQuestionId($question->getId());
-        $newQuestionHistory->setQuestionText($question->getText());
-        $newQuestionHistory->setCompleted(false);
-        $em->persist($newQuestionHistory);
-        $em->flush();
-        // dump($newQuestionHistory);
-        dump($question->getText());
-        foreach ($question->getAnswers() as $key => $answer) {
-            dump($answer->getText());
-            dump($answer->getWorkoutCorrectGiven());
+        // Check if enough questions for this quiz
+        $questionsCount = $questionRepository->countByCategories($quiz->getCategories());
+        if ($questionsCount < $quiz->getNumberOfQuestions()) {
+            $this->addFlash('danger', 'Not enough questions for this quiz');
+            $form = $this->createForm(QuizType::class, $quiz, array('form_type'=>'student_questioning'));
+            return $this->render('quiz/end.html.twig',
+                [
+                    'id' => $workout->getId(),
+                    'quiz' => $quiz,
+                    'form' => $form->createView(),
+                ]
+            );
         }
-        //////////////
 
+        // Next question
+        if ($questionNumber < $quiz->getNumberOfQuestions()) {
+            $questionNumber++;
+            $workout->setNumberOfQuestions($questionNumber);
 
-        $form = $this->createForm(QuestionType::class, $question, array('form_type'=>'student'));
+            $questionHasBeenPosted = true;
+            while ($questionHasBeenPosted) {
+                // Draw a random question
+                $nextQuestion = $questionRepository->findOneRandomByCategories($quiz->getCategories());
+                // Check if this question has not already been posted
+                $questionsHistory = $questionHistoryRepository->findAllByWorkout($workout);
+                $questionHasBeenPosted = false;
+                foreach ($questionsHistory as $questionHistory) {
+                    if ($questionHistory->getQuestionId() == $nextQuestion->getId()) {
+                        $questionHasBeenPosted = true;
+                    }
+                }
+            }
 
-        return $this->render('quiz/workout.html.twig',
-            [
-                'id' => $workout->getId(),
-                'quiz' => $quiz,
-                'question' => $question,
-                'questionNumber' => $questionNumber,
-                'form' => $form->createView(),
-            ]
-        );
+            // Save the history of the new question
+            $newQuestionHistory = new QuestionHistory();
+            $newQuestionHistory->setWorkout($workout);
+            $newQuestionHistory->setStartedAt(new \DateTime());
+            $newQuestionHistory->setQuestionId($nextQuestion->getId());
+            $newQuestionHistory->setQuestionText($nextQuestion->getText());
+            $newQuestionHistory->setCompleted(false);
+            $em->persist($newQuestionHistory);
+            //////////////
+
+            $em->flush();
+
+            $form = $this->createForm(QuestionType::class, $nextQuestion, array('form_type'=>'student_questioning'));
+
+            dump($questionResult);
+            return $this->render('quiz/workout.html.twig',
+                [
+                    'id' => $workout->getId(),
+                    'quiz' => $quiz,
+                    'question' => $nextQuestion,
+                    'questionNumber' => $questionNumber,
+                    'questionResult' => 0,
+                    'form' => $form->createView(),
+                ]
+            );
+
+        } else {
+            // Quiz is completed then display end
+            $form = $this->createForm(QuizType::class, $quiz, array('form_type'=>'student_questioning'));
+
+            return $this->render('quiz/end.html.twig',
+                [
+                    'id' => $workout->getId(),
+                    'quiz' => $quiz,
+                    'form' => $form->createView(),
+                ]
+            );
+        }
     }
 
     /**
@@ -133,7 +186,7 @@ class QuizController extends Controller
         $workout->setStudent($user);
         $workout->setQuiz($quiz);
         $workout->setStartedAt(new \DateTime());
-        $workout->setEndedAt(new \DateTime());
+        // $workout->setEndedAt(new \DateTime());
         $workout->setNumberOfQuestions(0);
         $em->persist($workout);
         $em->flush();
@@ -168,13 +221,20 @@ class QuizController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //$em = $this->getDoctrine()->getManager();
-            $em->persist($quiz);
-            $em->flush();
 
-            return $this->redirectToRoute('quiz_index');
+            $questionRepository = $em->getRepository(Question::Class);
+
+            // Check if enough questions for this quiz
+            $questionsCount = $questionRepository->countByCategories($quiz->getCategories());
+            if ($questionsCount < $quiz->getNumberOfQuestions()) {
+                $this->addFlash('danger', 'Not enough questions ('.$questionsCount.') for this quiz');
+            }
+            else {
+                $em->persist($quiz);
+                $em->flush();
+                return $this->redirectToRoute('quiz_index');
+            }
         }
-
         return $this->render('quiz/new.html.twig', [
             'quiz' => $quiz,
             'form' => $form->createView(),

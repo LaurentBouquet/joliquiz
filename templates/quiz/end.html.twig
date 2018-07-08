@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Starting Quiz "{{ quiz.title }}{% endblock %}
+{% block title %}End Quiz "{{ quiz.title }}{% endblock %}
 
 {% block body %}
-    <h1>Starting Quiz "{{ id }}"</h1>
+    <h1>End Quiz "{{ id }}"</h1>
 
     <table class="table">
         <tbody>
@@ -22,7 +22,7 @@
             </tr>
             {% endif %}
             <tr>
-                <th>Number_of_questions</th>
+                <th>Number of questions</th>
                 <td>{{ quiz.numberOfQuestions }}</td>
             </tr>
         </tbody>
@@ -30,10 +30,5 @@
 
     <a href="{{ path('quiz_index') }}">back to list</a>
 
-    {% if is_granted('ROLE_USER') %}
-        <form action="{{ path('quiz_workout', {'id': id}) }}" method="post">
-            <button type="submit">{{ button_label|default('Next') }}</button>
-        </form>
-    {% endif %}
 
 {% endblock %}
