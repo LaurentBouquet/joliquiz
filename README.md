@@ -1,5 +1,7 @@
 ![JoliQuiz](https://raw.githubusercontent.com/LaurentBouquet/joliquiz/assets/JoliQuiz.png?raw=true)
 
+[![Build Status](https://travis-ci.org/LaurentBouquet/joliquiz.svg?branch=master)](https://travis-ci.org/LaurentBouquet/joliquiz)
+
 [![Deploy on Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 # Description
