@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}End Quiz "{{ quiz.title }}{% endblock %}
+
+{% block body %}
+    <h1>End Quiz "{{ id }}"</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Categories</th>
+                <td>
+                  {% for category in quiz.categories %}
+                     - {{ category.longname }} <br>
+                  {% endfor %}
+                </td>
+            </tr>
+            {% if quiz.summary %}
+            <tr>
+                <th>Summary</th>
+                <td>{{ quiz.summary }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th>Number of questions</th>
+                <td>{{ quiz.numberOfQuestions }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('quiz_index') }}">back to list</a>
+
+
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Question index{% endblock %}
+
+{% block body %}
+    <h1>Question index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Text</th>
+                <th>Categories</th>
+                {% if is_granted('ROLE_TEACHER') %}
+                    <th>Answers</th>
+                    <th>Actions</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+        {% for question in questions %}
+            <tr>
+                <td>{{ question.id }}</td>
+                <td>{{ question.text }}</td>
+                <td>
+                  {% for category in question.categories %}
+                     - {{ category.shortname }} <br>
+                  {% endfor %}
+                </td>
+                {% if is_granted('ROLE_TEACHER') %}
+                    <td>
+                      {% for answer in question.answers %}
+                         {% if answer.correct %}+{% else %}-{% endif %} {{ answer.text }} <br>
+                      {% endfor %}
+                    </td>
+                    <td>
+                        <a href="{{ path('question_show', {'id': question.id}) }}">show</a>
+                        <a href="{{ path('question_edit', {'id': question.id}) }}">edit</a>
+                    </td>
+                {% endif %}
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% if is_granted('ROLE_TEACHER') %}
+        <a href="{{ path('question_new') }}">Create new</a>
+    {% endif %}
+{% endblock %}

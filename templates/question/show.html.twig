@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Question{% endblock %}
+
+{% block body %}
+    <h1>Question</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ question.id }}</td>
+            </tr>
+            <tr>
+                <th>Text</th>
+                <td>{{ question.text }}</td>
+            </tr>
+            <tr>
+                <th>Categories</th>
+                <td>
+                  {% for category in question.categories %}
+                     - {{ category.longname }} <br>
+                  {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <th>Answers</th>
+                <td>
+                  {% for answer in question.answers %}
+                     {% if answer.correct %}+{% else %}-{% endif %} {{ answer.text }} <br>
+                  {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <th>Created_at</th>
+                <td>{{ question.createdAt ? question.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Updated_at</th>
+                <td>{{ question.updatedAt ? question.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('question_index') }}">back to list</a>
+
+    {% if is_granted('ROLE_TEACHER') %}
+        <a href="{{ path('question_edit', {'id': question.id}) }}">edit</a>
+    {% endif %}
+
+    {{ include('question/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,6 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    {% if is_granted('ROLE_TEACHER') %}
+        <button class="btn">{{ button_label|default('Save') }}</button>
+    {% endif %}
+{{ form_end(form) }}

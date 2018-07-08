@@ -5,6 +5,8 @@
     {{ form_row(form.roles) }}
 
     <a class="btn btn-secondary" href="{{ path('user_index') }}"><i class="fas fa-angle-left"></i> Back to list</a>
-    <button class="btn btn-primary"><i class="fas fa-check"></i> {{ button_label|default('Save') }}</button>
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <button class="btn btn-primary"><i class="fas fa-check"></i> {{ button_label|default('Save') }}</button>
+    {% endif %}
 
 {{ form_end(form) }}

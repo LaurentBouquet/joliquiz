@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Answer index{% endblock %}
+
+{% block body %}
+    <h1>Answer index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Text</th>
+                {% if is_granted('ROLE_TEACHER') %}
+                    <th>Correct</th>
+                    <th>Actions</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+        {% for answer in answers %}
+            <tr>
+                <td>{{ answer.id }}</td>
+                <td>{{ answer.text }}</td>
+                {% if is_granted('ROLE_TEACHER') %}
+                    <td>{{ answer.correct ? 'Yes' : 'No' }}</td>
+                    <td>
+                        <a href="{{ path('answer_show', {'id': answer.id}) }}">show</a>
+                        <a href="{{ path('answer_edit', {'id': answer.id}) }}">edit</a>
+                    </td>
+                {% endif %}
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% if is_granted('ROLE_TEACHER') %}
+        <a href="{{ path('answer_new') }}">Create new</a>
+    {% endif %}
+{% endblock %}

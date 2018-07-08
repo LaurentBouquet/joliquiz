@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Starting Quiz "{{ quiz.title }}{% endblock %}
+
+{% block body %}
+    <h1>Starting Quiz "{{ quiz.title }}"</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Categories</th>
+                <td>
+                  {% for category in quiz.categories %}
+                     - {{ category.longname }} <br>
+                  {% endfor %}
+                </td>
+            </tr>
+            {% if quiz.summary %}
+            <tr>
+                <th>Summary</th>
+                <td>{{ quiz.summary }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th>Number_of_questions</th>
+                <td>{{ quiz.numberOfQuestions }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('quiz_index') }}">back to list</a>
+
+    {% if is_granted('ROLE_USER') %}
+        <form action="{{ path('quiz_workout', {'id': id}) }}" method="post">
+            <button type="submit">{{ button_label|default('Next') }}</button>
+        </form>
+    {% endif %}
+
+{% endblock %}

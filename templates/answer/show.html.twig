@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Answer{% endblock %}
+
+{% block body %}
+    <h1>Answer</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ answer.id }}</td>
+            </tr>
+            <tr>
+                <th>Text</th>
+                <td>{{ answer.text }}</td>
+            </tr>
+            <tr>
+                <th>Correct</th>
+                <td>{{ answer.correct ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('answer_index') }}">back to list</a>
+
+    {% if is_granted('ROLE_TEACHER') %}
+        <a href="{{ path('answer_edit', {'id': answer.id}) }}">edit</a>
+    {% endif %}
+
+    {{ include('answer/_delete_form.html.twig') }}
+{% endblock %}

@@ -5,3 +5,7 @@ body {
   /* padding: 3rem 1.5rem; */
   text-align: left;
 }
+.logo {
+    font-size:24;
+    /* color: #860000 !important; */
+}

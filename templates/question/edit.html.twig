@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Question{% endblock %}
+
+{% block body %}
+    <h1>Edit Question</h1>
+
+    {% if is_granted('ROLE_TEACHER') %}
+        {{ include('question/_form.html.twig', {'button_label': 'Update'}) }}
+    {% endif %}
+
+    <a href="{{ path('question_index') }}">back to list</a>
+
+    {{ include('question/_delete_form.html.twig') }}
+{% endblock %}
+
+{% if is_granted('ROLE_TEACHER') %}
+    {% block javascripts %}
+        <script src="{{ asset('js/question.js') }}" type="text/javascript"></script>
+    {% endblock %}
+{% endif %}

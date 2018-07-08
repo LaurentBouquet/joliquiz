@@ -11,6 +11,7 @@ class UserFixtures extends Fixture
 {
 
     public const BASIC_USER_REFERENCE = 'basic_user';
+    public const TEACHER_USER_REFERENCE = 'teacher_user';
     public const ADMIN_USER_REFERENCE = 'admin_user';
     public const SUPER_ADMIN_USER_REFERENCE = 'super_admin_user';
 
@@ -43,6 +44,16 @@ class UserFixtures extends Fixture
         $admin->setPassword($password);
         $manager->persist($admin);
         $this->addReference(self::ADMIN_USER_REFERENCE, $admin);
+
+        $teacher = new User();
+        $teacher->setUsername('teacher');
+        $teacher->setEmail('teacher@domain.tld');
+        $teacher->setPlainPassword('teacher');
+        $teacher->setRoles(array('ROLE_TEACHER'));
+        $password = $this->passwordEncoder->encodePassword($teacher, $teacher->getPlainPassword());
+        $teacher->setPassword($password);
+        $manager->persist($teacher);
+        $this->addReference(self::TEACHER_USER_REFERENCE, $teacher);
 
         $user = new User();
         $user->setUsername('user');

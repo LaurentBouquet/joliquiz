@@ -20,10 +20,6 @@
                 <td>{{ user.email }}</td>
             </tr>
             <tr>
-                <th>Password</th>
-                <td>{{ user.password }}</td>
-            </tr>
-            <tr>
                 <th>IsActive</th>
                 <td>{{ user.isActive ? 'Yes' : 'No' }}</td>
             </tr>
@@ -36,7 +32,9 @@
 
     <a href="{{ path('user_index') }}">back to list</a>
 
-    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+    {% endif %}
 
     {{ include('user/_delete_form.html.twig') }}
 {% endblock %}

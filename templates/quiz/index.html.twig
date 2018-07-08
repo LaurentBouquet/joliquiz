@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Quiz index{% endblock %}
+
+{% block body %}
+    <h1>Quiz index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Questions</th>
+                <th>Categories</th>
+                <th>Result after question</th>
+                {% if is_granted('ROLE_TEACHER') %}
+                    <th>Active</th>
+                {% endif %}
+                {% if is_granted('ROLE_USER') %}
+                    <th>Actions</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+        {% for quiz in quizzes %}
+            <tr>
+                <td>{{ quiz.title }}</td>
+                <td>{{ quiz.numberOfQuestions }}</td>
+                <td>
+                  {% for category in quiz.categories %}
+                     - {{ category.longname }} <br>
+                  {% endfor %}
+                </td>
+                <td>{{ quiz.showResultQuestion ? 'Yes' : 'No' }}</td>
+                {% if is_granted('ROLE_TEACHER') %}
+                    <td>{{ quiz.active ? 'Yes' : 'No' }}</td>
+                    <td>
+                        <a href="{{ path('quiz_show', {'id': quiz.id}) }}">show</a>
+                        <a href="{{ path('quiz_edit', {'id': quiz.id}) }}">edit</a>
+                        <a href="{{ path('quiz_start', {'id': quiz.id}) }}">start</a>
+                    </td>
+                {% else %}
+                    {% if is_granted('ROLE_USER') %}
+                    <td>
+                        <a href="{{ path('quiz_start', {'id': quiz.id}) }}">start</a>
+                    </td>
+                    {% endif %}
+                {% endif %}
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% if is_granted('ROLE_TEACHER') %}
+        <a href="{{ path('quiz_new') }}">Create new</a>
+    {% endif %}
+
+{% endblock %}

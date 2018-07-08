@@ -24,20 +24,26 @@ security:
                 # form security
                 csrf_token_generator: security.csrf.token_manager
                 # defaut page after success login
-                default_target_path: /
+                default_target_path: /quiz
 
             logout:
                 path:  /logout
                 target: /
 
     role_hierarchy:
-         ROLE_ADMIN:      ROLE_USER
-         ROLE_SUPER_ADMIN: ROLE_ADMIN
+         ROLE_TEACHER:      ROLE_USER
+         ROLE_ADMIN:        ROLE_TEACHER
+         ROLE_SUPER_ADMIN:  ROLE_ADMIN
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/quiz, roles: ROLE_USER }
+        - { path: ^/question, roles: ROLE_USER }
+        - { path: ^/answer, roles: ROLE_USER }
+        - { path: ^/category, roles: ROLE_ADMIN }
+        - { path: ^/user, roles: ROLE_SUPER_ADMIN }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
