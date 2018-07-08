@@ -184,7 +184,6 @@ class QuizController extends Controller
         $workout->setStudent($user);
         $workout->setQuiz($quiz);
         $workout->setStartedAt(new \DateTime());
-        // $workout->setEndedAt(new \DateTime());
         $workout->setNumberOfQuestions(0);
         $em->persist($workout);
         $em->flush();
