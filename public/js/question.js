@@ -52,6 +52,7 @@ function addAnswerForm($collectionHolder, $newLinkLi) {
 
 function addAnswerFormDeleteLink($answerFormLi) {
     var $removeFormButton = $('<button class="btn btn-danger btn-sm mr-2" type="button"><i class="fas fa-trash-alt"></i> Delete this answer</button>');
+    $answerFormLi.addClass('card bg-light border-dark p-3 mb-3');
     $answerFormLi.append($removeFormButton);
 
     $removeFormButton.on('click', function(e) {
