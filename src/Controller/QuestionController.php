@@ -49,6 +49,8 @@ class QuestionController extends Controller
 
             $em->flush();
 
+            $this->addFlash('success', sprintf('Question #%s is created.', $question->getId()));
+
             return $this->redirectToRoute('question_index');
         }
 
@@ -90,6 +92,8 @@ class QuestionController extends Controller
 
             $em->flush();
 
+            $this->addFlash('success', sprintf('Question #%s is updated.', $question->getId()));
+
             return $this->redirectToRoute('question_edit', ['id' => $question->getId()]);
         }
 
@@ -110,6 +114,8 @@ class QuestionController extends Controller
             //$em = $this->getDoctrine()->getManager();
             $em->remove($question);
             $em->flush();
+
+            $this->addFlash('success', sprintf('Question #%s is deleted.', $question->getId()));
         }
 
         return $this->redirectToRoute('question_index');

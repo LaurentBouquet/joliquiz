@@ -42,6 +42,8 @@ class CategoryController extends Controller
             $em->persist($category);
             $em->flush();
 
+            $this->addFlash('success', sprintf('Category "%s" is created.', $category->getShortname()));
+
             return $this->redirectToRoute('category_index');
         }
 
@@ -74,6 +76,8 @@ class CategoryController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
+            $this->addFlash('success', sprintf('Category "%s" is updated.', $category->getShortname()));
+
             return $this->redirectToRoute('category_edit', ['id' => $category->getId()]);
         }
 
@@ -94,6 +98,8 @@ class CategoryController extends Controller
             //$em = $this->getDoctrine()->getManager();
             $em->remove($category);
             $em->flush();
+
+            $this->addFlash('success', sprintf('Category "%s" is deleted.', $category->getShortname()));
         }
 
         return $this->redirectToRoute('category_index');

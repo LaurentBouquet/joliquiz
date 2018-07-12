@@ -42,11 +42,10 @@
         </tbody>
     </table>
 
-    <a href="{{ path('question_index') }}">back to list</a>
+    <a class="btn btn-primary mr-2" href="{{ path('question_index') }}"><i class="fas fa-chevron-left"></i> {{'Back to list'|trans}}</a>
 
     {% if is_granted('ROLE_TEACHER') %}
-        <a href="{{ path('question_edit', {'id': question.id}) }}">edit</a>
+        <a class="btn btn-primary" href="{{ path('question_edit', {'id': question.id}) }}"><i class="fas fa-pencil-alt"></i> {{'Edit'|trans}}</a>
     {% endif %}
 
-    {{ include('question/_delete_form.html.twig') }}
 {% endblock %}

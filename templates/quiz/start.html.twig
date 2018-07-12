@@ -28,12 +28,12 @@
         </tbody>
     </table>
 
-    <a href="{{ path('quiz_index') }}">back to list</a>
 
-    {% if is_granted('ROLE_USER') %}
-        <form action="{{ path('quiz_workout', {'id': id}) }}" method="post">
-            <button type="submit">{{ button_label|default('Next') }}</button>
-        </form>
-    {% endif %}
+    <form action="{{ path('quiz_workout', {'id': id}) }}" method="post">
+        <a class="btn btn-primary mr-2" href="{{ path('quiz_index') }}"><i class="fas fa-fast-backward"></i> {{'Back to list'|trans}}</a>
+        {% if is_granted('ROLE_USER') %}
+            <button class="btn btn-primary mr-2" type="submit"><i class="fas fa-play"></i> {{ button_label|default('Next'|trans) }}</button>
+        {% endif %}
+    </form>
 
 {% endblock %}

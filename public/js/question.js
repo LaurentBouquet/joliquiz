@@ -1,7 +1,7 @@
 var $collectionHolder;
 
 // setup an "add an answer" link
-var $addAnswerButton = $('<button type="button" class="add_answer_link">Add an answer</button>');
+var $addAnswerButton = $('<button class="btn btn-primary mr-2" type="button"><i class="fas fa-plus"></i> Add an answer</button>');
 var $newLinkLi = $('<li></li>').append($addAnswerButton);
 
 jQuery(document).ready(function() {
@@ -51,7 +51,7 @@ function addAnswerForm($collectionHolder, $newLinkLi) {
 }
 
 function addAnswerFormDeleteLink($answerFormLi) {
-    var $removeFormButton = $('<button type="button">Delete this answer</button>');
+    var $removeFormButton = $('<button class="btn btn-danger btn-sm mr-2" type="button"><i class="fas fa-trash-alt"></i> Delete this answer</button>');
     $answerFormLi.append($removeFormButton);
 
     $removeFormButton.on('click', function(e) {

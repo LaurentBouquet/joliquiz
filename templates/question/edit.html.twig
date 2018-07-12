@@ -9,9 +9,6 @@
         {{ include('question/_form.html.twig', {'button_label': 'Update'}) }}
     {% endif %}
 
-    <a href="{{ path('question_index') }}">back to list</a>
-
-    {{ include('question/_delete_form.html.twig') }}
 {% endblock %}
 
 {% if is_granted('ROLE_TEACHER') %}
