@@ -2,7 +2,7 @@ var $collectionHolder;
 
 // setup an "add an answer" link
 var $addAnswerButton = $('<button class="btn btn-primary mr-2" type="button"><i class="fas fa-plus"></i> Add an answer</button>');
-var $newLinkLi = $('<li></li>').append($addAnswerButton);
+var $newLinkLi = $('<div></div>').append($addAnswerButton);
 
 jQuery(document).ready(function() {
 
@@ -43,7 +43,8 @@ function addAnswerForm($collectionHolder, $newLinkLi) {
     $collectionHolder.data('index', index + 1);
 
     // Display the form in the page in an li, before the "Add a tag" link li
-    var $newFormLi = $('<li>' + 'New answer' + '</li>').append(newForm);
+    // var $newFormLi = $('<div>' + 'New answer' + '</div>').append(newForm);
+    var $newFormLi = $(newForm);
     $newLinkLi.before($newFormLi);
 
     // add a delete link to the new form
