@@ -4,17 +4,30 @@
 
 {% block body %}
 
-    <h1>Sign in</h1>
+<div class="example-wrapper">
 
-    {{ form_start(form) }}
+    <img src="https://raw.githubusercontent.com/LaurentBouquet/joliquiz/assets/JoliQuiz.png" alt="JoliQuiz">
 
-        {{ form_row(form.username, {'id': 'username', 'full_name': '_username'}) }}
-        {{ form_row(form.plainPassword, {'id': 'password', 'full_name': '_password'}) }}
+    <div class="jumbotron">
+        <h1>Sign in</h1>
 
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+        {{ form_start(form) }}
 
-        <button class="btn btn-primary" type="submit"><i class="fas fa-sign-in-alt"></i> Login</button>
+            {{ form_row(form.username, {'id': 'username', 'full_name': '_username'}) }}
+            {{ form_row(form.plainPassword, {'id': 'password', 'full_name': '_password'}) }}
 
-    {{ form_end(form) }}
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+
+            <button class="btn btn-primary float-md-right" type="submit"><i class="fas fa-sign-in-alt"></i> Login</button>
+
+        {{ form_end(form) }}
+
+    </div>
+
+    Sign up if you do not have an account. It's simple and fast. <a href="{{ path('register') }}">{{'I create my free account...'|trans}}</a>
+
+</div>
+
+{% include 'home_bottom.html.twig' %}
 
 {% endblock %}

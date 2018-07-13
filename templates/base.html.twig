@@ -25,10 +25,10 @@
   <body>
 
     <nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
-      <a class="navbar-brand logo" href="/">JoliQuiz</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <a class="navbar-brand" href="/">JoliQuiz</a>
+      <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
-      </button>
+      </button> -->
 
       <div class="collapse navbar-collapse" id="navbar">
           <ul class="navbar-nav mr-auto">
@@ -53,7 +53,7 @@
                   </li>
               {% endif %}
           </ul>
-          <ul class="navbar-nav mr-right">
+          <ul class="navbar-nav">
               {% if is_granted('ROLE_USER') %}
                   <li>
                       <div class="nav-link disabled">
