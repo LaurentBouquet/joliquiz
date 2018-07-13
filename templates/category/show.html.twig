@@ -30,7 +30,7 @@
         </tbody>
     </table>
 
-    <a class="btn btn-primary mr-2" href="{{ path('category_index') }}"><i class="fas fa-chevron-left"></i> {{'Back to list'|trans}}</a>
+    <a class="btn btn-primary mr-2" href="{{ path('category_index') }}"><i class="fas fa-arrow-circle-left"></i> {{'Back to list'|trans}}</a>
 
     {% if is_granted('ROLE_TEACHER') %}
         <a class="btn btn-primary" href="{{ path('category_edit', {'id': category.id}) }}"><i class="fas fa-pencil-alt"></i> {{'Edit'|trans}}</a>

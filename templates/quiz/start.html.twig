@@ -30,9 +30,9 @@
 
 
     <form action="{{ path('quiz_workout', {'id': id}) }}" method="post">
-        <a class="btn btn-primary mr-2" href="{{ path('quiz_index') }}"><i class="fas fa-fast-backward"></i> {{'Back to list'|trans}}</a>
+        <a class="btn btn-primary mr-2" href="{{ path('quiz_index') }}"><i class="fas fa-arrow-circle-left"></i> {{'Back to list'|trans}}</a>
         {% if is_granted('ROLE_USER') %}
-            <button class="btn btn-primary mr-2" type="submit"><i class="fas fa-play"></i> {{ button_label|default('Next'|trans) }}</button>
+            <button class="btn btn-primary mr-2" type="submit">{{ button_label|default('Next'|trans) }} <i class="fas fa-arrow-circle-right"></i></button>
         {% endif %}
     </form>
 
