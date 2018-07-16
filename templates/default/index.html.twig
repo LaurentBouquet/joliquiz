@@ -1,56 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Welcome!{% endblock %}
+{% block title %}{{'Welcome!'|trans}}{% endblock %}
 
 {% block body %}
-    <style>
-        .example-wrapper {
-            margin: 1em auto;
-            max-width: 800px;
-            width: 95%;
-            font: 18px/1.5 sans-serif;
-        }
-        .example-wrapper code {
-            background: #F5F5F5;
-            padding: 2px 6px;
-        }
-    </style>
-
     <div class="example-wrapper">
 
-        <img src="https://raw.githubusercontent.com/LaurentBouquet/joliquiz/assets/JoliQuiz.png" alt="JoliQuiz">
+        <img src="https://raw.githubusercontent.com/LaurentBouquet/joliquiz/assets/JoliQuiz-300x111.png" alt="JoliQuiz">
 
         <div class="jumbotron">
-            <h3>Need to check on students’ performance?</h3>
-            <p class="lead">Welcome! JoliQuiz is an online quiz software. A simple and free tool.</p>
+            <h3>{{'Need to check on students’ performance?'|trans}}</h3>
+            <p class="lead">{{'Welcome!'|trans}} {{'JoliQuiz is an online quiz software.'|trans}} {{'A simple and free tool.'|trans}}</p>
             <hr class="my-4">
-            <h3>Features</h3>
+            <h3>{{'Features'|trans}}</h3>
             <ul>
-                <li>Engaging interactive content</li>
+                <li>{{'Motivating interactive content'|trans}}</li>
                 <li>
-                    Image and media support, automatic social media integration
+                    {{'Image support, automatic social media integration'|trans}}
                     <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="not yet implemented">
                         <i class="fas fa-clock"></i>
                     </span>
                 </li>
                 <li>
-                    Automatic scoring
+                    {{'Automatic scoring'|trans}}
                 </li>
                 <li>
-                    Real-time activity tracking (receive the results of your students by email)
+                    {{'Real-time activity tracking (receive the results of your students by email)'|trans}}
                     <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="not yet implemented">
                         <i class="fas fa-clock"></i>
                     </span>
                 </li>
                 <li>
-                    Test your audience via smartphone and provide live results during a presentation
+                    {{'Test your audience via smartphone and provide live results during a presentation'|trans}}
                     <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="not yet implemented">
                         <i class="fas fa-clock"></i>
                     </span>
                 </li>
             </ul>
-            License : This is a 100% free service that covers all functionality.</p>
-        <a class="btn btn-primary float-md-right" href="{{ path('login') }}" role="button">{{ 'Let\'s start'|trans}} <i class="fas fa-arrow-circle-right"></i></a>
+            <p>{{'License:'|trans}} {{'It is libre software whose sources you can find and which you can modify.'|trans}}</p>
+
+            <a class="btn btn-primary float-md-right" href="{{ path('login') }}" role="button">{{ 'Let\'s start'|trans}} <i class="fas fa-arrow-circle-right"></i></a>
         </div>
 
     </div>

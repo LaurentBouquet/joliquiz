@@ -1,25 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Question index{% endblock %}
+{% block title %}{{'Question index'|trans}}{% endblock %}
 
 {% block body %}
-    <h1>Question index</h1>
+    <h1>{{'Question index'|trans}}</h1>
 
     {% if is_granted('ROLE_TEACHER') %}
         <div class="mb-3">
-            <a class="btn btn-primary" href="{{ path('question_new') }}"><i class="fas fa-plus"></i> {{'Create new'|trans}}</a>
+            <a class="btn btn-primary" href="{{ path('question_new') }}"><i class="fas fa-plus"></i> {{'Create new question'|trans}}</a>
         </div>
     {% endif %}
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Text</th>
-                <th>Categories</th>
+                <th>{{ 'Id'|trans }}</th>
+                <th>{{ 'Text'|trans }}</th>
+                <th>{{ 'Categories'|trans }}</th>
                 {% if is_granted('ROLE_TEACHER') %}
-                    <th>Answers</th>
-                    <th>Actions</th>
+                    <th>{{ 'Answers'|trans }}</th>
+                    <th>{{ 'Actions'|trans }}</th>
                 {% endif %}
             </tr>
         </thead>

@@ -1,28 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Quiz index{% endblock %}
+{% block title %}{{'Quiz index'|trans}}{% endblock %}
 
 {% block body %}
-    <h1>Quiz index</h1>
+    <h1>{{'Quiz index'|trans}}</h1>
 
     {% if is_granted('ROLE_TEACHER') %}
         <div class="mb-3">
-            <a class="btn btn-primary" href="{{ path('quiz_new') }}"><i class="fas fa-plus"></i> {{'Create new'|trans}}</a>
+            <a class="btn btn-primary" href="{{ path('quiz_new') }}"><i class="fas fa-plus"></i> {{'Create new quiz'|trans}}</a>
         </div>
     {% endif %}
 
     <table class="table">
         <thead>
             <tr>
-                <th>Title</th>
-                <th>Questions</th>
-                <th>Categories</th>
-                <th>Result after question</th>
+                <th>{{ 'Title'|trans }}</th>
+                <th>{{ 'Questions'|trans }}</th>
+                <th>{{ 'Categories'|trans }}</th>
                 {% if is_granted('ROLE_TEACHER') %}
-                    <th>Active</th>
+                    <th>{{ 'Active'|trans }}</th>
                 {% endif %}
                 {% if is_granted('ROLE_USER') %}
-                    <th>Actions</th>
+                    <th>{{ 'Actions'|trans }}</th>
                 {% endif %}
             </tr>
         </thead>
@@ -36,7 +35,6 @@
                      - {{ category.longname }} <br>
                   {% endfor %}
                 </td>
-                <td>{{ quiz.showResultQuestion ? 'Yes' : 'No' }}</td>
                 {% if is_granted('ROLE_TEACHER') %}
                     <td>{{ quiz.active ? 'Yes' : 'No' }}</td>
                     <td>

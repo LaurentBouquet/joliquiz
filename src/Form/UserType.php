@@ -15,14 +15,17 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraints\IsTrue;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class UserType extends AbstractType
 {
     private $checker;
+    private $translator;
 
-    public function __construct(AuthorizationCheckerInterface $checker)
+    public function __construct(AuthorizationCheckerInterface $checker, TranslatorInterface $translator)
     {
         $this->checker = $checker;
+        $this->translator = $translator;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -37,8 +40,8 @@ class UserType extends AbstractType
                     RepeatedType::class,
                     [
                     'type' => PasswordType::class,
-                    'first_options'  => array('label' => 'Password'),
-                    'second_options' => array('label' => 'Repeat Password')
+                    'first_options'  => array('label' => $this->translator->trans('Password')),
+                    'second_options' => array('label' => $this->translator->trans('Repeat Password'))
                     ]
                 );
                 $builder->add('termsAccepted', CheckboxType::class, array(
@@ -49,7 +52,7 @@ class UserType extends AbstractType
                 break;
 
             case 'login':
-                $builder->add('plainPassword', PasswordType::class, array('label' => 'Password'));
+                $builder->add('plainPassword', PasswordType::class, array('label' => $this->translator->trans('Password')));
                 break;
 
             // register + update
@@ -60,8 +63,8 @@ class UserType extends AbstractType
                     RepeatedType::class,
                     [
                     'type' => PasswordType::class,
-                    'first_options'  => array('label' => 'Password'),
-                    'second_options' => array('label' => 'Repeat Password')
+                    'first_options'  => array('label' => $this->translator->trans('Password')),
+                    'second_options' => array('label' => $this->translator->trans('Repeat Password'))
                     ]
                 );
                 if ($this->checker->isGranted('ROLE_SUPER_ADMIN')) {

@@ -1,24 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Category index{% endblock %}
+{% block title %}{{'Category index'|trans}}{% endblock %}
 
 {% block body %}
-    <h1>Category index</h1>
+    <h1>{{'Category index'|trans}}</h1>
 
     {% if is_granted('ROLE_TEACHER') %}
         <div class="mb-3">
-            <a class="btn btn-primary" href="{{ path('category_new') }}"><i class="fas fa-plus"></i> {{'Create new'|trans}}</a>
+            <a class="btn btn-primary" href="{{ path('category_new') }}"><i class="fas fa-plus"></i> {{'Create new category'|trans}}</a>
         </div>
     {% endif %}
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Shortname</th>
-                <th>Longname</th>
+                <th>{{ 'Id'|trans }}</th>
+                <th>{{ 'Shortname'|trans }}</th>
+                <th>{{ 'Longname'|trans }}</th>
                 {% if is_granted('ROLE_TEACHER') %}
-                    <th>Actions</th>
+                    <th>{{ 'Actions'|trans }}</th>
                 {% endif %}
             </tr>
         </thead>
