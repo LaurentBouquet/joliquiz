@@ -84,6 +84,11 @@ class User implements UserInterface, \Serializable
      */
     private $workouts;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Language", inversedBy="users")
+     */
+    private $prefered_language;
+
 
 
     public function __construct()
@@ -242,6 +247,18 @@ class User implements UserInterface, \Serializable
                 $workout->setStudent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPreferedLanguage(): ?Language
+    {
+        return $this->prefered_language;
+    }
+
+    public function setPreferedLanguage(?Language $prefered_language): self
+    {
+        $this->prefered_language = $prefered_language;
 
         return $this;
     }

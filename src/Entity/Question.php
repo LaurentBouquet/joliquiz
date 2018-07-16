@@ -37,6 +37,7 @@ class Question
         $this->setUpdatedAt(new \DateTime());
         $this->categories = new ArrayCollection();
         $this->answers = new ArrayCollection();
+        //$this->setLanguage('en');
     }
 
     /**
@@ -54,6 +55,12 @@ class Question
      * @ORM\OneToMany(targetEntity="App\Entity\Answer", mappedBy="question", orphanRemoval=true)
      */
     private $answers;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Language", inversedBy="questions")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $language;
 
 
     public function getId()
@@ -150,6 +157,18 @@ class Question
                 $answer->setQuestion(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLanguage(): ?Language
+    {
+        return $this->language;
+    }
+
+    public function setLanguage(?Language $language): self
+    {
+        $this->language = $language;
 
         return $this;
     }

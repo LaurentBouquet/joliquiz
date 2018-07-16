@@ -12,6 +12,7 @@ use Symfony\Component\Yaml\Yaml;
 use App\Entity\Answer;
 use App\Entity\Question;
 use App\Entity\Category;
+use App\Entity\Language;
 
 class AppQuizImportCommand extends DoctrineCommand
 {
@@ -27,7 +28,9 @@ class AppQuizImportCommand extends DoctrineCommand
             ->addArgument('silent', InputArgument::OPTIONAL, 'No confirmation')
             ->addOption('format', '-f', InputOption::VALUE_REQUIRED, 'Quiz data file format')
             ->addOption('category', '-c', InputOption::VALUE_OPTIONAL, 'Category (shortname) to class imported questions')
-            ->setHelp(<<<EOT
+            ->addOption('language', '-l', InputOption::VALUE_OPTIONAL, 'Language to associate with imported questions (default "en")', 'en')
+            ->setHelp(
+                <<<EOT
 The <info>%command.name%</info> imports quizzes from another software:
 
   <info>php %command.full_name%</info>
@@ -53,13 +56,13 @@ EOT
         $silent = $input->getArgument('silent');
         $format = $input->getOption('format');
         $category = $input->getOption('category');
+        $language = $input->getOption('language');
 
         if ($file) {
             if (!$silent) {
                 $io->note(sprintf('Import data from file: "%s"', $file));
             }
-        }
-        else {
+        } else {
             throw new \LogicException(sprintf("The file must be provided. Pass --help to see options."));
         }
 
@@ -67,8 +70,7 @@ EOT
             if (!$silent) {
                 $io->note(sprintf('Import format: "%s"', $format));
             }
-        }
-        else {
+        } else {
             throw new \LogicException(sprintf("The format must be provided. Pass --help to see options."));
         }
 
@@ -79,6 +81,7 @@ EOT
         }
 
         if (!$silent) {
+            $io->note(sprintf('Questions language: "%s"', $language));
             if (!$io->confirm('<question>Careful, data will be inserted in the database. Do you want to continue y/N ?</question>', false)) {
                 return;
             }
@@ -86,7 +89,7 @@ EOT
 
         switch ($format) {
             case 'certificationy':
-                $result = $this->importCertificationy($io, $format, $file, $category);
+                $result = $this->importCertificationy($io, $format, $file, $language, $category);
                 break;
 
             default:
@@ -99,8 +102,9 @@ EOT
         }
     }
 
-    protected function getCategory($category) {
-        $repository = $this->em->getRepository(Category::Class);
+    protected function getCategory($category)
+    {
+        $repository = $this->em->getRepository(Category::class);
 
         $persistedCategory = $repository->findOneByShortname($category);
 
@@ -113,8 +117,17 @@ EOT
         }
     }
 
-    protected function importCertificationy($io, $format, $file, $secondCategory=null) {
+    protected function getLanguage($language)
+    {
+        $repository = $this->em->getRepository(Language::class);
 
+        $persistedLanguage = $repository->findOneById($language);
+
+        return $persistedLanguage;
+    }
+
+    protected function importCertificationy($io, $format, $file, $language, $secondCategory=null)
+    {
         $data = Yaml::parseFile($file);
         $questions = $data['questions'];
         $category = $data['category'];
@@ -125,7 +138,6 @@ EOT
         }
 
         foreach ($questions as $question) {
-
             $answers = array();
 
             $joliquizQuestion = new Question();
@@ -133,6 +145,7 @@ EOT
             if ($secondCategory) {
                 $joliquizQuestion->addCategory($joliquizSecondCategory);
             }
+            $joliquizQuestion->setLanguage($this->getLanguage($language));
             $joliquizQuestion->setText($question['question']);
 
             foreach ($question['answers'] as $answer) {
@@ -157,10 +170,9 @@ EOT
         $this->em->flush();
 
         if ($secondCategory) {
-            $io->note(sprintf('Importing %s question(s) in category "%s" and category "%s".', count($questions), $category, $secondCategory));
-        }
-        else {
-            $io->note(sprintf('Importing %s question(s) in category "%s".', count($questions), $category));
+            $io->note(sprintf('Importing %s question(s) (language: "%s") in category "%s" and category "%s".', count($questions), $language, $category, $secondCategory));
+        } else {
+            $io->note(sprintf('Importing %s question(s) (language: "%s") in category "%s".', count($questions), $language, $category));
         }
 
         return true;
