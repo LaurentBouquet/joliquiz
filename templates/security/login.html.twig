@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Sign in{% endblock %}
+{% block title %}{{'Sign in'|trans}}{% endblock %}
 
 {% block body %}
 
@@ -9,7 +9,7 @@
     <img src="https://raw.githubusercontent.com/LaurentBouquet/joliquiz/assets/JoliQuiz.png" alt="JoliQuiz">
 
     <div class="jumbotron">
-        <h1>Sign in</h1>
+        <h1>{{'Sign in'|trans}}</h1>
 
         {{ form_start(form) }}
 
@@ -18,13 +18,13 @@
 
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
 
-            <button class="btn btn-primary float-md-right" type="submit"><i class="fas fa-sign-in-alt"></i> Login</button>
+            <button class="btn btn-primary float-md-right" type="submit"><i class="fas fa-sign-in-alt"></i> {{'Login'|trans}}</button>
 
         {{ form_end(form) }}
 
     </div>
 
-    Sign up if you do not have an account. It's simple and fast. <a href="{{ path('register') }}">{{'I create my free account...'|trans}}</a>
+    {% trans %}Sign up if you do not have an account. It's simple and fast.{% endtrans %} <a href="{{ path('register') }}">{{'I create my free account...'|trans}}</a>
 
 </div>
 

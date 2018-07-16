@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Question index{% endblock %}
+{% block title %}{{'Question index'|trans}}{% endblock %}
 
 {% block body %}
-    <h1>Question index</h1>
+    <h1>{{'Question index'|trans}}</h1>
 
     {% if is_granted('ROLE_TEACHER') %}
         <div class="mb-3">

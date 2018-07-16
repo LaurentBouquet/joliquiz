@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Answer index{% endblock %}
+{% block title %}{{'Answer index'|trans}}{% endblock %}
 
 {% block body %}
-    <h1>Answer index</h1>
+    <h1>{{'Answer index'|trans}}</h1>
 
     {% if is_granted('ROLE_TEACHER') %}
         <div class="mb-3">
@@ -14,11 +14,11 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Text</th>
+                <th>{{ 'Id'|trans }}</th>
+                <th>{{ 'Text'|trans }}</th>
                 {% if is_granted('ROLE_TEACHER') %}
-                    <th>Correct</th>
-                    <th>Actions</th>
+                    <th>{{ 'Correct'|trans }}</th>
+                    <th>{{ 'Actions'|trans }}</th>
                 {% endif %}
             </tr>
         </thead>

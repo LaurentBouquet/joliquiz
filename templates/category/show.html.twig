@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Category{% endblock %}
+{% block title %}{{'Category'|trans}}{% endblock %}
 
 {% block body %}
     <h1>Category</h1>
@@ -8,19 +8,19 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
+                <th>{{ 'Id'|trans }}</th>
                 <td>{{ category.id }}</td>
             </tr>
             <tr>
-                <th>Shortname</th>
+                <th>{{ 'Shortname'|trans }}</th>
                 <td>{{ category.shortname }}</td>
             </tr>
             <tr>
-                <th>Longname</th>
+                <th>{{ 'Longname'|trans }}</th>
                 <td>{{ category.longname }}</td>
             </tr>
             <tr>
-                <th>Quizzes</th>
+                <th>{{ 'Quizzes'|trans }}</th>
                 <td>
                   {% for quiz in category.quizzes %}
                      - {{ quiz.title }} <br>

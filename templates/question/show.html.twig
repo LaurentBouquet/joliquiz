@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Question{% endblock %}
+{% block title %}{{'Question'|trans}}{% endblock %}
 
 {% block body %}
     <h1>Question</h1>
@@ -8,15 +8,15 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
+                <th>{{ 'Id'|trans }}</th>
                 <td>{{ question.id }}</td>
             </tr>
             <tr>
-                <th>Text</th>
+                <th>{{ 'Text'|trans }}</th>
                 <td>{{ question.text }}</td>
             </tr>
             <tr>
-                <th>Categories</th>
+                <th>{{ 'Categories'|trans }}</th>
                 <td>
                   {% for category in question.categories %}
                      - {{ category.longname }} <br>
@@ -24,7 +24,7 @@
                 </td>
             </tr>
             <tr>
-                <th>Answers</th>
+                <th>{{ 'Answers'|trans }}</th>
                 <td>
                   {% for answer in question.answers %}
                      {% if answer.correct %}+{% else %}-{% endif %} {{ answer.text }} <br>
@@ -32,11 +32,11 @@
                 </td>
             </tr>
             <tr>
-                <th>Created_at</th>
+                <th>{{ 'Created_at'|trans }}</th>
                 <td>{{ question.createdAt ? question.createdAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
-                <th>Updated_at</th>
+                <th>{{ 'Updated_at'|trans }}</th>
                 <td>{{ question.updatedAt ? question.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
         </tbody>

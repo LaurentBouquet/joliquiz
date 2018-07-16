@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Answer{% endblock %}
+{% block title %}{{'Answer'|trans}}{% endblock %}
 
 {% block body %}
     <h1>Answer</h1>
@@ -8,15 +8,15 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
+                <th>{{ 'Id'|trans }}</th>
                 <td>{{ answer.id }}</td>
             </tr>
             <tr>
-                <th>Text</th>
+                <th>{{ 'Text'|trans }}</th>
                 <td>{{ answer.text }}</td>
             </tr>
             <tr>
-                <th>Correct</th>
+                <th>{{ 'Correct'|trans }}</th>
                 <td>{{ answer.correct ? 'Yes' : 'No' }}</td>
             </tr>
         </tbody>

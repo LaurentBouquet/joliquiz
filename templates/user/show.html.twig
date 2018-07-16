@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User{% endblock %}
+{% block title %}{{'User'|trans}}{% endblock %}
 
 {% block body %}
     <h1>User</h1>
@@ -8,23 +8,23 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
+                <th>{{ 'Id'|trans }}</th>
                 <td>{{ user.id }}</td>
             </tr>
             <tr>
-                <th>Username</th>
+                <th>{{ 'Username'|trans }}</th>
                 <td>{{ user.username }}</td>
             </tr>
             <tr>
-                <th>Email</th>
+                <th>{{ 'Email'|trans }}</th>
                 <td>{{ user.email }}</td>
             </tr>
             <tr>
-                <th>IsActive</th>
+                <th>{{ 'IsActive'|trans }}</th>
                 <td>{{ user.isActive ? 'Yes' : 'No' }}</td>
             </tr>
             <tr>
-                <th>Roles</th>
+                <th>{{ 'Roles'|trans }}</th>
                 <td>{{ user.roles ? user.roles|join(', ') : '' }}</td>
             </tr>
         </tbody>
