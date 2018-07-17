@@ -6,10 +6,10 @@
 
 <div class="example-wrapper">
 
-    <img src="https://raw.githubusercontent.com/LaurentBouquet/joliquiz/assets/JoliQuiz.png" alt="JoliQuiz">
+    <!-- <img src="https://raw.githubusercontent.com/LaurentBouquet/joliquiz/assets/JoliQuiz.png" alt="JoliQuiz"> -->
 
     <div class="jumbotron">
-        <h1>Sign up</h1>
+        <h1>{{'Sign up'|trans}}</h1>
 
         {{ form_start(form) }}
             {{ form_row(form.username) }}
@@ -17,8 +17,8 @@
             {{ form_row(form.plainPassword.first) }}
             {{ form_row(form.plainPassword.second) }}
             {{ form_row(form.termsAccepted) }}
-
-            <button class="btn btn-primary float-md-right" type="submit"><i class="fas fa-user-plus"></i> Register</button>
+            <a href="terms_and_conditions.pdf" target="_blank">{{ 'Terms and conditions'|trans }}</a>
+            <button class="btn btn-primary float-md-right" type="submit"><i class="fas fa-user-plus"></i> {{'Register'|trans}}</button>
         {{ form_end(form) }}
 
     </div>

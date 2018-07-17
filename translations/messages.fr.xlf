@@ -129,6 +129,22 @@
         <source>Password</source>
         <target>Mot de passe</target>
       </trans-unit>
+      <trans-unit id="Hkmh4Tp" resname="Repeat Password">
+        <source>Repeat Password</source>
+        <target>Répéter le mot de passe</target>
+      </trans-unit>
+      <trans-unit id="4MFfyNz" resname="I have read and accept the terms and conditions">
+        <source>I have read and accept the terms and conditions</source>
+        <target>J'ai lu et j'accepte les conditions générales</target>
+      </trans-unit>
+      <trans-unit id="zJ7bm.q" resname="the terms and conditions">
+        <source>the terms and conditions</source>
+        <target>les conditions générales</target>
+      </trans-unit>
+      <trans-unit id="w_Om7eq" resname="Terms and conditions">
+        <source>Terms and conditions</source>
+        <target>Conditions générales</target>
+      </trans-unit>
       <trans-unit id="lpzL089" resname="Email">
         <source>Email</source>
         <target>Email</target>
@@ -137,7 +153,7 @@
         <source>IsActive</source>
         <target>Actif</target>
       </trans-unit>
-      <trans-unit id="V0AeWYH2" resname="Account activated">
+      <trans-unit id="tvGq1da" resname="Account activated">
         <source>Account activated</source>
         <target>Compte activé</target>
       </trans-unit>
@@ -368,6 +384,10 @@
       <trans-unit id="D5lam8." resname="no records found">
         <source>no records found</source>
         <target>Aucun enregistrement trouvé</target>
+      </trans-unit>
+      <trans-unit id="u3I07BJ" resname="Register">
+        <source>Register</source>
+        <target>S'enregistrer</target>
       </trans-unit>
     </body>
   </file>

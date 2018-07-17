@@ -41,12 +41,13 @@ class UserType extends AbstractType
                     [
                     'type' => PasswordType::class,
                     'first_options'  => array('label' => $this->translator->trans('Password')),
-                    'second_options' => array('label' => $this->translator->trans('Repeat Password'))
+                    'second_options' => array('label' => $this->translator->trans('Repeat Password')),
                     ]
                 );
                 $builder->add('termsAccepted', CheckboxType::class, array(
                     'mapped' => false,
                     'constraints' => new IsTrue(),
+                    'label' => $this->translator->trans('I have read and accept the terms and conditions'),                    
                   )
                 );
                 break;
