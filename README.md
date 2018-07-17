@@ -164,6 +164,7 @@ Here is initial credentials of the super-admin user.
 
 Thanks to [Heroku](https://www.heroku.com/)
 
+French version of JoliQuiz : [http://joliquiz.joliciel.fr/](http://joliquiz.joliciel.fr/)
 
 
 
