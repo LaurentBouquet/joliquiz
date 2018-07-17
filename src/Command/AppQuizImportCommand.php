@@ -104,9 +104,9 @@ EOT
 
     protected function getCategory($category, $joliquizLanguage)
     {
-        $repository = $this->em->getRepository(Category::class);
+        $categoryRepository = $this->em->getRepository(Category::class);
 
-        $persistedCategory = $repository->findOneByShortnameAndLanguage($category, $joliquizLanguage);
+        $persistedCategory = $categoryRepository->findOneByShortnameAndLanguage($category, $joliquizLanguage);
 
         if ($persistedCategory) {
             return $persistedCategory;

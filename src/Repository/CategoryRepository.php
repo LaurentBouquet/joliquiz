@@ -58,7 +58,7 @@ class CategoryRepository extends ServiceEntityRepository
             ->orderBy('c.shortname', 'ASC')
             // ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
+            ->getOneOrNullResult()
         ;
     }
 
