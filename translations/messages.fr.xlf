@@ -27,7 +27,7 @@
       </trans-unit>
       <trans-unit id="GNaOPCC" resname="I create my free account...">
         <source>I create my free account...</source>
-        <target>Je crée mon compte gratuit...</target>
+        <target>Je crée mon compte gratuit ...</target>
       </trans-unit>
       <trans-unit id="c8Pe1Gq" resname="Let's start">
         <source>Let's start</source>
@@ -136,6 +136,10 @@
       <trans-unit id="V0AeWYH" resname="IsActive">
         <source>IsActive</source>
         <target>Actif</target>
+      </trans-unit>
+      <trans-unit id="V0AeWYH2" resname="Account activated">
+        <source>Account activated</source>
+        <target>Compte activé</target>
       </trans-unit>
       <trans-unit id="wlM3BVR" resname="Roles">
         <source>Roles</source>
@@ -356,6 +360,14 @@
       <trans-unit id="r4Jc_Qa" resname="License:">
         <source>License:</source>
         <target>License :</target>
+      </trans-unit>
+      <trans-unit id="pP5lJk7" resname="Language">
+        <source>Language</source>
+        <target>Langue</target>
+      </trans-unit>
+      <trans-unit id="D5lam8." resname="no records found">
+        <source>no records found</source>
+        <target>Aucun enregistrement trouvé</target>
       </trans-unit>
     </body>
   </file>

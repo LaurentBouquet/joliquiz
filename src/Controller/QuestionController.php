@@ -34,13 +34,12 @@ class QuestionController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
-        $question = new Question();
+        $question = $em->getRepository(Question::class)->create();
 
         $form = $this->createForm(QuestionType::class, $question, array('form_type'=>'teacher'));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //$em = $this->getDoctrine()->getManager();
             $em->persist($question);
 
             foreach ($question->getAnswers() as $answer) {
@@ -84,8 +83,6 @@ class QuestionController extends Controller
 
             $question->setUpdatedAt(new \DateTime());
 
-            //$em = $this->getDoctrine()->getManager();
-
             foreach ($question->getAnswers() as $answer) {
                 $em->persist($answer);
             }
@@ -111,7 +108,6 @@ class QuestionController extends Controller
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
         if ($this->isCsrfTokenValid('delete'.$question->getId(), $request->request->get('_token'))) {
-            //$em = $this->getDoctrine()->getManager();
             $em->remove($question);
             $em->flush();
 
