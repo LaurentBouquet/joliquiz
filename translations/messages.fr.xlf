@@ -29,9 +29,9 @@
         <source>I create my free account...</source>
         <target>Je crée mon compte gratuit ...</target>
       </trans-unit>
-      <trans-unit id="c8Pe1Gq" resname="Let's start">
-        <source>Let's start</source>
-        <target>Commençons</target>
+      <trans-unit id="c8Pe1Gq" resname="Let's start now">
+        <source>Let's start now</source>
+        <target>Commençons dès maintenant</target>
       </trans-unit>
       <trans-unit id="0ziYMaR" resname="Create new question">
         <source>Create new question</source>
@@ -353,9 +353,9 @@
         <source>Automatic scoring</source>
         <target>Notation automatique</target>
       </trans-unit>
-      <trans-unit id="pPu0uHB" resname="Real-time activity tracking (receive the results of your students by email)">
-        <source>Real-time activity tracking (receive the results of your students by email)</source>
-        <target>Suivi d'activité en temps réel (recevez les résultats de vos élèves par email)</target>
+      <trans-unit id="pPu0uHB" resname="Real-time activity tracking (receive the results of students by email)">
+        <source>Real-time activity tracking (receive the results of students by email)</source>
+        <target>Suivi d'activité en temps réel (recevez les résultats des élèves par email)</target>
       </trans-unit>
       <trans-unit id="v3rVIzc" resname="Test your audience via smartphone and provide live results during a presentation">
         <source>Test your audience via smartphone and provide live results during a presentation</source>
@@ -388,6 +388,10 @@
       <trans-unit id="u3I07BJ" resname="Register">
         <source>Register</source>
         <target>S'enregistrer</target>
+      </trans-unit>
+      <trans-unit id="1BoNRvC" resname="Here is the tool you need!">
+        <source>Here is the tool you need!</source>
+        <target>Voici l'outil qu'il vous faut !</target>
       </trans-unit>
     </body>
   </file>
