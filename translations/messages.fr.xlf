@@ -331,7 +331,7 @@
       </trans-unit>
       <trans-unit id="9oqzB2f" resname="Code hosted by GitHub">
         <source>Code hosted by GitHub</source>
-        <target>Code hébergé par GitHubb</target>
+        <target>Code hébergé par GitHub</target>
       </trans-unit>
       <trans-unit id="oyJZkxE" resname="Need to check on students’ performance?">
         <source>Need to check on students’ performance?</source>
@@ -361,9 +361,9 @@
         <source>Test your audience via smartphone and provide live results during a presentation</source>
         <target>Testez vos élèves via un smartphone et fournissez des résultats en direct lors d'une présentation</target>
       </trans-unit>
-      <trans-unit id="6Us85Pp" resname="It is libre software whose sources you can find and which you can modify.">
-        <source>It is libre software whose sources you can find and which you can modify.</source>
-        <target>C'est un logiciel libre dont vous pouvez copier les sources et que vous pouvez modifier.</target>
+      <trans-unit id="6Us85Pp" resname="It is free software that you can copy and modify.">
+        <source>It is free software that you can copy and modify.</source>
+        <target>C'est un logiciel libre que vous pouvez copier et modifier.</target>
       </trans-unit>
       <trans-unit id="Lzz1Nub" resname="Motivating interactive content">
         <source>Motivating interactive content</source>
