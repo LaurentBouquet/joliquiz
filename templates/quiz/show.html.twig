@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Quiz{% endblock %}
+{% block title %}{{'Quiz'|trans}}{% endblock %}
 
 {% block body %}
     <h1>Quiz</h1>
@@ -8,21 +8,21 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Title</th>
+                <th>{{ 'Title'|trans }}</th>
                 <td>{{ quiz.title }}</td>
             </tr>
             {% if quiz.summary %}
             <tr>
-                <th>Summary</th>
+                <th>{{ 'Summary'|trans }}</th>
                 <td>{{ quiz.summary }}</td>
             </tr>
             {% endif %}
             <tr>
-                <th>Number_of_questions</th>
+                <th>{{ 'Number of questions'|trans }}</th>
                 <td>{{ quiz.numberOfQuestions }}</td>
             </tr>
             <tr>
-                <th>Categories</th>
+                <th>{{ 'Categories'|trans }}</th>
                 <td>
                   {% for category in quiz.categories %}
                      - {{ category.longname }} <br>
@@ -30,29 +30,28 @@
                 </td>
             </tr>
             <tr>
-                <th>Result after question</th>
+                <th>{{ 'Result after question'|trans }}</th>
                 <td>{{ quiz.showResultQuestion ? 'Yes' : 'No' }}</td>
             </tr>
             <tr>
-                <th>Active</th>
+                <th>{{ 'Active'|trans }}</th>
                 <td>{{ quiz.active ? 'Yes' : 'No' }}</td>
             </tr>
             <tr>
-                <th>Created_at</th>
+                <th>{{ 'Created_at'|trans }}</th>
                 <td>{{ quiz.createdAt ? quiz.createdAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
-                <th>Updated_at</th>
+                <th>{{ 'Updated_at'|trans }}</th>
                 <td>{{ quiz.updatedAt ? quiz.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('quiz_index') }}">back to list</a>
+    <a class="btn btn-primary mr-2" href="{{ path('quiz_index') }}"><i class="fas fa-arrow-circle-left"></i> {{'Back to list'|trans}}</a>
 
     {% if is_granted('ROLE_TEACHER') %}
-        <a href="{{ path('quiz_edit', {'id': quiz.id}) }}">edit</a>
+        <a class="btn btn-primary" href="{{ path('quiz_edit', {'id': quiz.id}) }}"><i class="fas fa-pencil-alt"></i> {{'Edit'|trans}}</a>
     {% endif %}
 
-    {{ include('quiz/_delete_form.html.twig') }}
 {% endblock %}

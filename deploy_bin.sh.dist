@@ -1,0 +1,7 @@
+#!/bin/sh
+
+export DEPLOY_HOST=254.55.56.57
+export DEPLOY_PORT=22
+export DEPLOY_SITE=joliquiz
+
+ ./vendor/bin/dep deploy production -vvv

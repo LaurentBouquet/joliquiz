@@ -229,6 +229,9 @@ class QuizController extends Controller
             else {
                 $em->persist($quiz);
                 $em->flush();
+
+                $this->addFlash('success', sprintf('Quiz "%s" is created.', $quiz->getTitle()));
+
                 return $this->redirectToRoute('quiz_index');
             }
         }
@@ -264,6 +267,8 @@ class QuizController extends Controller
 
             $this->getDoctrine()->getManager()->flush();
 
+            $this->addFlash('success', sprintf('Quiz "%s" is updated.', $quiz->getTitle()));
+
             return $this->redirectToRoute('quiz_edit', ['id' => $quiz->getId()]);
         }
 
@@ -284,6 +289,8 @@ class QuizController extends Controller
             //$em = $this->getDoctrine()->getManager();
             $em->remove($quiz);
             $em->flush();
+
+            $this->addFlash('success', sprintf('Quiz "%s" is deleted.', $quiz->getTitle()));
         }
 
         return $this->redirectToRoute('quiz_index');

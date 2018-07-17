@@ -14,22 +14,32 @@ class CategoryFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
+        $filename = 'joliquiz-initial-prod-languages.dump.sql';
+        $sql = file_get_contents($filename);  // Read file contents
+        $manager->getConnection()->exec($sql);  // Execute native SQL
+        $manager->flush();
+
+        $this->loadCategories($manager);
+    }
+
+    private function loadCategories(ObjectManager $manager)
+    {
         // SYMFONY_REFERENCE
-        $category = new Category();
+        $category = $manager->getRepository(Category::class)->create();
         $category->setShortname('Symfony');
         $category->setLongname('Symfony (all versions)');
         $manager->persist($category);
         $this->addReference(self::SYMFONY_REFERENCE, $category);
 
         // SYMFONY_V3_REFERENCE
-        $category = new Category();
+        $category = $manager->getRepository(Category::class)->create();
         $category->setShortname('Symfony3');
         $category->setLongname('Symfony version 3');
         $manager->persist($category);
         $this->addReference(self::SYMFONY_V3_REFERENCE, $category);
 
         // SYMFONY_V4_REFERENCE
-        $category = new Category();
+        $category = $manager->getRepository(Category::class)->create();
         $category->setShortname('Symfony4');
         $category->setLongname('Symfony version 4');
         $manager->persist($category);

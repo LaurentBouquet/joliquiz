@@ -1,14 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}End Quiz "{{ quiz.title }}{% endblock %}
+{% block title %}{{'End Quiz'|trans}} "{{ quiz.title }}"{% endblock %}
 
 {% block body %}
-    <h1>End Quiz "{{ id }}"</h1>
+    <h1>{{'End Quiz'|trans}} "{{ quiz.title }}"</h1>
 
     <table class="table">
         <tbody>
             <tr>
-                <th>Categories</th>
+                <th>{{ 'Categories'|trans }}</th>
                 <td>
                   {% for category in quiz.categories %}
                      - {{ category.longname }} <br>
@@ -17,18 +17,18 @@
             </tr>
             {% if quiz.summary %}
             <tr>
-                <th>Summary</th>
+                <th>{{ 'Summary'|trans }}</th>
                 <td>{{ quiz.summary }}</td>
             </tr>
             {% endif %}
             <tr>
-                <th>Number of questions</th>
+                <th>{{ 'Number of questions'|trans }}</th>
                 <td>{{ quiz.numberOfQuestions }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('quiz_index') }}">back to list</a>
+    <a class="btn btn-primary mr-2" href="{{ path('quiz_index') }}"><i class="fas fa-arrow-circle-left"></i> {{'Back to list'|trans}}</a>
 
 
 {% endblock %}

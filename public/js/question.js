@@ -1,8 +1,8 @@
 var $collectionHolder;
 
 // setup an "add an answer" link
-var $addAnswerButton = $('<button type="button" class="add_answer_link">Add an answer</button>');
-var $newLinkLi = $('<li></li>').append($addAnswerButton);
+var $addAnswerButton = $('<button class="btn btn-primary mr-2" type="button"><i class="fas fa-plus"></i> Add an answer</button>');
+var $newLinkLi = $('<div></div>').append($addAnswerButton);
 
 jQuery(document).ready(function() {
 
@@ -43,7 +43,8 @@ function addAnswerForm($collectionHolder, $newLinkLi) {
     $collectionHolder.data('index', index + 1);
 
     // Display the form in the page in an li, before the "Add a tag" link li
-    var $newFormLi = $('<li>' + 'New answer' + '</li>').append(newForm);
+    // var $newFormLi = $('<div>' + 'New answer' + '</div>').append(newForm);
+    var $newFormLi = $(newForm);
     $newLinkLi.before($newFormLi);
 
     // add a delete link to the new form
@@ -51,7 +52,8 @@ function addAnswerForm($collectionHolder, $newLinkLi) {
 }
 
 function addAnswerFormDeleteLink($answerFormLi) {
-    var $removeFormButton = $('<button type="button">Delete this answer</button>');
+    var $removeFormButton = $('<button class="btn btn-danger btn-sm mr-2" type="button"><i class="fas fa-trash-alt"></i> Delete this answer</button>');
+    $answerFormLi.addClass('card bg-light border-dark p-3 mb-3');
     $answerFormLi.append($removeFormButton);
 
     $removeFormButton.on('click', function(e) {

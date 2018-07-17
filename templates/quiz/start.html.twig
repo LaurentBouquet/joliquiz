@@ -1,14 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Starting Quiz "{{ quiz.title }}{% endblock %}
+{% block title %}{{'Starting Quiz'|trans}} "{{ quiz.title }}"{% endblock %}
 
 {% block body %}
-    <h1>Starting Quiz "{{ quiz.title }}"</h1>
+    <h1>{{'Starting Quiz'|trans}} "{{ quiz.title }}"</h1>
 
     <table class="table">
         <tbody>
             <tr>
-                <th>Categories</th>
+                <th>{{ 'Categories'|trans }}</th>
                 <td>
                   {% for category in quiz.categories %}
                      - {{ category.longname }} <br>
@@ -17,23 +17,23 @@
             </tr>
             {% if quiz.summary %}
             <tr>
-                <th>Summary</th>
+                <th>{{ 'Summary'|trans }}</th>
                 <td>{{ quiz.summary }}</td>
             </tr>
             {% endif %}
             <tr>
-                <th>Number_of_questions</th>
+                <th>{{ 'Number of questions'|trans }}</th>
                 <td>{{ quiz.numberOfQuestions }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('quiz_index') }}">back to list</a>
 
-    {% if is_granted('ROLE_USER') %}
-        <form action="{{ path('quiz_workout', {'id': id}) }}" method="post">
-            <button type="submit">{{ button_label|default('Next') }}</button>
-        </form>
-    {% endif %}
+    <form action="{{ path('quiz_workout', {'id': id}) }}" method="post">
+        <a class="btn btn-primary mr-2" href="{{ path('quiz_index') }}"><i class="fas fa-arrow-circle-left"></i> {{'Back to list'|trans}}</a>
+        {% if is_granted('ROLE_USER') %}
+            <button class="btn btn-primary mr-2" type="submit">{{ button_label|default('Next'|trans) }} <i class="fas fa-arrow-circle-right"></i></button>
+        {% endif %}
+    </form>
 
 {% endblock %}

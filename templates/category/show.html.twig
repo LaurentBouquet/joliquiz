@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Category{% endblock %}
+{% block title %}{{'Category'|trans}}{% endblock %}
 
 {% block body %}
     <h1>Category</h1>
@@ -8,19 +8,23 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
+                <th>{{ 'Id'|trans }}</th>
                 <td>{{ category.id }}</td>
             </tr>
             <tr>
-                <th>Shortname</th>
+                <th>{{ 'Language'|trans }}</th>
+                <td>{{ category.language }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Shortname'|trans }}</th>
                 <td>{{ category.shortname }}</td>
             </tr>
             <tr>
-                <th>Longname</th>
+                <th>{{ 'Longname'|trans }}</th>
                 <td>{{ category.longname }}</td>
             </tr>
             <tr>
-                <th>Quizzes</th>
+                <th>{{ 'Quizzes'|trans }}</th>
                 <td>
                   {% for quiz in category.quizzes %}
                      - {{ quiz.title }} <br>
@@ -30,11 +34,10 @@
         </tbody>
     </table>
 
-    <a href="{{ path('category_index') }}">back to list</a>
+    <a class="btn btn-primary mr-2" href="{{ path('category_index') }}"><i class="fas fa-arrow-circle-left"></i> {{'Back to list'|trans}}</a>
 
     {% if is_granted('ROLE_TEACHER') %}
-        <a href="{{ path('category_edit', {'id': category.id}) }}">edit</a>
+        <a class="btn btn-primary" href="{{ path('category_edit', {'id': category.id}) }}"><i class="fas fa-pencil-alt"></i> {{'Edit'|trans}}</a>
     {% endif %}
 
-    {{ include('category/_delete_form.html.twig') }}
 {% endblock %}

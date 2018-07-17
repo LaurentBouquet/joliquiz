@@ -1,15 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Quiz{% endblock %}
+{% block title %}{{'Edit Quiz'|trans}}{% endblock %}
 
 {% block body %}
-    <h1>Edit Quiz</h1>
+    <h1>{{'Edit Quiz'|trans}}</h1>
 
     {% if is_granted('ROLE_TEACHER') %}
-        {{ include('quiz/_form.html.twig', {'button_label': 'Update'}) }}
+        {{ include('quiz/_form.html.twig', {'button_label': 'Update'|trans}) }}
     {% endif %}
 
-    <a href="{{ path('quiz_index') }}">back to list</a>
-
-    {{ include('quiz/_delete_form.html.twig') }}
 {% endblock %}

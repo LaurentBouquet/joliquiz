@@ -78,6 +78,12 @@ class Quiz
      */
     private $show_result_quiz;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Language", inversedBy="quizzes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $language;
+
 
     public function __construct()
     {
@@ -248,4 +254,17 @@ class Quiz
 
         return $this;
     }
+
+    public function getLanguage(): ?Language
+    {
+        return $this->language;
+    }
+
+    public function setLanguage(?Language $language): self
+    {
+        $this->language = $language;
+
+        return $this;
+    }
+
 }

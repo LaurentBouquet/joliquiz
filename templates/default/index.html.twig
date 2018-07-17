@@ -1,20 +1,49 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Welcome!{% endblock %}
+{% block title %}{{'Welcome!'|trans}}{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="example-wrapper">
 
-<div class="example-wrapper">
+        <img src="https://raw.githubusercontent.com/LaurentBouquet/joliquiz/assets/JoliQuiz-300x111.png" alt="JoliQuiz">
 
-    <img src="https://raw.githubusercontent.com/LaurentBouquet/joliquiz/assets/JoliQuiz.png" alt="JoliQuiz">
+        <div class="jumbotron">
+            <h3>{{'Need to check on students’ performance?'|trans}}</h3>
+            <p></p>
+            <h6>{{'Here is the tool you need!'|trans}} {{'JoliQuiz is an online quiz software.'|trans}} {{'A simple and free tool.'|trans}}</h6>
+            <hr class="my-4">
+            <h3>{{'Features'|trans}}</h3>
+            <ul>
+                <li>{{'Motivating interactive content'|trans}}</li>
+                <li>
+                    {{'Image support, automatic social media integration'|trans}}
+                    <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="not yet implemented">
+                        <i class="fas fa-clock"></i>
+                    </span>
+                </li>
+                <li>
+                    {{'Automatic scoring'|trans}}
+                </li>
+                <li>
+                    {{'Real-time activity tracking (receive the results of students by email)'|trans}}
+                    <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="not yet implemented">
+                        <i class="fas fa-clock"></i>
+                    </span>
+                </li>
+                <li>
+                    {{'Test your audience via smartphone and provide live results during a presentation'|trans}}
+                    <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="not yet implemented">
+                        <i class="fas fa-clock"></i>
+                    </span>
+                </li>
+            </ul>
+            <p>{{'License:'|trans}} {{'It is free software that you can copy and modify.'|trans}}</p>
 
-    <h1>Welcome!</h1>
+            <a class="btn btn-primary float-md-right" href="{{ path('login') }}" role="button">{{ 'Let\'s start now'|trans}} <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
 
-    Your online quiz software, and may be later also offline.
+    </div>
 
-</div>
+{% include 'home_bottom.html.twig' %}
+
 {% endblock %}

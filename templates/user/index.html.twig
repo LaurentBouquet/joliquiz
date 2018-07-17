@@ -1,47 +1,55 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User index{% endblock %}
+{% block title %}{{'User index'|trans}}{% endblock %}
 
 {% block body %}
-    <h1>User index</h1>
+    <h1>{{'User index'|trans}}</h1>
+
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <div class="mb-3">
+            <a class="btn btn-primary" href="{{ path('user_new') }}"><i class="fas fa-plus"></i> {{'Create new user'|trans}}</a>
+        </div>
+    {% endif %}
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>IsActive</th>
-                <th>Roles</th>
+                <th>{{ 'Id'|trans }}</th>
+                <th>{{ 'Username'|trans }}</th>
+                <th>{{ 'Email'|trans }}</th>
+                <th>{{ 'IsActive'|trans }}</th>
+                <th>{{ 'Roles'|trans }}</th>
                 {% if is_granted('ROLE_SUPER_ADMIN') %}
-                    <th>Actions</th>
+                <th>{{ 'Actions'|trans }}</th>
                 {% endif %}
             </tr>
         </thead>
         <tbody>
         {% for user in users %}
-            <tr>
+            <tr {{ 'ROLE_SUPER_ADMIN' in user.roles ? 'class="table-danger"' : 'ROLE_ADMIN' in user.roles ? 'class="table-warning"' : 'ROLE_TEACHER' in user.roles ? 'class="table-primary"' : 'class="table-success"' }}>
                 <td>{{ user.id }}</td>
                 <td>{{ user.username }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.isActive ? 'Yes' : 'No' }}</td>
                 <td>{{ user.roles ? user.roles|join(', ') : '' }}</td>
-                {% if is_granted('ROLE_SUPER_ADMIN') %}
-                    <td>
-                        <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
-                        <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
-                    </td>
-                {% endif %}
+                <td>
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                    <div class="form-check-inline">
+                        <a class="btn btn-primary btn-sm mr-2" href="{{ path('user_show', {'id': user.id}) }}"><i class="fas fa-eye"></i> {{'Show'|trans}}</a>
+                        {% if 'ROLE_SUPER_ADMIN' not in user.roles %}
+                            <a class="btn btn-primary btn-sm mr-2" href="{{ path('user_edit', {'id': user.id}) }}"><i class="fas fa-pencil-alt"></i> {{'Edit'|trans}}</a>
+                            {{ include('user/_delete_form.html.twig') }}
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="7">no records found</td>
+                <td colspan="7">{{'no records found'|trans}}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    {% if is_granted('ROLE_SUPER_ADMIN') %}
-        <a href="{{ path('user_new') }}">Create new</a>
-    {% endif %}
 {% endblock %}

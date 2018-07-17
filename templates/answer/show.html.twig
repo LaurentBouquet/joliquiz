@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Answer{% endblock %}
+{% block title %}{{'Answer'|trans}}{% endblock %}
 
 {% block body %}
     <h1>Answer</h1>
@@ -8,25 +8,24 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
+                <th>{{ 'Id'|trans }}</th>
                 <td>{{ answer.id }}</td>
             </tr>
             <tr>
-                <th>Text</th>
+                <th>{{ 'Text'|trans }}</th>
                 <td>{{ answer.text }}</td>
             </tr>
             <tr>
-                <th>Correct</th>
+                <th>{{ 'Correct'|trans }}</th>
                 <td>{{ answer.correct ? 'Yes' : 'No' }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('answer_index') }}">back to list</a>
+    <a class="btn btn-primary mr-2" href="{{ path('answer_index') }}"><i class="fas fa-arrow-circle-left"></i> {{'Back to list'|trans}}</a>
 
     {% if is_granted('ROLE_TEACHER') %}
-        <a href="{{ path('answer_edit', {'id': answer.id}) }}">edit</a>
+        <a class="btn btn-primary" href="{{ path('answer_edit', {'id': answer.id}) }}"><i class="fas fa-pencil-alt"></i> {{'Edit'|trans}}</a>
     {% endif %}
 
-    {{ include('answer/_delete_form.html.twig') }}
 {% endblock %}

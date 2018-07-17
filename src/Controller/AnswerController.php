@@ -42,6 +42,8 @@ class AnswerController extends Controller
             $em->persist($answer);
             $em->flush();
 
+            $this->addFlash('success', sprintf('Answer #%s is created.', $answer->getId()));
+
             return $this->redirectToRoute('answer_index');
         }
 
@@ -74,6 +76,8 @@ class AnswerController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
+            $this->addFlash('success', sprintf('Answer #%s is updated.', $answer->getId()));
+
             return $this->redirectToRoute('answer_edit', ['id' => $answer->getId()]);
         }
 
@@ -94,6 +98,8 @@ class AnswerController extends Controller
             //$em = $this->getDoctrine()->getManager();
             $em->remove($answer);
             $em->flush();
+
+            $this->addFlash('success', sprintf('Answer #%s is deleted.', $answer->getId()));
         }
 
         return $this->redirectToRoute('answer_index');

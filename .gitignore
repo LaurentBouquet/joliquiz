@@ -21,3 +21,8 @@ yarn-error.log
 .phpunit
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+
+###> deployer/deployer ###
+/deploy_bin.sh
+/deploy_sql.sh
+###< deployer/deployer ###
