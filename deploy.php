@@ -4,7 +4,7 @@ namespace Deployer;
 require 'recipe/symfony4.php';
 
 // Project name
-set('application', 'joliquiz.joliciel.fr');
+set('application', getenv(DEPLOY_SITE));
 
 // Project repository
 set('repository', 'git@github.com:LaurentBouquet/joliquiz.git');
@@ -21,22 +21,22 @@ add('writable_dirs', []);
 
 set('allow_anonymous_stats', true);
 
-host('54.38.243.9')
+host(getenv(DEPLOY_HOST))
     ->stage('production')
     ->roles('app')
     ->set('deploy_path', '/var/www/{{application}}')
-    ->port(2267);
+    ->port(getenv(DEPLOY_PORT));
 
 // Tasks
 task('import', function () {
-    $DATABASE_URL = run('cat /etc/nginx/sites-available/joliquiz.joliciel.fr | grep DATABASE_URL | sed -e \'s/^        fastcgi_param DATABASE_URL "//\' -e \'s/..$//\'');
+    $DATABASE_URL = run('cat /etc/nginx/sites-available/{{application}} | grep DATABASE_URL | sed -e \'s/^        fastcgi_param DATABASE_URL "//\' -e \'s/..$//\'');
     $DATABASE_URL = str_replace('pgsql://', 'postgres://', $DATABASE_URL);
     run('cd {{release_path}}; psql --file joliquiz-initial-prod-data.dump.sql '.$DATABASE_URL. ';');
 });
 task('load:env-vars', function() {
-    $data['APP_ENV'] = run('cat /etc/nginx/sites-available/joliquiz.joliciel.fr | grep APP_ENV | sed -e \'s/^        fastcgi_param APP_ENV //\' -e \'s/.$//\'');
-    $data['APP_SECRET'] = run('cat /etc/nginx/sites-available/joliquiz.joliciel.fr | grep APP_SECRET | sed -e \'s/^        fastcgi_param APP_SECRET //\' -e \'s/.$//\'');
-    $data['DATABASE_URL'] = run('cat /etc/nginx/sites-available/joliquiz.joliciel.fr | grep DATABASE_URL | sed -e \'s/^        fastcgi_param DATABASE_URL "//\' -e \'s/..$//\'');
+    $data['APP_ENV'] = run('cat /etc/nginx/sites-available/{{application}} | grep APP_ENV | sed -e \'s/^        fastcgi_param APP_ENV //\' -e \'s/.$//\'');
+    $data['APP_SECRET'] = run('cat /etc/nginx/sites-available/{{application}} | grep APP_SECRET | sed -e \'s/^        fastcgi_param APP_SECRET //\' -e \'s/.$//\'');
+    $data['DATABASE_URL'] = run('cat /etc/nginx/sites-available/{{application}} | grep DATABASE_URL | sed -e \'s/^        fastcgi_param DATABASE_URL "//\' -e \'s/..$//\'');
     set('env', $data);
 });
 before('deploy', 'load:env-vars');
