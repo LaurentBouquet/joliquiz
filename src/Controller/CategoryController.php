@@ -33,7 +33,8 @@ class CategoryController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
-        $category = new Category();
+        $category = $em->getRepository(Category::class)->create();
+
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
