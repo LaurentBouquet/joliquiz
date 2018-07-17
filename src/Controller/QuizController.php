@@ -213,7 +213,8 @@ class QuizController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
-        $quiz = new Quiz();
+        $quiz = $em->getRepository(Quiz::class)->create();
+
         $form = $this->createForm(QuizType::class, $quiz);
         $form->handleRequest($request);
 
