@@ -43,11 +43,22 @@ class Language
      */
     private $users;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Category", mappedBy="language")
+     */
+    private $categories;
+
     public function __construct()
     {
         $this->questions = new ArrayCollection();
         $this->quizzes = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->categories = new ArrayCollection();
+    }
+
+    public function __toString(): ?string
+    {
+        return $this->getNativeName();
     }
 
     public function getCode(): ?string
@@ -173,6 +184,37 @@ class Language
             // set the owning side to null (unless already changed)
             if ($user->getPreferedLanguage() === $this) {
                 $user->setPreferedLanguage(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Category[]
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+            $category->setLanguage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        if ($this->categories->contains($category)) {
+            $this->categories->removeElement($category);
+            // set the owning side to null (unless already changed)
+            if ($category->getLanguage() === $this) {
+                $category->setLanguage(null);
             }
         }
 

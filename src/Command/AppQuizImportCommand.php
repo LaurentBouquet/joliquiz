@@ -102,16 +102,17 @@ EOT
         }
     }
 
-    protected function getCategory($category)
+    protected function getCategory($category, $joliquizLanguage)
     {
         $repository = $this->em->getRepository(Category::class);
 
-        $persistedCategory = $repository->findOneByShortname($category);
+        $persistedCategory = $repository->findOneByShortnameAndLanguage($category, $joliquizLanguage);
 
         if ($persistedCategory) {
             return $persistedCategory;
         } else {
             $joliquizCategory = new Category($category);
+            $joliquizCategory->setLanguage($joliquizLanguage);
             $this->em->persist($joliquizCategory);
             return $joliquizCategory;
         }
@@ -119,11 +120,10 @@ EOT
 
     protected function getLanguage($language)
     {
-        $repository = $this->em->getRepository(Language::class);
-
-        $persistedLanguage = $repository->findOneById($language);
-
-        return $persistedLanguage;
+        // $repository = $this->em->getRepository(Language::class);
+        // $persistedLanguage = $repository->findOneById($language);
+        // return $persistedLanguage;
+        return $this->em->getReference(Language::class, $language);
     }
 
     protected function importCertificationy($io, $format, $file, $language, $secondCategory=null)
@@ -132,9 +132,11 @@ EOT
         $questions = $data['questions'];
         $category = $data['category'];
 
-        $joliquizCategory = $this->getCategory($category);
+        $joliquizLanguage = $this->getLanguage($language);
+
+        $joliquizCategory = $this->getCategory($category, $joliquizLanguage);
         if ($secondCategory) {
-            $joliquizSecondCategory = $this->getCategory($secondCategory);
+            $joliquizSecondCategory = $this->getCategory($secondCategory, $joliquizLanguage);
         }
 
         foreach ($questions as $question) {
@@ -145,7 +147,7 @@ EOT
             if ($secondCategory) {
                 $joliquizQuestion->addCategory($joliquizSecondCategory);
             }
-            $joliquizQuestion->setLanguage($this->getLanguage($language));
+            $joliquizQuestion->setLanguage($joliquizLanguage);
             $joliquizQuestion->setText($question['question']);
 
             foreach ($question['answers'] as $answer) {

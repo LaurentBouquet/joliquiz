@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Table;
-
+use App\Repository\LanguageRepository;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\QuestionRepository")
  * @ORM\Table(name="tbl_question")
@@ -30,16 +30,6 @@ class Question
      */
     private $created_at;
 
-
-    public function __construct()
-    {
-        $this->setCreatedAt(new \DateTime());
-        $this->setUpdatedAt(new \DateTime());
-        $this->categories = new ArrayCollection();
-        $this->answers = new ArrayCollection();
-        //$this->setLanguage('en');
-    }
-
     /**
      * @ORM\Column(type="datetime")
      */
@@ -62,6 +52,14 @@ class Question
      */
     private $language;
 
+
+    public function __construct()
+    {
+        $this->setCreatedAt(new \DateTime());
+        $this->setUpdatedAt(new \DateTime());
+        $this->categories = new ArrayCollection();
+        $this->answers = new ArrayCollection();
+    }
 
     public function getId()
     {

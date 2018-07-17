@@ -49,6 +49,12 @@ class Category
      */
     private $questions;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Language", inversedBy="categories")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $language;
+
     public function __construct($shortname = null)
     {
         $this->quizzes = new ArrayCollection();
@@ -140,6 +146,18 @@ class Category
             $this->questions->removeElement($question);
             $question->removeCategory($this);
         }
+
+        return $this;
+    }
+
+    public function getLanguage(): ?Language
+    {
+        return $this->language;
+    }
+
+    public function setLanguage(?Language $language): self
+    {
+        $this->language = $language;
 
         return $this;
     }

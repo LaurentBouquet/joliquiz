@@ -79,6 +79,7 @@ class UserType extends AbstractType
                 }
                 $builder->add('isActive', CheckboxType::class, array(
                     'required' => false,
+                    'label' => $this->translator->trans('Account activated'),
                 ));
                 break;
 
@@ -96,6 +97,7 @@ class UserType extends AbstractType
                 }
                 $builder->add('isActive', CheckboxType::class, array(
                     'required' => false,
+                    'label' => $this->translator->trans('Account activated'),
                 ));
                 break;
         }

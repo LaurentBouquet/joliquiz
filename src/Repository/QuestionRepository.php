@@ -3,8 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Question;
+use App\Entity\Language;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**
  * @method Question|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,14 +17,31 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class QuestionRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+
+    private $em;
+    private $param;
+    private $language;
+
+    public function __construct(RegistryInterface $registry, EntityManagerInterface $em, ParameterBagInterface $param)
     {
         parent::__construct($registry, Question::class);
+        $this->em = $em;
+        $this->param = $param;
+        $this->language = $this->em->getReference(Language::class, $this->param->get('locale'));
+    }
+
+    public function create(): Question
+    {
+        $question = new Question();
+        $question->setLanguage($this->language);
+        return $question;
     }
 
     public function findAll()
     {
         $builder = $this->createQueryBuilder('q');
+        $builder->andWhere('q.language = :language');
+        $builder->setParameter('language', $this->language);
         $builder->orderBy('q.text', 'ASC');
         return $builder->getQuery()->getResult();
     }

@@ -3,8 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Quiz;
+use App\Entity\Language;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**
  * @method Quiz|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,18 +17,34 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class QuizRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    private $em;
+    private $param;
+    private $language;
+
+    public function __construct(RegistryInterface $registry, EntityManagerInterface $em, ParameterBagInterface $param)
     {
         parent::__construct($registry, Quiz::class);
+        $this->em = $em;
+        $this->param = $param;
+        $this->language = $this->em->getReference(Language::class, $this->param->get('locale'));
+    }
+
+    public function create(): Quiz
+    {
+        $quiz = new Quiz();
+        $quiz->setLanguage($this->language);
+        return $quiz;
     }
 
     public function findAll()
     {
         $builder = $this->createQueryBuilder('q');
+        $builder->andWhere('q.language = :language');
+        $builder->setParameter('language', $this->language);
         $builder->orderBy('q.title', 'ASC');
         return $builder->getQuery()->getResult();
     }
-    
+
 //    /**
 //     * @return Quiz[] Returns an array of Quiz objects
 //     */

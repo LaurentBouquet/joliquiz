@@ -27,7 +27,7 @@
         {% for question in questions %}
             <tr>
                 <td>{{ question.id }}</td>
-                <td>{{ question.text }}</td>
+                <td>{{ question.text[:60] }} {{ question.text|length>60 ? '...' : '' }}</td>
                 <td>
                   {% for category in question.categories %}
                      - {{ category.shortname }} <br>
@@ -36,7 +36,7 @@
                 {% if is_granted('ROLE_TEACHER') %}
                     <td>
                       {% for answer in question.answers %}
-                         {% if answer.correct %}+{% else %}-{% endif %} {{ answer.text }} <br>
+                         {% if answer.correct %}+{% else %}-{% endif %} {{ answer.text[:30] }} {{ answer.text|length>30 ? '...' : '' }}<br>
                       {% endfor %}
                     </td>
                     <td>
@@ -52,7 +52,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="6">{{'no records found'|trans}}</td>
             </tr>
         {% endfor %}
         </tbody>
