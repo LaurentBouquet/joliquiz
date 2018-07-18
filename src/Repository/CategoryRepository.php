@@ -18,15 +18,13 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 class CategoryRepository extends ServiceEntityRepository
 {
     private $em;
-    private $param;
     private $language;
 
     public function __construct(RegistryInterface $registry, EntityManagerInterface $em, ParameterBagInterface $param)
     {
         parent::__construct($registry, Category::class);
         $this->em = $em;
-        $this->param = $param;
-        $this->language = $this->em->getReference(Language::class, $this->param->get('locale'));
+        $this->language = $this->em->getReference(Language::class, $param->get('locale'));
     }
 
     public function create(): Category

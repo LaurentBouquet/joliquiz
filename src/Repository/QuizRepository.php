@@ -36,6 +36,17 @@ class QuizRepository extends ServiceEntityRepository
         return $quiz;
     }
 
+    public function find($id, $lockMode = NULL, $lockVersion = NULL)
+    {
+        $builder = $this->createQueryBuilder('q');
+        $builder->andWhere('q.id = :id');
+        $builder->setParameter('id', $id);
+        $builder->andWhere('q.language = :language');
+        $builder->setParameter('language', $this->language);
+        $builder->orderBy('q.text', 'ASC');
+        return $builder->getQuery()->getOneOrNullResult();
+    }
+
     public function findAll()
     {
         $builder = $this->createQueryBuilder('q');

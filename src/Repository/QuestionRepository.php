@@ -37,6 +37,17 @@ class QuestionRepository extends ServiceEntityRepository
         return $question;
     }
 
+    public function find($id, $lockMode = NULL, $lockVersion = NULL)
+    {
+        $builder = $this->createQueryBuilder('q');
+        $builder->andWhere('q.id = :id');
+        $builder->setParameter('id', $id);
+        $builder->andWhere('q.language = :language');
+        $builder->setParameter('language', $this->language);
+        $builder->orderBy('q.text', 'ASC');
+        return $builder->getQuery()->getOneOrNullResult();
+    }
+
     public function findAll()
     {
         $builder = $this->createQueryBuilder('q');
@@ -49,6 +60,8 @@ class QuestionRepository extends ServiceEntityRepository
     public function findOneRandomByCategories($categories): ?Question
     {
         $builder = $this->createQueryBuilder('q');
+        $builder->andWhere('q.language = :language');
+        $builder->setParameter('language', $this->language);
         $builder->innerJoin('q.categories', 'categories');
         $builder->andWhere($builder->expr()->in('categories', ':categories'))->setParameter('categories', $categories);
 
@@ -61,6 +74,8 @@ class QuestionRepository extends ServiceEntityRepository
     public function countByCategories($categories): int
     {
         $builder = $this->createQueryBuilder('q');
+        $builder->andWhere('q.language = :language');
+        $builder->setParameter('language', $this->language);
         $builder->innerJoin('q.categories', 'categories');
         $builder->andWhere($builder->expr()->in('categories', ':categories'))->setParameter('categories', $categories);
 

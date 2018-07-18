@@ -9,15 +9,18 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class QuizType extends AbstractType
 {
     private $translator;
+    private $param;
 
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(TranslatorInterface $translator, ParameterBagInterface $param)
     {
         $this->translator = $translator;
+        $this->param = $param;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -28,7 +31,7 @@ class QuizType extends AbstractType
         $builder->add('categories', EntityType::class, array(
                 'class' => Category::class,
                 'query_builder' => function (CategoryRepository $er) {
-                    return $er->createQueryBuilder('c')->orderBy('c.shortname', 'ASC');
+                    return $er->createQueryBuilder('c')->andWhere('c.language = :language')->setParameter('language', $this->param->get('locale'))->orderBy('c.shortname', 'ASC');
                  },
                 'choice_label' => 'longname',
                 'multiple' => true

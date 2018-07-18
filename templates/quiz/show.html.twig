@@ -1,16 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{'Quiz'|trans}}{% endblock %}
+{% block title %}{{'Quiz'|trans}} "{{ quiz.title }}"{% endblock %}
 
 {% block body %}
-    <h1>Quiz</h1>
+    <h1>{{'Quiz'|trans}} "{{ quiz.title }}"</h1>
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>{{ 'Title'|trans }}</th>
-                <td>{{ quiz.title }}</td>
-            </tr>
             {% if quiz.summary %}
             <tr>
                 <th>{{ 'Summary'|trans }}</th>

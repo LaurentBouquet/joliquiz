@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{'Edit Category'|trans}}{% endblock %}
+{% block title %}{{'Edit Category'|trans}} "{{ category.shortname }}"{% endblock %}
 
 {% block body %}
-    <h1>{{'Edit Category'|trans}}</h1>
+    <h1>{{'Edit Category'|trans}} "{{ category.shortname }}"</h1>
 
     {% if is_granted('ROLE_TEACHER') %}
         {{ include('category/_form.html.twig', {'button_label': 'Update'|trans}) }}
