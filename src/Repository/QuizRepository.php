@@ -43,7 +43,7 @@ class QuizRepository extends ServiceEntityRepository
         $builder->setParameter('id', $id);
         $builder->andWhere('q.language = :language');
         $builder->setParameter('language', $this->language);
-        $builder->orderBy('q.text', 'ASC');
+        $builder->orderBy('q.title', 'ASC');
         return $builder->getQuery()->getOneOrNullResult();
     }
 

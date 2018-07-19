@@ -5,9 +5,12 @@ namespace App\Repository;
 use App\Entity\Question;
 use App\Entity\Language;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
 
 /**
  * @method Question|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,7 +20,6 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
  */
 class QuestionRepository extends ServiceEntityRepository
 {
-
     private $em;
     private $param;
     private $language;
@@ -37,7 +39,16 @@ class QuestionRepository extends ServiceEntityRepository
         return $question;
     }
 
-    public function find($id, $lockMode = NULL, $lockVersion = NULL)
+    private function createPaginator(Query $query, int $page): Pagerfanta
+    {
+        $paginator = new Pagerfanta(new DoctrineORMAdapter($query));
+        $paginator->setMaxPerPage(Question::NUM_ITEMS);
+        $paginator->setCurrentPage($page);
+
+        return $paginator;
+    }
+
+    public function find($id, $lockMode = null, $lockVersion = null)
     {
         $builder = $this->createQueryBuilder('q');
         $builder->andWhere('q.id = :id');
@@ -48,13 +59,15 @@ class QuestionRepository extends ServiceEntityRepository
         return $builder->getQuery()->getOneOrNullResult();
     }
 
-    public function findAll()
+    public function findAll(int $page=1): Pagerfanta
     {
         $builder = $this->createQueryBuilder('q');
         $builder->andWhere('q.language = :language');
         $builder->setParameter('language', $this->language);
         $builder->orderBy('q.text', 'ASC');
-        return $builder->getQuery()->getResult();
+
+        //return $builder->getQuery()->getResult();
+        return $this->createPaginator($builder->getQuery(), $page);
     }
 
     public function findOneRandomByCategories($categories): ?Question

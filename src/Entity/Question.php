@@ -13,6 +13,9 @@ use App\Repository\LanguageRepository;
  */
 class Question
 {
+
+    public const NUM_ITEMS = 10;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()

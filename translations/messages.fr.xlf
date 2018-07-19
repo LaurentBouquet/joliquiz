@@ -29,7 +29,7 @@
         <source>I create my free account...</source>
         <target>Je crée mon compte gratuit ...</target>
       </trans-unit>
-      <trans-unit id="c8Pe1Gq" resname="Let's start now">
+      <trans-unit id="w9BnAje" resname="Let's start now">
         <source>Let's start now</source>
         <target>Commençons dès maintenant</target>
       </trans-unit>
@@ -353,7 +353,7 @@
         <source>Automatic scoring</source>
         <target>Notation automatique</target>
       </trans-unit>
-      <trans-unit id="pPu0uHB" resname="Real-time activity tracking (receive the results of students by email)">
+      <trans-unit id="u1NAMKc" resname="Real-time activity tracking (receive the results of students by email)">
         <source>Real-time activity tracking (receive the results of students by email)</source>
         <target>Suivi d'activité en temps réel (recevez les résultats des élèves par email)</target>
       </trans-unit>
@@ -361,7 +361,7 @@
         <source>Test your audience via smartphone and provide live results during a presentation</source>
         <target>Testez vos élèves via un smartphone et fournissez des résultats en direct lors d'une présentation</target>
       </trans-unit>
-      <trans-unit id="6Us85Pp" resname="It is free software that you can copy and modify.">
+      <trans-unit id="XhpKdyT" resname="It is free software that you can copy and modify.">
         <source>It is free software that you can copy and modify.</source>
         <target>C'est un logiciel libre que vous pouvez copier et modifier.</target>
       </trans-unit>
