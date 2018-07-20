@@ -28,7 +28,10 @@
         </tbody>
     </table>
 
-    <a class="btn btn-primary mr-2" href="{{ path('quiz_index') }}"><i class="fas fa-arrow-circle-left"></i> {{'Back to list'|trans}}</a>
+    {% if (is_granted('ROLE_USER')) %}
+        <a class="btn btn-primary mr-2" href="{{ path('quiz_index') }}"><i class="fas fa-arrow-circle-left"></i> {{'Back to list'|trans}}</a>
+    {% endif %}
 
+{% include '_home_bottom.html.twig' %}
 
 {% endblock %}

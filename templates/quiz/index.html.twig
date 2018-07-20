@@ -19,6 +19,7 @@
                 <th>{{ 'Categories'|trans }}</th>
                 {% if is_granted('ROLE_TEACHER') %}
                     <th>{{ 'Active'|trans }}</th>
+                    <th>{{ 'Anonymous'|trans }}</th>
                 {% endif %}
                 {% if is_granted('ROLE_USER') %}
                     <th>{{ 'Actions'|trans }}</th>
@@ -28,7 +29,7 @@
         <tbody>
         {% for quiz in quizzes %}
             <tr>
-                <td>{{ quiz.title }}</td>
+                <td title="{{ quiz.summary }}">{{ quiz.title }}</td>
                 <td>{{ quiz.numberOfQuestions }}</td>
                 <td>
                   {% for category in quiz.categories %}
@@ -37,10 +38,11 @@
                 </td>
                 {% if is_granted('ROLE_TEACHER') %}
                     <td>{{ quiz.active ? 'Yes' : 'No' }}</td>
+                    <td>{{ quiz.allowAnonymousWorkout ? 'Yes' : 'No' }}</td>
                     <td>
                         <div class="form-check-inline">
-                            <a class="btn btn-primary btn-sm mr-2" href="{{ path('quiz_show', {'id': quiz.id}) }}"><i class="fas fa-eye"></i> {{'Show'|trans}}</a>
-                            <a class="btn btn-primary btn-sm mr-2" href="{{ path('quiz_edit', {'id': quiz.id}) }}"><i class="fas fa-pencil-alt"></i> {{'Edit'|trans}}</a>
+                            <a class="btn btn-primary btn-sm mr-2" href="{{ path('quiz_show', {'id': quiz.id}) }}" title="{{'Show'|trans}}"><i class="fas fa-eye"></i></a>
+                            <a class="btn btn-primary btn-sm mr-2" href="{{ path('quiz_edit', {'id': quiz.id}) }}" title="{{'Edit'|trans}}"><i class="fas fa-pencil-alt"></i></a>
                             {{ include('quiz/_delete_form.html.twig') }}
                             <a class="btn btn-primary btn-sm mr-2" href="{{ path('quiz_start', {'id': quiz.id}) }}">{{'Start'|trans}} <i class="fas fa-arrow-circle-right"></i></a>
                         </div>

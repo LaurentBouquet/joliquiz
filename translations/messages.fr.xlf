@@ -397,6 +397,22 @@
         <source>Label</source>
         <target>Libellé</target>
       </trans-unit>
+      <trans-unit id="akbPQ7Z" resname="Start quiz comment">
+        <source>Start quiz comment</source>
+        <target>Commentaire de démarrage du questionnaire</target>
+      </trans-unit>
+      <trans-unit id="qq45sgA" resname="Result quiz comment">
+        <source>Result quiz comment</source>
+        <target>Commentaire du résultat du questionnaire</target>
+      </trans-unit>
+      <trans-unit id="AdiCba8" resname="Allow anonymous workout">
+        <source>Allow anonymous workout</source>
+        <target>Autoriser un entrainement anonyme</target>
+      </trans-unit>
+      <trans-unit id="56iqLff" resname="Anonymous">
+        <source>Anonymous</source>
+        <target>Anonyme</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

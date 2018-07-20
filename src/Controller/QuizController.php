@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Quiz;
+use App\Entity\User;
 use App\Entity\Question;
 use App\Entity\Workout;
 use App\Entity\AnswerHistory;
@@ -28,8 +29,6 @@ class QuizController extends Controller
      */
     public function workout(Request $request, Workout $workout, EntityManagerInterface $em, UserInterface $user = null): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
-
         //////////////
         // TODO mettre ces opérations d'historique dans un service
 
@@ -44,9 +43,13 @@ class QuizController extends Controller
         $questionResult = 0;
         $quiz = $workout->getQuiz();
 
+        if (!$quiz->getAllowAnonymousWorkout()) {
+            $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
+        }
+
         // Re-read (from the database) the previous question
-        $questionHistoryRepository = $em->getRepository(QuestionHistory::Class);
-        $questionRepository = $em->getRepository(Question::Class);
+        $questionHistoryRepository = $em->getRepository(QuestionHistory::class);
+        $questionRepository = $em->getRepository(Question::class);
         $lastQuestionHistory = $questionHistoryRepository->findLastByWorkout($workout);
         if ($lastQuestionHistory) {
             $currentQuestionResult = +1;
@@ -84,7 +87,8 @@ class QuizController extends Controller
 
                 if ($quiz->getShowResultQuestion()) {
                     $form = $this->createForm(QuestionType::class, $lastQuestion, array('form_type'=>'student_marking'));
-                    return $this->render('quiz/workout.html.twig',
+                    return $this->render(
+                        'quiz/workout.html.twig',
                         [
                             'id' => $workout->getId(),
                             'quiz' => $quiz,
@@ -96,7 +100,6 @@ class QuizController extends Controller
                     );
                 }
             }
-
         }
 
 
@@ -105,7 +108,8 @@ class QuizController extends Controller
         if ($questionsCount < $quiz->getNumberOfQuestions()) {
             $this->addFlash('danger', 'Not enough questions for this quiz');
             $form = $this->createForm(QuizType::class, $quiz, array('form_type'=>'student_questioning'));
-            return $this->render('quiz/end.html.twig',
+            return $this->render(
+                'quiz/end.html.twig',
                 [
                     'id' => $workout->getId(),
                     'quiz' => $quiz,
@@ -147,7 +151,8 @@ class QuizController extends Controller
 
             $form = $this->createForm(QuestionType::class, $nextQuestion, array('form_type'=>'student_questioning'));
 
-            return $this->render('quiz/workout.html.twig',
+            return $this->render(
+                'quiz/workout.html.twig',
                 [
                     'id' => $workout->getId(),
                     'quiz' => $quiz,
@@ -157,12 +162,12 @@ class QuizController extends Controller
                     'form' => $form->createView(),
                 ]
             );
-
         } else {
             // Quiz is completed then display end
             $form = $this->createForm(QuizType::class, $quiz, array('form_type'=>'student_questioning'));
 
-            return $this->render('quiz/end.html.twig',
+            return $this->render(
+                'quiz/end.html.twig',
                 [
                     'id' => $workout->getId(),
                     'quiz' => $quiz,
@@ -177,9 +182,24 @@ class QuizController extends Controller
      */
     public function start(Request $request, Quiz $quiz, EntityManagerInterface $em, UserInterface $user = null): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
+        if (!$quiz->getAllowAnonymousWorkout()) {
+            $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
+        }
+        else {
+            if (!$user) {
+                $userRepository = $em->getRepository(User::class);
+                $user = $userRepository->findOneBy(['username'=>'anonymous']);
+                if (!$user) {
+                    $user = new User();
+                    $user->setUsername('anonymous');
+                    $user->setPassword(random_bytes(10));
+                    $user->setEmail('anonymous@domain.tld');
+                    $em->persist($user);
+                }
+            }
+        }
 
-        $workoutRepository = $em->getRepository(Workout::Class);
+        $workoutRepository = $em->getRepository(Workout::class);
         $workout = new Workout();
         $workout->setStudent($user);
         $workout->setQuiz($quiz);
@@ -188,7 +208,8 @@ class QuizController extends Controller
         $em->persist($workout);
         $em->flush();
 
-        return $this->render('quiz/start.html.twig',
+        return $this->render(
+            'quiz/start.html.twig',
             [
                 'id' => $workout->getId(),
                 'quiz' => $quiz,
@@ -219,15 +240,13 @@ class QuizController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $questionRepository = $em->getRepository(Question::Class);
+            $questionRepository = $em->getRepository(Question::class);
 
             // Check if enough questions for this quiz
             $questionsCount = $questionRepository->countByCategories($quiz->getCategories());
             if ($questionsCount < $quiz->getNumberOfQuestions()) {
                 $this->addFlash('danger', 'Not enough questions ('.$questionsCount.') for this quiz');
-            }
-            else {
+            } else {
                 $em->persist($quiz);
                 $em->flush();
 
@@ -263,7 +282,6 @@ class QuizController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $quiz->setUpdatedAt(new \DateTime());
 
             $this->getDoctrine()->getManager()->flush();

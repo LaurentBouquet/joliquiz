@@ -17,7 +17,7 @@
 
     {{ form_start(form) }}
         {{ form_widget(form) }}
-        {% if is_granted('ROLE_USER') %}
+        {% if (is_granted('ROLE_USER')) or (quiz.allowAnonymousWorkout) %}
             <button class="btn btn-primary mr-2" type="submit">{{ button_label|default('Next'|trans) }} <i class="fas fa-arrow-circle-right"></i></button>
         {% endif %}
     {{ form_end(form) }}

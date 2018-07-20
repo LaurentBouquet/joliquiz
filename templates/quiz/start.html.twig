@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{'Starting Quiz'|trans}} "{{ quiz.title }}"{% endblock %}
+{% block title %}{{'Quiz'|trans}} "{{ quiz.title }}"{% endblock %}
 
 {% block body %}
-    <h1>{{'Starting Quiz'|trans}} "{{ quiz.title }}"</h1>
+    <h1>{{'Quiz'|trans}} "{{ quiz.title }}"</h1>
 
     <table class="table">
         <tbody>
@@ -30,8 +30,10 @@
 
 
     <form action="{{ path('quiz_workout', {'id': id}) }}" method="post">
-        <a class="btn btn-primary mr-2" href="{{ path('quiz_index') }}"><i class="fas fa-arrow-circle-left"></i> {{'Back to list'|trans}}</a>
-        {% if is_granted('ROLE_USER') %}
+        {% if (is_granted('ROLE_USER')) %}
+            <a class="btn btn-primary mr-2" href="{{ path('quiz_index') }}"><i class="fas fa-arrow-circle-left"></i> {{'Back to list'|trans}}</a>
+        {% endif %}
+        {% if (is_granted('ROLE_USER')) or (quiz.allowAnonymousWorkout) %}
             <button class="btn btn-primary mr-2" type="submit">{{ button_label|default('Next'|trans) }} <i class="fas fa-arrow-circle-right"></i></button>
         {% endif %}
     </form>

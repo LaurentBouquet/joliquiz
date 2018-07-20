@@ -40,7 +40,7 @@ security:
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/quiz, roles: ROLE_USER }
+        - { path: ^/quiz, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/question, roles: ROLE_USER }
         - { path: ^/answer, roles: ROLE_USER }
         - { path: ^/category, roles: ROLE_ADMIN }
