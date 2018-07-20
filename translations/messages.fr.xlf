@@ -393,6 +393,10 @@
         <source>Here is the tool you need!</source>
         <target>Voici l'outil qu'il vous faut !</target>
       </trans-unit>
+      <trans-unit id="DmY3P0X" resname="Label">
+        <source>Label</source>
+        <target>Libellé</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
