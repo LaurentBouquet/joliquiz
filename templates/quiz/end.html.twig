@@ -8,28 +8,61 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>{{ 'Categories'|trans }}</th>
-                <td>
-                  {% for category in quiz.categories %}
-                     - {{ category.longname }} <br>
-                  {% endfor %}
-                </td>
+                <th>{{ 'Your score'|trans }}</th>
+                <td><span class="badge {{ 51>50? 'badge-success' : 'badge-primary'}}">{{ 100 }}%</span></td>
             </tr>
-            {% if quiz.summary %}
-            <tr>
-                <th>{{ 'Summary'|trans }}</th>
-                <td>{{ quiz.summary }}</td>
-            </tr>
-            {% endif %}
             <tr>
                 <th>{{ 'Number of questions'|trans }}</th>
                 <td>{{ quiz.numberOfQuestions }}</td>
             </tr>
+            <tr>
+                <td>
+                    <div id="accordion">
+                      {% for questionHistory in questionsHistory|reverse %}
+                        {% set questionNumber = loop.index %}
+                         <div class="card">
+                           <div class="card-header" id="heading{{questionNumber}}">
+                             <h5 class="mb-0">
+                               <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse{{questionNumber}}" aria-expanded="false" aria-controls="collapse{{questionNumber}}">
+                                   <div class="alert {{ questionHistory.questionSuccess ? 'alert-success' : 'alert-danger' }}" role="alert">
+                                       {{ questionHistory.questionText }}
+                                   </div>
+                               </button>
+                             </h5>
+                           </div>
+                           <div id="collapse{{questionNumber}}" class="collapse" aria-labelledby="heading{{questionNumber}}" data-parent="#accordion">
+                             <div class="card-body">
+                                {% for answerHistory in questionHistory.answersHistory %}
+                                    {% set answerNumber = questionNumber ~ '-' ~ loop.index %}
+                                    <fieldset class="form-group">
+                                        <div id="question_answers_0">
+                                            <div class="form-group">
+                                                <div class="form-check">
+                                                    <input type="checkbox" id="{{answerNumber}}" name="question[{{questionNumber}}][{{loop.index}}]" disabled="disabled" class="form-check-input" value="{{answerNumber}}" {{answerHistory.correctGiven ? 'checked' : ''}} />
+                                                    <label class="{{ answerHistory.answerSucces ? 'alert-success' : 'alert-danger' }} form-check-label" for="question[{{questionNumber}}][{{loop.index}}]">
+                                                        {{ answerHistory.answerText }}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                {% endfor %}
+                             </div>
+                           </div>
+                         </div>
+                      {% endfor %}
+                    </div>
+                </td>
+            </tr>
         </tbody>
     </table>
 
+    <div class="progress" style="height: 10px;">
+        <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+
     {% if (is_granted('ROLE_USER')) %}
-        <a class="btn btn-primary mr-2" href="{{ path('quiz_index') }}"><i class="fas fa-arrow-circle-left"></i> {{'Back to list'|trans}}</a>
+        <a class="mt-3 btn btn-secondary mr-2" href="{{ path('quiz_index') }}"><i class="fas fa-arrow-circle-left"></i> {{'Back to list'|trans}}</a>
     {% endif %}
 
 {% include '_home_bottom.html.twig' %}

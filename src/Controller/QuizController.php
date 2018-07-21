@@ -50,8 +50,10 @@ class QuizController extends Controller
         // Re-read (from the database) the previous question
         $questionHistoryRepository = $em->getRepository(QuestionHistory::class);
         $questionRepository = $em->getRepository(Question::class);
-        $lastQuestionHistory = $questionHistoryRepository->findLastByWorkout($workout);
-        if ($lastQuestionHistory) {
+        //$lastQuestionHistory = $questionHistoryRepository->findLastByWorkout($workout);
+        $questionsHistory = $questionHistoryRepository->findAllByWorkout($workout);
+        if ($questionsHistory) {
+            $lastQuestionHistory = $questionsHistory[0];
             $currentQuestionResult = +1;
             $lastQuestion = $questionRepository->findOneById($lastQuestionHistory->getQuestionId());
             $form = $this->createForm(QuestionType::class, $lastQuestion, array('form_type'=>'student_questioning'));
@@ -95,6 +97,7 @@ class QuizController extends Controller
                             'question' => $lastQuestion,
                             'questionNumber' => $questionNumber,
                             'questionResult' => $questionResult,
+                            'progress' => ($questionNumber/$quiz->getNumberOfQuestions())*100,
                             'form' => $form->createView(),
                         ]
                     );
@@ -128,7 +131,6 @@ class QuizController extends Controller
                 // Draw a random question
                 $nextQuestion = $questionRepository->findOneRandomByCategories($quiz->getCategories());
                 // Check if this question has not already been posted
-                $questionsHistory = $questionHistoryRepository->findAllByWorkout($workout);
                 $questionHasBeenPosted = false;
                 foreach ($questionsHistory as $questionHistory) {
                     if ($questionHistory->getQuestionId() == $nextQuestion->getId()) {
@@ -150,7 +152,6 @@ class QuizController extends Controller
             $em->flush();
 
             $form = $this->createForm(QuestionType::class, $nextQuestion, array('form_type'=>'student_questioning'));
-
             return $this->render(
                 'quiz/workout.html.twig',
                 [
@@ -159,6 +160,7 @@ class QuizController extends Controller
                     'question' => $nextQuestion,
                     'questionNumber' => $questionNumber,
                     'questionResult' => 0,
+                    'progress' => (($questionNumber-1)/$quiz->getNumberOfQuestions())*100,
                     'form' => $form->createView(),
                 ]
             );
@@ -171,6 +173,7 @@ class QuizController extends Controller
                 [
                     'id' => $workout->getId(),
                     'quiz' => $quiz,
+                    'questionsHistory' => $questionsHistory,
                     'form' => $form->createView(),
                 ]
             );
