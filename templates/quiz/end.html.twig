@@ -8,14 +8,11 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>{{ 'Your score'|trans }}</th>
-                <td><span class="badge {{ 51>50? 'badge-success' : 'badge-primary'}}">{{ 100 }}%</span></td>
+                <th>{{ 'Score'|trans }}</th>
+                <td><h1><span class="badge {{ 51>50? 'badge-success' : 'badge-primary'}}">{{ 100 }}%</span></h1></td>
             </tr>
             <tr>
-                <th>{{ 'Number of questions'|trans }}</th>
-                <td>{{ quiz.numberOfQuestions }}</td>
-            </tr>
-            <tr>
+                <th>{{ 'Questions'|trans }}</th>
                 <td>
                     <div id="accordion">
                       {% for questionHistory in questionsHistory|reverse %}

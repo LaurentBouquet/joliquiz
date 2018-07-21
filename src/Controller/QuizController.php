@@ -55,31 +55,31 @@ class QuizController extends Controller
         if ($questionsHistory) {
             $lastQuestionHistory = $questionsHistory[0];
             $currentQuestionResult = +1;
-            $lastQuestion = $questionRepository->findOneById($lastQuestionHistory->getQuestionId());
-            $form = $this->createForm(QuestionType::class, $lastQuestion, array('form_type'=>'student_questioning'));
-            $form->handleRequest($request);
-            if ($form->isSubmitted() && $form->isValid()) {
-                foreach ($lastQuestion->getAnswers() as $key => $lastAnswer) {
-                    // Save answers history
-                    $newAnswerHistory = new AnswerHistory();
-                    $newAnswerHistory->setQuestionHistory($lastQuestionHistory);
-                    $newAnswerHistory->setAnswerId($lastAnswer->getId());
-                    $newAnswerHistory->setAnswerText($lastAnswer->getText());
-                    $newAnswerHistory->setAnswerCorrect($lastAnswer->getCorrect());
-                    $newAnswerHistory->setCorrectGiven($lastAnswer->getWorkoutCorrectGiven());
-                    $currentAnswerResult = $lastAnswer->getWorkoutCorrectGiven() == $lastAnswer->getCorrect();
-                    if (!$currentAnswerResult) {
-                        $currentQuestionResult = -1;
-                    }
-                    $newAnswerHistory->setAnswerSucces($currentAnswerResult);
-                    $em->persist($newAnswerHistory);
-                }
-            }
-            $lastQuestionHistory->setQuestionSuccess($currentQuestionResult==+1);
-            $questionResult = $currentQuestionResult;
-            $em->persist($lastQuestionHistory);
-
             if (!$lastQuestionHistory->getEndedAt()) {
+                $lastQuestion = $questionRepository->findOneById($lastQuestionHistory->getQuestionId());
+                $form = $this->createForm(QuestionType::class, $lastQuestion, array('form_type'=>'student_questioning'));
+                $form->handleRequest($request);
+                if ($form->isSubmitted() && $form->isValid()) {
+                    foreach ($lastQuestion->getAnswers() as $key => $lastAnswer) {
+                        // Save answers history
+                        $newAnswerHistory = new AnswerHistory();
+                        $newAnswerHistory->setQuestionHistory($lastQuestionHistory);
+                        $newAnswerHistory->setAnswerId($lastAnswer->getId());
+                        $newAnswerHistory->setAnswerText($lastAnswer->getText());
+                        $newAnswerHistory->setAnswerCorrect($lastAnswer->getCorrect());
+                        $newAnswerHistory->setCorrectGiven($lastAnswer->getWorkoutCorrectGiven());
+                        $currentAnswerResult = $lastAnswer->getWorkoutCorrectGiven() == $lastAnswer->getCorrect();
+                        if (!$currentAnswerResult) {
+                            $currentQuestionResult = -1;
+                        }
+                        $newAnswerHistory->setAnswerSucces($currentAnswerResult);
+                        $em->persist($newAnswerHistory);
+                    }
+                }
+                $lastQuestionHistory->setQuestionSuccess($currentQuestionResult==+1);
+                $questionResult = $currentQuestionResult;
+                $em->persist($lastQuestionHistory);
+
                 $lastQuestionHistory->setEndedAt(new \DateTime());
                 $lastQuestionHistory->setDuration(date_diff($lastQuestionHistory->getEndedAt(), $lastQuestionHistory->getStartedAt()));
                 $em->persist($lastQuestionHistory);
