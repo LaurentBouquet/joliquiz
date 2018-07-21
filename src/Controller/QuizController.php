@@ -41,6 +41,7 @@ class QuizController extends Controller
 
         $questionNumber = $workout->getNumberOfQuestions();
         $questionResult = 0;
+        $workoutScore = 0;
         $quiz = $workout->getQuiz();
 
         if (!$quiz->getAllowAnonymousWorkout()) {
@@ -84,6 +85,17 @@ class QuizController extends Controller
                 $lastQuestionHistory->setDuration(date_diff($lastQuestionHistory->getEndedAt(), $lastQuestionHistory->getStartedAt()));
                 $em->persist($lastQuestionHistory);
                 $workout->setEndedAt(new \DateTime());
+                ////////////////////////////
+                // Calc score
+                $workoutSuccess = 0;
+                foreach ($questionsHistory as $questionHistory) {
+                    if ($questionHistory->getQuestionSuccess()) {
+                        $workoutSuccess++;
+                    }
+                }
+                $workoutScore = round(($workoutSuccess / $quiz->getNumberOfQuestions()) * 100);
+                $workout->setScore($workoutScore);
+                ////////////////////////////
                 $em->persist($workout);
                 $em->flush();
 
@@ -173,6 +185,7 @@ class QuizController extends Controller
                 [
                     'id' => $workout->getId(),
                     'quiz' => $quiz,
+                    'score' => $workout->getScore(),
                     'questionsHistory' => $questionsHistory,
                     'form' => $form->createView(),
                 ]

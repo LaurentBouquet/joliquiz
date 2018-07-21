@@ -57,6 +57,11 @@ class Workout
      */
     private $questionsHistory;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $score;
+
 
     public function __construct()
     {
@@ -169,6 +174,18 @@ class Workout
                 $questionsHistory->setWorkout(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getScore(): ?float
+    {
+        return $this->score;
+    }
+
+    public function setScore(?float $score): self
+    {
+        $this->score = $score;
 
         return $this;
     }
