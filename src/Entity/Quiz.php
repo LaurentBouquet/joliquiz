@@ -84,6 +84,21 @@ class Quiz
      */
     private $language;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $allow_anonymous_workout;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $result_quiz_comment;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $start_quiz_comment;
+
 
     public function __construct()
     {
@@ -95,6 +110,7 @@ class Quiz
         $this->setNumberOfQuestions(10);
         $this->categories = new ArrayCollection();
         $this->workouts = new ArrayCollection();
+        $this->setAllowAnonymousWorkout(false);
     }
 
     public function getId()
@@ -263,6 +279,42 @@ class Quiz
     public function setLanguage(?Language $language): self
     {
         $this->language = $language;
+
+        return $this;
+    }
+
+    public function getAllowAnonymousWorkout(): ?bool
+    {
+        return $this->allow_anonymous_workout;
+    }
+
+    public function setAllowAnonymousWorkout(bool $allow_anonymous_workout): self
+    {
+        $this->allow_anonymous_workout = $allow_anonymous_workout;
+
+        return $this;
+    }
+
+    public function getResultQuizComment(): ?string
+    {
+        return $this->result_quiz_comment;
+    }
+
+    public function setResultQuizComment(?string $result_quiz_comment): self
+    {
+        $this->result_quiz_comment = $result_quiz_comment;
+
+        return $this;
+    }
+
+    public function getStartQuizComment(): ?string
+    {
+        return $this->start_quiz_comment;
+    }
+
+    public function setStartQuizComment(?string $start_quiz_comment): self
+    {
+        $this->start_quiz_comment = $start_quiz_comment;
 
         return $this;
     }

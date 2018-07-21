@@ -14,7 +14,6 @@
     <table class="table">
         <thead>
             <tr>
-                <th>{{ 'Id'|trans }}</th>
                 <th>{{ 'Username'|trans }}</th>
                 <th>{{ 'Email'|trans }}</th>
                 <th>{{ 'IsActive'|trans }}</th>
@@ -27,7 +26,6 @@
         <tbody>
         {% for user in users %}
             <tr {{ 'ROLE_SUPER_ADMIN' in user.roles ? 'class="table-danger"' : 'ROLE_ADMIN' in user.roles ? 'class="table-warning"' : 'ROLE_TEACHER' in user.roles ? 'class="table-primary"' : 'class="table-success"' }}>
-                <td>{{ user.id }}</td>
                 <td>{{ user.username }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.isActive ? 'Yes' : 'No' }}</td>

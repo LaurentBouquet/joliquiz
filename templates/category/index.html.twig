@@ -14,7 +14,6 @@
     <table class="table">
         <thead>
             <tr>
-                <th>{{ 'Id'|trans }}</th>
                 <th>{{ 'Shortname'|trans }}</th>
                 <th>{{ 'Longname'|trans }}</th>
                 {% if is_granted('ROLE_TEACHER') %}
@@ -25,7 +24,6 @@
         <tbody>
         {% for category in categories %}
             <tr>
-                <td>{{ category.id }}</td>
                 <td>{{ category.shortname }}</td>
                 <td>{{ category.longname }}</td>
                 <td>

@@ -36,7 +36,10 @@ class QuizType extends AbstractType
                 'choice_label' => 'longname',
                 'multiple' => true
             ));
+        $builder->add('start_quiz_comment');
         $builder->add('show_result_question');
+        $builder->add('result_quiz_comment');
+        $builder->add('allow_anonymous_workout');
         $builder->add('active');
     }
 

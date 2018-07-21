@@ -26,12 +26,24 @@
                 </td>
             </tr>
             <tr>
+                <th>{{ 'Start quiz comment'|trans }}</th>
+                <td>{{ quiz.startQuizComment }}</td>
+            </tr>
+            <tr>
                 <th>{{ 'Result after question'|trans }}</th>
                 <td>{{ quiz.showResultQuestion ? 'Yes' : 'No' }}</td>
             </tr>
             <tr>
+                <th>{{ 'Result quiz comment'|trans }}</th>
+                <td>{{ quiz.resultQuizComment }}</td>
+            </tr>
+            <tr>
                 <th>{{ 'Active'|trans }}</th>
                 <td>{{ quiz.active ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Allow anonymous workout'|trans }}</th>
+                <td>{{ quiz.allowAnonymousWorkout ? 'Yes' : 'No' }}</td>
             </tr>
             <tr>
                 <th>{{ 'Created_at'|trans }}</th>

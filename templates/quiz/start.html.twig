@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{'Starting Quiz'|trans}} "{{ quiz.title }}"{% endblock %}
+{% block title %}{{'Quiz'|trans}} "{{ quiz.title }}"{% endblock %}
 
 {% block body %}
-    <h1>{{'Starting Quiz'|trans}} "{{ quiz.title }}"</h1>
+    <h1>{{'Quiz'|trans}} "{{ quiz.title }}"</h1>
 
     <table class="table">
         <tbody>
@@ -29,10 +29,16 @@
     </table>
 
 
+    <div class="progress" style="height: 10px;">
+        <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+
     <form action="{{ path('quiz_workout', {'id': id}) }}" method="post">
-        <a class="btn btn-primary mr-2" href="{{ path('quiz_index') }}"><i class="fas fa-arrow-circle-left"></i> {{'Back to list'|trans}}</a>
-        {% if is_granted('ROLE_USER') %}
-            <button class="btn btn-primary mr-2" type="submit">{{ button_label|default('Next'|trans) }} <i class="fas fa-arrow-circle-right"></i></button>
+        {% if (is_granted('ROLE_USER')) %}
+            <a class="mt-3 btn btn-secondary mr-2" href="{{ path('quiz_index') }}"><i class="fas fa-arrow-circle-left"></i> {{'Back to list'|trans}}</a>
+        {% endif %}
+        {% if (is_granted('ROLE_USER')) or (quiz.allowAnonymousWorkout) %}
+            <button class="mt-3 float-right btn btn-primary mr-2" type="submit">{{ button_label|default('Next'|trans) }} <i class="fas fa-arrow-circle-right"></i></button>
         {% endif %}
     </form>
 
