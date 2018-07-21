@@ -8,6 +8,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Yaml\Yaml;
 use App\Entity\Answer;
 use App\Entity\Question;
@@ -47,7 +48,6 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        /** @var $doctrine \Doctrine\Common\Persistence\ManagerRegistry */
         $doctrine = $this->getContainer()->get('doctrine');
         $this->em = $doctrine->getManager();
 
@@ -89,7 +89,7 @@ EOT
 
         switch ($format) {
             case 'certificationy':
-                $result = $this->importCertificationy($io, $format, $file, $language, $category);
+                $result = $this->importCertificationy($output, $format, $file, $language, $category);
                 break;
 
             default:
@@ -98,7 +98,12 @@ EOT
         }
 
         if ($result) {
-            $io->success(sprintf('Import from "%s" file completed!', $file));
+            if (!$silent) {
+                $io->success(sprintf('Import from "%s" file completed!', $file));
+            }
+        }
+        else {
+            $io->error(sprintf('Error durring import from "%s" file.', $file));
         }
     }
 
@@ -126,7 +131,7 @@ EOT
         return $this->em->getReference(Language::class, $language);
     }
 
-    protected function importCertificationy($io, $format, $file, $language, $secondCategory=null)
+    protected function importCertificationy($output, $format, $file, $language, $secondCategory=null)
     {
         $data = Yaml::parseFile($file);
         $questions = $data['questions'];
@@ -138,6 +143,18 @@ EOT
         if ($secondCategory) {
             $joliquizSecondCategory = $this->getCategory($secondCategory, $joliquizLanguage);
         }
+
+        if ($secondCategory) {
+            $output->write(sprintf('Importing %s question(s) (language: "%s") in category "%s" and category "%s":', count($questions), $language, $category, $secondCategory), true);
+        } else {
+            $output->write(sprintf('Importing %s question(s) (language: "%s") in category "%s":', count($questions), $language, $category), true);
+        }
+
+        // create a new progress bar (50 units)
+        $progress = new ProgressBar($output, sizeof($questions));
+
+        // start and displays the progress bar
+        $progress->start();
 
         foreach ($questions as $question) {
             $answers = array();
@@ -167,15 +184,14 @@ EOT
             */
 
             $this->em->persist($joliquizQuestion);
+
+            $progress->advance();
         }
 
         $this->em->flush();
 
-        if ($secondCategory) {
-            $io->note(sprintf('Importing %s question(s) (language: "%s") in category "%s" and category "%s".', count($questions), $language, $category, $secondCategory));
-        } else {
-            $io->note(sprintf('Importing %s question(s) (language: "%s") in category "%s".', count($questions), $language, $category));
-        }
+        $progress->finish();
+        $output->write(' completed', true);
 
         return true;
     }

@@ -57,6 +57,16 @@ class Workout
      */
     private $questionsHistory;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $score;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $comment;
+
 
     public function __construct()
     {
@@ -169,6 +179,30 @@ class Workout
                 $questionsHistory->setWorkout(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getScore(): ?float
+    {
+        return $this->score;
+    }
+
+    public function setScore(?float $score): self
+    {
+        $this->score = $score;
+
+        return $this;
+    }
+
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
+
+    public function setComment(?string $comment): self
+    {
+        $this->comment = $comment;
 
         return $this;
     }

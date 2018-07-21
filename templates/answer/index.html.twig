@@ -14,8 +14,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>{{ 'Id'|trans }}</th>
-                <th>{{ 'Text'|trans }}</th>
+                <th>{{ 'Label'|trans }}</th>
                 {% if is_granted('ROLE_TEACHER') %}
                     <th>{{ 'Correct'|trans }}</th>
                     <th>{{ 'Actions'|trans }}</th>
@@ -25,7 +24,6 @@
         <tbody>
         {% for answer in answers %}
             <tr>
-                <td>{{ answer.id }}</td>
                 <td>{{ answer.text }}</td>
                 {% if is_granted('ROLE_TEACHER') %}
                     <td>{{ answer.correct ? 'Yes' : 'No' }}</td>

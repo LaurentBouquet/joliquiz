@@ -5,15 +5,27 @@ namespace App\Form;
 use App\Entity\Question;
 use App\Entity\Answer;
 use App\Entity\Category;
+use App\Repository\CategoryRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class QuestionType extends AbstractType
 {
+    private $translator;
+    private $param;
+
+    public function __construct(TranslatorInterface $translator, ParameterBagInterface $param)
+    {
+        $this->translator = $translator;
+        $this->param = $param;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         switch ($options['form_type']) {
@@ -33,6 +45,9 @@ class QuestionType extends AbstractType
                 $builder->add('text');
                 $builder->add('categories', EntityType::class, array(
                     'class' => Category::class,
+                    'query_builder' => function (CategoryRepository $er) {
+                        return $er->createQueryBuilder('c')->andWhere('c.language = :language')->setParameter('language', $this->param->get('locale'))->orderBy('c.shortname', 'ASC');
+                     },
                     'choice_label' => 'longname',
                     'multiple' => true
                 ));

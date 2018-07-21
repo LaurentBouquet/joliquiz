@@ -1,16 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{'Quiz'|trans}}{% endblock %}
+{% block title %}{{'Quiz'|trans}} "{{ quiz.title }}"{% endblock %}
 
 {% block body %}
-    <h1>Quiz</h1>
+    <h1>{{'Quiz'|trans}} "{{ quiz.title }}"</h1>
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>{{ 'Title'|trans }}</th>
-                <td>{{ quiz.title }}</td>
-            </tr>
             {% if quiz.summary %}
             <tr>
                 <th>{{ 'Summary'|trans }}</th>
@@ -30,12 +26,24 @@
                 </td>
             </tr>
             <tr>
+                <th>{{ 'Start quiz comment'|trans }}</th>
+                <td>{{ quiz.startQuizComment }}</td>
+            </tr>
+            <tr>
                 <th>{{ 'Result after question'|trans }}</th>
                 <td>{{ quiz.showResultQuestion ? 'Yes' : 'No' }}</td>
             </tr>
             <tr>
+                <th>{{ 'Result quiz comment'|trans }}</th>
+                <td>{{ quiz.resultQuizComment }}</td>
+            </tr>
+            <tr>
                 <th>{{ 'Active'|trans }}</th>
                 <td>{{ quiz.active ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Allow anonymous workout'|trans }}</th>
+                <td>{{ quiz.allowAnonymousWorkout ? 'Yes' : 'No' }}</td>
             </tr>
             <tr>
                 <th>{{ 'Created_at'|trans }}</th>

@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{'Category'|trans}}{% endblock %}
+{% block title %}{{'Category'|trans}} "{{ category.shortname }}"{% endblock %}
 
 {% block body %}
-    <h1>Category</h1>
+    <h1>{{'Category'|trans}} "{{ category.shortname }}"</h1>
 
     <table class="table">
         <tbody>

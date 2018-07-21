@@ -29,7 +29,7 @@
         <source>I create my free account...</source>
         <target>Je crée mon compte gratuit ...</target>
       </trans-unit>
-      <trans-unit id="c8Pe1Gq" resname="Let's start now">
+      <trans-unit id="w9BnAje" resname="Let's start now">
         <source>Let's start now</source>
         <target>Commençons dès maintenant</target>
       </trans-unit>
@@ -353,7 +353,7 @@
         <source>Automatic scoring</source>
         <target>Notation automatique</target>
       </trans-unit>
-      <trans-unit id="pPu0uHB" resname="Real-time activity tracking (receive the results of students by email)">
+      <trans-unit id="u1NAMKc" resname="Real-time activity tracking (receive the results of students by email)">
         <source>Real-time activity tracking (receive the results of students by email)</source>
         <target>Suivi d'activité en temps réel (recevez les résultats des élèves par email)</target>
       </trans-unit>
@@ -361,7 +361,7 @@
         <source>Test your audience via smartphone and provide live results during a presentation</source>
         <target>Testez vos élèves via un smartphone et fournissez des résultats en direct lors d'une présentation</target>
       </trans-unit>
-      <trans-unit id="6Us85Pp" resname="It is free software that you can copy and modify.">
+      <trans-unit id="XhpKdyT" resname="It is free software that you can copy and modify.">
         <source>It is free software that you can copy and modify.</source>
         <target>C'est un logiciel libre que vous pouvez copier et modifier.</target>
       </trans-unit>
@@ -392,6 +392,50 @@
       <trans-unit id="1BoNRvC" resname="Here is the tool you need!">
         <source>Here is the tool you need!</source>
         <target>Voici l'outil qu'il vous faut !</target>
+      </trans-unit>
+      <trans-unit id="DmY3P0X" resname="Label">
+        <source>Label</source>
+        <target>Libellé</target>
+      </trans-unit>
+      <trans-unit id="akbPQ7Z" resname="Start quiz comment">
+        <source>Start quiz comment</source>
+        <target>Commentaire de démarrage du questionnaire</target>
+      </trans-unit>
+      <trans-unit id="qq45sgA" resname="Result quiz comment">
+        <source>Result quiz comment</source>
+        <target>Commentaire du résultat du questionnaire</target>
+      </trans-unit>
+      <trans-unit id="AdiCba8" resname="Allow anonymous workout">
+        <source>Allow anonymous workout</source>
+        <target>Autoriser un entrainement anonyme</target>
+      </trans-unit>
+      <trans-unit id="56iqLff" resname="Anonymous">
+        <source>Anonymous</source>
+        <target>Anonyme</target>
+      </trans-unit>
+      <trans-unit id="OOWkbLx" resname="Score">
+        <source>Score</source>
+        <target>Résultat</target>
+      </trans-unit>
+      <trans-unit id="RPXj__x" resname="Comment">
+        <source>Comment</source>
+        <target>Commentaire</target>
+      </trans-unit>
+      <trans-unit id="RPXj12345x1" resname="Your result is not enough, please review and redo this quiz.">
+        <source>Your result is not enough, please review and redo this quiz.</source>
+        <target>Votre résultat n'est pas suffisant, veuillez réviser puis refaire ce questionnaire.</target>
+      </trans-unit>
+      <trans-unit id="RPXj12345x2" resname="Your result is fairly average, we advise you to review the questions on which you made mistakes, then redo this quiz.">
+        <source>Your result is fairly average, we advise you to review the questions on which you made mistakes, then redo this quiz.</source>
+        <target>Votre résultat est assez moyen, nous vous conseillons de revoir les questions sur lesquelles vous avez fait des erreurs, puis de refaire ce questionnaire.</target>
+      </trans-unit>
+      <trans-unit id="RPXj12345x3" resname="Good result. You have acquired most of the concepts covered in this quiz.">
+        <source>Good result. You have acquired most of the concepts covered in this quiz.</source>
+        <target>Bon résultat. Vous avez acquis l'essentiel des notions abordées dans ce questionnaire.</target>
+      </trans-unit>
+      <trans-unit id="RPXj12345x4" resname="Congratulations! Your answers showed that you have a good knowledge of the concepts covered in this quiz.">
+        <source>Congratulations! Your answers showed that you have a good knowledge of the concepts covered in this quiz.</source>
+        <target>Félicitations ! Vos réponses ont montré que vous aviez une bonne connaissance des notions abordées dans ce questionnaire.</target>
       </trans-unit>
     </body>
   </file>

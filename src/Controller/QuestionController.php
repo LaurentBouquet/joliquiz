@@ -18,13 +18,14 @@ use Doctrine\ORM\EntityManagerInterface;
 class QuestionController extends Controller
 {
     /**
-     * @Route("/", name="question_index", methods="GET")
+     * @Route("/", defaults={"page": "1"}, name="question_index", methods="GET")
+     * @Route("/page/{page}", requirements={"page": "[1-9]\d*"}, methods={"GET"}, name="question_index_paginated")
      */
-    public function index(QuestionRepository $questionRepository): Response
+    public function index(int $page, QuestionRepository $questionRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
-        return $this->render('question/index.html.twig', ['questions' => $questionRepository->findAll()]);
+        return $this->render('question/index.html.twig', ['questions' => $questionRepository->findAll($page)]);
     }
 
     /**

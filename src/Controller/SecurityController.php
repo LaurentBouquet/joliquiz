@@ -25,9 +25,7 @@ class SecurityController extends Controller
     /**
      * @Route("/register", name="register")
      */
-    public function register(Request $request,
-        UserPasswordEncoderInterface $passwordEncoder,
-        \Swift_Mailer $mailer)
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, \Swift_Mailer $mailer)
     {
         // 1) build the form
         $user = new User();
@@ -48,7 +46,6 @@ class SecurityController extends Controller
 
             $this->addFlash('success', sprintf('User "%s" is registred.', $user->getUsername()));
 
-            /*
             $message = (new \Swift_Message('[JoliQuiz] Please, confirm your email address.'))
                 ->setFrom('calagan.dev@gmail.com')
                 ->setTo($user->getEmail())
@@ -70,9 +67,7 @@ class SecurityController extends Controller
                 // )
             ;
             $mailer->send($message);
-
             $this->addFlash('success', sprintf('Please confirm your email address "%s".', $user->getEmail()));
-            */
 
             return $this->redirectToRoute('login');
         }

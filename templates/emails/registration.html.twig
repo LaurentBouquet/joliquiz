@@ -1,0 +1,12 @@
+{# templates/emails/registration.html.twig #}
+<h3>You did it! You registered!</h3>
+
+Hi {{ username }}! You're successfully registered, with {{ email }} email.
+
+{# example, assuming you have a route named "login" #}
+To login, go to: <a href="{{ url('login') }}">{{ url('login') }}</a>.
+
+Thanks!
+
+{# Makes an absolute URL to the /images/logo.png file #}
+<img src="https://raw.githubusercontent.com/LaurentBouquet/joliquiz/assets/JoliQuiz-300x111.png" alt="JoliQuiz">

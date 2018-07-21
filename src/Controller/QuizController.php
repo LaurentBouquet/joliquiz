@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Quiz;
+use App\Entity\User;
 use App\Entity\Question;
 use App\Entity\Workout;
 use App\Entity\AnswerHistory;
@@ -26,10 +27,8 @@ class QuizController extends Controller
     /**
      * @Route("/{id}/workout", name="quiz_workout", methods="POST")
      */
-    public function workout(Request $request, Workout $workout, EntityManagerInterface $em, UserInterface $user = null): Response
+    public function workout(Request $request, Workout $workout, EntityManagerInterface $em, UserInterface $user = null, \Swift_Mailer $mailer): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
-
         //////////////
         // TODO mettre ces opérations d'historique dans un service
 
@@ -42,61 +41,80 @@ class QuizController extends Controller
 
         $questionNumber = $workout->getNumberOfQuestions();
         $questionResult = 0;
+        $workoutScore = 0;
         $quiz = $workout->getQuiz();
 
-        // Re-read (from the database) the previous question
-        $questionHistoryRepository = $em->getRepository(QuestionHistory::Class);
-        $questionRepository = $em->getRepository(Question::Class);
-        $lastQuestionHistory = $questionHistoryRepository->findLastByWorkout($workout);
-        if ($lastQuestionHistory) {
-            $currentQuestionResult = +1;
-            $lastQuestion = $questionRepository->findOneById($lastQuestionHistory->getQuestionId());
-            $form = $this->createForm(QuestionType::class, $lastQuestion, array('form_type'=>'student_questioning'));
-            $form->handleRequest($request);
-            if ($form->isSubmitted() && $form->isValid()) {
-                foreach ($lastQuestion->getAnswers() as $key => $lastAnswer) {
-                    // Save answers history
-                    $newAnswerHistory = new AnswerHistory();
-                    $newAnswerHistory->setQuestionHistory($lastQuestionHistory);
-                    $newAnswerHistory->setAnswerId($lastAnswer->getId());
-                    $newAnswerHistory->setAnswerText($lastAnswer->getText());
-                    $newAnswerHistory->setAnswerCorrect($lastAnswer->getCorrect());
-                    $newAnswerHistory->setCorrectGiven($lastAnswer->getWorkoutCorrectGiven());
-                    $currentAnswerResult = $lastAnswer->getWorkoutCorrectGiven() == $lastAnswer->getCorrect();
-                    if (!$currentAnswerResult) {
-                        $currentQuestionResult = -1;
-                    }
-                    $newAnswerHistory->setAnswerSucces($currentAnswerResult);
-                    $em->persist($newAnswerHistory);
-                }
-            }
-            $lastQuestionHistory->setQuestionSuccess($currentQuestionResult==+1);
-            $questionResult = $currentQuestionResult;
-            $em->persist($lastQuestionHistory);
+        if (!$quiz->getAllowAnonymousWorkout()) {
+            $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
+        }
 
+        // Re-read (from the database) the previous question
+        $questionHistoryRepository = $em->getRepository(QuestionHistory::class);
+        $questionRepository = $em->getRepository(Question::class);
+        //$lastQuestionHistory = $questionHistoryRepository->findLastByWorkout($workout);
+        $questionsHistory = $questionHistoryRepository->findAllByWorkout($workout);
+        if ($questionsHistory) {
+            $lastQuestionHistory = $questionsHistory[0];
+            $currentQuestionResult = +1;
             if (!$lastQuestionHistory->getEndedAt()) {
+                $lastQuestion = $questionRepository->findOneById($lastQuestionHistory->getQuestionId());
+                $form = $this->createForm(QuestionType::class, $lastQuestion, array('form_type'=>'student_questioning'));
+                $form->handleRequest($request);
+                if ($form->isSubmitted() && $form->isValid()) {
+                    foreach ($lastQuestion->getAnswers() as $key => $lastAnswer) {
+                        // Save answers history
+                        $newAnswerHistory = new AnswerHistory();
+                        $newAnswerHistory->setQuestionHistory($lastQuestionHistory);
+                        $newAnswerHistory->setAnswerId($lastAnswer->getId());
+                        $newAnswerHistory->setAnswerText($lastAnswer->getText());
+                        $newAnswerHistory->setAnswerCorrect($lastAnswer->getCorrect());
+                        $newAnswerHistory->setCorrectGiven($lastAnswer->getWorkoutCorrectGiven());
+                        $currentAnswerResult = $lastAnswer->getWorkoutCorrectGiven() == $lastAnswer->getCorrect();
+                        if (!$currentAnswerResult) {
+                            $currentQuestionResult = -1;
+                        }
+                        $newAnswerHistory->setAnswerSucces($currentAnswerResult);
+                        $em->persist($newAnswerHistory);
+                    }
+                }
+                $lastQuestionHistory->setQuestionSuccess($currentQuestionResult==+1);
+                $questionResult = $currentQuestionResult;
+                $em->persist($lastQuestionHistory);
+
                 $lastQuestionHistory->setEndedAt(new \DateTime());
                 $lastQuestionHistory->setDuration(date_diff($lastQuestionHistory->getEndedAt(), $lastQuestionHistory->getStartedAt()));
                 $em->persist($lastQuestionHistory);
                 $workout->setEndedAt(new \DateTime());
+                ////////////////////////////
+                // Calc score
+                $workoutSuccess = 0;
+                foreach ($questionsHistory as $questionHistory) {
+                    if ($questionHistory->getQuestionSuccess()) {
+                        $workoutSuccess++;
+                    }
+                }
+                $workoutScore = round(($workoutSuccess / $quiz->getNumberOfQuestions()) * 100);
+                $workout->setScore($workoutScore);
+                ////////////////////////////
                 $em->persist($workout);
                 $em->flush();
 
                 if ($quiz->getShowResultQuestion()) {
                     $form = $this->createForm(QuestionType::class, $lastQuestion, array('form_type'=>'student_marking'));
-                    return $this->render('quiz/workout.html.twig',
+                    return $this->render(
+                        'quiz/workout.html.twig',
                         [
                             'id' => $workout->getId(),
                             'quiz' => $quiz,
                             'question' => $lastQuestion,
                             'questionNumber' => $questionNumber,
                             'questionResult' => $questionResult,
+                            'progress' => ($questionNumber/$quiz->getNumberOfQuestions())*100,
                             'form' => $form->createView(),
                         ]
                     );
                 }
             }
-
         }
 
 
@@ -105,7 +123,8 @@ class QuizController extends Controller
         if ($questionsCount < $quiz->getNumberOfQuestions()) {
             $this->addFlash('danger', 'Not enough questions for this quiz');
             $form = $this->createForm(QuizType::class, $quiz, array('form_type'=>'student_questioning'));
-            return $this->render('quiz/end.html.twig',
+            return $this->render(
+                'quiz/end.html.twig',
                 [
                     'id' => $workout->getId(),
                     'quiz' => $quiz,
@@ -124,7 +143,6 @@ class QuizController extends Controller
                 // Draw a random question
                 $nextQuestion = $questionRepository->findOneRandomByCategories($quiz->getCategories());
                 // Check if this question has not already been posted
-                $questionsHistory = $questionHistoryRepository->findAllByWorkout($workout);
                 $questionHasBeenPosted = false;
                 foreach ($questionsHistory as $questionHistory) {
                     if ($questionHistory->getQuestionId() == $nextQuestion->getId()) {
@@ -146,26 +164,72 @@ class QuizController extends Controller
             $em->flush();
 
             $form = $this->createForm(QuestionType::class, $nextQuestion, array('form_type'=>'student_questioning'));
-
-            return $this->render('quiz/workout.html.twig',
+            return $this->render(
+                'quiz/workout.html.twig',
                 [
                     'id' => $workout->getId(),
                     'quiz' => $quiz,
                     'question' => $nextQuestion,
                     'questionNumber' => $questionNumber,
                     'questionResult' => 0,
+                    'progress' => (($questionNumber-1)/$quiz->getNumberOfQuestions())*100,
                     'form' => $form->createView(),
                 ]
             );
-
         } else {
             // Quiz is completed then display end
+            $score = $workout->getScore();
+            $comment = '';
+            $commentLines = explode("\n", $quiz->getResultQuizComment());
+            foreach ($commentLines as $commentLine) {
+                list($commentInterval, $commentText) = explode(":", $commentLine);
+                list($min, $max) = explode("-", $commentInterval);
+                if ( ($score>=$min) && ($score<=$max) ){
+                    $comment = $comment.$commentText. ' ';
+                }
+            }
+            $workout->setComment($comment);
+            $workout->setCompleted(true);
+            $em->persist($workout);
+            $em->flush();
+
+            $message = (new \Swift_Message('[JoliQuiz] Please, confirm your email address.'))
+                ->setFrom('calagan.dev@gmail.com')
+                ->setTo('calagan.dev@gmail.com')
+                ->setBody(
+                    $this->renderView(
+                        // templates/emails/registration.html.twig
+                        'emails/quiz_result.html.twig',
+                        array(
+                            'username' => $user->getUsername(),
+                            'email' => $user->getEmail(),
+                            'quiz' => $quiz,
+                            'score' => $score,
+                        )
+                    ),
+                    'text/html'
+                )
+                // //If you also want to include a plaintext version of the message
+                // ->addPart(
+                //     $this->renderView(
+                //         'emails/registration.txt.twig',
+                //         array('name' => $name)
+                //     ),
+                //     'text/plain'
+                // )
+            ;
+            $mailer->send($message);
+
             $form = $this->createForm(QuizType::class, $quiz, array('form_type'=>'student_questioning'));
 
-            return $this->render('quiz/end.html.twig',
+            return $this->render(
+                'quiz/end.html.twig',
                 [
                     'id' => $workout->getId(),
                     'quiz' => $quiz,
+                    'score' => $score,
+                    'questionsHistory' => $questionsHistory,
+                    'comment' => $workout->getComment(),
                     'form' => $form->createView(),
                 ]
             );
@@ -177,9 +241,24 @@ class QuizController extends Controller
      */
     public function start(Request $request, Quiz $quiz, EntityManagerInterface $em, UserInterface $user = null): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
+        if (!$quiz->getAllowAnonymousWorkout()) {
+            $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
+        }
+        else {
+            if (!$user) {
+                $userRepository = $em->getRepository(User::class);
+                $user = $userRepository->findOneBy(['username'=>'anonymous']);
+                if (!$user) {
+                    $user = new User();
+                    $user->setUsername('anonymous');
+                    $user->setPassword(random_bytes(10));
+                    $user->setEmail('anonymous@domain.tld');
+                    $em->persist($user);
+                }
+            }
+        }
 
-        $workoutRepository = $em->getRepository(Workout::Class);
+        $workoutRepository = $em->getRepository(Workout::class);
         $workout = new Workout();
         $workout->setStudent($user);
         $workout->setQuiz($quiz);
@@ -188,7 +267,8 @@ class QuizController extends Controller
         $em->persist($workout);
         $em->flush();
 
-        return $this->render('quiz/start.html.twig',
+        return $this->render(
+            'quiz/start.html.twig',
             [
                 'id' => $workout->getId(),
                 'quiz' => $quiz,
@@ -219,15 +299,13 @@ class QuizController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $questionRepository = $em->getRepository(Question::Class);
+            $questionRepository = $em->getRepository(Question::class);
 
             // Check if enough questions for this quiz
             $questionsCount = $questionRepository->countByCategories($quiz->getCategories());
             if ($questionsCount < $quiz->getNumberOfQuestions()) {
                 $this->addFlash('danger', 'Not enough questions ('.$questionsCount.') for this quiz');
-            }
-            else {
+            } else {
                 $em->persist($quiz);
                 $em->flush();
 
@@ -263,7 +341,6 @@ class QuizController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $quiz->setUpdatedAt(new \DateTime());
 
             $this->getDoctrine()->getManager()->flush();
