@@ -27,7 +27,7 @@ class QuizController extends Controller
     /**
      * @Route("/{id}/workout", name="quiz_workout", methods="POST")
      */
-    public function workout(Request $request, Workout $workout, EntityManagerInterface $em, UserInterface $user = null): Response
+    public function workout(Request $request, Workout $workout, EntityManagerInterface $em, UserInterface $user = null, \Swift_Mailer $mailer): Response
     {
         //////////////
         // TODO mettre ces opérations d'historique dans un service
@@ -192,6 +192,33 @@ class QuizController extends Controller
             $workout->setCompleted(true);
             $em->persist($workout);
             $em->flush();
+
+            $message = (new \Swift_Message('[JoliQuiz] Please, confirm your email address.'))
+                ->setFrom('calagan.dev@gmail.com')
+                ->setTo('calagan.dev@gmail.com')
+                ->setBody(
+                    $this->renderView(
+                        // templates/emails/registration.html.twig
+                        'emails/quiz_result.html.twig',
+                        array(
+                            'username' => $user->getUsername(),
+                            'email' => $user->getEmail(),
+                            'quiz' => $quiz,
+                            'score' => $score,
+                        )
+                    ),
+                    'text/html'
+                )
+                // //If you also want to include a plaintext version of the message
+                // ->addPart(
+                //     $this->renderView(
+                //         'emails/registration.txt.twig',
+                //         array('name' => $name)
+                //     ),
+                //     'text/plain'
+                // )
+            ;
+            $mailer->send($message);
 
             $form = $this->createForm(QuizType::class, $quiz, array('form_type'=>'student_questioning'));
 
