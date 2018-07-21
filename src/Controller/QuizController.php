@@ -48,6 +48,10 @@ class QuizController extends Controller
             $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
         }
 
+        if (!$user) {
+            $user = $workout->getStudent();
+        }
+
         // Re-read (from the database) the previous question
         $questionHistoryRepository = $em->getRepository(QuestionHistory::class);
         $questionRepository = $em->getRepository(Question::class);
@@ -193,12 +197,11 @@ class QuizController extends Controller
             $em->persist($workout);
             $em->flush();
 
-            $message = (new \Swift_Message('[JoliQuiz] Please, confirm your email address.'))
+            $message = (new \Swift_Message('[JoliQuiz] A quiz has just been completed!'))
                 ->setFrom('calagan.dev@gmail.com')
                 ->setTo('calagan.dev@gmail.com')
                 ->setBody(
                     $this->renderView(
-                        // templates/emails/registration.html.twig
                         'emails/quiz_result.html.twig',
                         array(
                             'username' => $user->getUsername(),
@@ -251,7 +254,7 @@ class QuizController extends Controller
                 if (!$user) {
                     $user = new User();
                     $user->setUsername('anonymous');
-                    $user->setPassword(random_bytes(10));
+                    $user->setPassword(bin2hex(random_bytes(10)));
                     $user->setEmail('anonymous@domain.tld');
                     $em->persist($user);
                 }
