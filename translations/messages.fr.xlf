@@ -413,6 +413,30 @@
         <source>Anonymous</source>
         <target>Anonyme</target>
       </trans-unit>
+      <trans-unit id="OOWkbLx" resname="Score">
+        <source>Score</source>
+        <target>Résultat</target>
+      </trans-unit>
+      <trans-unit id="RPXj__x" resname="Comment">
+        <source>Comment</source>
+        <target>Commentaire</target>
+      </trans-unit>
+      <trans-unit id="RPXj12345x1" resname="Your result is not enough, please review and redo this quiz.">
+        <source>Your result is not enough, please review and redo this quiz.</source>
+        <target>Votre résultat n'est pas suffisant, veuillez réviser puis refaire ce questionnaire.</target>
+      </trans-unit>
+      <trans-unit id="RPXj12345x2" resname="Your result is fairly average, we advise you to review the questions on which you made mistakes, then redo this quiz.">
+        <source>Your result is fairly average, we advise you to review the questions on which you made mistakes, then redo this quiz.</source>
+        <target>Votre résultat est assez moyen, nous vous conseillons de revoir les questions sur lesquelles vous avez fait des erreurs, puis de refaire ce questionnaire.</target>
+      </trans-unit>
+      <trans-unit id="RPXj12345x3" resname="Good result. You have acquired most of the concepts covered in this quiz.">
+        <source>Good result. You have acquired most of the concepts covered in this quiz.</source>
+        <target>Bon résultat. Vous avez acquis l'essentiel des notions abordées dans ce questionnaire.</target>
+      </trans-unit>
+      <trans-unit id="RPXj12345x4" resname="Congratulations! Your answers showed that you have a good knowledge of the concepts covered in this quiz.">
+        <source>Congratulations! Your answers showed that you have a good knowledge of the concepts covered in this quiz.</source>
+        <target>Félicitations ! Vos réponses ont montré que vous aviez une bonne connaissance des notions abordées dans ce questionnaire.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

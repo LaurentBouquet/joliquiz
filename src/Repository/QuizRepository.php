@@ -8,6 +8,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * @method Quiz|null find($id, $lockMode = null, $lockVersion = null)
@@ -20,23 +21,25 @@ class QuizRepository extends ServiceEntityRepository
     private $em;
     private $param;
     private $language;
+    private $translator;
 
-    public function __construct(RegistryInterface $registry, EntityManagerInterface $em, ParameterBagInterface $param)
+    public function __construct(RegistryInterface $registry, EntityManagerInterface $em, ParameterBagInterface $param, TranslatorInterface $translator)
     {
         parent::__construct($registry, Quiz::class);
         $this->em = $em;
         $this->param = $param;
         $this->language = $this->em->getReference(Language::class, $this->param->get('locale'));
+        $this->translator = $translator;
     }
 
     public function create(): Quiz
     {
         $quiz = new Quiz();
         $quiz->setLanguage($this->language);
-        $commentLines = "0-24: "."Votre résultat n'est pas suffisant, veuillez réviser puis refaire ce questionnaire.\n";
-        $commentLines = $commentLines."25-49: "."Votre résultat est assez moyen, nous vous conseillons de revoir les questions sur lesquelles vous avez fait des erreurs, puis de refaire ce questionnaire.\n";
-        $commentLines = $commentLines."50-74: "."Bon résultat. Vous avez acquis l'essentiel des notions abordées dans ce questionnaire.\n";
-        $commentLines = $commentLines."75-100: "."Félicitations ! Vos réponses ont montré que vous aviez une bonne connaissance des notions abordées dans ce questionnaire.\n";
+        $commentLines = "0-24: ".$this->translator->trans("Your result is not enough, please review and redo this quiz.")."\n";
+        $commentLines = $commentLines."25-49: ".$this->translator->trans("Your result is fairly average, we advise you to review the questions on which you made mistakes, then redo this quiz.")."\n";
+        $commentLines = $commentLines."50-74: ".$this->translator->trans("Good result. You have acquired most of the concepts covered in this quiz.")."\n";
+        $commentLines = $commentLines."75-100: ".$this->translator->trans("Congratulations! Your answers showed that you have a good knowledge of the concepts covered in this quiz.")."\n";
         $quiz->setResultQuizComment($commentLines);
         return $quiz;
     }
