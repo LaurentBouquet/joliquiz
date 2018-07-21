@@ -62,6 +62,11 @@ class Workout
      */
     private $score;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $comment;
+
 
     public function __construct()
     {
@@ -186,6 +191,18 @@ class Workout
     public function setScore(?float $score): self
     {
         $this->score = $score;
+
+        return $this;
+    }
+
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
+
+    public function setComment(?string $comment): self
+    {
+        $this->comment = $comment;
 
         return $this;
     }

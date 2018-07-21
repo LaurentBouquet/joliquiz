@@ -35,7 +35,7 @@
 
     <form action="{{ path('quiz_workout', {'id': id}) }}" method="post">
         {% if (is_granted('ROLE_USER')) %}
-            <a class="btn btn-secondary mr-2" href="{{ path('quiz_index') }}"><i class="fas fa-arrow-circle-left"></i> {{'Back to list'|trans}}</a>
+            <a class="mt-3 btn btn-secondary mr-2" href="{{ path('quiz_index') }}"><i class="fas fa-arrow-circle-left"></i> {{'Back to list'|trans}}</a>
         {% endif %}
         {% if (is_granted('ROLE_USER')) or (quiz.allowAnonymousWorkout) %}
             <button class="mt-3 float-right btn btn-primary mr-2" type="submit">{{ button_label|default('Next'|trans) }} <i class="fas fa-arrow-circle-right"></i></button>

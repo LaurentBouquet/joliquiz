@@ -33,6 +33,11 @@ class QuizRepository extends ServiceEntityRepository
     {
         $quiz = new Quiz();
         $quiz->setLanguage($this->language);
+        $commentLines = "0-24: "."Votre résultat n'est pas suffisant, veuillez réviser puis refaire ce questionnaire.\n";
+        $commentLines = $commentLines."25-49: "."Votre résultat est assez moyen, nous vous conseillons de revoir les questions sur lesquelles vous avez fait des erreurs, puis de refaire ce questionnaire.\n";
+        $commentLines = $commentLines."50-74: "."Bon résultat. Vous avez acquis l'essentiel des notions abordées dans ce questionnaire.\n";
+        $commentLines = $commentLines."75-100: "."Félicitations ! Vos réponses ont montré que vous aviez une bonne connaissance des notions abordées dans ce questionnaire.\n";
+        $quiz->setResultQuizComment($commentLines);
         return $quiz;
     }
 

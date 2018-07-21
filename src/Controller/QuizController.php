@@ -178,6 +178,21 @@ class QuizController extends Controller
             );
         } else {
             // Quiz is completed then display end
+            $score = $workout->getScore();
+            $comment = '';
+            $commentLines = explode("\n", $quiz->getResultQuizComment());
+            foreach ($commentLines as $commentLine) {
+                list($commentInterval, $commentText) = explode(":", $commentLine);
+                list($min, $max) = explode("-", $commentInterval);
+                if ( ($score>=$min) && ($score<=$max) ){
+                    $comment = $comment.$commentText. ' ';
+                }
+            }
+            $workout->setComment($comment);
+            $workout->setCompleted(true);
+            $em->persist($workout);
+            $em->flush();
+
             $form = $this->createForm(QuizType::class, $quiz, array('form_type'=>'student_questioning'));
 
             return $this->render(
@@ -185,8 +200,9 @@ class QuizController extends Controller
                 [
                     'id' => $workout->getId(),
                     'quiz' => $quiz,
-                    'score' => $workout->getScore(),
+                    'score' => $score,
                     'questionsHistory' => $questionsHistory,
+                    'comment' => $workout->getComment(),
                     'form' => $form->createView(),
                 ]
             );
