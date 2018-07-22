@@ -9,6 +9,7 @@ use App\Repository\CategoryRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -31,7 +32,7 @@ class QuestionType extends AbstractType
         switch ($options['form_type']) {
             case 'student_questioning':
             case 'student_marking':
-                $builder->add('text', TextType::class, array(
+                $builder->add('text', TextareaType::class, array(
                     'label' => false,
                     'disabled' => true,
                 ));
