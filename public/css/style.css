@@ -44,12 +44,13 @@ input[type=checkbox] + label {
     padding-bottom: 0.2em;
     margin-right: 0.3em;
     vertical-align: bottom;
-    color: white;
+    color: transparent;
     transition: .2s;
   }
   
   input[type=checkbox] + label:active:before {
     transform: scale(0);
+    color: transparent;
   }
   
   input[type=checkbox]:checked + label:before {
