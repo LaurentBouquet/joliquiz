@@ -44,7 +44,7 @@ input[type=checkbox] + label {
     padding-bottom: 0.2em;
     margin-right: 0.3em;
     vertical-align: bottom;
-    color: transparent;
+    color: white;
     transition: .2s;
   }
   
@@ -61,10 +61,12 @@ input[type=checkbox] + label {
   input[type=checkbox]:disabled + label:before {
     transform: scale(1);
     border-color:  gray;
+    color: transparent;
   }
   
   input[type=checkbox]:checked:disabled + label:before {
     transform: scale(1);
     background-color: gray;
     border-color:  gray;
+    color: black;
   }
