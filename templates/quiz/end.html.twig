@@ -13,7 +13,8 @@
                 <th>{{ 'Score'|trans }}</th>
                 <td>
                     <h1>
-                        <span class="badge {{ score>75? 'badge-success' : score>50? 'badge-primary' : score>25? 'badge-warning' : 'badge-danger'}}">{{ score }}%</span></h1>
+                        <span class="badge {{ score>75? 'badge-success' : score>50? 'badge-primary' : score>25? 'badge-warning' : 'badge-danger'}}">{{ score }}%</span>
+                    </h1>
                 </td>
             </tr>
             <tr>
@@ -26,9 +27,9 @@
                                 <div class="card-header" id="heading{{questionNumber}}">
                                     <h5 class="mb-0">
                                         {{questionNumber}}
-                                        <button class="mb-0 btn btn-link collapsed" data-toggle="collapse" data-target="#collapse{{questionNumber}}" aria-expanded="false" aria-controls="collapse{{questionNumber}}">
+                                        <button style="text-align: left;" class="mb-0 btn btn-link collapsed" data-toggle="collapse" data-target="#collapse{{questionNumber}}" aria-expanded="false" aria-controls="collapse{{questionNumber}}">
                                             <div class="mb-0 alert {{ questionHistory.questionSuccess ? 'alert-success' : 'alert-danger' }}" role="alert">
-                                                {{ questionHistory.questionText }}
+                                                {{ questionHistory.questionText|nl2br }}
                                             </div>
                                         </button>
                                     </h5>
