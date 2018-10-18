@@ -86,6 +86,9 @@
     "egulias/email-validator": {
         "version": "2.1.4"
     },
+    "facebook/webdriver": {
+        "version": "1.6.0"
+    },
     "fig/link-util": {
         "version": "1.0.0"
     },
@@ -242,9 +245,6 @@
     "symfony/intl": {
         "version": "v4.1.0"
     },
-    "symfony/lts": {
-        "version": "4-dev"
-    },
     "symfony/maker-bundle": {
         "version": "1.0",
         "recipe": {
@@ -271,6 +271,9 @@
     },
     "symfony/orm-pack": {
         "version": "v1.0.5"
+    },
+    "symfony/panther": {
+        "version": "v0.2.0"
     },
     "symfony/phpunit-bridge": {
         "version": "4.1",
