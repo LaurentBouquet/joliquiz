@@ -4,19 +4,20 @@ namespace App\Controller;
 
 use App\Entity\Quiz;
 use App\Entity\User;
-use App\Entity\Question;
+use App\Form\QuizType;
 use App\Entity\Workout;
+use App\Entity\Question;
+use App\Services\Mailer;
+use App\Form\QuestionType;
 use App\Entity\AnswerHistory;
 use App\Entity\QuestionHistory;
-use App\Form\QuizType;
-use App\Form\QuestionType;
 use App\Repository\QuizRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * @Route("/quiz")
@@ -27,7 +28,7 @@ class QuizController extends Controller
     /**
      * @Route("/{id}/workout", name="quiz_workout", methods="POST")
      */
-    public function workout(Request $request, Workout $workout, EntityManagerInterface $em, UserInterface $user = null, \Swift_Mailer $mailer): Response
+    public function workout(Request $request, Workout $workout, EntityManagerInterface $em, UserInterface $user = null, Mailer $mailer): Response
     {
         //////////////
         // TODO mettre ces opérations d'historique dans un service
@@ -197,31 +198,15 @@ class QuizController extends Controller
             $em->persist($workout);
             $em->flush();
 
-            $message = (new \Swift_Message('[JoliQuiz] A quiz has just been completed!'))
-                ->setFrom('calagan.dev@gmail.com')
-                ->setTo('calagan.dev@gmail.com')
-                ->setBody(
-                    $this->renderView(
-                        'emails/quiz_result.html.twig',
-                        array(
-                            'username' => $user->getUsername(),
-                            'email' => $user->getEmail(),
-                            'quiz' => $quiz,
-                            'score' => $score,
-                        )
-                    ),
-                    'text/html'
-                )
-                // //If you also want to include a plaintext version of the message
-                // ->addPart(
-                //     $this->renderView(
-                //         'emails/registration.txt.twig',
-                //         array('name' => $name)
-                //     ),
-                //     'text/plain'
-                // )
-            ;
-            $mailer->send($message);
+            $email = 'calagan.dev@gmail.com'; 
+            $bodyMail = $mailer->createBodyMail('emails/quiz_result.html.twig', [
+                'username' => $user->getUsername(),
+                'email' => $user->getEmail(),
+                'quiz' => $quiz,
+                'score' => $score,
+            ]);
+            $result = $mailer->sendMessage($email, 'A quiz has just been completed!', $bodyMail);
+
 
             $form = $this->createForm(QuizType::class, $quiz, array('form_type'=>'student_questioning'));
 

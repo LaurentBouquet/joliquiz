@@ -4,13 +4,14 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Services\Mailer;
 use App\Repository\UserRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * @Route("/user")
@@ -21,7 +22,7 @@ class UserController extends Controller
     /**
      * @Route("/", name="user_index", methods="GET")
      */
-    public function index(UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository, Mailer $mailer): Response
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN', null, 'Access not allowed');
 
