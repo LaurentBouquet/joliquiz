@@ -27,16 +27,7 @@ class Mailer
             ->setBody($body)
             ->setReplyTo($from)
             ->setContentType('text/html');
-
-        // //If you also want to include a plaintext version of the message
-        // ->addPart(
-        //     $this->renderView(
-        //         'emails/registration.txt.twig',
-        //         array('name' => $name)
-        //     ),
-        //     'text/plain'
-        // )
-
+            
         return $this->mailer->send($mail);
     }
 
