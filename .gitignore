@@ -26,3 +26,7 @@ yarn-error.log
 /deploy_bin.sh
 /deploy_sql.sh
 ###< deployer/deployer ###
+
+###> ide/phpstorm ###
+.idea
+###< ide/phpstorm ###
