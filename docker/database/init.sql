@@ -1,0 +1,3 @@
+CREATE USER joliquiz WITH PASSWORD 'db_password';
+CREATE DATABASE joliquiz;
+GRANT ALL PRIVILEGES ON DATABASE joliquiz TO joliquiz;

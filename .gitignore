@@ -30,3 +30,7 @@ yarn-error.log
 ###> ide/phpstorm ###
 .idea
 ###< ide/phpstorm ###
+
+###> docker/docker ###
+docker/database/data
+###< docker/docker ###
