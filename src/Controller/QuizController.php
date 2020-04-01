@@ -198,8 +198,8 @@ class QuizController extends Controller
             $em->flush();
 
             $message = (new \Swift_Message('[JoliQuiz] A quiz has just been completed!'))
-                ->setFrom('calagan.dev@gmail.com')
-                ->setTo('calagan.dev@gmail.com')
+                ->setFrom('laurent.bouquet@joliciel.org')
+                ->setTo('laurent.bouquet@joliciel.org')
                 ->setBody(
                     $this->renderView(
                         'emails/quiz_result.html.twig',
