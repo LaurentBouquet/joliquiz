@@ -2,7 +2,7 @@
 
 export DATABASE_URL=$(cat $ENV_DIR/DATABASE_URL)
 
-#psql --file joliquiz-initial-prod-structure.dump.sql $DATABASE_URL;
-psql --file joliquiz-initial-prod-languages.dump.sql $DATABASE_URL;
-psql --file joliquiz-initial-prod-users.dump.sql $DATABASE_URL;
-#psql --file joliquiz-initial-prod-exemples.dump.sql $DATABASE_URL;
+#psql --file initial-prod-data-structure.pgsql.dump.sql $DATABASE_URL;
+psql --file initial-prod-data-languages.pgsql.dump.sql $DATABASE_URL;
+psql --file initial-prod-data-users.pgsql.dump.sql $DATABASE_URL;
+#psql --file initial-prod-data-exemples.pgsql.dump.sql $DATABASE_URL;

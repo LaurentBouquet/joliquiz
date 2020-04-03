@@ -2,9 +2,9 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Category;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
-use App\Entity\Category;
 
 class CategoryFixtures extends Fixture
 {
@@ -14,7 +14,9 @@ class CategoryFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        $filename = 'joliquiz-initial-prod-languages.dump.sql';
+        $filename = 'initial-prod-data-languages.pgsql.dump.sql';
+        //$filename = 'initial-prod-data-languages.mysql.dump.sql';        
+        
         $sql = file_get_contents($filename);  // Read file contents
         $manager->getConnection()->exec($sql);  // Execute native SQL
         $manager->flush();
