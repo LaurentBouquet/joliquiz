@@ -1,0 +1,64 @@
+version: '3'
+
+services:
+  database:
+    image: postgres:11.1-alpine
+    working_dir: /database
+    volumes:
+      - ./database:/database
+    environment:
+      - POSTGRES_PASSWORD=${DATABASE_ROOT_PASSWORD}
+      - POSTGRES_DB=${DATABASE_NAME}
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+    expose:
+      - 5432
+    ports:
+      - 4447:5432
+
+#  database:
+#    image: mysql:8.0
+#    working_dir: /database
+#    volumes:
+#      - ./database:/database
+#    environment:
+#      - MYSQL_DATABASE=${DATABASE_NAME}
+#      - MYSQL_USER=${DATABASE_USER}
+#      - MYSQL_PASSWORD=${DATABASE_PASSWORD}
+#      - MYSQL_ROOT_PASSWORD=${DATABASE_ROOT_PASSWORD}
+#    expose:
+#      - 3306
+#    ports:
+#      - 4445:3306
+
+  php-fpm:
+    build:
+      context: ./php-fpm
+    depends_on:
+      - database
+    environment:
+      - APP_ENV=${APP_ENV}
+      - APP_SECRET=${APP_SECRET}
+      - DATABASE_URL=pgsql://${DATABASE_USER}:${DATABASE_PASSWORD}@database:5432/${DATABASE_NAME}
+      # - DATABASE_URL=sqlite:///%kernel.project_dir%/var/${DATABASE_NAME}.db
+      # - DATABASE_URL=mysql://${DATABASE_USER}:${DATABASE_PASSWORD}@database:3306/${DATABASE_NAME}
+      - MAILER_URL=${MAILER_URL}
+      - ADMIN_EMAIL_ADDRESS=${ADMIN_EMAIL_ADDRESS}
+      - LOCALE=${LOCALE}
+    volumes:
+      - ../:/var/www
+      - ../composer.json:/var/www/composer.json
+      - ./php-fpm/php.ini:/usr/local/etc/php/php.ini
+    expose:
+      - 9000
+
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ../src:/var/www
+      - ../var/log/:/var/log/nginx
+    depends_on:
+      - php-fpm
+    ports:
+      - "8080:80"
