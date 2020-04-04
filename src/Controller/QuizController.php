@@ -201,7 +201,8 @@ class QuizController extends AbstractController
             $em->persist($workout);
             $em->flush();
 
-            $email = 'dev@joliciel.top';
+            $email = getenv('ADMIN_EMAIL_ADDRESS');
+            dump($email);
             $bodyMail = $mailer->createBodyMail('emails/quiz_result.html.twig', [
                 'username' => $user->getUsername(),
                 'email' => $user->getEmail(),
