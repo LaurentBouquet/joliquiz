@@ -7,9 +7,10 @@ services:
     volumes:
       - ./database:/database
     environment:
+      - POSTGRES_PASSWORD=${DATABASE_ROOT_PASSWORD}
+      - POSTGRES_DB=${DATABASE_NAME}
       - POSTGRES_USER=${DATABASE_USER}
       - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
-      - POSTGRES_DB=${DATABASE_NAME}
     expose:
       - 5432
     ports:
