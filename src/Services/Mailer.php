@@ -18,7 +18,7 @@ class Mailer
         $this->environment = $environment;
     }
 
-    public function sendMessage($to, $subject, $body, $attachement = null, $from = 'calagan.dev@gmail.com'): int
+    public function sendMessage($to, $subject, $body, $attachement = null, $from = 'dev@joliciel.top'): int
     {
         $mail = (new \Swift_Message($subject))
             ->setFrom($from)

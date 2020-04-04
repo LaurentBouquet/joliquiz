@@ -11,14 +11,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 
-class SecurityController extends Controller
+class SecurityController extends AbstractController
 {
     private $logger;
 
@@ -123,7 +123,7 @@ class SecurityController extends Controller
 
             $em = $this->getDoctrine()->getManager();
 
-            $user = $em->getRepository(User::class)->findByEmail($form->getData()['email']);
+            $user = $em->getRepository(User::class)->findOneByEmail($form->getData()['email']);
 
             if (!$user) {
                 $this->addFlash('warning', 'This email does not exist.');
@@ -151,9 +151,9 @@ class SecurityController extends Controller
     }
 
 
-    /**
-     * @Route("/{id}/{token}", name="resetting")
-     */
+    /*
+     @Route("/{id}/{token}", name="resetting")
+    
     public function resetPassword(User $user, $token, Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
         // Forbid access to the page if:
@@ -192,7 +192,7 @@ class SecurityController extends Controller
         ]);
         
     }
-
+*/
     // if greater than 10 min, return false, otherwise return true
     private function isRequestInTime(\Datetime $passwordRequestedAt = null)
     {

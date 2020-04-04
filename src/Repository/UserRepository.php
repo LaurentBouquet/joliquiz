@@ -27,9 +27,9 @@ class UserRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return User[] Returns an array of User objects
+     * @return User Returns an User objects
      */
-    public function findByEmail($value)
+    public function findOneByEmail($value)
     {
         return $this->createQueryBuilder('u')
             ->andWhere('u.email = :val')
@@ -39,5 +39,7 @@ class UserRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
         ;
     }
+
+
 
 }
