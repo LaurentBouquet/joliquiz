@@ -2,7 +2,7 @@
     "type": "project",
     "license": "MIT",
     "require": {
-        "php": "^7.1.3",
+        "php": "^7.4",
         "ext-iconv": "*",
         "deployer/deployer": "^6.2",
         "doctrine/common": "2.8.1",
