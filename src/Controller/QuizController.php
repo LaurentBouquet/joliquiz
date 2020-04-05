@@ -66,7 +66,6 @@ class QuizController extends AbstractController
                 $form = $this->createForm(QuestionType::class, $lastQuestion, array('form_type' => 'student_questioning'));
                 $form->handleRequest($request);
 
-                var_dump(print_r($form->isSubmitted(), true));
                 if ($form->isSubmitted() && $form->isValid()) {
                     foreach ($lastQuestion->getAnswers() as $key => $lastAnswer) {
                         // Save answers history
@@ -202,7 +201,6 @@ class QuizController extends AbstractController
             $em->flush();
 
             $email = getenv('ADMIN_EMAIL_ADDRESS');
-            dump($email);
             $bodyMail = $mailer->createBodyMail('emails/quiz_result.html.twig', [
                 'username' => $user->getUsername(),
                 'email' => $user->getEmail(),
