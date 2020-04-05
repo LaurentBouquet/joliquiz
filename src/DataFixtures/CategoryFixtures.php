@@ -15,7 +15,7 @@ class CategoryFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $filename = 'initial-prod-data-languages.pgsql.sql';
-        //$filename = 'initial-prod-data-languages.mysql.dump.sql';        
+        //$filename = 'initial-prod-data-languages.mysql.sql';        
         
         $sql = file_get_contents($filename);  // Read file contents
         $manager->getConnection()->exec($sql);  // Execute native SQL
