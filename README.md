@@ -1,11 +1,8 @@
 ![JoliQuiz](https://raw.githubusercontent.com/LaurentBouquet/joliquiz/assets/JoliQuiz.png?raw=true)
 
 [![Build Status](https://travis-ci.org/LaurentBouquet/joliquiz.svg?branch=master)](https://travis-ci.org/LaurentBouquet/joliquiz)
-[![Build Status](https://semaphoreci.com/api/v1/laurentbouquet/joliquiz/branches/develop/badge.svg)](https://semaphoreci.com/laurentbouquet/joliquiz)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/ffbbae0ffc224808a43894742a79df91)](https://www.codacy.com/app/LaurentBouquet/joliquiz?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=LaurentBouquet/joliquiz&amp;utm_campaign=Badge_Grade)
 [![CodeFactor](https://www.codefactor.io/repository/github/laurentbouquet/joliquiz/badge)](https://www.codefactor.io/repository/github/laurentbouquet/joliquiz)
-
-[![Deploy on Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 ## Description
 Joliquiz is an online quiz software, a PHP web application developed using the Symfony framework (version 4).
@@ -168,7 +165,7 @@ Thanks to [Heroku](https://www.heroku.com/)
 
 
 
-<!-- ## Contributing
+## Contributing
 
 Joliquiz is an open source project that welcomes pull requests and issues from anyone.
-Before opening pull requests, please read our short Contribution Guide. -->
+Before opening pull requests, please read our short Contribution Guide.
