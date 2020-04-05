@@ -1,7 +1,7 @@
 language: php
 
 php:
-  - '7.2'
+  - '7.4'
 
 before_script:
   - psql -c "CREATE USER joliquiz WITH PASSWORD 'db_password';" -U postgres
