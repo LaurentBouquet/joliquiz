@@ -110,7 +110,7 @@ doctrine:
 ```
 
 Uncomment and update the password in this line of **.env** file :
-DATABASE_URL=pgsql://joliquiz:**aSecurePassword**@127.0.0.1:5432/joliquiz
+DATABASE_URL=pgsql://joliquiz:**aSecurePassword**@127.0.0.1:5432/joliquiz?charset=UTF-8
 
 
 Enter this commands in a terminal prompt :

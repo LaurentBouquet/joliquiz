@@ -9,7 +9,8 @@ before_script:
   - psql -c "GRANT ALL PRIVILEGES ON DATABASE joliquiz TO joliquiz;" -U postgres
 
 env:
-    - DATABASE_URL="pgsql://joliquiz:db_password@127.0.0.1:5432/joliquiz"
+    - DATABASE_URL="pgsql://joliquiz:db_password@127.0.0.1:5432/joliquiz?charset=UTF-8"
+    - ADMIN_EMAIL_ADDRESS="admin@domain.tld"
 
 script:
    - composer install
