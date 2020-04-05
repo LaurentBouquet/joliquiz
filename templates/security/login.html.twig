@@ -13,12 +13,15 @@
 
         {{ form_start(form) }}
 
-            {{ form_row(form.username, {'id': 'username', 'full_name': '_username'}) }}
-            {{ form_row(form.plainPassword, {'id': 'password', 'full_name': '_password'}) }}
+        {{ form_row(form.username, {'id': 'username', 'full_name': '_username'}) }}
+        {{ form_row(form.plainPassword, {'id': 'password', 'full_name': '_password'}) }}
 
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
 
-            <button class="btn btn-primary float-md-right" type="submit"><i class="fas fa-sign-in-alt"></i> {{'Login'|trans}}</button>
+        <button class="btn btn-primary float-md-right" type="submit"><i class="fas fa-sign-in-alt"></i>
+            {{'Login'|trans}}</button>
+
+        <a href="{{ path('newpassword') }}">{{'Forgot your password'|trans}}</a>
 
         {{ form_end(form) }}
 

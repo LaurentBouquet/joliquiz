@@ -6,7 +6,7 @@ use App\Entity\Answer;
 use App\Entity\Question;
 use App\Form\QuestionType;
 use App\Repository\QuestionRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,7 +15,7 @@ use Doctrine\ORM\EntityManagerInterface;
 /**
  * @Route("/question")
  */
-class QuestionController extends Controller
+class QuestionController extends AbstractController
 {
     /**
      * @Route("/", defaults={"page": "1"}, name="question_index", methods="GET")

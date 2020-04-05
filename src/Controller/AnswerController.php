@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Answer;
 use App\Form\AnswerType;
 use App\Repository\AnswerRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,7 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
 /**
  * @Route("/answer")
  */
-class AnswerController extends Controller
+class AnswerController extends AbstractController
 {
     /**
      * @Route("/", name="answer_index", methods="GET")

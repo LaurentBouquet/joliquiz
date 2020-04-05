@@ -2,18 +2,23 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Psr\Log\LoggerInterface;
-
 use App\Entity\User;
 use App\Form\UserType;
+use App\Services\Mailer;
+use Psr\Log\LoggerInterface;
+use App\Form\PasswordResettingType;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 
-class SecurityController extends Controller
+class SecurityController extends AbstractController
 {
     private $logger;
 
@@ -25,11 +30,11 @@ class SecurityController extends Controller
     /**
      * @Route("/register", name="register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, \Swift_Mailer $mailer)
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, Mailer $mailer)
     {
         // 1) build the form
         $user = new User();
-        $form = $this->createForm(UserType::class, $user, array('form_type'=>'register'));
+        $form = $this->createForm(UserType::class, $user, array('form_type' => 'register'));
 
         // 2) handle the submit (will only happen on POST)
         $form->handleRequest($request);
@@ -46,28 +51,13 @@ class SecurityController extends Controller
 
             $this->addFlash('success', sprintf('User "%s" is registred.', $user->getUsername()));
 
-            $message = (new \Swift_Message('[JoliQuiz] Please, confirm your email address.'))
-                ->setFrom('calagan.dev@gmail.com')
-                ->setTo($user->getEmail())
-                ->setBody(
-                    $this->renderView(
-                        // templates/emails/registration.html.twig
-                        'emails/registration.html.twig',
-                        array('username' => $user->getUsername(), 'email' => $user->getEmail())
-                    ),
-                    'text/html'
-                )
-                // //If you also want to include a plaintext version of the message
-                // ->addPart(
-                //     $this->renderView(
-                //         'emails/registration.txt.twig',
-                //         array('name' => $name)
-                //     ),
-                //     'text/plain'
-                // )
-            ;
-            $mailer->send($message);
-            $this->addFlash('success', sprintf('Please confirm your email address "%s".', $user->getEmail()));
+            $bodyMail = $mailer->createBodyMail('emails/registration.html.twig', [
+                'username' => $user->getUsername(),
+                'email' => $user->getEmail(),
+            ]);
+            $mailer->sendMessage($user->getEmail(), 'Please, confirm your email address.', $bodyMail);
+
+            $this->addFlash('success', sprintf('We have sent you an email, please click on the link in it to confirm your email address "%s".', $user->getEmail()));
 
             return $this->redirectToRoute('login');
         }
@@ -95,7 +85,7 @@ class SecurityController extends Controller
         // 1) build the form
         $user = new User();
         $user->setUsername($lastUsername);
-        $form = $this->createForm(UserType::class, $user, array('form_type'=>'login'));
+        $form = $this->createForm(UserType::class, $user, array('form_type' => 'login'));
 
         return $this->render('security/login.html.twig', array(
             'form' => $form->createView(),
@@ -112,4 +102,112 @@ class SecurityController extends Controller
     {
         throw new \Exception('This should never be reached!');
     }
+
+    /**
+     * @Route("/newpassword", name="newpassword")
+     */
+    public function requestNewPassword(Request $request, Mailer $mailer, TokenGeneratorInterface $tokenGenerator)
+    {
+        // Creation of a form "on the fly", so that the user can inform his email
+        $form = $this->createFormBuilder()
+            ->add('email', EmailType::class, [
+                'constraints' => [
+                    new Email(),
+                    new NotBlank(),
+                ],
+            ])
+            ->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+
+            $user = $em->getRepository(User::class)->findOneByEmail($form->getData()['email']);
+
+            if (!$user) {
+                $this->addFlash('warning', 'This email does not exist.');
+
+            } else {
+                $user->setToken($tokenGenerator->generateToken());
+                $user->setPasswordRequestedAt(new \Datetime());
+                $em->flush();
+
+                $bodyMail = $mailer->createBodyMail('emails/passwordresetting.html.twig', [
+                    'user' => $user,
+                ]);
+                $mailer->sendMessage($user->getEmail(), 'Renew your password', $bodyMail);
+
+                $this->addFlash('success', 'An email will be sent to you so you can renew your password. The link you receive will be valid 24h.');
+
+                return $this->redirectToRoute("login");
+            }
+
+        }
+
+        return $this->render('security/passwordrequest.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+
+    /*
+     @Route("/{id}/{token}", name="resetting")
+    
+    public function resetPassword(User $user, $token, Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    {
+        // Forbid access to the page if:
+        // the token associated with the member is null
+        // the token registered in base and the token present in the url are not equal
+        // the token is more than 10 minutes old
+        if ($user->getToken() === null || $token !== $user->getToken() || !$this->isRequestInTime($user->getPasswordRequestedAt()))
+        {
+            throw new AccessDeniedHttpException();
+        }
+
+        $form = $this->createForm(PasswordResettingType::class, $user);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+            $user->setPassword($password);
+
+            // Reset the token to null so that it is no longer reusable
+            $user->setToken(null);
+            $user->setPasswordRequestedAt(null);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            $request->getSession()->getFlashBag()->add('success', "Votre mot de passe a été renouvelé.");
+
+            return $this->redirectToRoute('login');
+
+        }
+
+        return $this->render('security/passwordreset.html.twig', [
+            'form' => $form->createView()
+        ]);
+        
+    }
+*/
+    // if greater than 10 min, return false, otherwise return true
+    private function isRequestInTime(\Datetime $passwordRequestedAt = null)
+    {
+        if ($passwordRequestedAt === null)
+        {
+            return false;        
+        }
+        
+        $now = new \DateTime();
+        $interval = $now->getTimestamp() - $passwordRequestedAt->getTimestamp();
+
+        $daySeconds = 60 * 10;
+        $response = $interval > $daySeconds ? false : $reponse = true;
+        return $response;
+    }
+
+
 }

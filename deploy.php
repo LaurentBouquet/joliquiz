@@ -31,9 +31,9 @@ host(getenv(DEPLOY_HOST))
 task('import', function () {
     $DATABASE_URL = run('cat /etc/nginx/sites-available/{{application}} | grep DATABASE_URL | sed -e \'s/^        fastcgi_param DATABASE_URL "//\' -e \'s/..$//\'');
     $DATABASE_URL = str_replace('pgsql://', 'postgres://', $DATABASE_URL);
-    run('cd {{release_path}}; psql --file joliquiz-initial-prod-languages.dump.sql '.$DATABASE_URL. ';');
-    run('cd {{release_path}}; psql --file joliquiz-initial-prod-users.dump.sql '.$DATABASE_URL. ';');
-    // run('cd {{release_path}}; psql --file joliquiz-initial-prod-exemples.dump.sql '.$DATABASE_URL. ';');
+    run('cd {{release_path}}; psql --file initial-prod-data-languages.pgsql.dump.sql '.$DATABASE_URL. ';');
+    run('cd {{release_path}}; psql --file initial-prod-data-users.pgsql.dump.sql '.$DATABASE_URL. ';');
+    // run('cd {{release_path}}; psql --file initial-prod-data-exemples.pgsql.dump.sql '.$DATABASE_URL. ';');
 });
 task('load:env-vars', function() {
     $data['APP_ENV'] = run('cat /etc/nginx/sites-available/{{application}} | grep APP_ENV | sed -e \'s/^        fastcgi_param APP_ENV //\' -e \'s/.$//\'');

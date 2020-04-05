@@ -2,8 +2,8 @@
 
 namespace App\Repository;
 
-use App\Entity\Quiz;
 use App\Entity\Language;
+use App\Entity\Quiz;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -36,15 +36,15 @@ class QuizRepository extends ServiceEntityRepository
     {
         $quiz = new Quiz();
         $quiz->setLanguage($this->language);
-        $commentLines = "0-24: ".$this->translator->trans("Your result is not enough, please review and redo this quiz.")."\n";
-        $commentLines = $commentLines."25-49: ".$this->translator->trans("Your result is fairly average, we advise you to review the questions on which you made mistakes, then redo this quiz.")."\n";
-        $commentLines = $commentLines."50-74: ".$this->translator->trans("Good result. You have acquired most of the concepts covered in this quiz.")."\n";
-        $commentLines = $commentLines."75-100: ".$this->translator->trans("Congratulations! Your answers showed that you have a good knowledge of the concepts covered in this quiz.")."\n";
+        $commentLines = "0-24: " . $this->translator->trans("Your result is not enough, please review and redo this quiz.") . "\n";
+        $commentLines = $commentLines . "25-49: " . $this->translator->trans("Your result is fairly average, we advise you to review the questions on which you made mistakes, then redo this quiz.") . "\n";
+        $commentLines = $commentLines . "50-74: " . $this->translator->trans("Good result. You have acquired most of the concepts covered in this quiz.") . "\n";
+        $commentLines = $commentLines . "75-100: " . $this->translator->trans("Congratulations! Your answers showed that you have a good knowledge of the concepts covered in this quiz.") . "\n";
         $quiz->setResultQuizComment($commentLines);
         return $quiz;
     }
 
-    public function find($id, $lockMode = NULL, $lockVersion = NULL)
+    public function find($id, $lockMode = null, $lockVersion = null)
     {
         $builder = $this->createQueryBuilder('q');
         $builder->andWhere('q.id = :id');
@@ -55,41 +55,45 @@ class QuizRepository extends ServiceEntityRepository
         return $builder->getQuery()->getOneOrNullResult();
     }
 
-    public function findAll()
+    public function findAll($isAdmin = false)
     {
         $builder = $this->createQueryBuilder('q');
         $builder->andWhere('q.language = :language');
         $builder->setParameter('language', $this->language);
+        if (!$isAdmin) {
+            $builder->andWhere('q.active = :active');
+            $builder->setParameter('active', true);
+        }
         $builder->orderBy('q.title', 'ASC');
         return $builder->getQuery()->getResult();
     }
 
 //    /**
-//     * @return Quiz[] Returns an array of Quiz objects
-//     */
+    //     * @return Quiz[] Returns an array of Quiz objects
+    //     */
     /*
     public function findByExampleField($value)
     {
-        return $this->createQueryBuilder('q')
-            ->andWhere('q.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('q.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+    return $this->createQueryBuilder('q')
+    ->andWhere('q.exampleField = :val')
+    ->setParameter('val', $value)
+    ->orderBy('q.id', 'ASC')
+    ->setMaxResults(10)
+    ->getQuery()
+    ->getResult()
+    ;
     }
-    */
+     */
 
     /*
-    public function findOneBySomeField($value): ?Quiz
-    {
-        return $this->createQueryBuilder('q')
-            ->andWhere('q.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+public function findOneBySomeField($value): ?Quiz
+{
+return $this->createQueryBuilder('q')
+->andWhere('q.exampleField = :val')
+->setParameter('val', $value)
+->getQuery()
+->getOneOrNullResult()
+;
+}
+ */
 }
