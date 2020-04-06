@@ -320,7 +320,7 @@ class QuizController extends AbstractController
     /**
      * @Route("/{id}/edit", name="quiz_edit", methods="GET|POST")
      */
-    public function edit(Request $request, Quiz $quiz): Response
+    public function edit(Request $request, Quiz $quiz, EntityManagerInterface $em): Response
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
@@ -330,7 +330,8 @@ class QuizController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $quiz->setUpdatedAt(new \DateTime());
 
-            $this->getDoctrine()->getManager()->flush();
+            //$this->getDoctrine()->getManager()->flush();
+            $em->flush();
 
             $this->addFlash('success', sprintf('Quiz "%s" is updated.', $quiz->getTitle()));
 
