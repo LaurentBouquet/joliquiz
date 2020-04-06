@@ -66,7 +66,7 @@ class AnswerController extends AbstractController
     /**
      * @Route("/{id}/edit", name="answer_edit", methods="GET|POST")
      */
-    public function edit(Request $request, Answer $answer): Response
+    public function edit(Request $request, Answer $answer, EntityManagerInterface $em): Response
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
@@ -74,8 +74,10 @@ class AnswerController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
+            
+            //$this->getDoctrine()->getManager()->flush();
+            $em->flush();
+            
             $this->addFlash('success', sprintf('Answer #%s is updated.', $answer->getId()));
 
             return $this->redirectToRoute('answer_edit', ['id' => $answer->getId()]);

@@ -7,12 +7,13 @@ use App\Form\UserType;
 use App\Services\Mailer;
 use Psr\Log\LoggerInterface;
 use App\Form\PasswordResettingType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -30,7 +31,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/register", name="register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, Mailer $mailer)
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, Mailer $mailer, EntityManagerInterface $em)
     {
         // 1) build the form
         $user = new User();
@@ -45,9 +46,9 @@ class SecurityController extends AbstractController
             $user->setPassword($password);
 
             // 4) save the User!
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
+            //$em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
 
             $this->addFlash('success', sprintf('User "%s" is registred.', $user->getUsername()));
 
@@ -106,7 +107,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/newpassword", name="newpassword")
      */
-    public function requestNewPassword(Request $request, Mailer $mailer, TokenGeneratorInterface $tokenGenerator)
+    public function requestNewPassword(Request $request, Mailer $mailer, TokenGeneratorInterface $tokenGenerator, EntityManagerInterface $em)
     {
         // Creation of a form "on the fly", so that the user can inform his email
         $form = $this->createFormBuilder()
@@ -121,7 +122,7 @@ class SecurityController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $em = $this->getDoctrine()->getManager();
+            //$em = $this->getDoctrine()->getManager();            
 
             $user = $em->getRepository(User::class)->findOneByEmail($form->getData()['email']);
 
@@ -154,7 +155,7 @@ class SecurityController extends AbstractController
     /*
      @Route("/{id}/{token}", name="resetting")
     
-    public function resetPassword(User $user, $token, Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    public function resetPassword(User $user, $token, Request $request, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em)
     {
         // Forbid access to the page if:
         // the token associated with the member is null
@@ -177,7 +178,7 @@ class SecurityController extends AbstractController
             $user->setToken(null);
             $user->setPasswordRequestedAt(null);
 
-            $em = $this->getDoctrine()->getManager();
+            //$em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
 
