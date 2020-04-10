@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  database:
+    image: mysql:5.7
+    working_dir: /database
+    environment:
+      - MYSQL_DATABASE=joliquiz
+      - MYSQL_USER=joliquiz
+      - MYSQL_PASSWORD=db_password
+      - MYSQL_ROOT_PASSWORD=root
+    expose:
+      - 3306
+
+  php-fpm:
+    image: lbouquet/joliquiz
+    depends_on:
+      - database
+    environment:
+      - APP_ENV=dev
+      - APP_SECRET=692984a0f492b64a2c7733f8e742b2bb
+      - DATABASE_URL=mysql://joliquiz:db_password@database:3306/joliquiz
+      - MAILER_URL=null://localhost
+      - ADMIN_EMAIL_ADDRESS=admin@domain.tld
+      - LOCALE=en
+    expose:
+      - 9000
+
+  nginx:
+    image: lbouquet/nginx-symf4
+    depends_on:
+      - php-fpm
+    ports:
+      - "80:80"
