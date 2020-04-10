@@ -1,0 +1,13 @@
+FROM php:7.4-fpm-alpine
+COPY docker/wait-for-it.sh /usr/bin/wait-for-it.sh
+RUN chmod +x /usr/bin/wait-for-it.sh
+RUN apk --update --no-cache add git bash
+RUN docker-php-ext-install pdo pdo_mysql
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+COPY . /var/www
+WORKDIR /var/www
+CMD composer install ; bash /usr/bin/wait-for-it.sh database:3306 -- bin/console doctrine:migrations:migrate -n ;  bin/console doctrine:fixtures:load -n ; php-fpm
+EXPOSE 9000
+# docker build -f Dockerfile.php-fpm -t lbouquet/joliquiz .
+# docker login
+# docker push lbouquet/joliquiz
