@@ -10,3 +10,12 @@
   type: LoadBalancer
 ```
 - Open IP address below "External terminations", with your browser
+
+
+# Okteto install
+
+- Connect to https://okteto.com/ Dashboard
+- Click on "Deploy"
+- Click on "Stacks"
+- Copy/paste joliquiz.okteto content in "Configuration:" input form
+- Click on "Deploy"
