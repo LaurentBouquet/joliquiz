@@ -7,7 +7,7 @@ use App\Entity\Language;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
@@ -24,7 +24,7 @@ class QuestionRepository extends ServiceEntityRepository
     private $param;
     private $language;
 
-    public function __construct(RegistryInterface $registry, EntityManagerInterface $em, ParameterBagInterface $param)
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $em, ParameterBagInterface $param)
     {
         parent::__construct($registry, Question::class);
         $this->em = $em;

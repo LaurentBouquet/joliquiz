@@ -6,7 +6,7 @@ use App\Entity\Language;
 use App\Entity\Quiz;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -23,7 +23,7 @@ class QuizRepository extends ServiceEntityRepository
     private $language;
     private $translator;
 
-    public function __construct(RegistryInterface $registry, EntityManagerInterface $em, ParameterBagInterface $param, TranslatorInterface $translator)
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $em, ParameterBagInterface $param, TranslatorInterface $translator)
     {
         parent::__construct($registry, Quiz::class);
         $this->em = $em;
