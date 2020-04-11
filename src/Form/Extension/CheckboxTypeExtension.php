@@ -23,7 +23,7 @@ class CheckboxTypeExtension extends AbstractTypeExtension
     
     public static function getExtendedTypes(): iterable
     {
-        return [TextareaType::class];
+        return [CheckboxType::class];
     }
 
     public function configureOptions(OptionsResolver $resolver)

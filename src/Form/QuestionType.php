@@ -35,6 +35,7 @@ class QuestionType extends AbstractType
                 $builder->add('text', TextareaType::class, array(
                     'label' => false,
                     'disabled' => true,
+                    'attr' => array('rows' => '7'),
                 ));
                 $builder->add('answers', CollectionType::class, array(
                     'label' => false,
