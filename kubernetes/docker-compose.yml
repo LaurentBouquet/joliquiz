@@ -33,4 +33,3 @@ services:
     ports:
       - "80:80"
 
-# docker-compose -f docker-compose_remote.yml up
