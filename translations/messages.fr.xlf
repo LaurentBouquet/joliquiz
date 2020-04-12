@@ -421,21 +421,61 @@
         <source>Comment</source>
         <target>Commentaire</target>
       </trans-unit>
-      <trans-unit id="RPXj12345x1" resname="Your result is not enough, please review and redo this quiz.">
+      <trans-unit id="1eTTQ3e" resname="Your result is not enough, please review and redo this quiz.">
         <source>Your result is not enough, please review and redo this quiz.</source>
         <target>Votre résultat n'est pas suffisant, veuillez réviser puis refaire ce questionnaire.</target>
       </trans-unit>
-      <trans-unit id="RPXj12345x2" resname="Your result is fairly average, we advise you to review the questions on which you made mistakes, then redo this quiz.">
+      <trans-unit id="ZUp9uuA" resname="Your result is fairly average, we advise you to review the questions on which you made mistakes, then redo this quiz.">
         <source>Your result is fairly average, we advise you to review the questions on which you made mistakes, then redo this quiz.</source>
         <target>Votre résultat est assez moyen, nous vous conseillons de revoir les questions sur lesquelles vous avez fait des erreurs, puis de refaire ce questionnaire.</target>
       </trans-unit>
-      <trans-unit id="RPXj12345x3" resname="Good result. You have acquired most of the concepts covered in this quiz.">
+      <trans-unit id="M7bZWFJ" resname="Good result. You have acquired most of the concepts covered in this quiz.">
         <source>Good result. You have acquired most of the concepts covered in this quiz.</source>
         <target>Bon résultat. Vous avez acquis l'essentiel des notions abordées dans ce questionnaire.</target>
       </trans-unit>
-      <trans-unit id="RPXj12345x4" resname="Congratulations! Your answers showed that you have a good knowledge of the concepts covered in this quiz.">
+      <trans-unit id="1mteIRx" resname="Congratulations! Your answers showed that you have a good knowledge of the concepts covered in this quiz.">
         <source>Congratulations! Your answers showed that you have a good knowledge of the concepts covered in this quiz.</source>
         <target>Félicitations ! Vos réponses ont montré que vous aviez une bonne connaissance des notions abordées dans ce questionnaire.</target>
+      </trans-unit>
+      <trans-unit id="r9Jf3xf" resname="Forgot your password?">
+        <source>Forgot your password?</source>
+        <target>Vous avez oublié votre mot de passe ?</target>
+      </trans-unit>
+      <trans-unit id="TustTAc" resname="Please enter your email address, we will send you an email to re-initialize your password.">
+        <source>Please enter your email address, we will send you an email to re-initialize your password.</source>
+        <target>Veuillez saisir votre adresse e-mail, nous vous enverrons un e-mail pour réinitialiser votre mot de passe.</target>
+      </trans-unit>
+      <trans-unit id="9vRoj.I" resname="Send">
+        <source>Send</source>
+        <target>Envoyer</target>
+      </trans-unit>
+      <trans-unit id="BPtM3Pd" resname="Renew password">
+        <source>Renew password</source>
+        <target>Modifier le mot de passe</target>
+      </trans-unit>
+      <trans-unit id="a7FhNlK" resname="Forgot your password">
+        <source>Forgot your password</source>
+        <target>Mot de passe oublié</target>
+      </trans-unit>
+      <trans-unit id="vFCURyP" resname="Hi,">
+        <source>Hi,</source>
+        <target>Bonjour,</target>
+      </trans-unit>
+      <trans-unit id="2gKsKOJ" resname="Please click this link to change your password:">
+        <source>Please click this link to change your password:</source>
+        <target>Veuillez cliquer sur ce lien pour changer votre mot de passe :</target>
+      </trans-unit>
+      <trans-unit id="CHZSHd." resname="Change the password">
+        <source>Change the password</source>
+        <target>Changer le mot de passe</target>
+      </trans-unit>
+      <trans-unit id="WfAG1jv" resname="seconds">
+        <source>seconds</source>
+        <target>secondes</target>
+      </trans-unit>
+      <trans-unit id="OnFP0N0" resname="Response time (%question_duration% s) exceeded time limit (%question_max_duration% s) by question">
+        <source>Response time (%question_duration% s) exceeded time limit (%question_max_duration% s) by question</source>
+        <target>La durée de la réponse (%question_duration% s) a dépassé le délai imparti (%question_max_duration% s)</target>
       </trans-unit>
     </body>
   </file>
