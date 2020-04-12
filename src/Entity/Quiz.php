@@ -99,6 +99,11 @@ class Quiz
      */
     private $start_quiz_comment;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $default_question_max_duration;
+
 
     public function __construct()
     {
@@ -315,6 +320,18 @@ class Quiz
     public function setStartQuizComment(?string $start_quiz_comment): self
     {
         $this->start_quiz_comment = $start_quiz_comment;
+
+        return $this;
+    }
+
+    public function getDefaultQuestionMaxDuration(): ?int
+    {
+        return $this->default_question_max_duration;
+    }
+
+    public function setDefaultQuestionMaxDuration(?int $default_question_max_duration): self
+    {
+        $this->default_question_max_duration = $default_question_max_duration;
 
         return $this;
     }
