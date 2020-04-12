@@ -2,22 +2,23 @@
 
 namespace App\Controller;
 
-use App\Entity\AnswerHistory;
-use App\Entity\Question;
-use App\Entity\QuestionHistory;
 use App\Entity\Quiz;
 use App\Entity\User;
-use App\Entity\Workout;
-use App\Form\QuestionType;
 use App\Form\QuizType;
-use App\Repository\QuizRepository;
+use App\Entity\Workout;
+use App\Entity\Question;
 use App\Services\Mailer;
+use App\Form\QuestionType;
+use App\Entity\AnswerHistory;
+use App\Entity\QuestionHistory;
+use App\Repository\QuizRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/quiz")
@@ -28,8 +29,9 @@ class QuizController extends AbstractController
     /**
      * @Route("/{id}/workout", name="quiz_workout", methods="POST")
      */
-    public function workout(Request $request, Workout $workout, EntityManagerInterface $em, UserInterface $user = null, Mailer $mailer): Response
+    public function workout(Request $request, Workout $workout, EntityManagerInterface $em, UserInterface $user = null, Mailer $mailer, TranslatorInterface $translator): Response
     {
+        $now = new \DateTime();
         //////////////
         // TODO mettre ces opérations d'historique dans un service
 
@@ -42,7 +44,7 @@ class QuizController extends AbstractController
 
         $questionNumber = $workout->getNumberOfQuestions();
         $questionResult = 0;
-        $workoutScore = 0;
+        $score = $workout->getScore();
         $quiz = $workout->getQuiz();
 
         if (!$quiz->getAllowAnonymousWorkout()) {
@@ -61,11 +63,60 @@ class QuizController extends AbstractController
         if ($questionsHistory) {
             $lastQuestionHistory = $questionsHistory[0];
             $currentQuestionResult = +1;
+
             if (!$lastQuestionHistory->getEndedAt()) {
                 $lastQuestion = $questionRepository->findOneById($lastQuestionHistory->getQuestionId());
+
+                /////////////////////////////////////////
+                //Check timer
+                $question_max_duration = $lastQuestion->getMaxDuration();
+                if (!isset($question_max_duration)) {
+                    $question_max_duration = $quiz->getDefaultQuestionMaxDuration();
+                    if (isset($question_max_duration)) {
+                        $question_duration_minutes = ($now->diff($lastQuestionHistory->getStartedAt()))->format('%i');
+                        $question_duration = ($now->diff($lastQuestionHistory->getStartedAt()))->format('%s') + ($question_duration_minutes * 60);
+                        if ($question_duration > ($question_max_duration * 1.5)) { // 50% margin
+                            $comment = $translator->trans('Response time (%question_duration% s) exceeded time limit (%question_max_duration% s) by question', array(
+                                '%question_duration%' => $question_duration,
+                                '%question_max_duration%' => $question_max_duration,
+                            ));
+                            //$comment = 'Response time (' . $question_duration . ' s) exceeded time limit (' . $question_max_duration . ' s) by question';
+                            $workout->setComment($comment);
+                            $workout->setCompleted(true);
+                            $em->persist($workout);
+                            $em->flush();
+
+                            $email = getenv('ADMIN_EMAIL_ADDRESS');
+                            $bodyMail = $mailer->createBodyMail('emails/quiz_result.html.twig', [
+                                'username' => $user->getUsername(),
+                                'email' => $user->getEmail(),
+                                'quiz' => $quiz,
+                                'score' => $score,
+                            ]);
+                            $result = $mailer->sendMessage($email, 'A quiz has just been completed!', $bodyMail);
+
+                            $this->addFlash('danger', $comment);
+                            $form = $this->createForm(QuizType::class, $quiz, array('form_type' => 'student_questioning'));
+                            return $this->render(
+                                'quiz/end.html.twig',
+                                [
+                                    'id' => $workout->getId(),
+                                    'quiz' => $quiz,
+                                    'score' => 0,
+                                    'questionsHistory' => $questionsHistory,
+                                    'comment' => $workout->getComment(),
+                                    'form' => $form->createView(),
+                                ],
+                            );
+                        }
+                    }
+                }
+                /////////////////////////////////////////
+
+                /////////////////////////////////////////
+                //Check answers
                 $form = $this->createForm(QuestionType::class, $lastQuestion, array('form_type' => 'student_questioning'));
                 $form->handleRequest($request);
-
                 if ($form->isSubmitted() && $form->isValid()) {
                     foreach ($lastQuestion->getAnswers() as $key => $lastAnswer) {
                         // Save answers history
@@ -87,10 +138,10 @@ class QuizController extends AbstractController
                     $questionResult = $currentQuestionResult;
                     $em->persist($lastQuestionHistory);
 
-                    $lastQuestionHistory->setEndedAt(new \DateTime());
+                    $lastQuestionHistory->setEndedAt($now);
                     $lastQuestionHistory->setDuration(date_diff($lastQuestionHistory->getEndedAt(), $lastQuestionHistory->getStartedAt()));
                     $em->persist($lastQuestionHistory);
-                    $workout->setEndedAt(new \DateTime());
+                    $workout->setEndedAt($now);
                     ////////////////////////////
                     // Calc score
                     $workoutSuccess = 0;
@@ -99,13 +150,14 @@ class QuizController extends AbstractController
                             $workoutSuccess++;
                         }
                     }
-                    $workoutScore = round(($workoutSuccess / $quiz->getNumberOfQuestions()) * 100);
-                    $workout->setScore($workoutScore);
+                    $score = round(($workoutSuccess / $quiz->getNumberOfQuestions()) * 100);
+                    $workout->setScore($score);
                     ////////////////////////////
                     $em->persist($workout);
                     $em->flush();
 
                     if ($quiz->getShowResultQuestion()) {
+                        // Show question result
                         $form = $this->createForm(QuestionType::class, $lastQuestion, array('form_type' => 'student_marking'));
                         return $this->render(
                             'quiz/workout.html.twig',
@@ -116,11 +168,14 @@ class QuizController extends AbstractController
                                 'questionNumber' => $questionNumber,
                                 'questionResult' => $questionResult,
                                 'progress' => ($questionNumber / $quiz->getNumberOfQuestions()) * 100,
+                                'question_max_duration' => $question_max_duration,
+                                'question_duration' => $question_duration,
                                 'form' => $form->createView(),
                             ]
                         );
                     }
                 }
+                /////////////////////////////////////////
 
             }
         }
@@ -135,6 +190,9 @@ class QuizController extends AbstractController
                 [
                     'id' => $workout->getId(),
                     'quiz' => $quiz,
+                    'score' => $score,
+                    'questionsHistory' => $questionsHistory,
+                    'comment' => $workout->getComment(),
                     'form' => $form->createView(),
                 ]
             );
@@ -161,7 +219,7 @@ class QuizController extends AbstractController
             // Save the history of the new question
             $newQuestionHistory = new QuestionHistory();
             $newQuestionHistory->setWorkout($workout);
-            $newQuestionHistory->setStartedAt(new \DateTime());
+            $newQuestionHistory->setStartedAt($now);
             $newQuestionHistory->setQuestionId($nextQuestion->getId());
             $newQuestionHistory->setQuestionText($nextQuestion->getText());
             $newQuestionHistory->setCompleted(false);
@@ -169,6 +227,13 @@ class QuizController extends AbstractController
             //////////////
 
             $em->flush();
+
+            //Set timer
+            $question_max_duration = $nextQuestion->getMaxDuration();
+            if (!isset($question_max_duration)) {
+                $question_max_duration = $quiz->getDefaultQuestionMaxDuration();
+            }
+            $question_duration = 0;
 
             $form = $this->createForm(QuestionType::class, $nextQuestion, array('form_type' => 'student_questioning'));
             return $this->render(
@@ -180,6 +245,8 @@ class QuizController extends AbstractController
                     'questionNumber' => $questionNumber,
                     'questionResult' => 0,
                     'progress' => (($questionNumber - 1) / $quiz->getNumberOfQuestions()) * 100,
+                    'question_max_duration' => $question_max_duration,
+                    'question_duration' => $question_duration,
                     'form' => $form->createView(),
                 ]
             );
@@ -230,6 +297,7 @@ class QuizController extends AbstractController
      */
     public function start(Request $request, Quiz $quiz, EntityManagerInterface $em, UserInterface $user = null): Response
     {
+        $now = new \DateTime();
         if (!$quiz->getAllowAnonymousWorkout()) {
             $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
         } else {
@@ -250,7 +318,7 @@ class QuizController extends AbstractController
         $workout = new Workout();
         $workout->setStudent($user);
         $workout->setQuiz($quiz);
-        $workout->setStartedAt(new \DateTime());
+        $workout->setStartedAt($now);
         $workout->setNumberOfQuestions(0);
         $em->persist($workout);
         $em->flush();
@@ -322,13 +390,15 @@ class QuizController extends AbstractController
      */
     public function edit(Request $request, Quiz $quiz, EntityManagerInterface $em): Response
     {
+        $now = new \DateTime();
+
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
         $form = $this->createForm(QuizType::class, $quiz);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $quiz->setUpdatedAt(new \DateTime());
+            $quiz->setUpdatedAt($now);
 
             //$this->getDoctrine()->getManager()->flush();
             $em->flush();

@@ -55,6 +55,11 @@ class Question
      */
     private $language;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $max_duration;
+
 
     public function __construct()
     {
@@ -170,6 +175,18 @@ class Question
     public function setLanguage(?Language $language): self
     {
         $this->language = $language;
+
+        return $this;
+    }
+
+    public function getMaxDuration(): ?int
+    {
+        return $this->max_duration;
+    }
+
+    public function setMaxDuration(?int $max_duration): self
+    {
+        $this->max_duration = $max_duration;
 
         return $this;
     }

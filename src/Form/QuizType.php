@@ -7,10 +7,11 @@ use App\Entity\Category;
 use App\Repository\CategoryRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class QuizType extends AbstractType
 {
@@ -40,6 +41,9 @@ class QuizType extends AbstractType
         $builder->add('show_result_question');
         $builder->add('result_quiz_comment');
         $builder->add('allow_anonymous_workout');
+        $builder->add('default_question_max_duration', IntegerType::class, array(
+            'label' => 'Default question max duration (seconds)',
+        ));
         $builder->add('active');
     }
 
