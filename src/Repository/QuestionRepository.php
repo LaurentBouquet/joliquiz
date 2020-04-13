@@ -70,6 +70,22 @@ class QuestionRepository extends ServiceEntityRepository
         return $this->createPaginator($builder->getQuery(), $page);
     }
 
+    public function findAllByCategories($categories, int $page=1)
+    {
+        $builder = $this->createQueryBuilder('q');
+        $builder->andWhere('q.language = :language');
+        $builder->setParameter('language', $this->language);
+        $builder->innerJoin('q.categories', 'categories');
+        $builder->andWhere($builder->expr()->in('categories', ':categories'))->setParameter('categories', $categories);
+        // if (!$isAdmin) {
+        //     $builder->andWhere('q.active = :active');
+        //     $builder->setParameter('active', true);
+        // }
+        $builder->orderBy('q.text', 'ASC');
+        //return $builder->getQuery()->getResult();
+        return $this->createPaginator($builder->getQuery(), $page);
+    }
+
     public function findOneRandomByCategories($categories): ?Question
     {
         $builder = $this->createQueryBuilder('q');

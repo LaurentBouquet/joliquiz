@@ -361,7 +361,7 @@ class QuizController extends AbstractController
             $quizzes = $quizRepository->findAll($this->isGranted('ROLE_ADMIN'));
         }
 
-        return $this->render('quiz/index.html.twig', ['quizzes' => $quizzes, 'category_long_name' => $categoryLongName]);
+        return $this->render('quiz/index.html.twig', ['quizzes' => $quizzes, 'category_id' => $categoryId, 'category_long_name' => $categoryLongName]);
     }
 
     /**

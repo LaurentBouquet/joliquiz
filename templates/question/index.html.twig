@@ -32,7 +32,7 @@
             <tr>
                 <td>
                   {% for category in question.categories %}
-                     - {{ category.shortname }} <br>
+                     - <a href="{{ path('question_index', {'category': category.id}) }}">{{ category.longname }}</a> <br>                     
                   {% endfor %}
                 </td>
                 <td>{{ question.text[:60] }} {{ question.text|length>60 ? '...' : '' }}</td>
@@ -64,7 +64,7 @@
 
     {% if questions.haveToPaginate %}
         <div class="navigation text-center">
-            {{ pagerfanta(questions, 'twitter_bootstrap4_translated', {routeName: 'question_index_paginated'}) }}
+            {{ pagerfanta(questions, 'twitter_bootstrap4_translated', {routeName: 'question_index_paginated', 'routeParams': {category: category_id } }) }}
         </div>
     {% endif %}
 

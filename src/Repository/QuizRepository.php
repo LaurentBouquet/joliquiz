@@ -80,7 +80,6 @@ class QuizRepository extends ServiceEntityRepository
             $builder->setParameter('active', true);
         }
         $builder->orderBy('q.title', 'ASC');
-        $builder->orderBy('q.title', 'ASC');
         return $builder->getQuery()->getResult();
     }
 //    /**
