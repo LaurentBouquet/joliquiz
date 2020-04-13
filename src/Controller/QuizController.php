@@ -50,11 +50,15 @@ class QuizController extends AbstractController
         if (!$quiz->getAllowAnonymousWorkout()) {
             $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
         }
-
+        
         if (!$user) {
             $user = $workout->getStudent();
         }
 
+        if (!$quiz->getActive()) {
+            $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Access not allowed');
+        }
+        
         // Re-read (from the database) the previous question
         $questionHistoryRepository = $em->getRepository(QuestionHistory::class);
         $questionRepository = $em->getRepository(Question::class);
@@ -314,6 +318,10 @@ class QuizController extends AbstractController
             }
         }
 
+        if (!$quiz->getActive()) {
+            $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Access not allowed');
+        }
+        
         $workoutRepository = $em->getRepository(Workout::class);
         $workout = new Workout();
         $workout->setStudent($user);
