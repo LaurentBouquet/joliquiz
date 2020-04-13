@@ -1,325 +1,347 @@
+{# templates/emails/registration.html.twig #}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-	<link href="https://fonts.googleapis.com/css?family=Lato:400,900" rel="stylesheet">
-	<title>Confirmer laurent.bouquet@gmail.com sur Slack</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,900" rel="stylesheet">
+    <title>A quiz has just been completed!</title>
 
-	<style type="text/css">
-		
+    <style type="text/css">
+        body,
+        .background_main,
+        p,
+        table,
+        td,
+        div {
+            font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
 
-		/* Global Resets */
+        img {
+            border: none;
+            -ms-interpolation-mode: bicubic;
+            max-width: 100%;
+        }
 
-		body, .background_main, p, table, td, div {
-			font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-		}
+        p {
+            padding-bottom: 2px;
+        }
 
-		img {
-			border: none;
-			-ms-interpolation-mode: bicubic;
-			max-width: 100%;
-		}
+        body {
+            background: #fff;
+            font-size: 17px;
+            line-height: 24px;
+            margin: 0;
+            padding: 0;
+            -ms-text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
 
-		p {
-			padding-bottom: 2px;
-		}
+        table {
+            border-collapse: collapse;
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+            width: 100%;
+        }
 
-		body {
-			background: #fff;
-			font-size: 17px;
-			line-height: 24px;
-			margin: 0;
-			padding: 0;
-			-ms-text-size-adjust: 100%;
-			-webkit-text-size-adjust: 100%;
-		}
+        td {
+            font-size: 17px;
+            line-height: 24px;
+            vertical-align: top;
+        }
 
-		table {
-			border-collapse: collapse;
-			mso-table-lspace: 0pt;
-			mso-table-rspace: 0pt;
-			width: 100%;
-		}
+        /* Footer */
+        .email_footer td,
+        .email_footer p,
+        .email_footer span,
+        .email_footer a {
+            font-size: 15px;
+            text-align: center;
+        }
 
-		td {
-			font-size: 17px;
-			line-height: 24px;
-			vertical-align: top;
-		}
+        .email_footer td {
+            padding-top: 20px;
+        }
 
-		/* Footer */
-		.email_footer td, .email_footer p, .email_footer span, .email_footer a {
-			font-size: 15px;
-			text-align: center;
-		}
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        h4 {
+            color: #434245;
+            font-weight: 400;
+            line-height: 1.4;
+            margin: 0;
+            margin-bottom: 12px;
+        }
 
-		.email_footer td {
-			padding-top: 20px;
-		}
+        h1 {
+            font-size: 30px;
+            line-height: 36px;
+            font-weight: 900;
+            letter-spacing: -.75px;
+            text-align: left;
+        }
 
-		/* Typography */
-		h1, h2, h3, h4 {
-			color: #434245;
-			font-weight: 400;
-			line-height: 1.4;
-			margin: 0;
-			margin-bottom: 12px;
-		}
+        p,
+        ul,
+        ol {
+            font-size: 17px;
+            line-height: 24px;
+            font-weight: normal;
+            margin: 0;
+            margin-bottom: 15px;
+        }
 
-		h1 {
-			font-size: 30px;
-			line-height: 36px;
-			font-weight: 900;
-			letter-spacing: -.75px;
-			text-align: left;
-		}
+        p li,
+        ul li,
+        ol li {
+            list-style-position: inside;
+            margin-left: 5px;
+        }
 
-		p, ul, ol {
-			font-size: 17px;
-			line-height: 24px;
-			font-weight: normal;
-			margin: 0;
-			margin-bottom: 15px;
-		}
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
 
-		p li, ul li, ol li {
-			list-style-position: inside;
-			margin-left: 5px;
-		}
+        a:hover {
+            text-decoration: underline;
+        }
 
-		a {
-			color: #3498db;
-			text-decoration: none;
-		}
+        .button_link::after {
+            position: absolute;
+            content: '';
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            border-radius: 4px;
+        }
 
-		a:hover {
-			text-decoration: underline;
-		}
+        .button_link:hover::after {
+            box-shadow: inset 0 -2px #237c4a;
+        }
 
-		.button_link::after {
-			position: absolute;
-			content: '';
-			top: 0;
-			right: 0;
-			bottom: 0;
-			left: 0;
-			border-radius: 4px;
-		}
+        .preview_text {
+            color: transparent;
+            display: none;
+            height: 0;
+            max-height: 0;
+            max-width: 0;
+            opacity: 0;
+            overflow: hidden;
+            mso-hide: all;
+            visibility: hidden;
+            width: 0;
+            font-size: 1px;
+            line-height: 1px;
+        }
 
-		.button_link:hover::after {
-			box-shadow: inset 0 -2px #237c4a;
-		}
+        .preview_text a {
+            color: #3AA3E3 !important;
+            font-weight: bold;
+        }
 
-		.preview_text {
-			color: transparent;
-			display: none;
-			height: 0;
-			max-height: 0;
-			max-width: 0;
-			opacity: 0;
-			overflow: hidden;
-			mso-hide: all;
-			visibility: hidden;
-			width: 0;
-			font-size: 1px;
-			line-height:1px;
-		}
+        /* Responsive and Mobile Friendly Styles */
+        /* Yahoo Mail has a history of rendering all media query styles with class selectors unless class is used as an attribute */
+        @media only screen and (max-width: 600px) {
+            table[class="background_main"] .sm_full_width {
+                width: 100% !important;
+            }
 
-		.preview_text a {
-			color: #3AA3E3 !important;
-			font-weight: bold;
-		}
+            table[class="background_main"] .sm_align_center {
+                text-align: center !important;
+            }
 
-		/* Responsive and Mobile Friendly Styles */
-		/* Yahoo Mail has a history of rendering all media query styles with class selectors unless class is used as an attribute */
-		@media only screen and (max-width: 600px) {
-			table[class="background_main"] .sm_full_width {
-				width: 100% !important;
-			}
-			table[class="background_main"] .sm_align_center {
-				text-align: center !important;
-			}
-			table[class="background_main"] .sm_auto_width {
-				width: auto !important;
-			}
-			table[class="background_main"] .sm_auto_height {
-				height: auto !important;
-			}
+            table[class="background_main"] .sm_auto_width {
+                width: auto !important;
+            }
 
-			table[class="background_main"] .sm_border_box {
-				box-sizing: border-box !important;
-			}
+            table[class="background_main"] .sm_auto_height {
+                height: auto !important;
+            }
 
-			table[class="background_main"] .sm_block {
-				display: block !important;
-			}
-			table[class="background_main"] .sm_inline_block {
-				display: inline-block !important;
-			}
-			table[class="background_main"] .sm_table {
-				display: table !important;
-			}
+            table[class="background_main"] .sm_border_box {
+                box-sizing: border-box !important;
+            }
 
-			table[class="background_main"] .sm_no_side_padding {
-				padding-right: 0 !important;
-				padding-left: 0 !important;
-			}
-			table[class="background_main"] .sm_no_border_radius {
-				border-radius: 0 !important;
-			}
-			table[class="background_main"] .sm_no_padding {
-				padding-right: 0 !important;
-				padding-left: 0 !important;
-			}
-			table[class="background_main"] .sm_os_icons_height {
-				/* this is to make the parent element the same height as the inline-block img inside */
-				height: 44px;
-			}
-			.social_img_bottom_margin {
-				/*this class is for social_user_outreach email only*/
-				margin-bottom: 20px !important;
-			}
-			.social_p_bottom_margin {
-				/*this class is for social_user_outreach email only*/
-				margin-bottom: 40px !important;
-			}
-		}
+            table[class="background_main"] .sm_block {
+                display: block !important;
+            }
 
-		/* More client-specific styles */
-		@media all {
-			.ExternalClass {
-				width: 100%;
-			}
-			.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {
-				line-height: 100%;
-			}
-			.email_footer a {
-				color: #434245 !important;
-				font-family: inherit !important;
-				font-size: inherit !important;
-				font-weight: inherit !important;
-				line-height: inherit !important;
-				text-decoration: none !important;
-			}
-		}
-		a:hover {
-			text-decoration: underline !important;
-		}
+            table[class="background_main"] .sm_inline_block {
+                display: inline-block !important;
+            }
 
-		
-	</style>
+            table[class="background_main"] .sm_table {
+                display: table !important;
+            }
+
+            table[class="background_main"] .sm_no_side_padding {
+                padding-right: 0 !important;
+                padding-left: 0 !important;
+            }
+
+            table[class="background_main"] .sm_no_border_radius {
+                border-radius: 0 !important;
+            }
+
+            table[class="background_main"] .sm_no_padding {
+                padding-right: 0 !important;
+                padding-left: 0 !important;
+            }
+
+            table[class="background_main"] .sm_os_icons_height {
+                /* this is to make the parent element the same height as the inline-block img inside */
+                height: 44px;
+            }
+
+            .social_img_bottom_margin {
+                /*this class is for social_user_outreach email only*/
+                margin-bottom: 20px !important;
+            }
+
+            .social_p_bottom_margin {
+                /*this class is for social_user_outreach email only*/
+                margin-bottom: 40px !important;
+            }
+        }
+
+        /* More client-specific styles */
+        @media all {
+            .ExternalClass {
+                width: 100%;
+            }
+
+            .ExternalClass,
+            .ExternalClass p,
+            .ExternalClass span,
+            .ExternalClass font,
+            .ExternalClass td,
+            .ExternalClass div {
+                line-height: 100%;
+            }
+
+            .email_footer a {
+                color: #434245 !important;
+                font-family: inherit !important;
+                font-size: inherit !important;
+                font-weight: inherit !important;
+                line-height: inherit !important;
+                text-decoration: none !important;
+            }
+        }
+
+        a:hover {
+            text-decoration: underline !important;
+        }
+    </style>
 </head>
+
 <body>
-		<!--[if mso]>
-	<style type="text/css">
-		
-		.background_main, table, table td, p, div, h1, h2, h3, h4, h5, h6 {
-			font-family: Arial, sans-serif !important;
-		}
-		
-	</style>
-	<![endif]-->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" class="background_main"
+        style="background-color: #ffffff; padding-top: 20px; color: #434245; width: 100%; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; ">
+        <tr>
+            <td valign="top" class="sm_full_width"
+                style="margin: 0 auto; width: 100%; max-width: 600px; display: block;">
+                <div class="sm_no_padding"
+                    style="margin: 0 auto; padding: 30px 0 40px; display: block; box-sizing: border-box;">
 
-	<table width="100%" cellpadding="0" cellspacing="0" border="0" class="background_main" style="background-color: #ffffff; padding-top: 20px; color: #434245; width: 100%; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; ">
-		<tr>
-			<td valign="top" class="sm_full_width" style="margin: 0 auto; width: 100%; max-width: 600px; display: block;">
-				<div class="sm_no_padding" style="margin: 0 auto; padding: 30px 0 40px; display: block; box-sizing: border-box;">
-					
-					<table style="width: 100%; color: #434245;" border="0" cellpadding="0" cellspacing="0">
-						<tr>
-							<td style="box-sizing: border-box;">
-								<table border="0" cellpadding="0" cellspacing="0">
-									<tr>
-										<td>
+                    <table style="width: 100%; color: #434245;" border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td style="box-sizing: border-box;">
+                                <table border="0" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td>
 
-	<img src="https://raw.githubusercontent.com/LaurentBouquet/joliquiz/assets/JoliQuiz-300x111.png" alt="JoliQuiz" />
+                                            <img src="https://raw.githubusercontent.com/LaurentBouquet/joliquiz/assets/JoliQuiz-300x111.png"
+                                                alt="JoliQuiz" />
 
-<h1 style="font-size: 30px; padding-right: 30px; padding-left: 30px;">
-	A quiz has just been completed!</h1>
+                                            <h1 style="font-size: 30px; padding-right: 30px; padding-left: 30px;">
+                                                A quiz has just been completed!</h1>
 
-<p style="font-size: 17px; padding-right: 30px; padding-left: 30px;">
-    A quiz has just been completed by  {{ username }}, with {{ email }} email, got the following result : {{ score }}% for the quiz "{{quiz.title}}".
+                                            <p style="font-size: 17px; padding-right: 30px; padding-left: 30px;">
 
-<p style="font-size: 17px; padding-right: 30px; padding-left: 30px; margin-bottom: 20px;">
-	<strong>Sur votre appareil mobile</strong>, appuyez sur le bouton ci-dessous pour confirmerÂ :</p>
+                                                Hi {{ username }}! <br/>
+                                                <br/>                                    
+                                                A quiz has just been completed by  {{ username }}, 
+                                                with {{ email }} email, got the following result : 
+                                                {{ score }}% for the quiz "{{quiz.title}}".
+                                                
+                                                
+                                                Pour suivre la réalisation de ce questionnaire, go to: 
+                                                <a href="{{ app.request.schemeAndHttpHost }}{{ path('workout_detail', {'id':quiz.id}) }}">
+                                                    {{ app.request.schemeAndHttpHost  }}</a>.                                        
 
-<div style="padding-right: 30px; padding-left: 30px; margin-top: 40px; margin-bottom: 30px;">
-	
-	
-<table style="width: 100%; " class="sm_table">
-	<tr style="width: 100%;">
-		<td style="width: 100%;">
-			<span style="display: inline-block; position:relative; border-radius:4px; background-color:#2ea664; " class="sm_full_width">
-				<a class="button_link sm_full_width sm_border_box" href="https://go.slack.com/get-started/enQtNDM4NTQ0MzM1MTU0LWZmMzNlZDZkYmJhMGY3NmMxZjRjZDc3NDMzOWI2NjNiYTg4NDllZWNkMjJlMTNiYWM5ZDU2ZWM0MTdjYTk2ZTc?e=bGF1cmVudC5ib3VxdWV0QGdtYWlsLmNvbQ%3D%3D&amp;i=default&amp;m=slack&amp;x=x-a437816022384" style="min-width:196px; border-top:13px solid; border-bottom:13px solid; border-right:24px solid; border-left:24px solid; border-color:#2ea664; border-radius:4px; background-color:#2ea664; color:#ffffff; font-size:18px; line-height:18px; word-break:break-word; text-shadow:0 1px 1px #2e9a5f;  display: inline-block; text-align: center; font-weight: 900; text-decoration: none !important;">
-					Confirmer l&#039;adresse e-mail
-				</a>
-			</span>
-		</td>
-	</tr>
-</table></div>
+                                                <p
+                                                    style="font-size: 17px; padding-right: 30px; padding-left: 30px; margin-bottom: 20px;">
+                                                    or press the button below :</p>
 
-<p style="font-size: 17px; padding-right: 30px; padding-left: 30px; margin-top: 40px; margin-bottom: 30px;">
-	<strong>Vous n'avez pas demandé  recevoir cet e-mail ?</strong><br/>
-	Aucun problème ! Votre adresse a probablement été saisie par erreur. Vous pouvez ignorer ou supprimer cet e-mail.</p>
+                                                <div
+                                                    style="padding-right: 30px; padding-left: 30px; margin-top: 40px; margin-bottom: 30px;">
 
-<!--[if mso]>
-		</td>
-		<td style="padding: 0; margin: 0;">&nbsp;</td>
-	</tr>
-	<tr>
-		<td colspan="3" style="padding: 0; margin: 0; font-size: 20px; height: 20px;" height="20">&nbsp;</td>
-	</tr>
-</table>
-<![endif]-->
 
-											</td>
-										</tr>
-									</table>
-								</td>
-							</tr>
-						</table>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td class="email_footer" style="padding: 0 30px 40px; border-top: 1px solid #E1E1E4; line-height: 24px; font-size: 15px; color: #717274; text-align: center; width: 100%;">
-					<table border="0" cellpadding="0" cellspacing="0" width="100%" align="center" style="margin-top: 20px; background-color: white;">
-						<tr>
-							<td>&nbsp;</td>
-							<td>
-							<span style="display: block;">
-																
-								ConÃ§u par <a href="https://slack.com" style="text-decoration: none; color: #434245;">Slack Technologies, Inc</a>
-								<br/>
-								500 Howard StreetÂ Â SanÂ Francisco,Â CAÂ 94105Â Â Ã‰tats-Unis
-																							</span>
-							</td>
-							<td>&nbsp;</td>
-						</tr>
-						<tr>
-							<td>&nbsp;</td>
-							<td>
-								<span>
-									<a href="https://slackhq.com" style="text-decoration: none; color: #434245;">
-										Notre blog									</a>
-									<span style="color: #D8D8D8;">&nbsp;&bull;&nbsp;</span>
+                                                    <table style="width: 100%; " class="sm_table">
+                                                        <tr style="width: 100%;">
+                                                            <td style="width: 100%;">
+                                                                <span
+                                                                    style="display: inline-block; position:relative; border-radius:4px; background-color:#2ea664; "
+                                                                    class="sm_full_width">
+                                                                    <a class="button_link sm_full_width sm_border_box"
+                                                                        href="{{ app.request.schemeAndHttpHost }}{{ path('workout_detail', {'id':quiz.id}) }}"
+                                                                        style="min-width:196px; border-top:13px solid; border-bottom:13px solid; border-right:24px solid; border-left:24px solid; border-color:#2ea664; border-radius:4px; background-color:#2ea664; color:#ffffff; font-size:18px; line-height:18px; word-break:break-word; text-shadow:0 1px 1px #2e9a5f;  display: inline-block; text-align: center; font-weight: 900; text-decoration: none !important;">
+                                                                        Suivre la réalisation du questionnaire
+                                                                    </a>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
 
-									
-									<a href=https://slack.com/x-a437816022384/account/notifications style="text-decoration: none; color: #434245;">
-										PrÃ©fÃ©rences de courrier Ã©lectronique									</a>
-									<span style="color: #D8D8D8;">&nbsp;&bull;&nbsp;</span>
+                                                <p
+                                                style="font-size: 17px; padding-right: 30px; padding-left: 30px; margin-bottom: 20px;">
+                                                Thanks!</p>
+                                                
 
-									
-									<a href="https://slack.com/legal" style="text-decoration: none; color: #434245;">
-										Politiques juridiques									</a>
-								</span>
-							</td>
-							<td>&nbsp;</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-		</table>
-	</body>
+                                                <p
+                                                    style="font-size: 17px; padding-right: 30px; padding-left: 30px; margin-top: 40px; margin-bottom: 30px;">
+                                                    <strong>Vous n'avez pas demandé recevoir cet e-mail ?</strong><br />
+                                                    Aucun problème ! Votre adresse a probablement été saisie par erreur.
+                                                    Vous pouvez ignorer ou supprimer cet e-mail.</p>
+
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="email_footer"
+                style="padding: 0 30px 40px; border-top: 1px solid #E1E1E4; line-height: 24px; font-size: 15px; color: #717274; text-align: center; width: 100%;">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" align="center"
+                    style="margin-top: 20px; background-color: white;">
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>
+                            <span style="display: block;">
+                                Conçu par <a href="{{ app.request.schemeAndHttpHost }}"
+                                    style="text-decoration: none; color: #434245;">JoliQuiz</a>
+                                <br />
+                                France
+                            </span>
+                        </td>
+                        <td>&nbsp;</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+
 </html>
