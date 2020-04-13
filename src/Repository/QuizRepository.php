@@ -68,6 +68,21 @@ class QuizRepository extends ServiceEntityRepository
         return $builder->getQuery()->getResult();
     }
 
+    public function findAllByCategories($isAdmin = false, array $categories)
+    {
+        $builder = $this->createQueryBuilder('q');
+        $builder->andWhere('q.language = :language');
+        $builder->setParameter('language', $this->language);
+        $builder->innerJoin('q.categories', 'categories');
+        $builder->andWhere($builder->expr()->in('categories', ':categories'))->setParameter('categories', $categories);
+        if (!$isAdmin) {
+            $builder->andWhere('q.active = :active');
+            $builder->setParameter('active', true);
+        }
+        $builder->orderBy('q.title', 'ASC');
+        $builder->orderBy('q.title', 'ASC');
+        return $builder->getQuery()->getResult();
+    }
 //    /**
     //     * @return Quiz[] Returns an array of Quiz objects
     //     */

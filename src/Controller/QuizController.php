@@ -12,6 +12,7 @@ use App\Form\QuestionType;
 use App\Entity\AnswerHistory;
 use App\Entity\QuestionHistory;
 use App\Repository\QuizRepository;
+use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -341,13 +342,24 @@ class QuizController extends AbstractController
     }
 
     /**
-     * @Route("/", name="quiz_index", methods="GET")
+     * @Route("/{categoryId}", defaults={"categoryId"=0}, name="quiz_index", methods="GET")
      */
-    public function index(QuizRepository $quizRepository): Response
+    public function index(QuizRepository $quizRepository, CategoryRepository $categoryRepository, int $categoryId): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
 
-        return $this->render('quiz/index.html.twig', ['quizzes' => $quizRepository->findAll($this->isGranted('ROLE_ADMIN'))]);
+        $categoryLongName = "";
+        
+        if ($categoryId > 0 ) {
+            $quizzes = $quizRepository->findAllByCategories($this->isGranted('ROLE_ADMIN'), [$categoryId]);
+            $category = $categoryRepository->find($categoryId);
+            $categoryLongName = $category->getLongName();
+        }
+        else {
+            $quizzes = $quizRepository->findAll($this->isGranted('ROLE_ADMIN'));
+        }
+
+        return $this->render('quiz/index.html.twig', ['quizzes' => $quizzes, 'category_long_name' => $categoryLongName]);
     }
 
     /**
