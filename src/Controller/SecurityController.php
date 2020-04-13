@@ -5,19 +5,17 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Services\Mailer;
-use Psr\Log\LoggerInterface;
-use App\Form\PasswordResettingType;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints\Email;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class SecurityController extends AbstractController
 {
@@ -67,6 +65,22 @@ class SecurityController extends AbstractController
             'security/register.html.twig',
             array('form' => $form->createView())
         );
+    }
+
+    /**
+     * @Route("/confirm/{id}", name="user_confirm")
+     */
+    public function confirm(Request $request, User $user, Mailer $mailer)
+    {
+        $bodyMail = $mailer->createBodyMail('emails/registration.html.twig', [
+            'username' => $user->getUsername(),
+            'email' => $user->getEmail(),
+        ]);
+        $mailer->sendMessage($user->getEmail(), 'Please, confirm your email address.', $bodyMail);
+
+        $this->addFlash('success', sprintf('A confirmation mail was sended to %s.', $user->getEmail()));
+
+        return $this->render('user/show.html.twig', ['user' => $user]);
     }
 
     /**
@@ -122,7 +136,7 @@ class SecurityController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            //$em = $this->getDoctrine()->getManager();            
+            //$em = $this->getDoctrine()->getManager();
 
             $user = $em->getRepository(User::class)->findOneByEmail($form->getData()['email']);
 
@@ -151,57 +165,55 @@ class SecurityController extends AbstractController
         ]);
     }
 
-
     /*
-     @Route("/{id}/{token}", name="resetting")
-    
+    @Route("/{id}/{token}", name="resetting")
+
     public function resetPassword(User $user, $token, Request $request, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em)
     {
-        // Forbid access to the page if:
-        // the token associated with the member is null
-        // the token registered in base and the token present in the url are not equal
-        // the token is more than 10 minutes old
-        if ($user->getToken() === null || $token !== $user->getToken() || !$this->isRequestInTime($user->getPasswordRequestedAt()))
-        {
-            throw new AccessDeniedHttpException();
-        }
-
-        $form = $this->createForm(PasswordResettingType::class, $user);
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid())
-        {
-            $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
-            $user->setPassword($password);
-
-            // Reset the token to null so that it is no longer reusable
-            $user->setToken(null);
-            $user->setPasswordRequestedAt(null);
-
-            //$em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
-
-            $request->getSession()->getFlashBag()->add('success', "Votre mot de passe a été renouvelé.");
-
-            return $this->redirectToRoute('login');
-
-        }
-
-        return $this->render('security/passwordreset.html.twig', [
-            'form' => $form->createView()
-        ]);
-        
+    // Forbid access to the page if:
+    // the token associated with the member is null
+    // the token registered in base and the token present in the url are not equal
+    // the token is more than 10 minutes old
+    if ($user->getToken() === null || $token !== $user->getToken() || !$this->isRequestInTime($user->getPasswordRequestedAt()))
+    {
+    throw new AccessDeniedHttpException();
     }
-*/
+
+    $form = $this->createForm(PasswordResettingType::class, $user);
+    $form->handleRequest($request);
+
+    if($form->isSubmitted() && $form->isValid())
+    {
+    $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+    $user->setPassword($password);
+
+    // Reset the token to null so that it is no longer reusable
+    $user->setToken(null);
+    $user->setPasswordRequestedAt(null);
+
+    //$em = $this->getDoctrine()->getManager();
+    $em->persist($user);
+    $em->flush();
+
+    $request->getSession()->getFlashBag()->add('success', "Votre mot de passe a été renouvelé.");
+
+    return $this->redirectToRoute('login');
+
+    }
+
+    return $this->render('security/passwordreset.html.twig', [
+    'form' => $form->createView()
+    ]);
+
+    }
+     */
     // if greater than 10 min, return false, otherwise return true
     private function isRequestInTime(\Datetime $passwordRequestedAt = null)
     {
-        if ($passwordRequestedAt === null)
-        {
-            return false;        
+        if ($passwordRequestedAt === null) {
+            return false;
         }
-        
+
         $now = new \DateTime();
         $interval = $now->getTimestamp() - $passwordRequestedAt->getTimestamp();
 
@@ -209,6 +221,5 @@ class SecurityController extends AbstractController
         $response = $interval > $daySeconds ? false : $reponse = true;
         return $response;
     }
-
 
 }
