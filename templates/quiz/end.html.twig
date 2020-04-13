@@ -43,9 +43,15 @@
                                                     <div class="form-group">
                                                         <div class="form-check">
                                                             <input type="checkbox" id="{{answerNumber}}" name="question[{{questionNumber}}][{{loop.index}}]" disabled="disabled" class="form-check-input" value="{{answerNumber}}" {{answerHistory.correctGiven ? 'checked' : ''}}/>
+                                                            <!--
+                                                            <input type="checkbox" id="{{answerNumber}}" name="question[{{questionNumber}}][{{loop.index}}]" disabled="disabled" class="form-check-input" value="{{answerNumber}}" {{answerHistory.correctGiven ? 'checked' : ''}}/>
                                                             <label class="{{ answerHistory.answerSucces ? 'alert-success' : 'alert-danger' }} form-check-label" for="question[{{questionNumber}}][{{loop.index}}]">
                                                                 {{ answerHistory.answerText }}
                                                             </label>
+                                                            -->
+                                                            <label class="{{ answerHistory.answerCorrect ? 'alert-success' }} form-check-label" for="question[{{questionNumber}}][{{loop.index}}]">
+                                                                {{ answerHistory.answerText }}
+                                                            </label>                                                            
                                                         </div>
                                                     </div>
                                                 </div>

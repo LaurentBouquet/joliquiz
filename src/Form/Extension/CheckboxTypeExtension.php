@@ -60,7 +60,7 @@ class CheckboxTypeExtension extends AbstractTypeExtension
                         $labelAttr = array('class' => 'alert-success');
                     }
                     else {
-                        $labelAttr = array('class' => 'alert-danger');
+                        //$labelAttr = array('class' => 'alert-danger');
                     }
                 }
             }
