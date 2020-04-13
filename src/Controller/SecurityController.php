@@ -70,7 +70,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/sendmail/{id}", name="user_sendmail")
      */
-    public function sendmail(Request $request, User $user, Mailer $mailer)
+    public function sendmail(Request $request, User $user, TokenGeneratorInterface $tokenGenerator, Mailer $mailer)
     {
         $token = $tokenGenerator->generateToken();
         $user->setToken($token);
