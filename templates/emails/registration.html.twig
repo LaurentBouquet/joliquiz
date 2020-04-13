@@ -267,7 +267,7 @@
                                                 Hi {{ username }}! <br/>
                                                 <br/>
                                                 To confirm your email address {{ email }}, go to: 
-                                                <a href="{{ app.request.headers.get('referer') }}{{ path('user_confirm', {'token':token}) }}">{{ app.request.headers.get('referer') }}</a>.
+                                                <a href="{{ app.request.baseUrl }}{{ path('user_confirm', {'token':token}) }}">{{ app.request.baseUrl }}</a>.
 
                                                 Thanks!
 
@@ -286,7 +286,7 @@
                                                                     style="display: inline-block; position:relative; border-radius:4px; background-color:#2ea664; "
                                                                     class="sm_full_width">
                                                                     <a class="button_link sm_full_width sm_border_box"
-                                                                        href="{{ path('user_confirm', {'token':token}) }}"
+                                                                        href="{{ app.request.baseUrl }}{{ path('user_confirm', {'token':token}) }}"
                                                                         style="min-width:196px; border-top:13px solid; border-bottom:13px solid; border-right:24px solid; border-left:24px solid; border-color:#2ea664; border-radius:4px; background-color:#2ea664; color:#ffffff; font-size:18px; line-height:18px; word-break:break-word; text-shadow:0 1px 1px #2e9a5f;  display: inline-block; text-align: center; font-weight: 900; text-decoration: none !important;">
                                                                         Confirm e-mail address
                                                                     </a>
@@ -322,7 +322,7 @@
                         <td>
                             <span style="display: block;">
                                 Conçu par <a href="https://quiz.joliciel.org"
-                                    style="text-decoration: none; color: #434245;">Joliciel</a>
+                                    style="text-decoration: none; color: #434245;">JoliQuiz</a>
                                 <br />
                                 France
                             </span>
