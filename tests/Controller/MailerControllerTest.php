@@ -27,7 +27,7 @@ class MailerControllerTest extends WebTestCase
 
         $mailer = self::$container->get(Mailer::class);
 
-        $email = 'dev@joliciel.top'; 
+        $from = getenv('ADMIN_EMAIL_ADDRESS');
         $bodyMail = $mailer->createBodyMail('emails/registration.html.twig', [
             'username' => 'test', 
             'email' => $email,
