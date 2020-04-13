@@ -264,14 +264,15 @@
 
                                             <p style="font-size: 17px; padding-right: 30px; padding-left: 30px;">
 
-                                                Hi {{ username }}! <br/>
+                                                Hi ! <br/>
                                                 <br/>                                    
-                                                A quiz has just been completed by  {{ username }}, 
-                                                with {{ email }} email, got the following result : 
-                                                {{ score }}% for the quiz "{{quiz.title}}".
+                                                A quiz has just been completed by <strong>{{ username }}</strong>, <br/>
+                                                with {{ email }} email, <br/>
+                                                got the following result : <strong>{{ score }}%</strong> <br/>
+                                                for the quiz "{{quiz.title}}". <br/>
+                                                <br/>
                                                 
-                                                
-                                                Pour suivre la réalisation de ce questionnaire, go to: 
+                                                Pour suivre la réalisation de ce questionnaire, go to: <br/>
                                                 <a href="{{ app.request.schemeAndHttpHost }}{{ path('quiz_workout', {'id':quiz.id}) }}">
                                                     {{ app.request.schemeAndHttpHost  }}</a>.                                        
 
