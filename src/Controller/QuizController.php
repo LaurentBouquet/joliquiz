@@ -98,7 +98,7 @@ class QuizController extends AbstractController
                                 'quiz' => $quiz,
                                 'score' => $score,
                             ]);
-                            $result = $mailer->sendMessage($email, 'A quiz has just been completed by '.$user->getUsername().' (before the end) !', $bodyMail);
+                            $result = $mailer->sendMessage($email, '🎓 A quiz has just been completed by '.$user->getUsername().' (before the end) !', $bodyMail);
 
                             $this->addFlash('danger', $comment);
                             $form = $this->createForm(QuizType::class, $quiz, array('form_type' => 'student_questioning'));
@@ -279,7 +279,7 @@ class QuizController extends AbstractController
                 'quiz' => $quiz,
                 'score' => $score,
             ]);
-            $result = $mailer->sendMessage($email, 'A quiz has just been completed by '.$user->getUsername().'!', $bodyMail);
+            $result = $mailer->sendMessage($email, '🎓 A quiz has just been completed by '.$user->getUsername().'!', $bodyMail);
 
             $form = $this->createForm(QuizType::class, $quiz, array('form_type' => 'student_questioning'));
 
