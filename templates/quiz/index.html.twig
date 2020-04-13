@@ -38,7 +38,7 @@
                 <td>{{ quiz.numberOfQuestions }}</td>
                 <td>
                   {% for category in quiz.categories %}
-                     - <a href="{{ path('quiz_index') }}/{{category.id}}">{{ category.longname }}</a> <br>
+                     - <a href="{{ path('quiz_index', {'category': category.id}) }}">{{ category.longname }}</a> <br>
                   {% endfor %}
                 </td>
                 {% if is_granted('ROLE_TEACHER') %}

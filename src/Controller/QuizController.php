@@ -342,11 +342,13 @@ class QuizController extends AbstractController
     }
 
     /**
-     * @Route("/{categoryId}", defaults={"categoryId"=0}, name="quiz_index", methods="GET")
+     * @Route("/", name="quiz_index", methods="GET")
      */
-    public function index(QuizRepository $quizRepository, CategoryRepository $categoryRepository, int $categoryId): Response
+    public function index(QuizRepository $quizRepository, CategoryRepository $categoryRepository, Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
+
+        $categoryId = $request->query->get('category');
 
         $categoryLongName = "";
         
