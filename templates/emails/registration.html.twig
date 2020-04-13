@@ -267,14 +267,14 @@
                                                 Hi {{ username }}! <br/>
                                                 <br/>
                                                 To confirm your email address {{ email }}, go to: 
-                                                <a href="{{ app.request.schemeAndHttpHost  }}{{ path('user_confirm', {'token':token}) }}">
+                                                <a href="{{ app.request.schemeAndHttpHost  }}{{ path('user_confirm', {'token':token, 'email':email}) }}">
                                                     {{ app.request.schemeAndHttpHost  }}</a>.
 
-                                                Thanks!
+                                           
 
                                                 <p
                                                     style="font-size: 17px; padding-right: 30px; padding-left: 30px; margin-bottom: 20px;">
-                                                    To confirm your email address, please press the button below :</p>
+                                                    or press the button below :</p>
 
                                                 <div
                                                     style="padding-right: 30px; padding-left: 30px; margin-top: 40px; margin-bottom: 30px;">
@@ -287,7 +287,7 @@
                                                                     style="display: inline-block; position:relative; border-radius:4px; background-color:#2ea664; "
                                                                     class="sm_full_width">
                                                                     <a class="button_link sm_full_width sm_border_box"
-                                                                        href="{{ app.request.schemeAndHttpHost  }}{{ path('user_confirm', {'token':token}) }}"
+                                                                        href="{{ app.request.schemeAndHttpHost  }}{{ path('user_confirm', {'token':token, 'email':email}) }}"
                                                                         style="min-width:196px; border-top:13px solid; border-bottom:13px solid; border-right:24px solid; border-left:24px solid; border-color:#2ea664; border-radius:4px; background-color:#2ea664; color:#ffffff; font-size:18px; line-height:18px; word-break:break-word; text-shadow:0 1px 1px #2e9a5f;  display: inline-block; text-align: center; font-weight: 900; text-decoration: none !important;">
                                                                         Confirm e-mail address
                                                                     </a>
@@ -296,6 +296,8 @@
                                                         </tr>
                                                     </table>
                                                 </div>
+
+                                                Thanks!
 
                                                 <p
                                                     style="font-size: 17px; padding-right: 30px; padding-left: 30px; margin-top: 40px; margin-bottom: 30px;">
