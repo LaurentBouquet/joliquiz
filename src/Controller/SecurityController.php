@@ -68,17 +68,34 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/confirm/{id}", name="user_confirm")
+     * @Route("/sendmail/{id}", name="user_sendmail")
      */
-    public function confirm(Request $request, User $user, Mailer $mailer)
+    public function sendmail(Request $request, User $user, Mailer $mailer)
     {
+        $token = $tokenGenerator->generateToken();
+        $user->setToken($token);
+        $em->flush();
+
         $bodyMail = $mailer->createBodyMail('emails/registration.html.twig', [
             'username' => $user->getUsername(),
             'email' => $user->getEmail(),
+            'token' => $token,
         ]);
         $mailer->sendMessage($user->getEmail(), 'Please, confirm your email address.', $bodyMail);
 
         $this->addFlash('success', sprintf('A confirmation mail was sended to %s.', $user->getEmail()));
+
+        return $this->render('user/show.html.twig', ['user' => $user]);
+    }
+
+    /**
+     * @Route("/confirm", name="user_confirm")
+     */
+    public function confirm(Request $request, Mailer $mailer)
+    {
+        // TODO
+
+        $this->addFlash('success', sprintf('TODO %s.', $user->getEmail()));
 
         return $this->render('user/show.html.twig', ['user' => $user]);
     }
