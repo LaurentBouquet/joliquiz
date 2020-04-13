@@ -1,9 +1,392 @@
 {# templates/emails/quiz_result.html.twig #}
-<h3>A quiz has just been completed!</h3>
+<!DOCTYPE html>
+<html style=3D"font-family: sans-serif; line-height: 1.3 !important; font-s=
+ize: 18px; color: black !important; margin: 0; padding: 0;">
+  <head>
+    <meta content=3D"text/html; charset=3Dutf-8" http-equiv=3D"Content-Type=
+">
+  <style>.sn-component .panel a:hover {
+text-decoration: underline;
+}
+.sn-component .menu-panel .row:hover {
+background-color: #efefef;
+}
+.sn-component .menu-panel .row .column .row:hover {
+background-color: #f7f7f7;
+}
+.sn-component .menu-panel .row .column .subrow:hover {
+background-color: #f7f7f7;
+}
+.sn-component .button.default:hover {
+background-color: white; color: #939393;
+}
+.sn-component .default.box:hover {
+background-color: white; color: #939393;
+}
+.sn-component .default.circle:hover {
+background-color: white; color: #939393;
+}
+.sn-component .box.default:hover {
+background-color: white; color: #939393;
+}
+.sn-component .circle.default:hover {
+background-color: white; color: #939393;
+}
+.sn-component .button.default.featured:hover {
+background-color: #9f9f9f;
+}
+.sn-component .default.featured.box:hover {
+background-color: #9f9f9f;
+}
+.sn-component .default.featured.circle:hover {
+background-color: #9f9f9f;
+}
+.sn-component .box.default.featured:hover {
+background-color: #9f9f9f;
+}
+.sn-component .circle.default.featured:hover {
+background-color: #9f9f9f;
+}
+.sn-component .button.info:hover {
+background-color: #d5e9fd; color: #0975e5;
+}
+.sn-component .info.box:hover {
+background-color: #d5e9fd; color: #0975e5;
+}
+.sn-component .info.circle:hover {
+background-color: #d5e9fd; color: #0975e5;
+}
+.sn-component .box.info:hover {
+background-color: #d5e9fd; color: #0975e5;
+}
+.sn-component .circle.info:hover {
+background-color: #d5e9fd; color: #0975e5;
+}
+.sn-component .button.info.featured:hover {
+background-color: #1181f6;
+}
+.sn-component .info.featured.box:hover {
+background-color: #1181f6;
+}
+.sn-component .info.featured.circle:hover {
+background-color: #1181f6;
+}
+.sn-component .box.info.featured:hover {
+background-color: #1181f6;
+}
+.sn-component .circle.info.featured:hover {
+background-color: #1181f6;
+}
+.sn-component .button.warning:hover {
+background-color: #fff8ec; color: #ffaa06;
+}
+.sn-component .warning.box:hover {
+background-color: #fff8ec; color: #ffaa06;
+}
+.sn-component .warning.circle:hover {
+background-color: #fff8ec; color: #ffaa06;
+}
+.sn-component .box.warning:hover {
+background-color: #fff8ec; color: #ffaa06;
+}
+.sn-component .circle.warning:hover {
+background-color: #fff8ec; color: #ffaa06;
+}
+.sn-component .button.warning.featured:hover {
+background-color: #ffb320;
+}
+.sn-component .warning.featured.box:hover {
+background-color: #ffb320;
+}
+.sn-component .warning.featured.circle:hover {
+background-color: #ffb320;
+}
+.sn-component .box.warning.featured:hover {
+background-color: #ffb320;
+}
+.sn-component .circle.warning.featured:hover {
+background-color: #ffb320;
+}
+.sn-component .button.danger:hover {
+background-color: #fff1f3; color: #fc0e2e;
+}
+.sn-component .danger.box:hover {
+background-color: #fff1f3; color: #fc0e2e;
+}
+.sn-component .danger.circle:hover {
+background-color: #fff1f3; color: #fc0e2e;
+}
+.sn-component .box.danger:hover {
+background-color: #fff1f3; color: #fc0e2e;
+}
+.sn-component .circle.danger:hover {
+background-color: #fff1f3; color: #fc0e2e;
+}
+.sn-component .button.danger.featured:hover {
+background-color: #fc2744;
+}
+.sn-component .danger.featured.box:hover {
+background-color: #fc2744;
+}
+.sn-component .danger.featured.circle:hover {
+background-color: #fc2744;
+}
+.sn-component .box.danger.featured:hover {
+background-color: #fc2744;
+}
+.sn-component .circle.danger.featured:hover {
+background-color: #fc2744;
+}
+.sn-component .button.success:hover {
+background-color: #b7f5a8; color: #2fa414;
+}
+.sn-component .success.box:hover {
+background-color: #b7f5a8; color: #2fa414;
+}
+.sn-component .success.circle:hover {
+background-color: #b7f5a8; color: #2fa414;
+}
+.sn-component .box.success:hover {
+background-color: #b7f5a8; color: #2fa414;
+}
+.sn-component .circle.success:hover {
+background-color: #b7f5a8; color: #2fa414;
+}
+.sn-component .button.success.featured:hover {
+background-color: #35ba16;
+}
+.sn-component .success.featured.box:hover {
+background-color: #35ba16;
+}
+.sn-component .success.featured.circle:hover {
+background-color: #35ba16;
+}
+.sn-component .box.success.featured:hover {
+background-color: #35ba16;
+}
+.sn-component .circle.success.featured:hover {
+background-color: #35ba16;
+}
+.sn-component .notification.info.featured:hover {
+background-color: #1181f6;
+}
+.sn-component .notification.warning.featured:hover {
+background-color: #ffb320;
+}
+body {
+font-family: sans-serif; line-height: 1.3 !important; font-size: 18px; colo=
+r: black !important; margin: 0; padding: 0;
+}
+@media (max-width: 767px) {
+  html {
+    font-size: 17px !important;
+  }
+  body {
+    font-size: 17px !important;
+  }
+  .sn-component .panel .content {
+    padding: 0.5rem 1.1rem !important;
+  }
+  .sn-component .panel .footer {
+    padding: 0.5rem 1.1rem !important;
+  }
+}
+</style>
+</head>
 
-{{ username }}, with {{ email }} email, got the following result : {{ score }}% for the quiz "{{quiz.title}}".
+  <body style=3D"font-family: sans-serif; line-height: 1.3 !important; font=
+-size: 18px; color: black !important; margin: 0; padding: 0;">
+    <div class=3D"sn-component" style=3D'font-family: -apple-system, BlinkM=
+acSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira =
+Sans", "Droid Sans", "Helvetica Neue", sans-serif; -webkit-font-smoothing: =
+antialiased;'>
+      <div class=3D"panel" style=3D"border-radius: 0.7rem; overflow: visibl=
+e;">
 
-Thanks!
+        <div class=3D"content" style=3D"overflow: visible; overflow-y: visi=
+ble !important; overflow-x: visible !important; padding: 1.6rem 2rem 0;">
+          <div class=3D"panel-section" style=3D"padding-bottom: 1.6rem; mar=
+gin-bottom: 1.5rem; border-bottom-width: 1px; border-bottom-color: #DDDDDD;=
+ border-bottom-style: solid;">
+  <div class=3D"h1 title panel-row" style=3D"justify-content: space-between=
+; align-items: center; padding-top: 0.4rem; padding-bottom: 0.4rem; font-si=
+ze: 1.5rem !important;">
+    <div class=3D"panel-column">
 
-{# Makes an absolute URL to the /images/logo.png file #}
-<img src="https://raw.githubusercontent.com/LaurentBouquet/joliquiz/assets/JoliQuiz-300x111.png" alt="JoliQuiz">
+        {# Makes an absolute URL to the /images/logo.png file #}
+        <img src="https://raw.githubusercontent.com/LaurentBouquet/joliquiz/assets/JoliQuiz-300x111.png" alt="JoliQuiz">
+
+      <strong>Joliquiz</strong>
+    </div>
+  </div>
+  <div class=3D"faded panel-row small" style=3D"justify-content: space-betw=
+een; align-items: center; padding-top: 0.4rem; font-size: 14px !important; =
+opacity: 0.5;">
+    Registered as {{ email }}
+  </div>
+</div>
+<div class=3D"panel-section" style=3D"padding-bottom: 1.6rem; margin-bottom=
+: 1.5rem; border-bottom-width: 1px; border-bottom-color: #DDDDDD; border-bo=
+ttom-style: solid;">
+  <p style=3D"line-height: 1.3 !important; color: black !important; margin:=
+ 0.5rem 0 10px;">
+    <i>Hi there,</i>
+  </p>
+  <p style=3D"line-height: 1.3 !important; color: black !important; margin:=
+ 0.5rem 0 10px;">
+A quiz has just been completed by  {{ username }}, with {{ email }} email, got the following result : {{ score }}% for the quiz "{{quiz.title}}".
+ 
+ Best regards.
+  </p>
+  <p style=3D"line-height: 1.3 !important; color: black !important; margin:=
+ 0.5rem 0 10px;">
+    <strong>You should know:</strong>
+  </p>
+  <ol>
+    <li style=3D"line-height: 1.3; margin-bottom: 10px;">
+      Your notes are fully encrypted on your device before they're ever sen=
+t to our servers.
+      This means even we can't read the contents of your notes.
+    </li>
+    <li style=3D"line-height: 1.3; margin-bottom: 10px;">
+      Standard Notes is available on all your devices. Download the
+      <a href=3D"https://itunes.apple.com/us/app/standard-notes/id128539245=
+0?mt=3D8" style=3D"cursor: pointer; color: #086dd6;">iOS</a>
+      and
+      <a href=3D"https://play.google.com/store/apps/details?id=3Dcom.standa=
+rdnotes" style=3D"cursor: pointer; color: #086dd6;">Android</a>
+      app to go mobile.
+    </li>
+    <li style=3D"line-height: 1.3; margin-bottom: 10px;">
+      Want to learn more about how we protect your privacy and security?
+      Check out our
+      <a href=3D"https://standardnotes.org/help" style=3D"cursor: pointer; =
+color: #086dd6;">FAQ</a>
+      to learn about everything we do.
+    </li>
+  </ol>
+  <h4 style=3D"font-weight: bold; font-size: 0.95rem; line-height: 1.4rem; =
+margin: 0; padding: 0;">One last thing:</h4>
+  <div class=3D"notification info dashed" style=3D"color: #086DD6; backgrou=
+nd-color: rgba(8,109,214,0.1); border-radius: 0.2rem; cursor: default; marg=
+in: 1.4rem 0; padding: 1.1rem 1rem; border: 1px dashed #086dd6;" align=3D"l=
+eft">
+    <div class=3D"text" style=3D"line-height: 1.5rem; font-size: 1.05rem; f=
+ont-weight: normal;" align=3D"left">
+      <h2 class=3D"title" style=3D"font-size: 1.2rem; line-height: 1.8rem; =
+margin: 0; padding: 0;">Standard Notes Extended</h2>
+      <p style=3D"line-height: 1.3 !important; color: black !important; mar=
+gin: 0.5rem 0 10px;">
+        Unlock entirely new workflows with powerful editors and cloud backu=
+p options
+        with
+        <a href=3D"https://standardnotes.org/extensions#pk_campaign=3DWelco=
+me-Email&amp;pk_kwd=3DEL" style=3D"cursor: pointer; color: #086dd6;">Extend=
+ed.</a>
+        Extended is our paid extensions program, and how we support our wor=
+k on Standard Notes.
+      </p>
+      <p style=3D"line-height: 1.3 !important; color: black !important; mar=
+gin: 0.5rem 0 10px;">
+        <strong>Benefits:</strong>
+      </p>
+      <ul class=3D"no-bullet" style=3D"list-style-type: none !important; pa=
+dding-left: 0; margin-left: 0;">
+        <li style=3D"line-height: 1.3; margin-bottom: 10px;">
+          <p style=3D"line-height: 1.3 !important; color: black !important;=
+ margin: 0.5rem 0 10px;">Unlimited access to powerful extensions, editors, =
+and beautiful themes.</p>
+        </li>
+        <li style=3D"line-height: 1.3; margin-bottom: 10px;">
+          <p style=3D"line-height: 1.3 !important; color: black !important;=
+ margin: 0.5rem 0 10px;">Note version history (up to 100 years)</p>
+        </li>
+        <li style=3D"line-height: 1.3; margin-bottom: 10px;">
+          <p style=3D"line-height: 1.3 !important; color: black !important;=
+ margin: 0.5rem 0 10px;">Automatic daily backups of your data to your email=
+ inbox, Dropbox, OneDrive, and Google Drive</p>
+        </li>
+        <li style=3D"line-height: 1.3; margin-bottom: 10px;">
+          <p style=3D"line-height: 1.3 !important; color: black !important;=
+ margin: 0.5rem 0 10px;">Two-factor authentication</p>
+        </li>
+        <li style=3D"line-height: 1.3; margin-bottom: 10px;">
+          <p style=3D"line-height: 1.3 !important; color: black !important;=
+ margin: 0.5rem 0 10px;">Support our mission for privacy and longevity in s=
+oftware</p>
+        </li>
+      </ul>
+      <div id=3D"pricing">
+        <h2 class=3D"price left" style=3D"font-size: 1.2rem; line-height: 1=
+.8rem; margin: 0; padding: 0;">
+          <strong>$34.99/year</strong>
+        </h2>
+        <div class=3D"panel-row" style=3D"justify-content: space-between; a=
+lign-items: center; padding-top: 0.4rem; padding-bottom: 0.4rem;"></div>
+        <a class=3D"button info right" href=3D"https://standardnotes.org/ex=
+tensions#pk_campaign=3DWelcome-Email&amp;pk_kwd=3DLM" style=3D"cursor: poin=
+ter; color: #086DD6; text-decoration: none; display: table; border-radius: =
+3px; font-size: 0.9rem; text-align: center; background-color: rgba(8,109,21=
+4,0.1); padding: 0.5rem 0.7rem; border: 1px solid #086dd6;">
+          <div class=3D"label" style=3D"font-weight: bold;">Learn More</div=
+>
+        </a>
+      </div>
+    </div>
+  </div>
+  <h4 style=3D"font-weight: bold; font-size: 0.95rem; line-height: 1.4rem; =
+margin: 0; padding: 0;">You're all set!</h4>
+  <p style=3D"line-height: 1.3 !important; color: black !important; margin:=
+ 0.5rem 0 10px;">
+    Keep in touch and join fellow notes and privacy enthusiasts in our
+    <a href=3D"https://standardnotes.org/slack" style=3D"cursor: pointer; c=
+olor: #086dd6;">Slack group</a>
+    or, follow along on
+    <a href=3D"https://twitter.com/StandardNotes" style=3D"cursor: pointer;=
+ color: #086dd6;">Twitter</a>
+    to get the latest.
+  </p>
+  <p style=3D"line-height: 1.3 !important; color: black !important; margin:=
+ 0.5rem 0 10px;">If you have any questions, please don't hesitate to reply =
+directly to this email.</p>
+</div>
+<div class=3D"panel-section" style=3D"padding-bottom: 1.6rem;">
+  <p style=3D"line-height: 1.3 !important; color: black !important; margin:=
+ 0.5rem 0 10px;">All the best,</p>
+  <p style=3D"line-height: 1.3 !important; color: black !important; margin:=
+ 0.5rem 0 10px;">
+    <i>=E2=80=94 SN</i>
+  </p>
+</div>
+
+        </div>
+
+        <div class=3D"footer" style=3D"border-top-width: 1px; border-top-co=
+lor: #E1E1E1; border-top-style: solid; box-sizing: border-box; padding: 1re=
+m 2rem;">
+          <div class=3D"left" style=3D"display: block;" align=3D"left">
+           =20
+             =20
+                <p style=3D"line-height: 1.3 !important; color: black !impo=
+rtant; margin: 0.5rem 0 10px;">
+                  <a href=3D"https://standardnotes.org/email_subscriptions/=
+57bfff19286a098a1bcc9d737f9554aa418850e51513fe1106884b7ec9255521/less" styl=
+e=3D"cursor: pointer; color: #086dd6;">Decrease email level</a>
+                </p>
+             =20
+              <p style=3D"line-height: 1.3 !important; color: black !import=
+ant; margin: 0.5rem 0 10px;">
+                <a href=3D"https://standardnotes.org/email_subscriptions/57=
+bfff19286a098a1bcc9d737f9554aa418850e51513fe1106884b7ec9255521/unsubscribe"=
+ style=3D"cursor: pointer; color: #086dd6;">Unsubscribe from all email</a>
+              </p>
+           =20
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </body>
+
+</html>
