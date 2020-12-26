@@ -34,33 +34,35 @@ class QuizController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
-        $startedAfter = new \DateTime();
-        //$startedAfter->modify('-5 minutes');
-        $startedAfter->modify('-5 months');
-        dump($startedAfter);
-
-        $showUsersNames = false;
-        $show = $request->query->get('show');
-        if (isset($show)) {
-            $showUsersNames = ($show == 1);
-        }
-
         if (!$quiz->getActive()) {
             $quiz->setActive(true);
             $em->persist($quiz);
             $em->flush();
         }
+        
+        // $startedAt = new \DateTime();
+        //$startedAt->modify('-5 minutes');
+        // $startedAt->modify('-5 months');
+        $startedAt = $quiz->getActivedAt();
+        dump($startedAt);
+
+        $showStudentsName = false;
+        $show = $request->query->get('show');
+        if (isset($show)) {
+            $showStudentsName = ($show == 1);
+        }
+
 
         $workoutRepository = $em->getRepository(Workout::class);
-        $workouts = $workoutRepository->findByQuizAndDate($quiz, $startedAfter);
+        $workouts = $workoutRepository->findByQuizAndDate($quiz, $startedAt);
 
         return $this->render(
             'quiz/monitor.html.twig',
             [
                 'workouts' => $workouts,
                 'quiz' => $quiz,
-                'startedAfter' => $startedAfter,
-                'showUsersNames' => $showUsersNames,
+                'startedAt' => $startedAt,
+                'showStudentsName' => $showStudentsName,
             ]
         );
     }

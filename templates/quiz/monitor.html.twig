@@ -6,15 +6,21 @@
 
 {% block body %}
 	<h1>{{'Quiz'|trans}}
-		"{{ quiz.title }}"</h1>
+		"{{ quiz.title }}"
+		{# , 'Europe/Paris' #}
+		<span>{{'started at'|trans}}
+			{{ startedAt|date('m/d/Y H:i:s') }}</span>
+	</h1>
 
 	{% if is_granted('ROLE_TEACHER') %}
 
-		<table <table class="table table-striped table-sm">
+		<table class="table table-striped table-sm">
 			<thead>
 				<tr>
-					{# <th>{{ 'Name'|trans }}</th> #}
 					<th class="text-center">{{ 'Position'|trans }}</th>
+                    {% if showStudentsName %}
+                        <th>{{ 'Name'|trans }}</th>
+                    {% endif %}
 					<th class="text-center" width="50%">{{ 'Progress'|trans }}</th>
 					<th class="text-center">{{ 'Score'|trans }}</th>
 					<th class="text-center">{{ 'Duration'|trans }}</th>
@@ -27,35 +33,43 @@
 				{% for workout in workouts %}
 					{% set position = position + 1 %}
 					{% set progress = (workout.numberOfQuestions / quiz.numberOfQuestions) * 100 %}
-                    
+
 					<tr>
-						<td class="text-center">{{ position }}</td>
+						<td class="text-center align-middle">{{ position }}</td>
+                        {% if showStudentsName %}
+                            <td>{{ workout.student.username }}</td>
+                        {% endif %}
 						<td class="text-center align-middle">
 							<div class="progress" style="height: 10px;">
 								<div class="progress-bar" role="progressbar" style="width: {{ progress }}%;" aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100"></div>
 							</div>
 						</td>
-						<td class="text-center">{{ workout.score|default("0") }}
+						<td class="text-center align-middle font-weight-bold text-primary lg h4">{{ workout.score|default("0") }}
 							%</td>
-                        {% if workout.completed %}
-    						<td class="text-center">{{ (date( workout.endedAt | date() ).diff(date(workout.startedAt)))|date }}</td>
-                        {% else %}
-    						<td class="text-center">{{ (date( "now" | date() ).diff(date(workout.startedAt)))|date }}</td>
-                        {% endif %}
-						<td class="text-center">{{ workout.completed ? 'Yes' : 'No' }}</td>
+						{% if workout.completed %}
+							<td class="text-center align-middle">
+                                {# {{ (date( workout.endedAt | date() ).diff(date(workout.startedAt)))|date }} #}
+                                {{ (workout.endedAt|date("U") - workout.startedAt|date("U"))|date("i:s")  }}                                
+                            </td>
+						{% else %}
+							<td class="text-center align-middle">{{ (date( "now" | date() ).diff(date(workout.startedAt)))|date }}</td>
+						{% endif %}
+						{# <td class="text-center align-middle"><i class="{{ workout.completed ? 'fas fa-check-square text-primary' : 'far fa-square text-muted' }}"></i></td> #}
+						<td class="text-center align-middle"><i class="{{ workout.completed ? 'fas fa-check-square text-primary' }}"></i></td>
 					</tr>
 				{% endfor %}
 			</tbody>
 		</table>
 
-		<div
-			class="mb-3">
-			{# , 'Europe/Paris' #}
-			<span>{{'Started after:'|trans}}
-				{{ startedAfter|date('m/d/Y H:i:s') }}</span>
-			<a class="btn btn-warning" href="{{ path('quiz_monitor', {'id': quiz.id, 'show': not(showUsersNames)}) }}">
+		<div class="mb-3">
+			<a class="btn btn-warning" href="{{ path('quiz_monitor', {'id': quiz.id, 'show': not(showStudentsName)}) }}">
 				<i class="fas fa-user"></i>
-				{{'Show/hide users names'|trans}}</a>
+                {% if showStudentsName %}
+                    {{'Hide users name'|trans}}
+                {% else %}
+                    {{'Show users name'|trans}}
+                {% endif %}                    
+            </a>
 		</div>
 
 	{% else %}

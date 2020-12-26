@@ -44,6 +44,7 @@ class WorkoutRepository extends ServiceEntityRepository
             ->setParameter('started_at', $date)
             ->orderBy('w.score', 'DESC')
             ->addOrderBy('w.ended_at', 'DESC')
+            ->distinct('w.user')
             ->getQuery()
             ->getResult()
         ;

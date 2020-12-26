@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -104,12 +105,17 @@ class Quiz
      */
     private $default_question_max_duration;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $actived_at;
+
 
     public function __construct()
     {
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
-        $this->setActive(true);
+        $this->setActive(false);
         $this->setShowResultQuestion(false);
         $this->setShowResultQuiz(false);
         $this->setNumberOfQuestions(10);
@@ -167,6 +173,12 @@ class Quiz
     public function setActive(bool $active): self
     {
         $this->active = $active;
+
+        if ($active) {
+            $this->actived_at = new DateTime();
+        } else {
+            $this->actived_at = null;
+        }            
 
         return $this;
     }
@@ -332,6 +344,18 @@ class Quiz
     public function setDefaultQuestionMaxDuration(?int $default_question_max_duration): self
     {
         $this->default_question_max_duration = $default_question_max_duration;
+
+        return $this;
+    }
+
+    public function getActivedAt(): ?\DateTimeInterface
+    {
+        return $this->actived_at;
+    }
+
+    public function setActivedAt(?\DateTimeInterface $actived_at): self
+    {
+        $this->actived_at = $actived_at;
 
         return $this;
     }
