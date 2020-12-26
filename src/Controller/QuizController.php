@@ -17,7 +17,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -26,6 +26,35 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class QuizController extends AbstractController
 {
+
+    /**
+     * @Route("/{id}/monitor", name="quiz_monitor", methods="GET")
+     */
+    public function monitor(Request $request, Quiz $quiz, EntityManagerInterface $em): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
+
+        $now = new \DateTime();
+
+        $showUsersNames = false;
+        $show = $request->query->get('show');
+        if (isset($show)) {
+            $showUsersNames = ($show == 1);
+        }
+        dump($showUsersNames);
+
+        $workoutRepository = $em->getRepository(Workout::class);
+        $workouts = $workoutRepository->findNotCompletedByQuizAndDate($quiz, $now);
+
+        return $this->render(
+            'quiz/monitor.html.twig',
+            [
+                'workouts' => $workouts,
+                'quiz' => $quiz,
+                'showUsersNames' => $showUsersNames,
+            ]
+        );
+    }
 
     /**
      * @Route("/{id}/workout", name="quiz_workout", methods="POST")
@@ -51,7 +80,7 @@ class QuizController extends AbstractController
         if (!$quiz->getAllowAnonymousWorkout()) {
             $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
         }
-        
+
         if (!$user) {
             $user = $workout->getStudent();
         }
@@ -59,7 +88,7 @@ class QuizController extends AbstractController
         if (!$quiz->getActive()) {
             $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Access not allowed');
         }
-        
+
         // Re-read (from the database) the previous question
         $questionHistoryRepository = $em->getRepository(QuestionHistory::class);
         $questionRepository = $em->getRepository(Question::class);
@@ -98,7 +127,7 @@ class QuizController extends AbstractController
                                 'quiz' => $quiz,
                                 'score' => $score,
                             ]);
-                            $result = $mailer->sendMessage($email, '🎓 A quiz has just been completed by '.$user->getUsername().' (before the end) !', $bodyMail);
+                            $result = $mailer->sendMessage($email, '🎓 A quiz has just been completed by ' . $user->getUsername() . ' (before the end) !', $bodyMail);
 
                             $this->addFlash('danger', $comment);
                             $form = $this->createForm(QuizType::class, $quiz, array('form_type' => 'student_questioning'));
@@ -279,7 +308,7 @@ class QuizController extends AbstractController
                 'quiz' => $quiz,
                 'score' => $score,
             ]);
-            $result = $mailer->sendMessage($email, '🎓 A quiz has just been completed by '.$user->getUsername().'!', $bodyMail);
+            $result = $mailer->sendMessage($email, '🎓 A quiz has just been completed by ' . $user->getUsername() . '!', $bodyMail);
 
             $form = $this->createForm(QuizType::class, $quiz, array('form_type' => 'student_questioning'));
 
@@ -322,8 +351,8 @@ class QuizController extends AbstractController
         if (!$quiz->getActive()) {
             $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Access not allowed');
         }
-        
-        $workoutRepository = $em->getRepository(Workout::class);
+
+        // $workoutRepository = $em->getRepository(Workout::class);
         $workout = new Workout();
         $workout->setStudent($user);
         $workout->setQuiz($quiz);
@@ -351,13 +380,12 @@ class QuizController extends AbstractController
         $categoryId = $request->query->get('category');
 
         $categoryLongName = "";
-        
-        if ($categoryId > 0 ) {
+
+        if ($categoryId > 0) {
             $quizzes = $quizRepository->findAllByCategories($this->isGranted('ROLE_ADMIN'), [$categoryId]);
             $category = $categoryRepository->find($categoryId);
             $categoryLongName = $category->getLongName();
-        }
-        else {
+        } else {
             $quizzes = $quizRepository->findAll($this->isGranted('ROLE_ADMIN'));
         }
 
@@ -367,7 +395,8 @@ class QuizController extends AbstractController
     /**
      * @Route("/new", name="quiz_new", methods="GET|POST")
      */
-    function new (Request $request, EntityManagerInterface $em): Response {
+    function new(Request $request, EntityManagerInterface $em): Response
+    {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
         $quiz = $em->getRepository(Quiz::class)->create();

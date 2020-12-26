@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{'Quiz index'|trans}}{% endblock %}
+
+{% block body %}
+    <h1>{{'Quiz'|trans}} "{{ quiz.title }}"</h1>
+
+    {% if is_granted('ROLE_TEACHER') %}
+
+        <table class="table">
+            <thead>
+                <tr>
+                    {# <th>{{ 'Name'|trans }}</th> #}
+                    <th>{{ 'Position'|trans }}</th>
+                    <th width="50%">{{ 'Progress'|trans }}</th>
+                    <th>{{ 'Score'|trans }}</th>
+                    <th>{{ 'Duration'|trans }}</th>
+                    <th>{{ 'Completed'|trans }}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for workout in workouts %}
+                <tr>
+                    {# <td></td> #}
+                    <td>1</td>
+                    <td>{{ workout.numer_of_questions }}</td>
+                    <td>{{ workout.score }}</td>
+                    <td>{{ workout.started_at }}</td>
+                    <td>{{ workout.completed ? 'Yes' : 'No' }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="mb-3">
+            <a class="btn btn-warning" href="{{ path('quiz_monitor', {'id': quiz.id, 'show': not(showUsersNames)}) }}"><i class="fas fa-user"></i> {{'Show/hide users names'|trans}}</a>
+        </div>
+
+    {% else %}   
+        <p>Not allowed !</p>
+    {% endif %}    
+
+{% endblock %}

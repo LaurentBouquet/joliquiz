@@ -51,6 +51,8 @@
                             <a class="btn btn-primary btn-sm mr-2" href="{{ path('quiz_edit', {'id': quiz.id}) }}" title="{{'Edit'|trans}}"><i class="fas fa-pencil-alt"></i></a>
                             {{ include('quiz/_delete_form.html.twig') }}
                             <a class="btn btn-primary btn-sm mr-2" href="{{ path('quiz_start', {'id': quiz.id}) }}">{{'Start'|trans}} <i class="fas fa-arrow-circle-right"></i></a>
+                            <a class="btn btn-warning btn-sm mr-2" href="{{ path('quiz_monitor', {'id': quiz.id}) }}"><i class="fas fa-chalkboard-teacher"></i></a>
+                            
                         </div>
                     </td>
                 {% else %}

@@ -26,7 +26,22 @@ class WorkoutRepository extends ServiceEntityRepository
             ->andWhere('w.completed = :completed')
             ->andWhere('w.student = :student')
             ->setParameter('completed', false)
-            ->setParameter('student_questioning', $user)
+            ->setParameter('student', $user)
+            ->orderBy('w.ended_at', 'DESC')
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+    public function findNotCompletedByQuizAndDate($quiz, $date): ?array
+    {
+        return $this->createQueryBuilder('w')
+            ->andWhere('w.completed = :completed')
+            ->andWhere('w.quiz = :quiz')
+            ->andWhere('w.started_at >= :started_at')
+            ->setParameter('completed', false)
+            ->setParameter('quiz', $quiz)
+            ->setParameter('started_at', $date)
             ->orderBy('w.ended_at', 'DESC')
             ->getQuery()
             ->getOneOrNullResult()
