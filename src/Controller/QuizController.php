@@ -28,6 +28,17 @@ class QuizController extends AbstractController
 {
 
     /**
+     * @Route("/{id}/activate", name="quiz_activate", methods="GET")
+     */
+    public function activate(Request $request, Quiz $quiz, EntityManagerInterface $em): Response
+    {
+
+        // TODO
+
+        return $this->redirectToRoute('quiz_index');
+    }
+
+    /**
      * @Route("/{id}/monitor", name="quiz_monitor", methods="GET")
      */
     public function monitor(Request $request, Quiz $quiz, EntityManagerInterface $em): Response
