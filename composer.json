@@ -25,6 +25,8 @@
         "symfony/web-link": "^4.1",
         "symfony/webpack-encore-pack": "*",
         "symfony/yaml": "^4.1",
+        "twig/extra-bundle": "^3.1",
+        "twig/intl-extra": "^3.1",
         "white-october/pagerfanta-bundle": "^1.2"
     },
     "require-dev": {

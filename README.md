@@ -165,6 +165,17 @@ Thanks to [Heroku](https://www.heroku.com/)
 
 
 
+
+## Set time zone
+
+You must set your time zone in the php.ini file: 
+
+```ini
+date.timezone = Europe/Paris 
+```
+
+
+
 ## Contributing
 
 Joliquiz is an open source project that welcomes pull requests and issues from anyone.

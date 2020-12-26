@@ -1,43 +1,63 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{'Quiz index'|trans}}{% endblock %}
+{% block title %}
+	{{'Quiz index'|trans}}
+{% endblock %}
 
 {% block body %}
-    <h1>{{'Quiz'|trans}} "{{ quiz.title }}"</h1>
+	<h1>{{'Quiz'|trans}}
+		"{{ quiz.title }}"</h1>
 
-    {% if is_granted('ROLE_TEACHER') %}
+	{% if is_granted('ROLE_TEACHER') %}
 
-        <table class="table">
-            <thead>
-                <tr>
-                    {# <th>{{ 'Name'|trans }}</th> #}
-                    <th>{{ 'Position'|trans }}</th>
-                    <th width="50%">{{ 'Progress'|trans }}</th>
-                    <th>{{ 'Score'|trans }}</th>
-                    <th>{{ 'Duration'|trans }}</th>
-                    <th>{{ 'Completed'|trans }}</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for workout in workouts %}
-                <tr>
-                    {# <td></td> #}
-                    <td>1</td>
-                    <td>{{ workout.numer_of_questions }}</td>
-                    <td>{{ workout.score }}</td>
-                    <td>{{ workout.started_at }}</td>
-                    <td>{{ workout.completed ? 'Yes' : 'No' }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+		<table class="table">
+			<thead>
+				<tr>
+					{# <th>{{ 'Name'|trans }}</th> #}
+					<th>{{ 'Position'|trans }}</th>
+					<th width="50%">{{ 'Progress'|trans }}</th>
+					<th>{{ 'Score'|trans }}</th>
+					<th>{{ 'Duration'|trans }}</th>
+					<th>{{ 'Completed'|trans }}</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% set position = 0 %}
 
-        <div class="mb-3">
-            <a class="btn btn-warning" href="{{ path('quiz_monitor', {'id': quiz.id, 'show': not(showUsersNames)}) }}"><i class="fas fa-user"></i> {{'Show/hide users names'|trans}}</a>
-        </div>
+				{% for workout in workouts %}
+					{% set position = position + 1 %}
+					{% set progress = (workout.numberOfQuestions / quiz.numberOfQuestions) * 100 %}
+                    
+					<tr>
+						{# <td></td> #}
+						<td>{{ position }} {{ workout.numberOfQuestions }} / {{ quiz.numberOfQuestions }}</td>
+						<td>
+							<div class="progress" style="height: 10px;">
+								<div class="progress-bar" role="progressbar" style="width: {{ progress }}%;" aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100"></div>
+							</div>
+						</td>
+						{# <td>{{ workout.score|format_percent_number  }}</td> #}
+						<td>{{ workout.score|default("0") }}
+							%</td>
+						<td>{{ (date( "now" | date() ).diff(date(workout.startedAt)))|date }}</td>
+						<td>{{ workout.completed ? 'Yes' : 'No' }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
 
-    {% else %}   
-        <p>Not allowed !</p>
-    {% endif %}    
+		<div
+			class="mb-3">
+			{# , 'Europe/Paris' #}
+			<span>{{'Started after:'|trans}}
+				{{ startedAfter|date('m/d/Y H:i:s') }}</span>
+			<a class="btn btn-warning" href="{{ path('quiz_monitor', {'id': quiz.id, 'show': not(showUsersNames)}) }}">
+				<i class="fas fa-user"></i>
+				{{'Show/hide users names'|trans}}</a>
+		</div>
+
+	{% else %}
+		<p>Not allowed !</p>
+	{% endif %}
 
 {% endblock %}
