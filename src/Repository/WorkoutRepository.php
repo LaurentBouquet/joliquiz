@@ -33,16 +33,17 @@ class WorkoutRepository extends ServiceEntityRepository
         ;
     }
 
-    public function findNotCompletedByQuizAndDate($quiz, $date): ?array
+    public function findByQuizAndDate($quiz, $date): ?array
     {
         return $this->createQueryBuilder('w')
-            ->andWhere('w.completed = :completed')
+            // ->andWhere('w.completed = :completed')
             ->andWhere('w.quiz = :quiz')
             ->andWhere('w.started_at >= :started_at')
-            ->setParameter('completed', false)
+            // ->setParameter('completed', false)
             ->setParameter('quiz', $quiz)
             ->setParameter('started_at', $date)
-            ->orderBy('w.ended_at', 'DESC')
+            ->orderBy('w.score', 'DESC')
+            ->addOrderBy('w.ended_at', 'DESC')
             ->getQuery()
             ->getResult()
         ;

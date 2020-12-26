@@ -52,7 +52,7 @@ class QuizController extends AbstractController
         }
 
         $workoutRepository = $em->getRepository(Workout::class);
-        $workouts = $workoutRepository->findNotCompletedByQuizAndDate($quiz, $startedAfter);
+        $workouts = $workoutRepository->findByQuizAndDate($quiz, $startedAfter);
 
         return $this->render(
             'quiz/monitor.html.twig',
