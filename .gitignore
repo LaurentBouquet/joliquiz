@@ -34,3 +34,8 @@ yarn-error.log
 ###> docker/docker ###
 docker/database/data
 ###< docker/docker ###
+
+###> build and images sources ###
+/build/
+###< build and images sources ###
+
