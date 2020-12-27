@@ -42,9 +42,10 @@ class WorkoutRepository extends ServiceEntityRepository
             // ->setParameter('completed', false)
             ->setParameter('quiz', $quiz)
             ->setParameter('started_at', $date)
-            ->orderBy('w.score', 'DESC')
-            ->addOrderBy('w.ended_at', 'DESC')
-            ->distinct('w.user')
+            ->groupBy('w.student')
+            ->orderBy('w.started_at', 'ASC')
+            // ->addOrderBy('w.score', 'DESC')
+            // ->addOrderBy('w.ended_at', 'DESC')
             ->getQuery()
             ->getResult()
         ;

@@ -64,7 +64,8 @@ class QuizRepository extends ServiceEntityRepository
             $builder->andWhere('q.active = :active');
             $builder->setParameter('active', true);
         }
-        $builder->orderBy('q.title', 'ASC');
+        $builder->orderBy('q.active', 'DESC');
+        $builder->addOrderBy('q.title', 'ASC');
         return $builder->getQuery()->getResult();
     }
 

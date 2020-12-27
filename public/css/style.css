@@ -1,12 +1,14 @@
 body {
-  padding-top: 5rem;
+    /* padding-top: 5rem; */
 }
+
 .starter-template {
-  /* padding: 3rem 1.5rem; */
-  text-align: left;
+    /* padding: 3rem 1.5rem; */
+    text-align: left;
 }
+
 .logo {
-    font-size:24;
+    font-size: 24;
     /* color: #860000 !important; */
 }
 
@@ -16,25 +18,26 @@ body {
     width: 95%;
     font: 18px/1.5 sans-serif;
 }
+
 .example-wrapper code {
     background: #F5F5F5;
     padding: 2px 6px;
 }
 
 h1 {
-  font-size: x-large;
+    font-size: x-large;
 }
 
-input[type=checkbox] + label {
+input[type=checkbox]+label {
     display: block;
     cursor: pointer;
-  }
-  
-  input[type=checkbox] {
+}
+
+input[type=checkbox] {
     display: none;
-  }
-  
-  input[type=checkbox] + label:before {
+}
+
+input[type=checkbox]+label:before {
     content: "\2714";
     font-size: 1.5em;
     border: 0.1em solid #000;
@@ -48,28 +51,28 @@ input[type=checkbox] + label {
     vertical-align: bottom;
     color: transparent;
     transition: .2s;
-  }
-  
-  input[type=checkbox] + label:active:before {
+}
+
+input[type=checkbox]+label:active:before {
     transform: scale(0);
     color: transparent;
-  }
-  
-  input[type=checkbox]:checked + label:before {
+}
+
+input[type=checkbox]:checked+label:before {
     background-color: #007bff;
     border-color: #000000;
     color: #fff;
-  }
-  
-  input[type=checkbox]:disabled + label:before {
+}
+
+input[type=checkbox]:disabled+label:before {
     transform: scale(1);
-    border-color:  gray;
+    border-color: gray;
     color: transparent;
-  }
-  
-  input[type=checkbox]:checked:disabled + label:before {
+}
+
+input[type=checkbox]:checked:disabled+label:before {
     transform: scale(1);
     background-color: gray;
-    border-color:  gray;
+    border-color: gray;
     color: black;
-  }
+}

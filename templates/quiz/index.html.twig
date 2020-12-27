@@ -25,7 +25,7 @@
                 <th class="text-center align-middle">{{ 'Categories'|trans }}</th>
                 {% if is_granted('ROLE_TEACHER') %}
                     <th class="text-center align-middle">{{ 'Active'|trans }}</th>
-                    <th class="text-center align-middle">{{ 'Anonymous'|trans }}</th>
+                    {# <th class="text-center align-middle">{{ 'Anonymous'|trans }}</th> #}
                 {% endif %}
                 {% if is_granted('ROLE_USER') %}
                     <th class="text-center align-middle">{{ 'Actions'|trans }}</th>
@@ -43,15 +43,17 @@
                   {% endfor %}
                 </td>
                 {% if is_granted('ROLE_TEACHER') %}
-                    <td class="text-center">{{ quiz.active ? 'Yes' : 'No' }}</td>
-                    <td class="text-center">{{ quiz.allowAnonymousWorkout ? 'Yes' : 'No' }}</td>
+                    {# <td class="text-center">{{ quiz.active ? 'Yes' : 'No' }}</td> #}
+                    <td class="text-center h4">
+                        {% if quiz.active %}
+                            <a class="mr-2" href="{{ path('quiz_activate', {'id': quiz.id, 'active': not(quiz.active)}) }}" title="{{'Disactivate'|trans}}"><i class="fas fa-toggle-on"></i></a>
+                        {% else %}
+                            <a class="mr-2" href="{{ path('quiz_activate', {'id': quiz.id, 'active': not(quiz.active)}) }}" title="{{'Activate'|trans}}"><i class="fas fa-toggle-off"></i></a>
+                        {% endif %}
+                    </td>
+                    {# <td class="text-center">{{ quiz.allowAnonymousWorkout ? 'Yes' : 'No' }}</td> #}
                     <td>
                         <div class="form-check-inline">
-                            {% if quiz.active %}
-                                <a class="mr-2" href="{{ path('quiz_activate', {'id': quiz.id, 'active': not(quiz.active)}) }}" title="{{'Disactivate'|trans}}"><i class="fas fa-toggle-off"></i></a>
-                            {% else %}
-                                <a class="mr-2" href="{{ path('quiz_activate', {'id': quiz.id, 'active': not(quiz.active)}) }}" title="{{'Activate'|trans}}"><i class="fas fa-toggle-on"></i></a>
-                            {% endif %}
                             {# <a class="btn btn-primary btn-sm mr-2" href="{{ path('quiz_show', {'id': quiz.id}) }}" title="{{'Show'|trans}}"><i class="fas fa-eye"></i></a> #}
                             <a class="btn btn-primary btn-sm mr-2" href="{{ path('quiz_edit', {'id': quiz.id}) }}" title="{{'Edit'|trans}}"><i class="fas fa-pencil-alt"></i></a>
                             {{ include('quiz/_delete_form.html.twig') }}

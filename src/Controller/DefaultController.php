@@ -15,6 +15,12 @@ class DefaultController extends AbstractController
      */
     public function index()
     {
+        if ($this->getUser()) {
+            // if (count($this->getUser()->getRoles()) < 2) {
+                return $this->redirectToRoute('quiz_index');
+            // }
+        }
+
         return $this->render('default/index.html.twig');
     }
 }

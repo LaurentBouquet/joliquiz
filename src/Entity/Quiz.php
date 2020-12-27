@@ -3,10 +3,12 @@
 namespace App\Entity;
 
 use DateTime;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Session;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\QuizRepository")
@@ -110,18 +112,24 @@ class Quiz
      */
     private $actived_at;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Session", mappedBy="quiz", orphanRemoval=true)
+     */
+    private $sessions;
+
 
     public function __construct()
     {
+        $this->active = false;
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
-        $this->setActive(false);
         $this->setShowResultQuestion(false);
         $this->setShowResultQuiz(false);
         $this->setNumberOfQuestions(10);
         $this->categories = new ArrayCollection();
         $this->workouts = new ArrayCollection();
         $this->setAllowAnonymousWorkout(false);
+        $this->sessions = new ArrayCollection();
     }
 
     public function getId()
@@ -170,15 +178,24 @@ class Quiz
         return $this->active;
     }
 
-    public function setActive(bool $active): self
+    public function setActive(bool $active, EntityManager $em): self
     {
-        $this->active = $active;
+        $now = new DateTime();
 
         if ($active) {
-            $this->actived_at = new DateTime();
+            if (!$this->getActive()) {
+                $this->actived_at = $now;
+                $session = new Session($this, $now);
+                $em->persist($session);
+            }
         } else {
             $this->actived_at = null;
-        }            
+            $session = $this->getLastSession();
+            $session->setEndedAt($now);
+            $em->persist($session);
+        }
+
+        $this->active = $active;
 
         return $this;
     }
@@ -360,4 +377,42 @@ class Quiz
         return $this;
     }
 
+    /**
+     * @return Collection|Session[]
+     */
+    public function getSessions(): Collection
+    {
+        return $this->sessions;
+    }
+
+    /**
+     * @return Session
+     */
+    public function getLastSession(): Session
+    {
+        return $this->sessions->last();
+    }
+
+    public function addSession(Session $session): self
+    {
+        if (!$this->sessions->contains($session)) {
+            $this->sessions[] = $session;
+            $session->setQuiz($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSession(Session $session): self
+    {
+        if ($this->sessions->contains($session)) {
+            $this->sessions->removeElement($session);
+            // set the owning side to null (unless already changed)
+            if ($session->getQuiz() === $this) {
+                $session->setQuiz(null);
+            }
+        }
+
+        return $this;
+    }
 }

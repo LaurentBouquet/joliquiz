@@ -28,12 +28,28 @@ class QuizController extends AbstractController
 {
 
     /**
+     * @Route("/{id}/podium", name="quiz_podium", methods="GET")
+     */
+    public function podium(Request $request, Quiz $quiz, EntityManagerInterface $em): Response
+    {
+        $showStudentsName = false;
+        $show = $request->query->get('show');
+        if (isset($show)) {
+            $showStudentsName = ($show == 1);
+        }
+
+        return $this->redirectToRoute('quiz_index');
+    }
+
+    /**
      * @Route("/{id}/activate", name="quiz_activate", methods="GET")
      */
     public function activate(Request $request, Quiz $quiz, EntityManagerInterface $em): Response
     {
-
-        // TODO
+        $activate = ($request->query->get('active') == 1);
+        $quiz->setActive($activate, $em);
+        $em->persist($quiz);
+        $em->flush();
 
         return $this->redirectToRoute('quiz_index');
     }
@@ -46,11 +62,11 @@ class QuizController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
         if (!$quiz->getActive()) {
-            $quiz->setActive(true);
+            $quiz->setActive(true, $em);
             $em->persist($quiz);
             $em->flush();
         }
-        
+
         // $startedAt = new \DateTime();
         //$startedAt->modify('-5 minutes');
         // $startedAt->modify('-5 months');
@@ -66,6 +82,7 @@ class QuizController extends AbstractController
 
         $workoutRepository = $em->getRepository(Workout::class);
         $workouts = $workoutRepository->findByQuizAndDate($quiz, $startedAt);
+        // $workouts = $workouts->
 
         return $this->render(
             'quiz/monitor.html.twig',
@@ -395,7 +412,7 @@ class QuizController extends AbstractController
     /**
      * @Route("/", name="quiz_index", methods="GET")
      */
-    public function index(QuizRepository $quizRepository, CategoryRepository $categoryRepository, Request $request): Response
+    public function index(QuizRepository $quizRepository, CategoryRepository $categoryRepository, Request $request, EntityManagerInterface $em, UserInterface $user = null): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
 
@@ -409,6 +426,10 @@ class QuizController extends AbstractController
             $categoryLongName = $category->getLongName();
         } else {
             $quizzes = $quizRepository->findAll($this->isGranted('ROLE_ADMIN'));
+        }
+
+        if ( count($quizzes) == 1 ) {
+            return $this->start($request, $quizzes[0], $em, $user);
         }
 
         return $this->render('quiz/index.html.twig', ['quizzes' => $quizzes, 'category_id' => $categoryId, 'category_long_name' => $categoryLongName]);
