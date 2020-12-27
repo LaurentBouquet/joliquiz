@@ -43,14 +43,40 @@ class QuizController extends AbstractController
         $startedAt = $quiz->getActivedAt();
 
         $workoutRepository = $em->getRepository(Workout::class);
-        $workouts = $workoutRepository->findByQuizAndDate($quiz, $startedAt);
+        $workouts = $workoutRepository->findFirstThreeByQuizAndDate($quiz, $startedAt);
         
+        $firstStudent = new User();
+        $firstStudentScore = 0;
+        if (sizeof($workouts) > 0) {
+            $firstStudent = ($workouts[0])->getStudent();
+            $firstStudentScore = ($workouts[0])->getScore();
+        }
+        $secondStudent = new User();
+        $secondStudentScore = 0;
+        if (sizeof($workouts) > 1) {
+            $secondStudent = ($workouts[1])->getStudent();
+            $secondStudentScore = ($workouts[1])->getScore();
+        }
+        $thirdStudent = new User();
+        $thirdStudentScore = 0;
+        if (sizeof($workouts) > 2) {
+            $thirdStudent = ($workouts[2])->getStudent();            
+            $thirdStudentScore = ($workouts[2])->getScore();
+        }
+
+
         return $this->render(
             'quiz/podium.html.twig',
             [
                 'workouts' => $workouts,
                 'quiz' => $quiz,
                 'startedAt' => $startedAt,
+                'firstStudent' => $firstStudent,
+                'secondStudent' => $secondStudent,
+                'thirdStudent' => $thirdStudent,
+                'firstStudentScore' => $firstStudentScore,
+                'secondStudentScore' => $secondStudentScore,
+                'thirdStudentScore' => $thirdStudentScore,
             ]
         );
 

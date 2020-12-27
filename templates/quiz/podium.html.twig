@@ -5,13 +5,61 @@
 	"{{ quiz.title }}"
 {% endblock %}
 
+{% block stylesheets %}
+    <style>
+
+        .podium{
+            {# border: solid black; #}            
+            position: relative;
+            display: inline-block; /* Make the width of box same as image */
+            
+        }
+
+        .podium .firstStudent {
+            {# border: dashed blue; #}
+            position: absolute;
+            z-index: 999;
+            margin: 0 auto;
+            left: 0;
+            right: 0;
+            top: 35%; /* Adjust this value to move the positioned div up and down */
+            text-align: center;
+            width: 100%; /* Set the width of the positioned div */
+        }
+
+        .podium .secondStudent {
+            {# border: dashed green; #}
+            position: absolute;
+            z-index: 999;
+            margin: 0 auto;
+            right: 20%;
+            top: 48%; /* Adjust this value to move the positioned div up and down */
+            text-align: center;
+            width: 18%; /* Set the width of the positioned div */
+        }
+
+        .podium .thirdStudent {
+            {# border: dashed red; #}
+            position: absolute;
+            z-index: 999;
+            margin: 0 auto;
+            left: 20%;
+            top: 48%; /* Adjust this value to move the positioned div up and down */
+            text-align: center;
+            width: 18%; /* Set the width of the positioned div */
+        }
+    </style>    
+{% endblock %}
+
 {% block body %}
 
 
-	<div class="row">
+	<div class="podium">
 		<img src="/images/podium.gif" alt="Podium" id="podium">
-	</div>
-
+        <div class="firstStudent"><h6>{{ firstStudent.username }}</h6> {{ firstStudentScore }}%</div>              
+        <div class="secondStudent"><h6>{{ secondStudent.username }}</h6> {{ secondStudentScore }}%</div>              
+        <div class="thirdStudent"><h6>{{ thirdStudent.username }}</h6> {{ thirdStudentScore }}%</div>             
+    </div>
 
 	<div class="row">
 		<div class="col">
@@ -20,6 +68,7 @@
 				<span>{{'started at'|trans}}
 					{{ startedAt|date('m/d/Y H:i:s') }}</span>
 			</h6>
+
 		</div>
 		<div class="col">
 			{% if is_granted('ROLE_TEACHER') %}

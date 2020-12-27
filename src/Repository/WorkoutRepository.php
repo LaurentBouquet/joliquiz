@@ -49,6 +49,22 @@ class WorkoutRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findFirstThreeByQuizAndDate($quiz, $date): ?array
+    {
+        return $this->createQueryBuilder('w')
+            ->andWhere('w.quiz = :quiz')
+            // ->andWhere('w.started_at >= :started_at')
+            ->setParameter('quiz', $quiz)
+            // ->setParameter('started_at', $date)
+            ->groupBy('w.student')
+            ->orderBy('w.score', 'DESC')
+            ->addOrderBy('w.ended_at', 'DESC')
+            ->getQuery()
+            ->setMaxResults(3)
+            ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return Workout[] Returns an array of Workout objects
 //     */
