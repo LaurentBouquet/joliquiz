@@ -32,13 +32,28 @@ class QuizController extends AbstractController
      */
     public function podium(Request $request, Quiz $quiz, EntityManagerInterface $em): Response
     {
-        $showStudentsName = false;
-        $show = $request->query->get('show');
-        if (isset($show)) {
-            $showStudentsName = ($show == 1);
+        $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
+
+        if ($quiz->getActive()) {
+            // $quiz->setActive(false, $em); //TODO
+            $em->persist($quiz);
+            $em->flush();
         }
 
-        return $this->redirectToRoute('quiz_index');
+        $startedAt = $quiz->getActivedAt();
+
+        $workoutRepository = $em->getRepository(Workout::class);
+        $workouts = $workoutRepository->findByQuizAndDate($quiz, $startedAt);
+        
+        return $this->render(
+            'quiz/podium.html.twig',
+            [
+                'workouts' => $workouts,
+                'quiz' => $quiz,
+                'startedAt' => $startedAt,
+            ]
+        );
+
     }
 
     /**
@@ -67,11 +82,7 @@ class QuizController extends AbstractController
             $em->flush();
         }
 
-        // $startedAt = new \DateTime();
-        //$startedAt->modify('-5 minutes');
-        // $startedAt->modify('-5 months');
         $startedAt = $quiz->getActivedAt();
-        dump($startedAt);
 
         $showStudentsName = false;
         $show = $request->query->get('show');
@@ -79,10 +90,8 @@ class QuizController extends AbstractController
             $showStudentsName = ($show == 1);
         }
 
-
         $workoutRepository = $em->getRepository(Workout::class);
         $workouts = $workoutRepository->findByQuizAndDate($quiz, $startedAt);
-        // $workouts = $workouts->
 
         return $this->render(
             'quiz/monitor.html.twig',

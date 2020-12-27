@@ -36,10 +36,8 @@ class WorkoutRepository extends ServiceEntityRepository
     public function findByQuizAndDate($quiz, $date): ?array
     {
         return $this->createQueryBuilder('w')
-            // ->andWhere('w.completed = :completed')
             ->andWhere('w.quiz = :quiz')
             ->andWhere('w.started_at >= :started_at')
-            // ->setParameter('completed', false)
             ->setParameter('quiz', $quiz)
             ->setParameter('started_at', $date)
             ->groupBy('w.student')

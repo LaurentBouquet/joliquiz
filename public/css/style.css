@@ -1,5 +1,11 @@
 body {
     /* padding-top: 5rem; */
+    background-color: #fbfbeb;
+}
+
+.navbar {
+    padding-top: 0.05rem;
+    padding-bottom: 0.05rem;
 }
 
 .starter-template {

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{'Quiz'|trans}}
+	"{{ quiz.title }}"
+{% endblock %}
+
+{% block body %}
+
+
+	<div class="row">
+		<img src="/images/podium.gif" alt="Podium" id="podium">
+	</div>
+
+
+	<div class="row">
+		<div class="col">
+			<h6>{{'Quiz'|trans}}
+				"{{ quiz.title }}"
+				<span>{{'started at'|trans}}
+					{{ startedAt|date('m/d/Y H:i:s') }}</span>
+			</h6>
+		</div>
+		<div class="col">
+			{% if is_granted('ROLE_TEACHER') %}
+				<a class="btn btn-primary float-right" href="{{ path('quiz_index') }}">
+					{{'Answers analyse'|trans}}
+					<i class="fas fa-arrow-circle-right"></i>
+				</a>
+			{% endif %}
+		</div>
+	</div>
+
+
+{% endblock %}

@@ -7,7 +7,6 @@
 {% block body %}
 	<h6>{{'Quiz'|trans}}
 		"{{ quiz.title }}"
-		{# , 'Europe/Paris' #}
 		<span>{{'started at'|trans}}
 			{{ startedAt|date('m/d/Y H:i:s') }}</span>
 	</h6>
@@ -15,21 +14,6 @@
 	{% if is_granted('ROLE_TEACHER') %}
     <div class="table-responsive-sm">
 		<table class="table table-striped table-sm">
-            <!--
-			<thead>
-				<tr>
-                    {% if showStudentsName %}
-                        <th class="text-center">{{ 'Name'|trans }}</th>
-					    <th class="text-center">{{ 'Progress'|trans }}</th>                        
-                    {% else %}
-					    <th class="text-center" width="90%">{{ 'Progress'|trans }}</th>                        
-                    {% endif %}
-					{# <th class="text-center">{{ 'Score'|trans }}</th> #}
-					{# <th class="text-center">{{ 'Duration'|trans }}</th> #}
-					<th colspan="2" class="text-center" width="10%">{{ 'Completed'|trans }}</th>
-				</tr>
-			</thead>
-            -->
 			<tbody>
 				{% for workout in workouts %}
                     {% if workout.completed %}
@@ -70,10 +54,8 @@
 							<td class="text-right align-middle" style="padding: 1px;">                                
                             </td>                            
     						<td class="text-left align-middle font-weight-bold text-primary" style="padding: 2px;">
-                                {# {{ ("now"|date("U") - workout.startedAt|date("U"))|date("i:s")  }}                                 #}
                             </td>
 						{% endif %}
-						{# <td class="text-center align-middle"><i class="{{ workout.completed ? 'fas fa-check-square text-primary' }}"></i></td> #}
 					</tr>
 				{% endfor %}
 			</tbody>
@@ -92,7 +74,7 @@
                 {% endif %}                    
             </a>            
             {% if workouts|length > 0 %}
-                <a class="btn btn-primary float-right" href="{{ path('quiz_podium', {'id': quiz.id, 'show': showStudentsName}) }}">
+                <a class="btn btn-primary float-right" href="{{ path('quiz_podium', {'id': quiz.id}) }}">
                     {{ 'Podium'|trans }} <i class="fas fa-arrow-circle-right"></i>
                 </a>
             {% endif %}
