@@ -6,79 +6,101 @@
 {% endblock %}
 
 {% block stylesheets %}
-    <style>
+	<style>
 
-        .podium{
-            {# border: solid black; #}            
-            position: relative;
-            display: inline-block; /* Make the width of box same as image */
-            
-        }
+		.podium {
+			position: relative;
+			display: inline-block; /* Make the width of box same as image */
 
-        .podium .firstStudent {
-            {# border: dashed blue; #}
-            position: absolute;
-            z-index: 999;
-            margin: 0 auto;
-            left: 0;
-            right: 0;
-            top: 35%; /* Adjust this value to move the positioned div up and down */
-            text-align: center;
-            width: 100%; /* Set the width of the positioned div */
-        }
+		}
 
-        .podium .secondStudent {
-            {# border: dashed green; #}
-            position: absolute;
-            z-index: 999;
-            margin: 0 auto;
-            right: 20%;
-            top: 48%; /* Adjust this value to move the positioned div up and down */
-            text-align: center;
-            width: 18%; /* Set the width of the positioned div */
-        }
+		.podium .firstStudent {
+			color: green;
+			font-weight: bold;
+			font-size: 2em;
+			position: absolute;
+			z-index: 999;
+			margin: 0 auto;
+			left: 0;
+			right: 0;
+			top: 35%; /* Adjust this value to move the positioned div up and down */
+			text-align: center;
+			width: 100%; /* Set the width of the positioned div */
+		}
 
-        .podium .thirdStudent {
-            {# border: dashed red; #}
-            position: absolute;
-            z-index: 999;
-            margin: 0 auto;
-            left: 20%;
-            top: 48%; /* Adjust this value to move the positioned div up and down */
-            text-align: center;
-            width: 18%; /* Set the width of the positioned div */
-        }
-    </style>    
+		.podium .secondStudent {
+			font-size: 1.2em;
+			position: absolute;
+			z-index: 999;
+			margin: 0 auto;
+			right: 20%;
+			top: 48%; /* Adjust this value to move the positioned div up and down */
+			text-align: center;
+			width: 18%; /* Set the width of the positioned div */
+		}
+
+		.podium .thirdStudent {
+			position: absolute;
+			z-index: 999;
+			margin: 0 auto;
+			left: 21%;
+			top: 49%; /* Adjust this value to move the positioned div up and down */
+			text-align: center;
+			width: 18%; /* Set the width of the positioned div */
+		}
+
+		.podium .title {
+			color: black;
+			font-weight: bold;
+			font-size: 2em;
+			position: absolute;
+			z-index: 999;
+			margin: 0 auto;
+			left: 0;
+			right: 0;
+			top: 75%; /* Adjust this value to move the positioned div up and down */
+			text-align: center;
+			width: 100%; /* Set the width of the positioned div */
+		}
+	</style>
 {% endblock %}
 
 {% block body %}
 
-
-	<div class="podium">
-		<img src="/images/podium.gif" alt="Podium" id="podium">
-        <div class="firstStudent"><h6>{{ firstStudent.username }}</h6> {{ firstStudentScore }}%</div>              
-        <div class="secondStudent"><h6>{{ secondStudent.username }}</h6> {{ secondStudentScore }}%</div>              
-        <div class="thirdStudent"><h6>{{ thirdStudent.username }}</h6> {{ thirdStudentScore }}%</div>             
-    </div>
-
-	<div class="row">
-		<div class="col">
-			<h6>{{'Quiz'|trans}}
-				"{{ quiz.title }}"
-				<span>{{'started at'|trans}}
-					{{ startedAt|date('m/d/Y H:i:s') }}</span>
-			</h6>
-
-		</div>
-		<div class="col">
-			{% if is_granted('ROLE_TEACHER') %}
-				<a class="btn btn-primary float-right" href="{{ path('quiz_index') }}">
-					{{'Answers analyse'|trans}}
-					<i class="fas fa-arrow-circle-right"></i>
-				</a>
-			{% endif %}
-		</div>
-	</div>
-
+	{% if is_granted('ROLE_TEACHER') %}
+        <div class="podium">
+            <a class="" href="{{ path('quiz_analyse', {'id': quiz.id}) }}">
+                <img src="/images/podium.gif" alt="Podium" id="podium">
+            </a>
+            <div class="firstStudent">
+                <h4 class="font-weight-bold">{{ firstStudent.username }}</h4>
+                {{ firstStudentScore }}%</div>
+            <div class="secondStudent">
+                {% if secondStudentScore > 0 %}
+                <h5 class="">{{ secondStudent.username }}</h5>
+                {{ secondStudentScore }}%
+                {% else %}
+                ?
+                {% endif %}
+            </div>
+            <div class="thirdStudent">
+                {% if thirdStudentScore > 0 %}
+                <h6 class="">{{ thirdStudent.username }}</h6>
+                {{ thirdStudentScore }}%
+                {% else %}
+                ?
+                {% endif %}
+            </div>
+            <div class="title">
+                <h6>{{'Quiz'|trans}}
+                    "{{ quiz.title }}"
+                    <span>{{'started at'|trans}}
+                        {{ startedAt|date('m/d/Y H:i:s') }}</span>
+                </h6>
+            </div>
+        </div>
+	{% else %}
+		<p>Not allowed !</p>
+	{% endif %}
 
 {% endblock %}

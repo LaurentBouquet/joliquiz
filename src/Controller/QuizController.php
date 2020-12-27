@@ -28,6 +28,19 @@ class QuizController extends AbstractController
 {
 
     /**
+     * @Route("/{id}/analyse", name="quiz_analyse", methods="GET")
+     */
+    public function analyse(Request $request, Quiz $quiz, EntityManagerInterface $em): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
+
+        // TODO
+
+        return $this->redirectToRoute('quiz_index');
+
+    }
+
+    /**
      * @Route("/{id}/podium", name="quiz_podium", methods="GET")
      */
     public function podium(Request $request, Quiz $quiz, EntityManagerInterface $em): Response
