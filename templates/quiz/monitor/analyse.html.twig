@@ -31,9 +31,9 @@
                                         </button>
                                     </h5>
                                 </div>
-                                {# <div id="collapse{{questionNumber}}" class="collapse" aria-labelledby="heading{{questionNumber}}" data-parent="#accordion">
+                                <div id="collapse{{questionNumber}}" class="collapse" aria-labelledby="heading{{questionNumber}}" data-parent="#accordion">
                                     <div class="card-body">
-                                        {% for answerHistory in questionHistory.answersHistory %}
+                                        {% for answerHistory in questionHistory.0.answersHistory %}
                                             {% set answerNumber = questionNumber ~ '-' ~ loop.index %}
                                             <fieldset class="form-group">
                                                 <div id="question_answers_0">
@@ -49,7 +49,7 @@
                                             </fieldset>
                                         {% endfor %}
                                     </div>
-                                </div> #}
+                                </div>
                             </div>
                         {% endfor %}
                     </div>
