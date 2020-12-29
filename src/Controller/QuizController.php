@@ -34,10 +34,21 @@ class QuizController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
-        // TODO
+        $startedAt = $quiz->getActivedAt();
 
-        return $this->redirectToRoute('quiz_index');
+        $questionHistoryRepository = $em->getRepository(QuestionHistory::class);
+        $questionsHistory = $questionHistoryRepository->findAllByQuizAndDate($quiz, $startedAt);
 
+        dump($questionsHistory);
+
+        return $this->render(
+            'quiz/monitor/analyse.html.twig',
+            [
+                'quiz' => $quiz,
+                'startedAt' => $startedAt,
+                'questionsHistory' => $questionsHistory,
+            ]
+        );
     }
 
     /**
@@ -57,7 +68,7 @@ class QuizController extends AbstractController
 
         $workoutRepository = $em->getRepository(Workout::class);
         $workouts = $workoutRepository->findFirstThreeByQuizAndDate($quiz, $startedAt);
-        
+
         $firstStudent = new User();
         $firstStudentScore = 0;
         if (sizeof($workouts) > 0) {
@@ -73,13 +84,13 @@ class QuizController extends AbstractController
         $thirdStudent = new User();
         $thirdStudentScore = 0;
         if (sizeof($workouts) > 2) {
-            $thirdStudent = ($workouts[2])->getStudent();            
+            $thirdStudent = ($workouts[2])->getStudent();
             $thirdStudentScore = ($workouts[2])->getScore();
         }
 
 
         return $this->render(
-            'quiz/podium.html.twig',
+            'quiz/monitor/podium.html.twig',
             [
                 'workouts' => $workouts,
                 'quiz' => $quiz,
@@ -92,7 +103,6 @@ class QuizController extends AbstractController
                 'thirdStudentScore' => $thirdStudentScore,
             ]
         );
-
     }
 
     /**
@@ -105,6 +115,11 @@ class QuizController extends AbstractController
         $em->persist($quiz);
         $em->flush();
 
+        // $url = $this->generateUrl('quiz_index');         
+        // if (!$activate) {
+        //     $url = $url . '#quiz-'.$quiz->getId();
+        // }
+        // return $this->redirect($url);
         return $this->redirectToRoute('quiz_index');
     }
 
@@ -133,7 +148,7 @@ class QuizController extends AbstractController
         $workouts = $workoutRepository->findByQuizAndDate($quiz, $startedAt);
 
         return $this->render(
-            'quiz/monitor.html.twig',
+            'quiz/monitor/monitor.html.twig',
             [
                 'workouts' => $workouts,
                 'quiz' => $quiz,
@@ -161,6 +176,7 @@ class QuizController extends AbstractController
 
         $questionNumber = $workout->getNumberOfQuestions();
         $questionResult = 0;
+        $question_duration = 0;
         $score = $workout->getScore();
         $quiz = $workout->getQuiz();
 
@@ -181,6 +197,7 @@ class QuizController extends AbstractController
         $questionRepository = $em->getRepository(Question::class);
         //$lastQuestionHistory = $questionHistoryRepository->findLastByWorkout($workout);
         $questionsHistory = $questionHistoryRepository->findAllByWorkout($workout);
+        dump($questionsHistory);        
         if ($questionsHistory) {
             $lastQuestionHistory = $questionsHistory[0];
             $currentQuestionResult = +1;
@@ -476,8 +493,12 @@ class QuizController extends AbstractController
             $quizzes = $quizRepository->findAll($this->isGranted('ROLE_ADMIN'));
         }
 
-        if ( count($quizzes) == 1 ) {
-            return $this->start($request, $quizzes[0], $em, $user);
+        if ($this->getUser()) {
+            if (!in_array('ROLE_TEACHER', $this->getUser()->getRoles())) {
+                if (count($quizzes) == 1) {
+                    return $this->start($request, $quizzes[0], $em, $user);
+                }
+            }
         }
 
         return $this->render('quiz/index.html.twig', ['quizzes' => $quizzes, 'category_id' => $categoryId, 'category_long_name' => $categoryLongName]);
@@ -486,7 +507,7 @@ class QuizController extends AbstractController
     /**
      * @Route("/new", name="quiz_new", methods="GET|POST")
      */
-    function new(Request $request, EntityManagerInterface $em): Response
+    public function new(Request $request, EntityManagerInterface $em): Response
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 

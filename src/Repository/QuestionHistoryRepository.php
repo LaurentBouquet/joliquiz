@@ -43,6 +43,26 @@ class QuestionHistoryRepository extends ServiceEntityRepository
             ;
         }
 
+        public function findAllByQuizAndDate($quiz, $startedAt)
+        {
+            return $this->createQueryBuilder('qh')
+                ->select("qh.id, qh.question_id, count(qh.id) as question_count, avg(qh.question_success) as question_success, qh.question_text as question_text")
+                
+                ->andWhere('qh.question_success IS NOT NULL')                
+
+                ->andWhere('qh.started_at >= :started_at')                
+                ->setParameter('started_at', $startedAt)
+
+                ->groupBy('qh.question_id')
+
+                ->orderBy('question_success', 'ASC')
+                ->addOrderBy('question_count', 'DESC')
+                
+                ->getQuery()
+                ->getResult()
+            ;
+        }        
+
 
 
 //    /**

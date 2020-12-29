@@ -34,7 +34,7 @@
         </thead>
         <tbody>
         {% for quiz in quizzes %}
-            <tr>
+            <tr id="quiz-{{ quiz.id }}">
                 <td title="{{ quiz.summary }}">{{ quiz.title }}</td>
                 <td class="text-center">{{ quiz.numberOfQuestions }}</td>
                 <td>
