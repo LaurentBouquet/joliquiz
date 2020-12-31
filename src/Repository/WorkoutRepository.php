@@ -37,9 +37,11 @@ class WorkoutRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('w')
             ->andWhere('w.quiz = :quiz')
-            // ->andWhere('w.started_at >= :started_at')
             ->setParameter('quiz', $quiz)
-            // ->setParameter('started_at', $date)
+
+            ->andWhere('w.started_at >= :started_at')
+            ->setParameter('started_at', $date)
+
             ->groupBy('w.student')
             ->orderBy('w.started_at', 'ASC')
             // ->addOrderBy('w.score', 'DESC')
@@ -53,9 +55,11 @@ class WorkoutRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('w')
             ->andWhere('w.quiz = :quiz')
-            // ->andWhere('w.started_at >= :started_at')
             ->setParameter('quiz', $quiz)
-            // ->setParameter('started_at', $date)
+
+            ->andWhere('w.started_at >= :started_at')
+            ->setParameter('started_at', $date)
+
             ->groupBy('w.student')
             ->orderBy('w.score', 'DESC')
             ->addOrderBy('w.ended_at', 'DESC')

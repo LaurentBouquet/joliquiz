@@ -45,21 +45,27 @@ class QuestionHistoryRepository extends ServiceEntityRepository
 
         public function findAllByQuizAndDate($quiz, $startedAt)
         {
-            return $this->createQueryBuilder('qh')
-                ->addSelect("qh.question_id, count(qh.id) as question_count, avg(qh.question_success) as question_success, qh.question_text as question_text")
+            $builder = $this->createQueryBuilder('qh');
+
+                $builder->addSelect("qh.question_id, count(qh.id) as question_count, avg(qh.question_success) as question_success, qh.question_text as question_text");
                 
-                ->andWhere('qh.question_success IS NOT NULL')                
+                $builder->andWhere('qh.question_success IS NOT NULL');            
 
-                ->andWhere('qh.started_at >= :started_at')                
-                ->setParameter('started_at', $startedAt)
+                // TODO select only questions of this $quiz
+                $builder->innerJoin('App\Entity\Workout', 'w', 'WITH', 'qh.workout = w.id');
+                $builder->andWhere('w.quiz = :quiz_id');
+                $builder->setParameter('quiz_id', $quiz->getId());
+         
+                $builder->andWhere('qh.started_at >= :started_at');              
+                $builder->setParameter('started_at', $startedAt);
 
-                ->groupBy('qh.question_id')
+                $builder->groupBy('qh.question_id');
 
-                ->orderBy('question_success', 'ASC')
-                ->addOrderBy('question_count', 'DESC')
+                $builder->orderBy('question_success', 'ASC');
+                $builder->addOrderBy('question_count', 'DESC');
                 
-                ->getQuery()
-                ->getResult()
+                return $builder->getQuery()->getResult();
+
             ;
         }        
 
