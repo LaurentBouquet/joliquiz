@@ -27,6 +27,12 @@
     <body>
         {# <main role="main" class="container"> #}
 
+            <div class="header">
+                <div class="col-sm-12">
+                    {% block header %}{% endblock %}
+                </div>
+            </div>
+            
             <div class="starter-template">
                 <div class="col-md-12 col-lg-12 col-xl-12">
                     {% for label, messages in app.flashes %}
@@ -41,7 +47,6 @@
                 <div class="col-sm-12">
                     {% block body %}{% endblock %}
                 </div>
-
             </div>
 
         {# </main> #}

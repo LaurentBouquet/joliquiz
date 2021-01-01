@@ -14,6 +14,9 @@ doctrine:
         default_table_options:
             charset: utf8
             collate: utf8_unicode_ci
+        options:
+            # PDO::MYSQL_ATTR_INIT_COMMAND
+            1002: "SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))"
 
         # configure these for your PostgreSQL database server
         # driver: 'pdo_pgsql'

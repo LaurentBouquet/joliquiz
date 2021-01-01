@@ -1,14 +1,28 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_without_menu.html.twig' %}
 
-{% block title %}{{'End Quiz'|trans}}
+{% block title %}{{ quiz.title }}
     "{{ quiz.title }}"{% endblock %}
 
+{% block stylesheets %}
+    <style>
+
+        .starter-template {
+            padding: 0rem 1rem !important;
+            text-align: left;
+        }
+
+    </style>
+{% endblock %}
+
+{% block header %}
+<h6>{{'Quiz'|trans}}
+	"{{ quiz.title }}"
+	<span>{{'started at'|trans}}
+		{{ startedAt|date('m/d/Y H:i:s') }}</span>
+</h6>
+{% endblock header %}
+
 {% block body %}
-	<h6>{{'Quiz'|trans}}
-		"{{ quiz.title }}"
-		<span>{{'started at'|trans}}
-			{{ startedAt|date('m/d/Y H:i:s') }}</span>
-	</h6>
 
     <table class="table">
         <tbody>
@@ -22,7 +36,7 @@
                                 <div class="card-header" id="heading{{questionNumber}}">
                                     <h5 class="mb-0">
                                         {{questionNumber}} &nbsp;                                        
-                                        <span class="badge {{ questionHistory.question_success > 0.75 ? 'badge-success' : questionHistory.question_success > 0.50 ? 'badge-primary' : questionHistory.question_success > 0.25 ? 'badge-warning' : 'badge-danger'}}">{{ questionHistory.question_success|format_percent_number({rounding_mode: 'floor', fraction_digit: 0}) }}</span>
+                                        <span class="badge {{ questionHistory.question_success > 0.75 ? 'badge-success' : questionHistory.question_success > 0.50 ? 'badge-primary' : questionHistory.question_success > 0.25 ? 'badge-warning' : 'badge-danger'}}">{{ (questionHistory.question_success * 100)|number_format }} %</span>
                                         <small class="text-muted">({{ questionHistory.question_count }})</small>
                                         <button style="text-align: left;" class="mb-0 btn btn-link collapsed" data-toggle="collapse" data-target="#collapse{{questionNumber}}" aria-expanded="false" aria-controls="collapse{{questionNumber}}">
                                             <div class="mb-0" role="alert">
