@@ -39,8 +39,6 @@ class QuizController extends AbstractController
         $questionHistoryRepository = $em->getRepository(QuestionHistory::class);
         $questionsHistory = $questionHistoryRepository->findAllByQuizAndDate($quiz, $startedAt);
 
-        dump($questionsHistory);
-
         return $this->render(
             'quiz/monitor/analyse.html.twig',
             [
@@ -197,7 +195,6 @@ class QuizController extends AbstractController
         $questionRepository = $em->getRepository(Question::class);
         //$lastQuestionHistory = $questionHistoryRepository->findLastByWorkout($workout);
         $questionsHistory = $questionHistoryRepository->findAllByWorkout($workout);
-        dump($questionsHistory);        
         if ($questionsHistory) {
             $lastQuestionHistory = $questionsHistory[0];
             $currentQuestionResult = +1;
