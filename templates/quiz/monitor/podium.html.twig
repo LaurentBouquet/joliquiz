@@ -1,17 +1,22 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_without_menu.html.twig' %}
 
-{% block title %}
-	{{'Quiz'|trans}}
-	"{{ quiz.title }}"
-{% endblock %}
+{% block title %}{{ quiz.title }}
+    "{{ quiz.title }}"{% endblock %}
 
 {% block stylesheets %}
 	<style>
 
+        .starter-template {
+            padding: 0rem 1rem !important;
+            margin: 0rem 2rem 2rem 2rem !important;
+            text-align: center !important;
+			background-color: #fbfbeb !important;
+			border: thick double #32a1ce;
+		}
+				
 		.podium {
 			position: relative;
 			display: inline-block; /* Make the width of box same as image */
-
 		}
 
 		.podium .firstStudent {
@@ -65,7 +70,17 @@
 	</style>
 {% endblock %}
 
+{% block header %}
+<h6>{{'Quiz'|trans}}
+	"{{ quiz.title }}"
+	<span>{{'started at'|trans}}
+		{{ startedAt|date('m/d/Y H:i:s') }}</span>
+</h6>
+{% endblock header %}
+
 {% block body %}
+
+
 
 	{% if is_granted('ROLE_TEACHER') %}
         <div class="podium">

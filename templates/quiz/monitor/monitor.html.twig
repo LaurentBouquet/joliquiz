@@ -1,15 +1,28 @@
 {% extends 'base_without_menu.html.twig' %}
 
-{% block title %}
-	{{'Workout index'|trans}}
+{% block title %}{{ quiz.title }}
+    "{{ quiz.title }}"{% endblock %}
+
+{% block stylesheets %}
+    <style>
+
+        .starter-template {
+            padding: 0rem 1rem !important;
+            text-align: left;
+        }
+
+    </style>
 {% endblock %}
 
+{% block header %}
+<h6>{{'Quiz'|trans}}
+	"{{ quiz.title }}"
+	<span>{{'started at'|trans}}
+		{{ startedAt|date('m/d/Y H:i:s') }}</span>
+</h6>
+{% endblock header %}
+
 {% block body %}
-	<h6>{{'Quiz'|trans}}
-		"{{ quiz.title }}"
-		<span>{{'started at'|trans}}
-			{{ startedAt|date('m/d/Y H:i:s') }}</span>
-	</h6>
 
 	{% if is_granted('ROLE_TEACHER') %}
     <div class="table-responsive-sm">
@@ -61,8 +74,18 @@
 			</tbody>
 		</table>
 
-		<div class="mb-3">
-			<a class="btn btn-warning" 
+		<div class="mb-3">       
+            {% if workouts|length > 2 %}
+                <a class="btn btn-primary mx-1 float-right" href="{{ path('quiz_podium', {'id': quiz.id}) }}">
+                    {{ 'Podium'|trans }} <i class="fas fa-arrow-circle-right"></i>
+                </a>
+            {% endif %}
+            {% if workouts|length > 0 %}
+                <a class="btn btn-info mx-1 float-right" href="{{ path('quiz_analyse', {'id': quiz.id}) }}">
+                    {{ 'Answers analyse'|trans }} <i class="fas fa-arrow-circle-right"></i>
+                </a>
+            {% endif %}
+			<a class="btn btn-warning mx-1 float-right" 
                 {% if showStudentsName %}
                     title="{{'Hide users name'|trans}}"
                     href="{{ path('quiz_monitor', {'id': quiz.id, 'show': 0}) }}">
@@ -72,17 +95,7 @@
                     href="{{ path('quiz_monitor', {'id': quiz.id, 'show': 1}) }}">
     				<i class="fas fa-user"></i>
                 {% endif %}                    
-            </a>            
-            {% if workouts|length > 2 %}
-                <a class="btn btn-primary mx-1 float-right" href="{{ path('quiz_podium', {'id': quiz.id}) }}">
-                    {{ 'Podium'|trans }} <i class="fas fa-arrow-circle-right"></i>
-                </a>
-            {% endif %}
-            {% if workouts|length > 0 %}
-                <a class="btn btn-primary mx-1 float-right" href="{{ path('quiz_analyse', {'id': quiz.id}) }}">
-                    {{ 'Answers analyse'|trans }} <i class="fas fa-arrow-circle-right"></i>
-                </a>
-            {% endif %}
+            </a>                 
 		</div>
     </div>
 	{% else %}

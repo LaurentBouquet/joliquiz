@@ -1,6 +1,5 @@
 body {
     /* padding-top: 5rem; */
-    background-color: #fbfbeb;
 }
 
 .navbar {
@@ -8,8 +7,13 @@ body {
     padding-bottom: 0.05rem;
 }
 
+.header {
+    padding: 1rem 1rem 0rem 1rem;
+    text-align: left;
+}
+
 .starter-template {
-    /* padding: 3rem 1.5rem; */
+    padding: 3rem 1.5rem;
     text-align: left;
 }
 
