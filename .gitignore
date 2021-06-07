@@ -34,3 +34,7 @@ yarn-error.log
 ###> docker/docker ###
 docker/database/data
 ###< docker/docker ###
+
+###> MacOS ###
+.DS_Store
+###< MacOS ###
