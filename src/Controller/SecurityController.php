@@ -6,7 +6,6 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Services\Mailer;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Mime\RawMessage;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
