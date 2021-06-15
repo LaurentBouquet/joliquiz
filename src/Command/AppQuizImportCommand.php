@@ -2,20 +2,20 @@
 
 namespace App\Command;
 
-use Doctrine\Bundle\DoctrineBundle\Command\DoctrineCommand;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Console\Helper\ProgressBar;
-use Symfony\Component\Yaml\Yaml;
 use App\Entity\Answer;
-use App\Entity\Question;
 use App\Entity\Category;
 use App\Entity\Language;
+use App\Entity\Question;
+use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Helper\ProgressBar;
+use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
-class AppQuizImportCommand extends DoctrineCommand
+class AppQuizImportCommand extends Command
 {
     protected static $defaultName = 'app:quiz-import';
 

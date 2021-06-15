@@ -1,0 +1,83 @@
+{% extends 'base_without_menu.html.twig' %}
+
+{% block title %}{{ quiz.title }}
+    "{{ quiz.title }}"{% endblock %}
+
+{% block stylesheets %}
+    <style>
+
+        .starter-template {
+            padding: 0rem 1rem !important;
+            text-align: left;
+        }
+
+    </style>
+{% endblock %}
+
+{% block header %}
+<h6>{{'Quiz'|trans}}
+	"{{ quiz.title }}"
+	<span>{{'started at'|trans}}
+		{{ startedAt|date('m/d/Y H:i:s') }}</span>
+</h6>
+{% endblock header %}
+
+{% block body %}
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>{{ 'Questions'|trans }}</th>
+                <td>
+                    <div id="accordion">
+                        {% for questionHistory in questionsHistory %}
+                            {% set questionNumber = loop.index %}
+                            <div class="card">
+                                <div class="card-header" id="heading{{questionNumber}}">
+                                    <h5 class="mb-0">
+                                        {{questionNumber}} &nbsp;                                        
+                                        <span class="badge {{ questionHistory.question_success > 0.75 ? 'badge-success' : questionHistory.question_success > 0.50 ? 'badge-primary' : questionHistory.question_success > 0.25 ? 'badge-warning' : 'badge-danger'}}">{{ (questionHistory.question_success * 100)|number_format }} %</span>
+                                        <small class="text-muted">({{ questionHistory.question_count }})</small>
+                                        <button style="text-align: left;" class="mb-0 btn btn-link collapsed" data-toggle="collapse" data-target="#collapse{{questionNumber}}" aria-expanded="false" aria-controls="collapse{{questionNumber}}">
+                                            <div class="mb-0" role="alert">
+                                                {{ questionHistory.question_text|nl2br }}
+                                            </div>
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapse{{questionNumber}}" class="collapse" aria-labelledby="heading{{questionNumber}}" data-parent="#accordion">
+                                    <div class="card-body">
+                                        {% for answerHistory in questionHistory.0.answersHistory %}
+                                            {% set answerNumber = questionNumber ~ '-' ~ loop.index %}
+                                            <fieldset class="form-group">
+                                                <div id="question_answers_0">
+                                                    <div class="form-group">
+                                                        <div class="form-check">
+                                                            <input type="checkbox" id="{{answerNumber}}" name="question[{{questionNumber}}][{{loop.index}}]" disabled="disabled" class="form-check-input" value="{{answerNumber}}" {{answerHistory.answerCorrect ? 'checked' : ''}}/>
+                                                            <label class="{{ answerHistory.answerCorrect ? 'alert-success' }} form-check-label" for="question[{{questionNumber}}][{{loop.index}}]">
+                                                                {{ answerHistory.answerText }}
+                                                            </label>                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    {% if (is_granted('ROLE_USER')) %}
+        <a class="mt-3 btn btn-secondary mr-2" href="{{ path('quiz_index') }}">
+            <i class="fas fa-arrow-circle-left"></i>
+            {{'Back to list'|trans}}</a>
+    {% endif %}
+
+    {% include '_home_bottom.html.twig' %}
+
+{% endblock %}

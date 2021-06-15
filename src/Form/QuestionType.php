@@ -2,19 +2,20 @@
 
 namespace App\Form;
 
-use App\Entity\Question;
 use App\Entity\Answer;
 use App\Entity\Category;
+use App\Entity\Question;
 use App\Repository\CategoryRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class QuestionType extends AbstractType
 {
@@ -35,6 +36,7 @@ class QuestionType extends AbstractType
                 $builder->add('text', TextareaType::class, array(
                     'label' => false,
                     'disabled' => true,
+                    'attr' => array('rows' => '7'),
                 ));
                 $builder->add('answers', CollectionType::class, array(
                     'label' => false,
@@ -44,6 +46,9 @@ class QuestionType extends AbstractType
                 break;
             case 'teacher':
                 $builder->add('text');
+                $builder->add('max_duration', IntegerType::class, array(
+                    'label' => 'Question max duration (seconds)',
+                ));
                 $builder->add('categories', EntityType::class, array(
                     'class' => Category::class,
                     'query_builder' => function (CategoryRepository $er) {

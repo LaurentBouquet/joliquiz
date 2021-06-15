@@ -4,8 +4,6 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/ffbbae0ffc224808a43894742a79df91)](https://www.codacy.com/app/LaurentBouquet/joliquiz?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=LaurentBouquet/joliquiz&amp;utm_campaign=Badge_Grade)
 [![CodeFactor](https://www.codefactor.io/repository/github/laurentbouquet/joliquiz/badge)](https://www.codefactor.io/repository/github/laurentbouquet/joliquiz)
 
-[![Deploy on Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
-
 ## Description
 Joliquiz is an online quiz software, a PHP web application developed using the Symfony framework (version 4).
 
@@ -61,7 +59,9 @@ doctrine:
         # charset: utf8
 ```
 
-Uncomment and update the password in this line of **.env** file :
+Copy **.env** file to **.env.local**
+
+Uncomment and update the password in this line of **.env.local** file :
 DATABASE_URL=mysql://joliquiz:**aSecurePassword**@127.0.0.1:3306/joliquiz
 
 
@@ -167,7 +167,18 @@ Thanks to [Heroku](https://www.heroku.com/)
 
 
 
-<!-- ## Contributing
+
+## Set time zone
+
+You must set your time zone in the php.ini file: 
+
+```ini
+date.timezone = Europe/Paris 
+```
+
+
+
+## Contributing
 
 Joliquiz is an open source project that welcomes pull requests and issues from anyone.
-Before opening pull requests, please read our short Contribution Guide. -->
+Before opening pull requests, please read our short Contribution Guide.

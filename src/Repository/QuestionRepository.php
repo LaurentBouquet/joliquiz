@@ -7,7 +7,7 @@ use App\Entity\Language;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
@@ -24,7 +24,7 @@ class QuestionRepository extends ServiceEntityRepository
     private $param;
     private $language;
 
-    public function __construct(RegistryInterface $registry, EntityManagerInterface $em, ParameterBagInterface $param)
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $em, ParameterBagInterface $param)
     {
         parent::__construct($registry, Question::class);
         $this->em = $em;
@@ -66,6 +66,22 @@ class QuestionRepository extends ServiceEntityRepository
         $builder->setParameter('language', $this->language);
         $builder->orderBy('q.text', 'ASC');
 
+        //return $builder->getQuery()->getResult();
+        return $this->createPaginator($builder->getQuery(), $page);
+    }
+
+    public function findAllByCategories($categories, int $page=1)
+    {
+        $builder = $this->createQueryBuilder('q');
+        $builder->andWhere('q.language = :language');
+        $builder->setParameter('language', $this->language);
+        $builder->innerJoin('q.categories', 'categories');
+        $builder->andWhere($builder->expr()->in('categories', ':categories'))->setParameter('categories', $categories);
+        // if (!$isAdmin) {
+        //     $builder->andWhere('q.active = :active');
+        //     $builder->setParameter('active', true);
+        // }
+        $builder->orderBy('q.text', 'ASC');
         //return $builder->getQuery()->getResult();
         return $this->createPaginator($builder->getQuery(), $page);
     }

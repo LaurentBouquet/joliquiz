@@ -18,8 +18,12 @@ class Mailer
         $this->environment = $environment;
     }
 
-    public function sendMessage($to, $subject, $body, $attachement = null, $from = 'dev@joliciel.top'): int
+    public function sendMessage($to, $subject, $body, $attachement = null, $from = null): int
     {
+        if (!isset($from)) {
+            $from = getenv('ADMIN_EMAIL_ADDRESS');
+        }
+        
         $mail = (new \Swift_Message($subject))
             ->setFrom($from)
             ->setTo($to)

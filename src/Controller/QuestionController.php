@@ -2,15 +2,15 @@
 
 namespace App\Controller;
 
-use App\Entity\Answer;
 use App\Entity\Question;
 use App\Form\QuestionType;
+use App\Repository\CategoryRepository;
 use App\Repository\QuestionRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/question")
@@ -21,11 +21,25 @@ class QuestionController extends AbstractController
      * @Route("/", defaults={"page": "1"}, name="question_index", methods="GET")
      * @Route("/page/{page}", requirements={"page": "[1-9]\d*"}, methods={"GET"}, name="question_index_paginated")
      */
-    public function index(int $page, QuestionRepository $questionRepository): Response
+    public function index(int $page, QuestionRepository $questionRepository, CategoryRepository $categoryRepository, Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
-        return $this->render('question/index.html.twig', ['questions' => $questionRepository->findAll($page)]);
+        $categoryId = $request->query->get('category');
+
+        $categoryLongName = "";
+        
+        if ($categoryId > 0 ) {
+            $questions = $questionRepository->findAllByCategories([$categoryId]);
+            $category = $categoryRepository->find($categoryId);
+            $categoryLongName = $category->getLongName();
+        }
+        else {
+            $questions = $questionRepository->findAll($page);
+        }
+
+        return $this->render('question/index.html.twig', ['questions' => $questions, 'category_id' => $categoryId, 'category_long_name' => $categoryLongName]);
+
     }
 
     /**
