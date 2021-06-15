@@ -25,7 +25,7 @@ class CategoryFixtures extends Fixture
     }
 
     private function loadCategories(ObjectManager $manager)
-    {
+    {        
         // SYMFONY_REFERENCE
         $category = $manager->getRepository(Category::class)->create();
         $category->setShortname('Symfony');

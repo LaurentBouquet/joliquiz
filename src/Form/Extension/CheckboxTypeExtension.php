@@ -2,12 +2,12 @@
 
 namespace App\Form\Extension;
 
-use Symfony\Component\Form\AbstractTypeExtension;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class CheckboxTypeExtension extends AbstractTypeExtension
 {
@@ -19,6 +19,11 @@ class CheckboxTypeExtension extends AbstractTypeExtension
     public function getExtendedType()
     {
         return CheckboxType::class;
+    }
+    
+    public static function getExtendedTypes(): iterable
+    {
+        return [CheckboxType::class];
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -55,7 +60,7 @@ class CheckboxTypeExtension extends AbstractTypeExtension
                         $labelAttr = array('class' => 'alert-success');
                     }
                     else {
-                        $labelAttr = array('class' => 'alert-danger');
+                        //$labelAttr = array('class' => 'alert-danger');
                     }
                 }
             }

@@ -33,6 +33,7 @@
     <a class="btn btn-primary mr-2" href="{{ path('user_index') }}"><i class="fas fa-arrow-circle-left"></i> {{'Back to list'|trans}}</a>
 
     {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <a class="btn btn-info" href="{{ path('user_sendmail', {'id': user.id}) }}"><i class="fas fa-pencil-alt"></i> {{'Send confirmation mail'|trans}}</a>
         <a class="btn btn-primary" href="{{ path('user_edit', {'id': user.id}) }}"><i class="fas fa-pencil-alt"></i> {{'Edit'|trans}}</a>
     {% endif %}
 

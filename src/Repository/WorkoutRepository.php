@@ -3,8 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Workout;
+use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * @method Workout|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,7 +14,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class WorkoutRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Workout::class);
     }
@@ -26,10 +26,46 @@ class WorkoutRepository extends ServiceEntityRepository
             ->andWhere('w.completed = :completed')
             ->andWhere('w.student = :student')
             ->setParameter('completed', false)
-            ->setParameter('student_questioning', $user)
+            ->setParameter('student', $user)
             ->orderBy('w.ended_at', 'DESC')
             ->getQuery()
             ->getOneOrNullResult()
+        ;
+    }
+
+    public function findByQuizAndDate($quiz, $date): ?array
+    {
+        return $this->createQueryBuilder('w')
+            ->andWhere('w.quiz = :quiz')
+            ->setParameter('quiz', $quiz)
+
+            ->andWhere('w.started_at >= :started_at')
+            ->setParameter('started_at', $date)
+
+            ->groupBy('w.student')
+            ->orderBy('w.started_at', 'ASC')
+            // ->addOrderBy('w.score', 'DESC')
+            // ->addOrderBy('w.ended_at', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findFirstThreeByQuizAndDate($quiz, $date): ?array
+    {
+        return $this->createQueryBuilder('w')
+            ->andWhere('w.quiz = :quiz')
+            ->setParameter('quiz', $quiz)
+
+            ->andWhere('w.started_at >= :started_at')
+            ->setParameter('started_at', $date)
+
+            ->groupBy('w.student')
+            ->orderBy('w.score', 'DESC')
+            ->addOrderBy('w.ended_at', 'DESC')
+            ->getQuery()
+            ->setMaxResults(3)
+            ->getResult()
         ;
     }
 

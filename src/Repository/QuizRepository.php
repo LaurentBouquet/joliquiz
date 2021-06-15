@@ -6,7 +6,7 @@ use App\Entity\Language;
 use App\Entity\Quiz;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -23,7 +23,7 @@ class QuizRepository extends ServiceEntityRepository
     private $language;
     private $translator;
 
-    public function __construct(RegistryInterface $registry, EntityManagerInterface $em, ParameterBagInterface $param, TranslatorInterface $translator)
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $em, ParameterBagInterface $param, TranslatorInterface $translator)
     {
         parent::__construct($registry, Quiz::class);
         $this->em = $em;
@@ -64,10 +64,25 @@ class QuizRepository extends ServiceEntityRepository
             $builder->andWhere('q.active = :active');
             $builder->setParameter('active', true);
         }
-        $builder->orderBy('q.title', 'ASC');
+        $builder->orderBy('q.active', 'DESC');
+        $builder->addOrderBy('q.title', 'ASC');
         return $builder->getQuery()->getResult();
     }
 
+    public function findAllByCategories($isAdmin = false, array $categories)
+    {
+        $builder = $this->createQueryBuilder('q');
+        $builder->andWhere('q.language = :language');
+        $builder->setParameter('language', $this->language);
+        $builder->innerJoin('q.categories', 'categories');
+        $builder->andWhere($builder->expr()->in('categories', ':categories'))->setParameter('categories', $categories);
+        if (!$isAdmin) {
+            $builder->andWhere('q.active = :active');
+            $builder->setParameter('active', true);
+        }
+        $builder->orderBy('q.title', 'ASC');
+        return $builder->getQuery()->getResult();
+    }
 //    /**
     //     * @return Quiz[] Returns an array of Quiz objects
     //     */

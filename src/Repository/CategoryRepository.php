@@ -6,7 +6,7 @@ use App\Entity\Category;
 use App\Entity\Language;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**
@@ -20,7 +20,7 @@ class CategoryRepository extends ServiceEntityRepository
     private $em;
     private $language;
 
-    public function __construct(RegistryInterface $registry, EntityManagerInterface $em, ParameterBagInterface $param)
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $em, ParameterBagInterface $param)
     {
         parent::__construct($registry, Category::class);
         $this->em = $em;

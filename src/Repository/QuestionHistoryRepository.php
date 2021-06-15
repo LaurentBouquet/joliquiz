@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\QuestionHistory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method QuestionHistory|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,7 +14,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class QuestionHistoryRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, QuestionHistory::class);
     }
@@ -42,6 +42,32 @@ class QuestionHistoryRepository extends ServiceEntityRepository
                 ->getResult()
             ;
         }
+
+        public function findAllByQuizAndDate($quiz, $startedAt)
+        {
+            $builder = $this->createQueryBuilder('qh');
+
+                $builder->addSelect("qh.question_id, count(qh.id) as question_count, avg(qh.question_success) as question_success, qh.question_text as question_text");
+                
+                $builder->andWhere('qh.question_success IS NOT NULL');            
+
+                // TODO select only questions of this $quiz
+                $builder->innerJoin('App\Entity\Workout', 'w', 'WITH', 'qh.workout = w.id');
+                $builder->andWhere('w.quiz = :quiz_id');
+                $builder->setParameter('quiz_id', $quiz->getId());
+         
+                $builder->andWhere('qh.started_at >= :started_at');              
+                $builder->setParameter('started_at', $startedAt);
+
+                $builder->groupBy('qh.question_id');
+
+                $builder->orderBy('question_success', 'ASC');
+                $builder->addOrderBy('question_count', 'DESC');
+                
+                return $builder->getQuery()->getResult();
+
+            ;
+        }        
 
 
 

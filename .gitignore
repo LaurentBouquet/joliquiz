@@ -1,7 +1,9 @@
 
 ###> symfony/framework-bundle ###
-/.env
-/public/bundles/
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
@@ -34,3 +36,37 @@ yarn-error.log
 ###> docker/docker ###
 docker/database/data
 ###< docker/docker ###
+
+###> build and images sources ###
+/build/
+###< build and images sources ###
+
+###> MacOS useless files ###
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+# Icon must end with two \r
+Icon
+# Thumbnails
+._*
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+###< MacOS useless files ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###

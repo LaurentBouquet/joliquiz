@@ -2,9 +2,9 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Table(name="tbl_language")
@@ -56,7 +56,7 @@ class Language
         $this->categories = new ArrayCollection();
     }
 
-    public function __toString(): ?string
+    public function __toString(): string
     {
         return $this->getNativeName();
     }
