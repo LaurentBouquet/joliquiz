@@ -59,7 +59,9 @@ doctrine:
         # charset: utf8
 ```
 
-Uncomment and update the password in this line of **.env** file :
+Copy **.env** file to **.env.local**
+
+Uncomment and update the password in this line of **.env.local** file :
 DATABASE_URL=mysql://joliquiz:**aSecurePassword**@127.0.0.1:3306/joliquiz
 
 

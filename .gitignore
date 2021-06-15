@@ -1,7 +1,9 @@
 
 ###> symfony/framework-bundle ###
-/.env
-/public/bundles/
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
@@ -63,3 +65,8 @@ Network Trash Folder
 Temporary Items
 .apdisk
 ###< MacOS useless files ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###

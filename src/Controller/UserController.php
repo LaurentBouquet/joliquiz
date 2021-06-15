@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
-use App\Services\Mailer;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +21,7 @@ class UserController extends AbstractController
     /**
      * @Route("/", name="user_index", methods="GET")
      */
-    public function index(UserRepository $userRepository, Mailer $mailer): Response
+    public function index(UserRepository $userRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN', null, 'Access not allowed');
 

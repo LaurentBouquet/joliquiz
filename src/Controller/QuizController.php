@@ -7,14 +7,16 @@ use App\Entity\User;
 use App\Form\QuizType;
 use App\Entity\Workout;
 use App\Entity\Question;
-use App\Services\Mailer;
 use App\Form\QuestionType;
 use App\Entity\AnswerHistory;
 use App\Entity\QuestionHistory;
 use App\Repository\QuizRepository;
 use App\Repository\CategoryRepository;
+use Symfony\Component\Mime\RawMessage;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -159,7 +161,7 @@ class QuizController extends AbstractController
     /**
      * @Route("/{id}/workout", name="quiz_workout", methods="POST")
      */
-    public function workout(Request $request, Workout $workout, EntityManagerInterface $em, UserInterface $user = null, Mailer $mailer, TranslatorInterface $translator): Response
+    public function workout(Request $request, Workout $workout, EntityManagerInterface $em, UserInterface $user = null, MailerInterface $mailer, TranslatorInterface $translator): Response
     {
         $now = new \DateTime();
         //////////////
@@ -221,14 +223,21 @@ class QuizController extends AbstractController
                             $em->persist($workout);
                             $em->flush();
 
-                            $email = getenv('ADMIN_EMAIL_ADDRESS');
-                            $bodyMail = $mailer->createBodyMail('emails/quiz_result.html.twig', [
-                                'username' => $user->getUsername(),
-                                'email' => $user->getEmail(),
-                                'quiz' => $quiz,
-                                'score' => $score,
-                            ]);
-                            $result = $mailer->sendMessage($email, '🎓 A quiz has just been completed by ' . $user->getUsername() . ' (before the end) !', $bodyMail);
+                            $admin_email_address = $this->getParameter('ADMIN_EMAIL_ADDRESS');
+                            $email = (new TemplatedEmail())
+                                ->from($admin_email_address)
+                                ->to($admin_email_address)
+                                ->subject('🎓 A quiz has just been completed by ' . $user->getUsername() . ' (before the end) !')
+                                // path of the Twig template to render
+                                ->htmlTemplate('emails/quiz_result.html.twig')
+                                // pass variables (name => value) to the template
+                                ->context([
+                                    'username' => $user->getUsername(),
+                                    'useremail' => $user->getEmail(),
+                                    'quiz' => $quiz,
+                                    'score' => $score,
+                                ]);
+                            $mailer->send($email);
 
                             $this->addFlash('danger', $comment);
                             $form = $this->createForm(QuizType::class, $quiz, array('form_type' => 'student_questioning'));
@@ -402,14 +411,22 @@ class QuizController extends AbstractController
             $em->persist($workout);
             $em->flush();
 
-            $email = getenv('ADMIN_EMAIL_ADDRESS');
-            $bodyMail = $mailer->createBodyMail('emails/quiz_result.html.twig', [
-                'username' => $user->getUsername(),
-                'email' => $user->getEmail(),
-                'quiz' => $quiz,
-                'score' => $score,
-            ]);
-            $result = $mailer->sendMessage($email, '🎓 A quiz has just been completed by ' . $user->getUsername() . '!', $bodyMail);
+            // TODO : Mettre l'envoi du mail dans un service
+            $admin_email_address = $this->getParameter('ADMIN_EMAIL_ADDRESS');
+            $email = (new TemplatedEmail())
+                ->from($admin_email_address)
+                ->to($admin_email_address)
+                ->subject('🎓 A quiz has just been completed by ' . $user->getUsername() . '!')
+                // path of the Twig template to render
+                ->htmlTemplate('emails/quiz_result.html.twig')
+                // pass variables (name => value) to the template
+                ->context([
+                    'username' => $user->getUsername(),
+                    'useremail' => $user->getEmail(),
+                    'quiz' => $quiz,
+                    'score' => $score,
+                ]);
+            $mailer->send($email);
 
             $form = $this->createForm(QuizType::class, $quiz, array('form_type' => 'student_questioning'));
 
