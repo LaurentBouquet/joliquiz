@@ -37,7 +37,6 @@ yarn-error.log
 docker/database/data
 ###< docker/docker ###
 
-<<<<<<< HEAD
 ###> build and images sources ###
 /build/
 ###< build and images sources ###
@@ -71,8 +70,3 @@ Temporary Items
 /phpunit.xml
 .phpunit.result.cache
 ###< phpunit/phpunit ###
-=======
-###> MacOS ###
-.DS_Store
-###< MacOS ###
->>>>>>> 70589ef8e06628bc6fd06678a70c8080ca4fcc80
