@@ -19,6 +19,37 @@ class UserController extends AbstractController
 {
 
     /**
+     * @Route("/profile", name="user_profile", methods="GET|POST")
+     */
+    public function profile(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
+
+        $user = $this->getUser();
+        $form = $this->createForm(UserType::class, $user, array('form_type' => 'profile'));
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if (strlen($user->getPlainPassword()) > 0) {
+                // Encode the password
+                $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+                $user->setPassword($password);
+            }
+
+            $em->flush();
+
+            $this->addFlash('success', sprintf('User "%s" is updated.', $user->getUsername()));
+
+            return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
+        }
+
+        return $this->render('user/profile.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
      * @Route("/", name="user_index", methods="GET")
      */
     public function index(UserRepository $userRepository): Response
@@ -36,7 +67,7 @@ class UserController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN', null, 'Access not allowed');
 
         $user = new User();
-        $form = $this->createForm(UserType::class, $user, array('form_type'=>'new'));
+        $form = $this->createForm(UserType::class, $user, array('form_type' => 'new'));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -64,9 +95,13 @@ class UserController extends AbstractController
      */
     public function show(User $user): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN', null, 'Access not allowed');
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
 
-        return $this->render('user/show.html.twig', ['user' => $user]);
+        if ($this->isGranted('ROLE_SUPER_ADMIN')) {
+            return $this->render('user/show.html.twig', ['user' => $user]);
+        } else {
+            return $this->render('user/show.html.twig', ['user' => $this->getUser()]);
+        }
     }
 
     /**
@@ -76,12 +111,10 @@ class UserController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN', null, 'Access not allowed');
 
-        $form = $this->createForm(UserType::class, $user, array('form_type'=>'update'));
+        $form = $this->createForm(UserType::class, $user, array('form_type' => 'update'));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //$em = $this->getDoctrine()->getManager();
-
             if (strlen($user->getPlainPassword()) > 0) {
                 // Encode the password
                 $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
@@ -108,7 +141,7 @@ class UserController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN', null, 'Access not allowed');
 
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             //$em = $this->getDoctrine()->getManager();
             $em->remove($user);
             $em->flush();
@@ -118,6 +151,4 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('user_index');
     }
-
-    
 }

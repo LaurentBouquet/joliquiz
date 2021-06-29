@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Services\Mailer;
 use Psr\Log\LoggerInterface;
+use App\Form\PasswordResettingType;
 use Symfony\Component\Mime\RawMessage;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -16,6 +17,7 @@ use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
@@ -168,7 +170,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/newpassword", name="newpassword")
+     * @Route("/newpassword", name="password_new")
      */
     public function requestNewPassword(Request $request, MailerInterface $mailer, TokenGeneratorInterface $tokenGenerator, EntityManagerInterface $em)
     {
@@ -218,48 +220,44 @@ class SecurityController extends AbstractController
         ]);
     }
 
-    /*
-    @Route("/{id}/{token}", name="resetting")
-
+    /**
+     * @Route("resetpassword/{id}/{token}", name="password_reset")
+     */
     public function resetPassword(User $user, $token, Request $request, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em)
     {
-    // Forbid access to the page if:
-    // the token associated with the member is null
-    // the token registered in base and the token present in the url are not equal
-    // the token is more than 10 minutes old
-    if ($user->getToken() === null || $token !== $user->getToken() || !$this->isRequestInTime($user->getPasswordRequestedAt()))
-    {
-    throw new AccessDeniedHttpException();
+        // Forbid access to the page if:
+        // the token associated with the member is null
+        // the token registered in base and the token present in the url are not equal
+        // the token is more than 10 minutes old
+        if ($user->getToken() === null || $token !== $user->getToken() || !$this->isRequestInTime($user->getPasswordRequestedAt())) {
+            throw new AccessDeniedHttpException();
+        }
+
+        $form = $this->createForm(PasswordResettingType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+            $user->setPassword($password);
+
+            // Reset the token to null so that it is no longer reusable
+            $user->setToken(null);
+            $user->setPasswordRequestedAt(null);
+
+            //$em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            $request->getSession()->getFlashBag()->add('success', "Votre mot de passe a été renouvelé.");
+
+            return $this->redirectToRoute('login');
+        }
+
+        return $this->render('security/passwordreset.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
-    $form = $this->createForm(PasswordResettingType::class, $user);
-    $form->handleRequest($request);
-
-    if($form->isSubmitted() && $form->isValid())
-    {
-    $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
-    $user->setPassword($password);
-
-    // Reset the token to null so that it is no longer reusable
-    $user->setToken(null);
-    $user->setPasswordRequestedAt(null);
-
-    //$em = $this->getDoctrine()->getManager();
-    $em->persist($user);
-    $em->flush();
-
-    $request->getSession()->getFlashBag()->add('success', "Votre mot de passe a été renouvelé.");
-
-    return $this->redirectToRoute('login');
-
-    }
-
-    return $this->render('security/passwordreset.html.twig', [
-    'form' => $form->createView()
-    ]);
-
-    }
-     */
     // if greater than 10 min, return false, otherwise return true
     private function isRequestInTime(\Datetime $passwordRequestedAt = null)
     {

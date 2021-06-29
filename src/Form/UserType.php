@@ -56,7 +56,6 @@ class UserType extends AbstractType
                 $builder->add('plainPassword', PasswordType::class, array('label' => $this->translator->trans('Password')));
                 break;
 
-            // register + update
             case 'new':
                 $builder->add('email', EmailType::class);
                 $builder->add(
@@ -101,6 +100,18 @@ class UserType extends AbstractType
                     'label' => $this->translator->trans('Account activated'),
                 ));
                 break;
+            case 'profile':
+                $builder->add(
+                    'plainPassword',
+                    RepeatedType::class,
+                    [
+                    'type' => PasswordType::class,
+                    'first_options'  => array('label' => $this->translator->trans('Password')),
+                    'second_options' => array('label' => $this->translator->trans('Repeat Password'))
+                    ]
+                );
+                break;
+    
         }
     }
 

@@ -57,12 +57,12 @@
                 <ul class="navbar-nav">
                     {% if is_granted('ROLE_USER') %}
                         <li>
-                            <div class="nav-link disabled">
+                            <a class="nav-link" href="{{ path('user_profile') }}">
                                 <i class="fas fa-user"></i>
                                 {% if app.user %}
                                     <strong>{{ app.user.username }}</strong>
                                 {% endif %}
-                            </div>
+                            </a>
                         </li>
                         <li>
                             <a class="nav-link" href="{{ path('logout') }}">{{'Logout'|trans}}</a>

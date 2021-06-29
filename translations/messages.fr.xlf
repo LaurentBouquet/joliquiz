@@ -477,6 +477,54 @@
         <source>Response time (%question_duration% s) exceeded time limit (%question_max_duration% s) by question</source>
         <target>La durée de la réponse (%question_duration% s) a dépassé le délai imparti (%question_max_duration% s)</target>
       </trans-unit>
+      <trans-unit id="_Dw4_iO" resname="Change my password">
+        <source>Change my password</source>
+        <target>Changer mon mot de passe</target>
+      </trans-unit>
+      <trans-unit id="pJ_s9ej" resname="of the &quot;%category_long_name%&quot; category">
+        <source>of the "%category_long_name%" category</source>
+        <target>de la catégorie "%category_long_name%"</target>
+      </trans-unit>
+      <trans-unit id="s7wLORW" resname="Disactivate">
+        <source>Disactivate</source>
+        <target>Désactiver</target>
+      </trans-unit>
+      <trans-unit id="JEM8cOu" resname="Activate">
+        <source>Activate</source>
+        <target>Activer</target>
+      </trans-unit>
+      <trans-unit id="xyfvR_W" resname="started at">
+        <source>started at</source>
+        <target>Démarré à</target>
+      </trans-unit>
+      <trans-unit id="iYj_XZ2" resname="Waiting for students...">
+        <source>Waiting for students...</source>
+        <target>En attente d'étudiants ...</target>
+      </trans-unit>
+      <trans-unit id="X3Vy1Cz" resname="Podium">
+        <source>Podium</source>
+        <target>Podium</target>
+      </trans-unit>
+      <trans-unit id="crtgHwF" resname="Answers analyse">
+        <source>Answers analyse</source>
+        <target>Analyser les réponses</target>
+      </trans-unit>
+      <trans-unit id="UIhK67c" resname="Hide users name">
+        <source>Hide users name</source>
+        <target>Cacher le nom des utilisateurs</target>
+      </trans-unit>
+      <trans-unit id="54g8dXJ" resname="Show users name">
+        <source>Show users name</source>
+        <target>Voir le nom des utilisateurs</target>
+      </trans-unit>
+      <trans-unit id="b758cB5" resname="Send confirmation mail">
+        <source>Send confirmation mail</source>
+        <target>Envoyer le mail de confirmation</target>
+      </trans-unit>
+      <trans-unit id="CG9UULI" resname="Edit my account">
+        <source>Edit my account</source>
+        <target>Modifier mon compte</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
