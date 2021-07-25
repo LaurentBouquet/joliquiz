@@ -3,10 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\SchoolRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=SchoolRepository::class)
+ * @ORM\Table(name="`tbl_school`")* 
  */
 class School
 {
@@ -26,6 +29,16 @@ class School
      * @ORM\Column(type="string", length=16)
      */
     private $code;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Group::class, mappedBy="school", orphanRemoval=true)
+     */
+    private $groups;
+
+    public function __construct()
+    {
+        $this->groups = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -52,6 +65,36 @@ class School
     public function setCode(string $code): self
     {
         $this->code = $code;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Group[]
+     */
+    public function getGroups(): Collection
+    {
+        return $this->groups;
+    }
+
+    public function addGroup(Group $group): self
+    {
+        if (!$this->groups->contains($group)) {
+            $this->groups[] = $group;
+            $group->setSchool($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGroup(Group $group): self
+    {
+        if ($this->groups->removeElement($group)) {
+            // set the owning side to null (unless already changed)
+            if ($group->getSchool() === $this) {
+                $group->setSchool(null);
+            }
+        }
 
         return $this;
     }

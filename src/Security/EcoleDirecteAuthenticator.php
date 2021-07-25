@@ -3,6 +3,7 @@
 namespace App\Security;
 
 use App\Entity\User;
+use App\Entity\Group;
 use App\Entity\School;
 use Psr\Log\LoggerInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -161,15 +162,6 @@ class EcoleDirecteAuthenticator extends AbstractGuardAuthenticator
             case 200:
                 // authentication success 
                 $em = $this->entityManager;
-                // Save user
-                $user->setLoginType('ED');
-                //$user->setToken($ecoleDirecteToken);
-                $user->setEmail($userEmail);
-                $user->setAccountType($typeCompte);
-                $user->setOrganizationCode($codeOgec);
-                $user->setOrganizationLabel($nomEtablissement);
-                $user->setPhone($telPortable);
-                $user->setComment($comment);
                 // Save school
                 $school = $em->getRepository(School::class)->findOneBy(['code' => $codeOgec]);
                 if (!$school) {
@@ -178,9 +170,36 @@ class EcoleDirecteAuthenticator extends AbstractGuardAuthenticator
                     $school->setName($nomEtablissement);
                     $em->persist($school);
                 }
-        
+                // Save group
+                $currentYear = date("Y");
+                $julyFifteenth = date_create($currentYear . "-07-15");
+                if ($julyFifteenth->getTimestamp() < mktime()) {
+                    $schoolYearName = $currentYear . '-' . strval((intval($currentYear)) + 1);
+                } else {
+                    $schoolYearName = strval((intval($currentYear)) - 1) . '-' . $currentYear;
+                }
 
-
+                $classesCount = sizeof($ecoleDirecteAccount->profile->classes);
+                for ($i = 0; $i < $classesCount; $i++) {
+                    $group = $em->getRepository(Group::class)->findOneBy(['code' => $codeOgec.'-'.$ecoleDirecteAccount->profile->classes[$i]->code.'-'.$schoolYearName]);
+                    if (!$group) {
+                        $group = new Group();
+                        $group->setSchool($school);
+                        $group->setCode($codeOgec.'-'.$ecoleDirecteAccount->profile->classes[$i]->code.'-'.$schoolYearName);
+                        $group->setName($ecoleDirecteAccount->profile->classes[$i]->libelle.' ('.$schoolYearName.')');
+                    }
+                    $user->addGroup($group);
+                    $em->persist($group);
+                }
+                // Save user
+                $user->setLoginType('ED');
+                //$user->setToken($ecoleDirecteToken);
+                $user->setEmail($userEmail);
+                $user->setAccountType($typeCompte);
+                $user->setOrganizationCode($codeOgec);
+                $user->setOrganizationLabel($nomEtablissement);
+                $user->setPhone($telPortable);
+                $user->setComment($comment);     
                 $em->persist($user);
                 $em->flush();
                 return true;

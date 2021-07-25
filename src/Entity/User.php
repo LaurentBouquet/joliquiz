@@ -130,6 +130,11 @@ class User implements UserInterface, \Serializable
      */
     private $login_type;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Group::class, inversedBy="users")
+     */
+    private $groups;
+
 
 
     public function __construct()
@@ -137,6 +142,7 @@ class User implements UserInterface, \Serializable
         $this->roles = array('ROLE_USER');
         $this->isActive = true;
         $this->workouts = new ArrayCollection();
+        $this->groups = new ArrayCollection();
     }
 
     public function getId()
@@ -396,6 +402,30 @@ class User implements UserInterface, \Serializable
     public function setLoginType(?string $login_type): self
     {
         $this->login_type = $login_type;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Group[]
+     */
+    public function getGroups(): Collection
+    {
+        return $this->groups;
+    }
+
+    public function addGroup(Group $group): self
+    {
+        if (!$this->groups->contains($group)) {
+            $this->groups[] = $group;
+        }
+
+        return $this;
+    }
+
+    public function removeGroup(Group $group): self
+    {
+        $this->groups->removeElement($group);
 
         return $this;
     }

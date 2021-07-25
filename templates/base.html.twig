@@ -47,11 +47,14 @@
                         <li>
                             <a class="nav-link {% if '/category/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('category_index') }}">{{'Categories'|trans}}</a>
                         </li>
-                    {% endif %}
-                    {% if is_granted('ROLE_SUPER_ADMIN') %}
                         <li>
                             <a class="nav-link {% if '/user/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('user_index') }}">{{'Users'|trans}}</a>
                         </li>
+                        <li>
+                            <a class="nav-link {% if '/group/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('group_index') }}">{{'Groups'|trans}}</a>
+                        </li>
+                    {% endif %}
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
                         <li>
                             <a class="nav-link {% if '/school/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('school_index') }}">{{'Schools'|trans}}</a>
                         </li>
