@@ -30,6 +30,10 @@ security:
                 path:  /logout
                 target: /
 
+            guard: # make:auth
+                authenticators:
+                    - App\Security\EcoleDirecteAuthenticator
+
     role_hierarchy:
          ROLE_TEACHER:      ROLE_USER
          ROLE_ADMIN:        ROLE_TEACHER

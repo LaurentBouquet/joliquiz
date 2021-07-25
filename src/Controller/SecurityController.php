@@ -36,6 +36,12 @@ class SecurityController extends AbstractController
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, MailerInterface $mailer, TokenGeneratorInterface $tokenGenerator, EntityManagerInterface $em)
     {
+        $ONLY_OGEC = $this->getParameter('ONLY_OGEC');
+        if (isset($ONLY_OGEC)) {
+            $this->addFlash('info', sprintf('Please log in with your EcoleDirecte login/password.'));
+            return $this->redirectToRoute('login');
+        }
+
         // 1) build the form
         $user = new User();
         $form = $this->createForm(UserType::class, $user, array('form_type' => 'register'));

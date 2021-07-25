@@ -21,16 +21,26 @@
         <button class="btn btn-primary float-md-right" type="submit"><i class="fas fa-sign-in-alt"></i>
             {{'Login'|trans}}</button>
 
+    {% if not ONLY_OGEC %}
         <a href="{{ path('password_new') }}">{{'Forgot your password'|trans}}</a>
+    {% endif %}
+
 
         {{ form_end(form) }}
 
     </div>
 
+    {% if ONLY_OGEC %}
+    <h6 class="text-center">
+        {% trans %}Please log in with your EcoleDirecte login/password.{% endtrans %}
+        <a href="https://www.ecoledirecte.com/" target="_blank">https://www.ecoledirecte.com/</a>
+    </h6>
+    {% else%}
     <h6 class="text-center">
         {% trans %}Sign up if you do not have an account. It's simple and fast.{% endtrans %}
         <a href="{{ path('register') }}">{{'I create my free account...'|trans}}</a>
     </h6>
+    {% endif %}
 
 </div>
 

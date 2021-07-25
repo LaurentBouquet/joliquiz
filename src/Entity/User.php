@@ -41,7 +41,7 @@ class User implements UserInterface, \Serializable
 
     /**
      * @var string The email of the user
-     * @ORM\Column(type="string", length=255, unique=true)
+     * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      * @Assert\Email()
      */
@@ -96,9 +96,39 @@ class User implements UserInterface, \Serializable
     private $passwordRequestedAt;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $token;
+
+    /**
+     * @ORM\Column(type="string", length=16, nullable=true)
+     */
+    private $organization_code;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $organization_label;
+
+    /**
+     * @ORM\Column(type="string", length=5, nullable=true)
+     */
+    private $account_type;
+
+    /**
+     * @ORM\Column(type="string", length=16, nullable=true)
+     */
+    private $phone;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $comment;
+
+    /**
+     * @ORM\Column(type="string", length=2, nullable=true)
+     */
+    private $login_type;
 
 
 
@@ -294,6 +324,78 @@ class User implements UserInterface, \Serializable
     public function setToken(?string $token): self
     {
         $this->token = $token;
+
+        return $this;
+    }
+
+    public function getOrganizationCode(): ?string
+    {
+        return $this->organization_code;
+    }
+
+    public function setOrganizationCode(?string $organization_code): self
+    {
+        $this->organization_code = $organization_code;
+
+        return $this;
+    }
+
+    public function getOrganizationLabel(): ?string
+    {
+        return $this->organization_label;
+    }
+
+    public function setOrganizationLabel(?string $organization_label): self
+    {
+        $this->organization_label = $organization_label;
+
+        return $this;
+    }
+
+    public function getAccountType(): ?string
+    {
+        return $this->account_type;
+    }
+
+    public function setAccountType(?string $account_type): self
+    {
+        $this->account_type = $account_type;
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(?string $phone): self
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
+
+    public function setComment(?string $comment): self
+    {
+        $this->comment = $comment;
+
+        return $this;
+    }
+
+    public function getLoginType(): ?string
+    {
+        return $this->login_type;
+    }
+
+    public function setLoginType(?string $login_type): self
+    {
+        $this->login_type = $login_type;
 
         return $this;
     }

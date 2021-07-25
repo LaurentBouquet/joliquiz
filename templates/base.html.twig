@@ -57,7 +57,7 @@
                 <ul class="navbar-nav">
                     {% if is_granted('ROLE_USER') %}
                         <li>
-                            <a class="nav-link" href="{{ path('user_profile') }}">
+                            <a class="nav-link {{ app.user.loginType=='ED' ? 'text-white' : '' }}" title="{{ 'LoginType'|trans }} : {{ app.user.loginType }}" href="{{ path('user_profile') }}">
                                 <i class="fas fa-user"></i>
                                 {% if app.user %}
                                     <strong>{{ app.user.username }}</strong>
@@ -68,9 +68,11 @@
                             <a class="nav-link" href="{{ path('logout') }}">{{'Logout'|trans}}</a>
                         </li>
                     {% else %}
+                        {% if not ONLY_OGEC %}
                         <li>
                             <a class="nav-link {% if '/register' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('register') }}">{{'Sign up'|trans}}</a>
                         </li>
+                        {% endif %}
                         <li>
                             <a class="nav-link {% if '/login' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('login') }}">{{'Sign in'|trans}}</a>
                         </li>

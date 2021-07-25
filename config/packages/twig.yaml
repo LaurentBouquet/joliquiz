@@ -6,4 +6,5 @@ twig:
         - 'bootstrap_4_layout.html.twig'
     globals:
         locale: '%env(LOCALE)%'
+        ONLY_OGEC: '%env(ONLY_OGEC)%'         
     exception_controller: null

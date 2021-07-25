@@ -123,7 +123,7 @@
       </trans-unit>
       <trans-unit id="47ienTP" resname="Username">
         <source>Username</source>
-        <target>Nom d'utilisateur</target>
+        <target>Identifiant</target>
       </trans-unit>
       <trans-unit id="588_9PF" resname="Password">
         <source>Password</source>
@@ -521,9 +521,17 @@
         <source>Send confirmation mail</source>
         <target>Envoyer le mail de confirmation</target>
       </trans-unit>
-      <trans-unit id="CG9UULI" resname="Edit my account">
+      <trans-unit id="Vxf9Ofb" resname="Edit my account">
         <source>Edit my account</source>
         <target>Modifier mon compte</target>
+      </trans-unit>
+      <trans-unit id="hJCgPR." resname="LoginType">
+        <source>LoginType</source>
+        <target>Type d'authentification</target>
+      </trans-unit>
+      <trans-unit id="3f5lbAb" resname="Please log in with your EcoleDirecte login/password.">
+        <source>Please log in with your EcoleDirecte login/password.</source>
+        <target>Veuillez vous connecter avec votre login/mot de passe d'EcoleDirecte.</target>
       </trans-unit>
     </body>
   </file>

@@ -26,7 +26,7 @@
         <tbody>
         {% for user in users %}
             <tr {{ 'ROLE_SUPER_ADMIN' in user.roles ? 'class="table-danger"' : 'ROLE_ADMIN' in user.roles ? 'class="table-warning"' : 'ROLE_TEACHER' in user.roles ? 'class="table-primary"' : 'class="table-success"' }}>
-                <td>{{ user.username }}</td>
+                <td {{ user.loginType=='ED' ? 'class="text-white font-weight-bold"' : '' }} title="{{ 'LoginType'|trans }} : {{ user.loginType }}"><i class="fas fa-user"></i> {{ user.username }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.isActive ? 'Yes' : 'No' }}</td>
                 <td>{{ user.roles ? user.roles|join(', ') : '' }}</td>
