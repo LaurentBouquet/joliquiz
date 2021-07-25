@@ -133,6 +133,7 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\ManyToMany(targetEntity=Group::class, inversedBy="users")
+     * @ORM\JoinTable(name="tbl_user_group")à
      */
     private $groups;
 
