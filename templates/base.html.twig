@@ -52,6 +52,9 @@
                         <li>
                             <a class="nav-link {% if '/user/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('user_index') }}">{{'Users'|trans}}</a>
                         </li>
+                        <li>
+                            <a class="nav-link {% if '/school/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('school_index') }}">{{'Schools'|trans}}</a>
+                        </li>
                     {% endif %}
                 </ul>
                 <ul class="navbar-nav">

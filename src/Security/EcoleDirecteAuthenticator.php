@@ -3,6 +3,7 @@
 namespace App\Security;
 
 use App\Entity\User;
+use App\Entity\School;
 use Psr\Log\LoggerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -160,6 +161,7 @@ class EcoleDirecteAuthenticator extends AbstractGuardAuthenticator
             case 200:
                 // authentication success 
                 $em = $this->entityManager;
+                // Save user
                 $user->setLoginType('ED');
                 //$user->setToken($ecoleDirecteToken);
                 $user->setEmail($userEmail);
@@ -168,6 +170,17 @@ class EcoleDirecteAuthenticator extends AbstractGuardAuthenticator
                 $user->setOrganizationLabel($nomEtablissement);
                 $user->setPhone($telPortable);
                 $user->setComment($comment);
+                // Save school
+                $school = $em->getRepository(School::class)->findOneBy(['code' => $codeOgec]);
+                if (!$school) {
+                    $school = new School();
+                    $school->setCode($codeOgec);
+                    $school->setName($nomEtablissement);
+                    $em->persist($school);
+                }
+        
+
+
                 $em->persist($user);
                 $em->flush();
                 return true;

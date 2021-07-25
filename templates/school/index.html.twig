@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}School index{% endblock %}
+
+{% block body %}
+    <h1>School index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Code</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for school in schools %}
+            <tr>
+                <td>{{ school.id }}</td>
+                <td>{{ school.name }}</td>
+                <td>{{ school.code }}</td>
+                <td>
+                    <a href="{{ path('school_show', {'id': school.id}) }}">show</a>
+                    <a href="{{ path('school_edit', {'id': school.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('school_new') }}">Create new</a>
+{% endblock %}
