@@ -63,7 +63,7 @@
                 <ul class="navbar-nav">
                     {% if is_granted('ROLE_USER') %}
                         <li>
-                            <a class="nav-link {{ app.user.loginType=='ED' ? 'text-white' : '' }}" title="{{ 'LoginType'|trans }} : {{ app.user.loginType }}" href="{{ path('user_profile') }}">
+                            <a class="nav-link {{ app.user.loginType=='ED' ? 'text-warning' : '' }}" title="{{ 'LoginType'|trans }} : {{ app.user.loginType }}" href="{{ path('user_profile') }}">
                                 <i class="fas fa-user"></i>
                                 {% if app.user %}
                                     <strong>{{ app.user.username }}</strong>

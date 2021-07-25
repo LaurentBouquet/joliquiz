@@ -37,8 +37,8 @@
 
             <tr>
                 {% if showStudentsName %}
-                <td width="10%" class="text-center align-middle" style="padding: 1px;">
-                    {{ workout.student.username }}
+                <td width="10%" class="align-left {{ workout.student.loginType=='ED' ? 'text-warning font-weight-bold' : '' }}" style="padding: 1px;" title="{{ 'LoginType'|trans }} : {{ workout.student.loginType }}">                
+                    <i class="fas fa-user"></i> {{  workout.student.username }}
                 </td>
                 <td width="80%" class="text-center align-middle">
                     {% else %}

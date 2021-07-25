@@ -3,19 +3,23 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Entity\Group;
+use App\Repository\GroupRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\IsTrue;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Component\Validator\Constraints\IsTrue;
-use Symfony\Component\Translation\TranslatorInterface;
 
 class UserType extends AbstractType
 {
@@ -81,6 +85,14 @@ class UserType extends AbstractType
                     'required' => false,
                     'label' => $this->translator->trans('Account activated'),
                 ));
+                $builder->add('groups', EntityType::class, array(
+                    'class' => Group::class,
+                    // 'query_builder' => function (GroupRepository $er) {
+                    //     return $er->createQueryBuilder('c')->andWhere('c.language = :language')->setParameter('language', $this->param->get('locale'))->orderBy('c.shortname', 'ASC');
+                    //  },
+                    'choice_label' => 'name',
+                    'multiple' => true
+                ));                   
                 break;
 
             case 'update':
@@ -94,7 +106,15 @@ class UserType extends AbstractType
                             'Super admin' => 'ROLE_SUPER_ADMIN',
                         ),
                     ));
-                }
+                }        
+                $builder->add('groups', EntityType::class, array(
+                    'class' => Group::class,
+                    // 'query_builder' => function (GroupRepository $er) {
+                    //     return $er->createQueryBuilder('c')->andWhere('c.language = :language')->setParameter('language', $this->param->get('locale'))->orderBy('c.shortname', 'ASC');
+                    //  },
+                    'choice_label' => 'name',
+                    'multiple' => true
+                ));                              
                 $builder->add('isActive', CheckboxType::class, array(
                     'required' => false,
                     'label' => $this->translator->trans('Account activated'),

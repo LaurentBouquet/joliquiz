@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Group;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
@@ -143,6 +144,11 @@ class User implements UserInterface, \Serializable
         $this->isActive = true;
         $this->workouts = new ArrayCollection();
         $this->groups = new ArrayCollection();
+    }
+    
+    public function __toString(): string
+    {
+        return $this->username;
     }
 
     public function getId()

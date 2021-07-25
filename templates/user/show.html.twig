@@ -24,8 +24,12 @@
                 <td>{{ user.isActive ? 'Yes' : 'No' }}</td>
             </tr>
             <tr>
-                <th>{{ 'Roles'|trans }}</th>
+                <th>{{ 'Role(s)'|trans }}</th>
                 <td>{{ user.roles ? user.roles|join(', ') : '' }}</td>
+            </tr>            
+            <tr>
+                <th>{{ 'Group(s)'|trans }}</th>
+                <td>{{ user.groups ? user.groups|join(', ') : '' }}</td>
             </tr>
         </tbody>
     </table>

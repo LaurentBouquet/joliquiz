@@ -533,6 +533,62 @@
         <source>Please log in with your EcoleDirecte login/password.</source>
         <target>Veuillez vous connecter avec votre login/mot de passe d'EcoleDirecte.</target>
       </trans-unit>
+      <trans-unit id="Obu3Gfo" resname="Groups">
+        <source>Groups</source>
+        <target>Classes</target>
+      </trans-unit>
+      <trans-unit id="ry6RKWk" resname="Schools">
+        <source>Schools</source>
+        <target>Ecoles</target>
+      </trans-unit>
+      <trans-unit id=".oWqpuT" resname="Role(s)">
+        <source>Role(s)</source>
+        <target>Rôle(s)</target>
+      </trans-unit>
+      <trans-unit id="BmCW3vv" resname="Group(s)">
+        <source>Group(s)</source>
+        <target>Classe(s)</target>
+      </trans-unit>
+      <trans-unit id="uA9Flqv" resname="Group index">
+        <source>Group index</source>
+        <target>Liste des classes</target>
+      </trans-unit>
+      <trans-unit id="7Au8I9y" resname="Create new group">
+        <source>Create new group</source>
+        <target>Créer une nouvelle classe</target>
+      </trans-unit>
+      <trans-unit id="zwEkdPf" resname="School index">
+        <source>School index</source>
+        <target>Liste des écoles</target>
+      </trans-unit>
+      <trans-unit id="IsDfL0J" resname="Create new school">
+        <source>Create new school</source>
+        <target>Créer une nouvelle école</target>
+      </trans-unit>
+      <trans-unit id="NMoOdmC" resname="Group">
+        <source>Group</source>
+        <target>Classe</target>
+      </trans-unit>
+      <trans-unit id="bNLjMYV" resname="School">
+        <source>School</source>
+        <target>Ecole</target>
+      </trans-unit>
+      <trans-unit id="3NHVIj9" resname="Name">
+        <source>Name</source>
+        <target>Nom</target>
+      </trans-unit>
+      <trans-unit id="NA9GMDP" resname="Code">
+        <source>Code</source>
+        <target>Code</target>
+      </trans-unit>
+      <trans-unit id="3V8tns5" resname="Edit Group">
+        <source>Edit Group</source>
+        <target>Modifier la classe</target>
+      </trans-unit>
+      <trans-unit id="YWsHuOJ" resname="Edit School">
+        <source>Edit School</source>
+        <target>Modifier l'école</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

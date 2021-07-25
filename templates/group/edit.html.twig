@@ -1,13 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Group{% endblock %}
+{% block title %}{{'Edit Group'|trans}} "{{ group.name }}"{% endblock %}
 
 {% block body %}
-    <h1>Edit Group</h1>
+    <h1>{{'Edit Group'|trans}} "{{ group.name }}"</h1>
 
-    {{ include('group/_form.html.twig', {'button_label': 'Update'}) }}
+    {% if is_granted('ROLE_ADMIN') %}
+        {{ include('group/_form.html.twig', {'button_label': 'Update'|trans}) }}
+    {% endif %}
 
-    <a href="{{ path('group_index') }}">back to list</a>
-
-    {{ include('group/_delete_form.html.twig') }}
 {% endblock %}
