@@ -22,12 +22,84 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 
 /**
  * @Route("/quiz")
  */
 class QuizController extends AbstractController
 {
+
+    private $tokenGenerator;
+
+    public function __construct(TokenGeneratorInterface $tokenGenerator)
+    {
+        $this->tokenGenerator = $tokenGenerator;
+    }
+
+    /**
+     * @Route("/{id}/result", name="quiz_result", methods="GET")
+     */
+    public function result(Request $request, Quiz $quiz, EntityManagerInterface $em): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
+
+        $workout_id = $request->query->get('workout');
+        if (isset($workout_id)) {
+            $workoutRepository = $em->getRepository(Workout::class);
+            $workout = $workoutRepository->find($workout_id);
+            if (isset($workout)) {
+                $user = $workout->getStudent();
+
+                $workout_token = $request->query->get('token');
+                if (isset($workout_token) && ($workout_token != "")) {
+                    if ($workout_token == $workout->getToken()) {
+                        // Quiz is completed then display end
+                        $score = $workout->getScore();
+                        $comment = '';
+                        $commentLines = explode("\n", $quiz->getResultQuizComment());
+                        foreach ($commentLines as $commentLine) {
+                            list($commentInterval, $commentText) = explode(":", $commentLine);
+                            list($min, $max) = explode("-", $commentInterval);
+                            if (($score >= $min) && ($score <= $max)) {
+                                $comment = $comment . $commentText . ' ';
+                            }
+                        }
+                        $workout->setComment($comment);
+                        $workout->setCompleted(true);
+                        $em->persist($workout);
+                        $em->flush();
+
+                        $form = $this->createForm(QuizType::class, $quiz, array('form_type' => 'student_questioning'));
+
+                        $questionHistoryRepository = $em->getRepository(QuestionHistory::class);
+                        $questionsHistory = $questionHistoryRepository->findAllByWorkout($workout);
+
+                        return $this->render(
+                            'quiz/end.html.twig',
+                            [
+                                'id' => $workout->getId(),
+                                'quiz' => $quiz,
+                                'score' => $score,
+                                'questionsHistory' => $questionsHistory,
+                                'user' => $user,
+                                'comment' => $workout->getComment(),
+                                'form' => $form->createView(),
+                            ]
+                        );
+                    } else {
+                        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Access not allowed');
+                    }
+                } else {
+                    $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Access not allowed');
+                }
+            } else {
+                return $this->redirectToRoute('index');
+            }
+        } else {
+            return $this->redirectToRoute('index');
+        }
+    }
 
     /**
      * @Route("/{id}/analyse", name="quiz_analyse", methods="GET")
@@ -236,7 +308,12 @@ class QuizController extends AbstractController
                                     'useremail' => $user->getEmail(),
                                     'quiz' => $quiz,
                                     'score' => $score,
+                                    'workout_id' => $workout->getId(),
+                                    'workout_token' => $workout->getToken(),
                                 ]);
+                            if ($user->getToReceiveMyResultByEmail()) {
+                                $email->addTo($user->getEmail());
+                            }
                             $mailer->send($email);
 
                             $this->addFlash('danger', $comment);
@@ -248,6 +325,7 @@ class QuizController extends AbstractController
                                     'quiz' => $quiz,
                                     'score' => 0,
                                     'questionsHistory' => $questionsHistory,
+                                    'user' => $user,
                                     'comment' => $workout->getComment(),
                                     'form' => $form->createView(),
                                 ],
@@ -336,6 +414,7 @@ class QuizController extends AbstractController
                     'quiz' => $quiz,
                     'score' => $score,
                     'questionsHistory' => $questionsHistory,
+                    'user' => $user,
                     'comment' => $workout->getComment(),
                     'form' => $form->createView(),
                 ]
@@ -425,7 +504,12 @@ class QuizController extends AbstractController
                     'useremail' => $user->getEmail(),
                     'quiz' => $quiz,
                     'score' => $score,
+                    'workout_id' => $workout->getId(),
+                    'workout_token' => $workout->getToken(),
                 ]);
+            if ($user->getToReceiveMyResultByEmail()) {
+                $email->addTo($user->getEmail());
+            }
             $mailer->send($email);
 
             $form = $this->createForm(QuizType::class, $quiz, array('form_type' => 'student_questioning'));
@@ -437,6 +521,7 @@ class QuizController extends AbstractController
                     'quiz' => $quiz,
                     'score' => $score,
                     'questionsHistory' => $questionsHistory,
+                    'user' => $user,
                     'comment' => $workout->getComment(),
                     'form' => $form->createView(),
                 ]
@@ -476,6 +561,7 @@ class QuizController extends AbstractController
         $workout->setQuiz($quiz);
         $workout->setStartedAt($now);
         $workout->setNumberOfQuestions(0);
+        $workout->setToken($this->tokenGenerator->generateToken());
         $em->persist($workout);
         $em->flush();
 
@@ -508,7 +594,7 @@ class QuizController extends AbstractController
         }
 
         if ($this->getUser()) {
-            if (!in_array('ROLE_TEACHER', $this->getUser()->getRoles())) {
+            if (!$this->isGranted('ROLE_TEACHER')) {
                 if (count($quizzes) == 1) {
                     return $this->start($request, $quizzes[0], $em, $user);
                 }

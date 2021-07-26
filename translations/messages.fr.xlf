@@ -495,7 +495,7 @@
       </trans-unit>
       <trans-unit id="xyfvR_W" resname="started at">
         <source>started at</source>
-        <target>Démarré à</target>
+        <target>démarré à</target>
       </trans-unit>
       <trans-unit id="iYj_XZ2" resname="Waiting for students...">
         <source>Waiting for students...</source>
@@ -588,6 +588,34 @@
       <trans-unit id="YWsHuOJ" resname="Edit School">
         <source>Edit School</source>
         <target>Modifier l'école</target>
+      </trans-unit>
+      <trans-unit id="6S3XAUJ" resname="Is active">
+        <source>Is active</source>
+        <target>Compte activé</target>
+      </trans-unit>
+      <trans-unit id="TznhcES" resname="To receive result by email">
+        <source>To receive result by email</source>
+        <target>Recevoir le résultat par mail</target>
+      </trans-unit>
+      <trans-unit id="DNedzED" resname="To receive my result by email">
+        <source>To receive my result by email</source>
+        <target>Recevoir mon résultat par mail</target>
+      </trans-unit>
+      <trans-unit id="p_LSbo0" resname="by">
+        <source>by</source>
+        <target>par</target>
+      </trans-unit>
+      <trans-unit id="uNMehSc" resname="on">
+        <source>on</source>
+        <target>le</target>
+      </trans-unit>
+      <trans-unit id="sda5G2f" resname="at">
+        <source>at</source>
+        <target>à</target>
+      </trans-unit>
+      <trans-unit id="0jAU9EI" resname="started on">
+        <source>started on</source>
+        <target>démarré le</target>
       </trans-unit>
     </body>
   </file>

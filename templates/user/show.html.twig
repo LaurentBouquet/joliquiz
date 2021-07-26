@@ -20,17 +20,21 @@
                 <td>{{ user.email }}</td>
             </tr>
             <tr>
-                <th>{{ 'IsActive'|trans }}</th>
+                <th>{{ 'Is active'|trans }}</th>
                 <td>{{ user.isActive ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'To receive result by email'|trans }}</th>
+                <td>{{ user.toReceiveMyResultByEmail ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Group(s)'|trans }}</th>
+                <td>{{ user.groups ? user.groups|join(', ') : '' }}</td>
             </tr>
             <tr>
                 <th>{{ 'Role(s)'|trans }}</th>
                 <td>{{ user.roles ? user.roles|join(', ') : '' }}</td>
             </tr>            
-            <tr>
-                <th>{{ 'Group(s)'|trans }}</th>
-                <td>{{ user.groups ? user.groups|join(', ') : '' }}</td>
-            </tr>
         </tbody>
     </table>
 

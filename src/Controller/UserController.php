@@ -26,7 +26,7 @@ class UserController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
 
         $user = $this->getUser();
-        $form = $this->createForm(UserType::class, $user, array('form_type' => 'profile'));
+        $form = $this->createForm(UserType::class, $user, array('form_type' => 'profile', 'login_type' => $user->getLoginType()));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

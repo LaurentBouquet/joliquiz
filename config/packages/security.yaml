@@ -49,5 +49,7 @@ security:
         - { path: ^/answer, roles: ROLE_USER }
         - { path: ^/category, roles: ROLE_ADMIN }
         - { path: ^/user, roles: ROLE_USER }
+        - { path: ^/group, roles: ROLE_TEACHER }
+        - { path: ^/school, roles: ROLE_SUPER_ADMIN }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }

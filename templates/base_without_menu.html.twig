@@ -7,9 +7,7 @@
         <meta name="author" content="">
         <link rel="icon" href="../../../../favicon.ico">
 
-        <title>JoliQuiz -
-            {% block title %}{% endblock %}
-        </title>
+        <title>JoliQuiz</title>
 
         {% block stylesheets %}{% endblock %}
 
@@ -25,7 +23,28 @@
     </head>
 
     <body>
-        {# <main role="main" class="container"> #}
+
+        <nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
+            <a class="navbar-brand text-warning" title="JoliQuiz" href="/"><img src="https://raw.githubusercontent.com/LaurentBouquet/joliquiz/assets/JoliQuiz_logo-30x30_transparent_bold.png" alt="JoliQuiz"></a>
+            <div class="collapse navbar-collapse" id="navbar">
+                <ul class="navbar-nav mr-auto">
+                    <!-- <li>
+                        <span class="nav-link active text-dark">{{ (locale ?? 'en')|upper }}</span>
+                    </li> -->
+                    <li class="text-white">
+                        {% block title %}{% endblock %}
+                    </li>                     
+                </ul>
+                <ul class="navbar-nav">
+                        <li>
+                            <a class="nav-link" href="{{ path('logout') }}">{{'Logout'|trans}}</a>
+                        </li>
+                </ul>
+            </div>
+
+        </nav>
+
+        <main role="main" class="">
 
             <div class="header">
                 <div class="col-sm-12">
@@ -33,7 +52,7 @@
                 </div>
             </div>
             
-            <div class="starter-template">
+            <div class="starter-template"> 
                 <div class="col-md-12 col-lg-12 col-xl-12">
                     {% for label, messages in app.flashes %}
                         {% for message in messages %}
@@ -47,9 +66,11 @@
                 <div class="col-sm-12">
                     {% block body %}{% endblock %}
                 </div>
-            </div>
+            </div> 
 
-        {# </main> #}
+        </main>
+
+        <br/>
         <!-- /.container -->
 
         <!-- Bootstrap core JavaScript ================================================== -->

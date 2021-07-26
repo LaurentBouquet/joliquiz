@@ -1,25 +1,11 @@
 {% extends 'base_without_menu.html.twig' %}
 
-{% block title %}{{ quiz.title }}
-"{{ quiz.title }}"{% endblock %}
-
-{% block stylesheets %}
-<style>
-    .starter-template {
-        padding: 0rem 1rem !important;
-        text-align: left;
-    }
-</style>
-<meta http-equiv="refresh" content="15">
+{% block title %}
+{{'Quiz'|trans}} "{{ quiz.title }}" {{'started on'|trans}} {{ startedAt|date('d/m/Y') }} {{'at'|trans}} {{ startedAt|date('H:i:s') }}
 {% endblock %}
 
-{% block header %}
-<h6>{{'Quiz'|trans}}
-    "{{ quiz.title }}"
-    <span>{{'started at'|trans}}
-        {{ startedAt|date('m/d/Y H:i:s') }}</span>
-</h6>
-{% endblock header %}
+{% block stylesheets %}
+{% endblock %}
 
 {% block body %}
 

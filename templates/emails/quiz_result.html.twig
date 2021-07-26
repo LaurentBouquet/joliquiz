@@ -30,8 +30,8 @@
                                                 for the quiz "<strong>{{quiz.title}}</strong>". <br/>
                                                 <br/>
                                                 
-                                                Pour suivre la réalisation de ce questionnaire, go to: <br/>
-                                                <a href="{{ app.request.schemeAndHttpHost }}{{ path('quiz_workout', {'id':quiz.id}) }}">
+                                                Pour consulter les résultats à ce questionnaire, go to: <br/>
+                                                <a href="{{ app.request.schemeAndHttpHost }}{{ path('quiz_result', {'id':quiz.id, 'workout':workout_id, 'token':workout_token}) }}">
                                                     {{ app.request.schemeAndHttpHost  }}</a>.                                        
 
                                                 <p
@@ -39,9 +39,7 @@
                                                     or press the button below :</p>
 
                                                 <div
-                                                    style="padding-right: 30px; padding-left: 30px; margin-top: 40px; margin-bottom: 30px;">
-
-
+                                                    style="padding-right: 30px; padding-left: 30px; margin-top: 5px; margin-bottom: 30px;">
                                                     <table style="width: 100%; " class="sm_table">
                                                         <tr style="width: 100%;">
                                                             <td style="width: 100%;">
@@ -49,9 +47,9 @@
                                                                     style="display: inline-block; position:relative; border-radius:4px; background-color:#2ea664; "
                                                                     class="sm_full_width">
                                                                     <a class="button_link sm_full_width sm_border_box"
-                                                                        href="{{ app.request.schemeAndHttpHost }}{{ path('quiz_workout', {'id':quiz.id}) }}"
+                                                                        href="{{ app.request.schemeAndHttpHost }}{{ path('quiz_result', {'id':quiz.id, 'workout':workout_id, 'token':workout_token}) }}"
                                                                         style="min-width:196px; border-top:13px solid; border-bottom:13px solid; border-right:24px solid; border-left:24px solid; border-color:#2ea664; border-radius:4px; background-color:#2ea664; color:#ffffff; font-size:18px; line-height:18px; word-break:break-word; text-shadow:0 1px 1px #2e9a5f;  display: inline-block; text-align: center; font-weight: 900; text-decoration: none !important;">
-                                                                        Suivre la réalisation du questionnaire
+                                                                        Consulter les résultats
                                                                     </a>
                                                                 </span>
                                                             </td>

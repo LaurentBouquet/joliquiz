@@ -137,6 +137,11 @@ class User implements UserInterface, \Serializable
      */
     private $groups;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $toReceiveMyResultByEmail;
+
 
 
     public function __construct()
@@ -433,6 +438,18 @@ class User implements UserInterface, \Serializable
     public function removeGroup(Group $group): self
     {
         $this->groups->removeElement($group);
+
+        return $this;
+    }
+
+    public function getToReceiveMyResultByEmail(): ?bool
+    {
+        return $this->toReceiveMyResultByEmail;
+    }
+
+    public function setToReceiveMyResultByEmail(bool $toReceiveMyResultByEmail): self
+    {
+        $this->toReceiveMyResultByEmail = $toReceiveMyResultByEmail;
 
         return $this;
     }

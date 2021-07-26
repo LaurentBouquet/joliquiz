@@ -55,9 +55,11 @@
                         </li>
                     {% endif %}
                     {% if is_granted('ROLE_SUPER_ADMIN') %}
+                    <!--
                         <li>
                             <a class="nav-link {% if '/school/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('school_index') }}">{{'Schools'|trans}}</a>
                         </li>
+                    -->
                     {% endif %}
                 </ul>
                 <ul class="navbar-nav">

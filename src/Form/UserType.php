@@ -34,7 +34,9 @@ class UserType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('username', TextType::class);
+        if ($options['login_type'] != 'ED') {
+            $builder->add('username', TextType::class);
+        }
 
         switch ($options['form_type']) {
             case 'register':
@@ -43,16 +45,19 @@ class UserType extends AbstractType
                     'plainPassword',
                     RepeatedType::class,
                     [
-                    'type' => PasswordType::class,
-                    'first_options'  => array('label' => $this->translator->trans('Password')),
-                    'second_options' => array('label' => $this->translator->trans('Repeat Password')),
+                        'type' => PasswordType::class,
+                        'first_options'  => array('label' => $this->translator->trans('Password')),
+                        'second_options' => array('label' => $this->translator->trans('Repeat Password')),
                     ]
                 );
-                $builder->add('termsAccepted', CheckboxType::class, array(
-                    'mapped' => false,
-                    'constraints' => new IsTrue(),
-                    'label' => $this->translator->trans('I have read and accept the terms and conditions'),                    
-                  )
+                $builder->add(
+                    'termsAccepted',
+                    CheckboxType::class,
+                    array(
+                        'mapped' => false,
+                        'constraints' => new IsTrue(),
+                        'label' => $this->translator->trans('I have read and accept the terms and conditions'),
+                    )
                 );
                 break;
 
@@ -66,9 +71,9 @@ class UserType extends AbstractType
                     'plainPassword',
                     RepeatedType::class,
                     [
-                    'type' => PasswordType::class,
-                    'first_options'  => array('label' => $this->translator->trans('Password')),
-                    'second_options' => array('label' => $this->translator->trans('Repeat Password'))
+                        'type' => PasswordType::class,
+                        'first_options'  => array('label' => $this->translator->trans('Password')),
+                        'second_options' => array('label' => $this->translator->trans('Repeat Password'))
                     ]
                 );
                 if ($this->checker->isGranted('ROLE_SUPER_ADMIN')) {
@@ -77,6 +82,7 @@ class UserType extends AbstractType
                         'expanded' => true, // render check-boxes
                         'choices' => array(
                             'Admin' => 'ROLE_ADMIN',
+                            'Teacher' => 'ROLE_TEACHER',                            
                             'Super admin' => 'ROLE_SUPER_ADMIN',
                         ),
                     ));
@@ -92,7 +98,11 @@ class UserType extends AbstractType
                     //  },
                     'choice_label' => 'name',
                     'multiple' => true
-                ));                   
+                ));
+                $builder->add('toReceiveMyResultByEmail', CheckboxType::class, [
+                    'label' => $this->translator->trans('To receive result by email'),
+                    'required' => false,
+                ]);
                 break;
 
             case 'update':
@@ -103,10 +113,11 @@ class UserType extends AbstractType
                         'expanded' => true, // render check-boxes
                         'choices' => array(
                             'Admin' => 'ROLE_ADMIN',
+                            'Teacher' => 'ROLE_TEACHER',                            
                             'Super admin' => 'ROLE_SUPER_ADMIN',
                         ),
                     ));
-                }        
+                }
                 $builder->add('groups', EntityType::class, array(
                     'class' => Group::class,
                     // 'query_builder' => function (GroupRepository $er) {
@@ -114,24 +125,33 @@ class UserType extends AbstractType
                     //  },
                     'choice_label' => 'name',
                     'multiple' => true
-                ));                              
+                ));
                 $builder->add('isActive', CheckboxType::class, array(
                     'required' => false,
                     'label' => $this->translator->trans('Account activated'),
                 ));
+                $builder->add('toReceiveMyResultByEmail', CheckboxType::class, [
+                    'label' => $this->translator->trans('To receive result by email'),
+                    'required' => false,
+                ]);
                 break;
             case 'profile':
-                $builder->add(
-                    'plainPassword',
-                    RepeatedType::class,
-                    [
-                    'type' => PasswordType::class,
-                    'first_options'  => array('label' => $this->translator->trans('Password')),
-                    'second_options' => array('label' => $this->translator->trans('Repeat Password'))
-                    ]
-                );
+                $builder->add('toReceiveMyResultByEmail', CheckboxType::class, [
+                    'label' => $this->translator->trans('To receive my result by email'),
+                    'required' => false,
+                ]);
+                if ($options['login_type'] != 'ED') {
+                    $builder->add(
+                        'plainPassword',
+                        RepeatedType::class,
+                        [
+                            'type' => PasswordType::class,
+                            'first_options'  => array('label' => $this->translator->trans('Password')),
+                            'second_options' => array('label' => $this->translator->trans('Repeat Password'))
+                        ]
+                    );
+                }
                 break;
-    
         }
     }
 
@@ -139,6 +159,7 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults([
             'form_type' => 'register',
+            'login_type' => '',
         ]);
     }
 }
