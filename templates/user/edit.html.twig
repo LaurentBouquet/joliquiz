@@ -6,7 +6,7 @@
     <h1>{{'Edit User'|trans}} "{{ user.username }}"</h1>
 
     {% if is_granted('ROLE_SUPER_ADMIN') %}
-        {{ include('user/_form.html.twig', {'button_label': 'Update'|trans}) }}
+        {{ include('user/_form.html.twig', {'button_label': 'Save'|trans}) }}
     {% endif %}
 
 {% endblock %}

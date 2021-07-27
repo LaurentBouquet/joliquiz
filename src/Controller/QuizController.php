@@ -582,15 +582,13 @@ class QuizController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
 
         $categoryId = $request->query->get('category');
-
         $categoryLongName = "";
-
         if ($categoryId > 0) {
-            $quizzes = $quizRepository->findAllByCategories($this->isGranted('ROLE_ADMIN'), [$categoryId]);
+            $quizzes = $quizRepository->findAllByCategories([$categoryId], $this->isGranted('ROLE_TEACHER'), $this->isGranted('ROLE_ADMIN'));
             $category = $categoryRepository->find($categoryId);
             $categoryLongName = $category->getLongName();
         } else {
-            $quizzes = $quizRepository->findAll($this->isGranted('ROLE_ADMIN'));
+            $quizzes = $quizRepository->findAll($this->isGranted('ROLE_TEACHER'), $this->isGranted('ROLE_ADMIN'));
         }
 
         if ($this->getUser()) {
@@ -624,6 +622,7 @@ class QuizController extends AbstractController
             if ($questionsCount < $quiz->getNumberOfQuestions()) {
                 $this->addFlash('danger', 'Not enough questions (' . $questionsCount . ') for this quiz');
             } else {
+                $quiz->setCreatedBy($this->getUser());
                 $em->persist($quiz);
                 $em->flush();
 

@@ -6,7 +6,7 @@
     <h1>{{'Edit Category'|trans}} "{{ category.shortname }}"</h1>
 
     {% if is_granted('ROLE_TEACHER') %}
-        {{ include('category/_form.html.twig', {'button_label': 'Update'|trans}) }}
+        {{ include('category/_form.html.twig', {'button_label': 'Save'|trans}) }}
     {% endif %}
 
 {% endblock %}

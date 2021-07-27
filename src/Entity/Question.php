@@ -39,6 +39,11 @@ class Question
     private $updated_at;
 
     /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="questions")
+     */
+    private $created_by;
+
+    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="questions")
      * @ORM\JoinTable(name="tbl_question_category")à
      */
@@ -106,6 +111,18 @@ class Question
     public function setUpdatedAt(\DateTimeInterface $updated_at): self
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    public function getCreatedBy(): ?User
+    {
+        return $this->created_by;
+    }
+
+    public function setCreatedBy(?User $created_by): self
+    {
+        $this->created_by = $created_by;
 
         return $this;
     }

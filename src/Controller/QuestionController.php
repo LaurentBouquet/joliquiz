@@ -30,12 +30,12 @@ class QuestionController extends AbstractController
         $categoryLongName = "";
         
         if ($categoryId > 0 ) {
-            $questions = $questionRepository->findAllByCategories([$categoryId]);
+            $questions = $questionRepository->findAllByCategories([$categoryId], $this->isGranted('ROLE_TEACHER'), $this->isGranted('ROLE_ADMIN'));
             $category = $categoryRepository->find($categoryId);
             $categoryLongName = $category->getLongName();
         }
         else {
-            $questions = $questionRepository->findAll($page);
+            $questions = $questionRepository->findAll($page, $this->isGranted('ROLE_TEACHER'), $this->isGranted('ROLE_ADMIN'));
         }
 
         return $this->render('question/index.html.twig', ['questions' => $questions, 'category_id' => $categoryId, 'category_long_name' => $categoryLongName]);
@@ -55,6 +55,8 @@ class QuestionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $question->setCreatedBy($this->getUser());
             $em->persist($question);
 
             foreach ($question->getAnswers() as $answer) {

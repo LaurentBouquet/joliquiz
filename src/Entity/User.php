@@ -142,6 +142,21 @@ class User implements UserInterface, \Serializable
      */
     private $toReceiveMyResultByEmail;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Quiz::class, mappedBy="created_by")
+     */
+    private $quizzes;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Question::class, mappedBy="created_by")
+     */
+    private $questions;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Category::class, mappedBy="created_by")
+     */
+    private $categories;
+
 
 
     public function __construct()
@@ -150,6 +165,9 @@ class User implements UserInterface, \Serializable
         $this->isActive = true;
         $this->workouts = new ArrayCollection();
         $this->groups = new ArrayCollection();
+        $this->quizzes = new ArrayCollection();
+        $this->questions = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
     
     public function __toString(): string
@@ -249,6 +267,19 @@ class User implements UserInterface, \Serializable
     {
         // for the user entity has always at least the role 'ROLE_USER'
         return array_unique(array_merge(['ROLE_USER'], $this->roles));
+    }
+
+    public function addRole(string $role): self
+    {
+        if (!$this->roles) {
+            $this->roles[] = $role;
+        }
+        
+        if (!in_array($role, $this->roles)) {
+            $this->roles[] = $role;
+        }
+
+        return $this;
     }
 
     public function eraseCredentials()
@@ -450,6 +481,96 @@ class User implements UserInterface, \Serializable
     public function setToReceiveMyResultByEmail(bool $toReceiveMyResultByEmail): self
     {
         $this->toReceiveMyResultByEmail = $toReceiveMyResultByEmail;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Quiz[]
+     */
+    public function getQuizzes(): Collection
+    {
+        return $this->quizzes;
+    }
+
+    public function addQuiz(Quiz $quiz): self
+    {
+        if (!$this->quizzes->contains($quiz)) {
+            $this->quizzes[] = $quiz;
+            $quiz->setCreatedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuiz(Quiz $quiz): self
+    {
+        if ($this->quizzes->removeElement($quiz)) {
+            // set the owning side to null (unless already changed)
+            if ($quiz->getCreatedBy() === $this) {
+                $quiz->setCreatedBy(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Question[]
+     */
+    public function getQuestions(): Collection
+    {
+        return $this->questions;
+    }
+
+    public function addQuestion(Question $question): self
+    {
+        if (!$this->questions->contains($question)) {
+            $this->questions[] = $question;
+            $question->setCreatedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuestion(Question $question): self
+    {
+        if ($this->questions->removeElement($question)) {
+            // set the owning side to null (unless already changed)
+            if ($question->getCreatedBy() === $this) {
+                $question->setCreatedBy(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Category[]
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+            $category->setCreatedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        if ($this->categories->removeElement($category)) {
+            // set the owning side to null (unless already changed)
+            if ($category->getCreatedBy() === $this) {
+                $category->setCreatedBy(null);
+            }
+        }
 
         return $this;
     }

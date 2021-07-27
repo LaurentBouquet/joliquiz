@@ -53,13 +53,11 @@ class Quiz
      */
     private $updated_at;
 
-    // /**
-    //  * @var Category One or more category(ies) of this quiz.
-    //  *
-    //  * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="quizzes")
-    //  * @ORM\JoinColumn()
-    //  */
-    // private $categories;
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="quizzes")
+     */
+    private $created_by;
+
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="quizzes")
      * @ORM\JoinTable(name="tbl_quiz_category")
@@ -116,6 +114,7 @@ class Quiz
      * @ORM\OneToMany(targetEntity="App\Entity\Session", mappedBy="quiz", orphanRemoval=true)
      */
     private $sessions;
+
 
 
     public function __construct()
@@ -224,6 +223,18 @@ class Quiz
         return $this;
     }
 
+    public function getCreatedBy(): ?User
+    {
+        return $this->created_by;
+    }
+
+    public function setCreatedBy(?User $created_by): self
+    {
+        $this->created_by = $created_by;
+
+        return $this;
+    }
+    
     /**
      * @return Collection|Category[]
      */
@@ -415,4 +426,6 @@ class Quiz
 
         return $this;
     }
+
+
 }

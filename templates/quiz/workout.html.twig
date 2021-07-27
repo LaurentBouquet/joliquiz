@@ -1,10 +1,12 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_without_menu.html.twig' %}
 
-{% block title %}{{'Quiz'|trans}}{% endblock %}
+{% block title %}
+{{'Quiz'|trans}} "{{ quiz.title }}" {{'started on'|trans}} {{ quiz.activedAt|date('d/m/Y') }} {{'at'|trans}} {{ quiz.activedAt|date('H:i:s') }}
+{% endblock %}
 
 {% block body %}
 <h1>
-    "{{ quiz.title }}" ({{ questionNumber }}/{{ quiz.numberOfQuestions }}) &nbsp;
+    {{'Question'|trans}} {{ questionNumber }}/{{ quiz.numberOfQuestions }} &nbsp;
     {% if (questionResult==1) %}
     <i class="fas fa-thumbs-up" style="font-size:30px; color: green"></i>
     <!-- #d4edda -->

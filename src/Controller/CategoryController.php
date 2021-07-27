@@ -23,7 +23,9 @@ class CategoryController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
 
-        return $this->render('category/index.html.twig', ['categories' => $categoryRepository->findAll()]);
+        $categories = $categoryRepository->findAll($this->isGranted('ROLE_TEACHER'), $this->isGranted('ROLE_ADMIN'));
+
+        return $this->render('category/index.html.twig', ['categories' => $categories]);
     }
 
     /**
@@ -40,6 +42,8 @@ class CategoryController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             //$em = $this->getDoctrine()->getManager();
+
+            $category->setCreatedBy($this->getUser());
             $em->persist($category);
             $em->flush();
 

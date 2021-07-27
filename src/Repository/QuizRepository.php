@@ -2,13 +2,14 @@
 
 namespace App\Repository;
 
-use App\Entity\Language;
 use App\Entity\Quiz;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\Language;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Translation\TranslatorInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * @method Quiz|null find($id, $lockMode = null, $lockVersion = null)
@@ -20,14 +21,16 @@ class QuizRepository extends ServiceEntityRepository
 {
     private $em;
     private $param;
+    private $tokenStorage;
     private $language;
     private $translator;
 
-    public function __construct(ManagerRegistry $registry, EntityManagerInterface $em, ParameterBagInterface $param, TranslatorInterface $translator)
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $em, ParameterBagInterface $param, TranslatorInterface $translator, TokenStorageInterface $tokenStorage)
     {
         parent::__construct($registry, Quiz::class);
         $this->em = $em;
         $this->param = $param;
+        $this->tokenStorage = $tokenStorage;
         $this->language = $this->em->getReference(Language::class, $this->param->get('locale'));
         $this->translator = $translator;
     }
@@ -44,46 +47,67 @@ class QuizRepository extends ServiceEntityRepository
         return $quiz;
     }
 
-    public function find($id, $lockMode = null, $lockVersion = null)
+    public function find($id, $lockMode = null, $lockVersion = null, $isTeacher = false, $isAdmin = false)
     {
         $builder = $this->createQueryBuilder('q');
+
         $builder->andWhere('q.id = :id');
         $builder->setParameter('id', $id);
+
         $builder->andWhere('q.language = :language');
         $builder->setParameter('language', $this->language);
+
+        $builder->andWhere('q.created_by = :created_by');
+        $builder->setParameter('created_by', $this->tokenStorage->getToken()->getUser());
+
         $builder->orderBy('q.title', 'ASC');
         return $builder->getQuery()->getOneOrNullResult();
     }
 
-    public function findAll($isAdmin = false)
+    public function findAll($isTeacher = false, $isAdmin = false)
     {
         $builder = $this->createQueryBuilder('q');
+
         $builder->andWhere('q.language = :language');
         $builder->setParameter('language', $this->language);
+
         if (!$isAdmin) {
-            $builder->andWhere('q.active = :active');
-            $builder->setParameter('active', true);
+            if (!$isTeacher) {
+                $builder->andWhere('q.active = :active');
+                $builder->setParameter('active', true);
+            } else {
+                $builder->andWhere('q.created_by = :created_by');
+                $builder->setParameter('created_by', $this->tokenStorage->getToken()->getUser());
+            }
         }
+
         $builder->orderBy('q.active', 'DESC');
         $builder->addOrderBy('q.title', 'ASC');
         return $builder->getQuery()->getResult();
     }
 
-    public function findAllByCategories($isAdmin = false, array $categories)
+    public function findAllByCategories(array $categories, $isTeacher = false, $isAdmin = false)
     {
         $builder = $this->createQueryBuilder('q');
+
         $builder->andWhere('q.language = :language');
         $builder->setParameter('language', $this->language);
+
+        $builder->andWhere('q.created_by = :created_by');
+        $builder->setParameter('created_by', $this->tokenStorage->getToken()->getUser());
+
         $builder->innerJoin('q.categories', 'categories');
         $builder->andWhere($builder->expr()->in('categories', ':categories'))->setParameter('categories', $categories);
-        if (!$isAdmin) {
+
+        if (!$isTeacher) {
             $builder->andWhere('q.active = :active');
             $builder->setParameter('active', true);
         }
+
         $builder->orderBy('q.title', 'ASC');
         return $builder->getQuery()->getResult();
     }
-//    /**
+    //    /**
     //     * @return Quiz[] Returns an array of Quiz objects
     //     */
     /*

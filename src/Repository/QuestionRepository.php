@@ -2,15 +2,16 @@
 
 namespace App\Repository;
 
-use App\Entity\Question;
-use App\Entity\Language;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
+use App\Entity\Language;
+use App\Entity\Question;
+use Pagerfanta\Pagerfanta;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
-use Pagerfanta\Pagerfanta;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * @method Question|null find($id, $lockMode = null, $lockVersion = null)
@@ -22,13 +23,15 @@ class QuestionRepository extends ServiceEntityRepository
 {
     private $em;
     private $param;
+    private $tokenStorage;
     private $language;
 
-    public function __construct(ManagerRegistry $registry, EntityManagerInterface $em, ParameterBagInterface $param)
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $em, ParameterBagInterface $param, TokenStorageInterface $tokenStorage)
     {
         parent::__construct($registry, Question::class);
         $this->em = $em;
         $this->param = $param;
+        $this->tokenStorage = $tokenStorage;
         $this->language = $this->em->getReference(Language::class, $this->param->get('locale'));
     }
 
@@ -48,36 +51,58 @@ class QuestionRepository extends ServiceEntityRepository
         return $paginator;
     }
 
-    public function find($id, $lockMode = null, $lockVersion = null)
+    public function find($id, $lockMode = null, $lockVersion = null, $isTeacher = false, $isAdmin = false)
     {
         $builder = $this->createQueryBuilder('q');
+
         $builder->andWhere('q.id = :id');
         $builder->setParameter('id', $id);
+
         $builder->andWhere('q.language = :language');
         $builder->setParameter('language', $this->language);
+
+        if (!$isAdmin) {
+            $builder->andWhere('q.created_by = :created_by');
+            $builder->setParameter('created_by', $this->tokenStorage->getToken()->getUser());
+        }
+
         $builder->orderBy('q.text', 'ASC');
         return $builder->getQuery()->getOneOrNullResult();
     }
 
-    public function findAll(int $page=1): Pagerfanta
+    public function findAll(int $page = 1, $isTeacher = false, $isAdmin = false): Pagerfanta
     {
         $builder = $this->createQueryBuilder('q');
+
         $builder->andWhere('q.language = :language');
         $builder->setParameter('language', $this->language);
+
+        if (!$isAdmin) {
+            $builder->andWhere('q.created_by = :created_by');
+            $builder->setParameter('created_by', $this->tokenStorage->getToken()->getUser());
+        }
+
         $builder->orderBy('q.text', 'ASC');
 
         //return $builder->getQuery()->getResult();
         return $this->createPaginator($builder->getQuery(), $page);
     }
 
-    public function findAllByCategories($categories, int $page=1)
+    public function findAllByCategories($categories, int $page = 1, $isTeacher = false, $isAdmin = false)
     {
         $builder = $this->createQueryBuilder('q');
+
         $builder->andWhere('q.language = :language');
         $builder->setParameter('language', $this->language);
+
+        if (!$isAdmin) {
+            $builder->andWhere('q.created_by = :created_by');
+            $builder->setParameter('created_by', $this->tokenStorage->getToken()->getUser());
+        }
+
         $builder->innerJoin('q.categories', 'categories');
         $builder->andWhere($builder->expr()->in('categories', ':categories'))->setParameter('categories', $categories);
-        // if (!$isAdmin) {
+        // if (!$isTeacher) {
         //     $builder->andWhere('q.active = :active');
         //     $builder->setParameter('active', true);
         // }
@@ -86,7 +111,7 @@ class QuestionRepository extends ServiceEntityRepository
         return $this->createPaginator($builder->getQuery(), $page);
     }
 
-    public function findOneRandomByCategories($categories): ?Question
+    public function findOneRandomByCategories($categories, $isTeacher = false, $isAdmin = false): ?Question
     {
         $builder = $this->createQueryBuilder('q');
         $builder->andWhere('q.language = :language');
@@ -95,25 +120,27 @@ class QuestionRepository extends ServiceEntityRepository
         $builder->andWhere($builder->expr()->in('categories', ':categories'))->setParameter('categories', $categories);
 
         $questions = $builder->getQuery()->getResult();
-        $question = $questions[rand(1, sizeof($questions))-1];
+        $question = $questions[rand(1, sizeof($questions)) - 1];
 
         return $question;
     }
 
-    public function countByCategories($categories): int
+    public function countByCategories($categories, $isTeacher = false, $isAdmin = false): int
     {
         $builder = $this->createQueryBuilder('q');
+
         $builder->andWhere('q.language = :language');
         $builder->setParameter('language', $this->language);
+
         $builder->innerJoin('q.categories', 'categories');
         $builder->andWhere($builder->expr()->in('categories', ':categories'))->setParameter('categories', $categories);
 
         $questions = $builder->getQuery()->getResult();
         return sizeof($questions);
     }
-//    /**
-//     * @return Question[] Returns an array of Question objects
-//     */
+    //    /**
+    //     * @return Question[] Returns an array of Question objects
+    //     */
     /*
     public function findByExampleField($value)
     {

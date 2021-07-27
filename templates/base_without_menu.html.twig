@@ -25,7 +25,7 @@
     <body>
 
         <nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
-            <a class="navbar-brand text-warning" title="JoliQuiz" href="/">JoliQuiz</a>
+            <a class="navbar-brand text-warning" title="JoliQuiz">JoliQuiz</a>
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="navbar-nav mr-auto">
                     <!-- <li>
@@ -36,9 +36,19 @@
                     </li>                     
                 </ul>
                 <ul class="navbar-nav">
+                    {% if is_granted('ROLE_USER') %}
+                        <li>
+                            <a class="nav-link {{ app.user.loginType=='ED' ? 'text-warning' : '' }}" title="{{ 'LoginType'|trans }} : {{ app.user.loginType }}">
+                                <i class="fas fa-user"></i>
+                                {% if app.user %}
+                                    <strong>{{ app.user.username }}</strong>
+                                {% endif %}
+                            </a>
+                        </li>
                         <li>
                             <a class="nav-link" href="{{ path('logout') }}">{{'Logout'|trans}}</a>
                         </li>
+                    {% endif %}
                 </ul>
             </div>
 

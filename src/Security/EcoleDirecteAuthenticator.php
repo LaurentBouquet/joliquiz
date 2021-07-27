@@ -199,7 +199,10 @@ class EcoleDirecteAuthenticator extends AbstractGuardAuthenticator
                 $user->setOrganizationCode($codeOgec);
                 $user->setOrganizationLabel($nomEtablissement);
                 $user->setPhone($telPortable);
-                $user->setComment($comment);     
+                $user->setComment($comment); 
+                if ($typeCompte == "P") {
+                    $user->addRole('ROLE_TEACHER');
+                }    
                 $em->persist($user);
                 $em->flush();
                 return true;
