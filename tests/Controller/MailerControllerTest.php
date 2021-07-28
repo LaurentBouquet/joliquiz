@@ -35,7 +35,7 @@ class MailerControllerTest extends WebTestCase
         $email = (new TemplatedEmail())
             ->from($admin_email_address)
             ->to($admin_email_address)
-            ->subject('Test sending mail')
+            ->subject('🙂 Test sending mail')
             // path of the Twig template to render
             ->htmlTemplate('emails/registration.html.twig')
             // pass variables (name => value) to the template

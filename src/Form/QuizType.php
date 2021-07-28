@@ -33,7 +33,17 @@ class QuizType extends AbstractType
         $builder->add('title');
         $builder->add('summary');
         $builder->add('number_of_questions');
-        $builder->add('categories', EntityType::class, array(
+        if ($options['isAdmin']) {
+            $builder->add('categories', EntityType::class, array(
+                'class' => Category::class,
+                'query_builder' => function (CategoryRepository $er) {
+                    return $er->createQueryBuilder('c')->andWhere('c.language = :language')->setParameter('language', $this->param->get('locale'))->orderBy('c.shortname', 'ASC');
+                 },
+                'choice_label' => 'longname',
+                'multiple' => true
+            ));
+        } else {
+            $builder->add('categories', EntityType::class, array(
                 'class' => Category::class,
                 'query_builder' => function (CategoryRepository $er) {
                     return $er->createQueryBuilder('c')->andWhere('c.created_by = :created_by')->setParameter('created_by', $this->tokenStorage->getToken()->getUser())->andWhere('c.language = :language')->setParameter('language', $this->param->get('locale'))->orderBy('c.shortname', 'ASC');
@@ -41,6 +51,8 @@ class QuizType extends AbstractType
                 'choice_label' => 'longname',
                 'multiple' => true
             ));
+        }
+        
         $builder->add('start_quiz_comment');
         $builder->add('show_result_question');
         $builder->add('result_quiz_comment');
@@ -56,6 +68,8 @@ class QuizType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Quiz::class,
             'form_type' => 'student_questioning',
+            'isTeacher' => false, 
+            'isAdmin' => false,
         ]);
     }
 }

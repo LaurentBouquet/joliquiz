@@ -235,6 +235,10 @@ class QuizController extends AbstractController
      */
     public function workout(Request $request, Workout $workout, EntityManagerInterface $em, UserInterface $user = null, MailerInterface $mailer, TranslatorInterface $translator): Response
     {
+        if ($workout->getCompleted()) {
+            return $this->redirectToRoute('quiz_result', ['id' => $workout->getQuiz()->getId(), 'workout' => $workout->getId(), 'token' => $workout->getToken()]);
+        }
+
         $now = new \DateTime();
         //////////////
         // TODO mettre ces opérations d'historique dans un service
@@ -299,7 +303,7 @@ class QuizController extends AbstractController
                             $email = (new TemplatedEmail())
                                 ->from($admin_email_address)
                                 ->to($admin_email_address)
-                                ->subject('🎓 A quiz has just been completed by ' . $user->getUsername() . ' (before the end) !')
+                                ->subject('🙂 A quiz has just been completed by ' . $user->getUsername() . ' (before the end) !')
                                 // path of the Twig template to render
                                 ->htmlTemplate('emails/quiz_result.html.twig')
                                 // pass variables (name => value) to the template
@@ -363,7 +367,6 @@ class QuizController extends AbstractController
                     $lastQuestionHistory->setEndedAt($now);
                     $lastQuestionHistory->setDuration(date_diff($lastQuestionHistory->getEndedAt(), $lastQuestionHistory->getStartedAt()));
                     $em->persist($lastQuestionHistory);
-                    $workout->setEndedAt($now);
                     ////////////////////////////
                     // Calc score
                     $workoutSuccess = 0;
@@ -374,6 +377,7 @@ class QuizController extends AbstractController
                     }
                     $score = round(($workoutSuccess / $quiz->getNumberOfQuestions()) * 100);
                     $workout->setScore($score);
+                    $workout->setEndedAt($now);
                     ////////////////////////////
                     $em->persist($workout);
                     $em->flush();
@@ -495,7 +499,7 @@ class QuizController extends AbstractController
             $email = (new TemplatedEmail())
                 ->from($admin_email_address)
                 ->to($admin_email_address)
-                ->subject('🎓 A quiz has just been completed by ' . $user->getUsername() . '!')
+                ->subject('🙂 A quiz has just been completed by ' . $user->getUsername() . '!')
                 // path of the Twig template to render
                 ->htmlTemplate('emails/quiz_result.html.twig')
                 // pass variables (name => value) to the template
@@ -585,7 +589,7 @@ class QuizController extends AbstractController
         $categoryLongName = "";
         if ($categoryId > 0) {
             $quizzes = $quizRepository->findAllByCategories([$categoryId], $this->isGranted('ROLE_TEACHER'), $this->isGranted('ROLE_ADMIN'));
-            $category = $categoryRepository->find($categoryId);
+            $category = $categoryRepository->findOne($categoryId);
             $categoryLongName = $category->getLongName();
         } else {
             $quizzes = $quizRepository->findAll($this->isGranted('ROLE_TEACHER'), $this->isGranted('ROLE_ADMIN'));
@@ -656,7 +660,7 @@ class QuizController extends AbstractController
 
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
-        $form = $this->createForm(QuizType::class, $quiz);
+        $form = $this->createForm(QuizType::class, $quiz, ['isTeacher' => $this->isGranted('ROLE_TEACHER'), 'isAdmin' => $this->isGranted('ROLE_ADMIN')]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

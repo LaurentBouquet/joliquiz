@@ -27,7 +27,7 @@
     <body>
 
         <nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
-            <a class="navbar-brand text-warning" title="JoliQuiz" href="/">JoliQuiz</a>
+            <a class="navbar-brand text-warning" title="JoliQuiz" href="/"><img src="/images/logo_MENU.png" height="32" alt="JoliQuiz"></a>
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="navbar-nav mr-auto">
                     <!-- <li>
@@ -45,11 +45,11 @@
                         <li>
                             <a class="nav-link {% if '/category/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('category_index') }}">{{'Categories'|trans}}</a>
                         </li>
-                    {% endif %}
-                    {% if is_granted('ROLE_ADMIN') %}
                         <li>
                             <a class="nav-link {% if '/user/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('user_index') }}">{{'Users'|trans}}</a>
                         </li>
+                    {% endif %}
+                    {% if is_granted('ROLE_ADMIN') %}
                         <li>
                             <a class="nav-link {% if '/group/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('group_index') }}">{{'Groups'|trans}}</a>
                         </li>
@@ -90,7 +90,7 @@
 
         </nav>
 
-        <main role="main" class="container">
+        <main role="main" class=""> <!-- class="container" -->
 
             <div class="starter-template">
                 <div class="col-md-12 col-lg-12 col-xl-12 py-4">

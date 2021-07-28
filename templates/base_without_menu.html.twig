@@ -25,7 +25,8 @@
     <body>
 
         <nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
-            <a class="navbar-brand text-warning" title="JoliQuiz">JoliQuiz</a>
+            <!-- <a class="navbar-brand text-warning" title="JoliQuiz">JoliQuiz</a> -->
+            <a class="navbar-brand text-warning" title="JoliQuiz"><img src="/images/logo_MENU.png" height="32" alt="JoliQuiz"></a>
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="navbar-nav mr-auto">
                     <!-- <li>
@@ -45,9 +46,12 @@
                                 {% endif %}
                             </a>
                         </li>
-                        <li>
-                            <a class="nav-link" href="{{ path('logout') }}">{{'Logout'|trans}}</a>
-                        </li>
+                        <!-- if (app.request.attributes.get('_route') in ['quiz_result']) -->
+                        {% if (score is defined) %}
+                            <li>
+                                <a class="nav-link" href="{{ path('logout') }}">{{'Logout'|trans}}</a>
+                            </li>
+                        {% endif %}
                     {% endif %}
                 </ul>
             </div>

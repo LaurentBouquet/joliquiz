@@ -47,7 +47,7 @@ class QuizRepository extends ServiceEntityRepository
         return $quiz;
     }
 
-    public function find($id, $lockMode = null, $lockVersion = null, $isTeacher = false, $isAdmin = false)
+    public function find($id, $lockMode = null, $lockVersion = null)
     {
         $builder = $this->createQueryBuilder('q');
 
@@ -57,10 +57,24 @@ class QuizRepository extends ServiceEntityRepository
         $builder->andWhere('q.language = :language');
         $builder->setParameter('language', $this->language);
 
-        // if (!$isAdmin) {
-        //     $builder->andWhere('q.created_by = :created_by');
-        //     $builder->setParameter('created_by', $this->tokenStorage->getToken()->getUser());
-        // }
+        $builder->orderBy('q.title', 'ASC');
+        return $builder->getQuery()->getOneOrNullResult();
+    }
+
+    public function findOne($id, $lockMode = null, $lockVersion = null, $isTeacher = false, $isAdmin = false)
+    {
+        $builder = $this->createQueryBuilder('q');
+
+        $builder->andWhere('q.id = :id');
+        $builder->setParameter('id', $id);
+
+        $builder->andWhere('q.language = :language');
+        $builder->setParameter('language', $this->language);
+
+        if (!$isAdmin) {
+            $builder->andWhere('q.created_by = :created_by');
+            $builder->setParameter('created_by', $this->tokenStorage->getToken()->getUser());
+        }
 
         $builder->orderBy('q.title', 'ASC');
         return $builder->getQuery()->getOneOrNullResult();

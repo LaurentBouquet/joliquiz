@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use App\Repository\GroupRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -52,11 +53,18 @@ class UserController extends AbstractController
     /**
      * @Route("/", name="user_index", methods="GET")
      */
-    public function index(UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository, GroupRepository $groupRepository): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN', null, 'Access not allowed');
+        $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
-        return $this->render('user/index.html.twig', ['users' => $userRepository->findAll()]);
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $users = $userRepository->findAll($this->isGranted('ROLE_TEACHER'), $this->isGranted('ROLE_ADMIN'));
+        } else {
+            $groups = $this->getUser()->getGroups();
+            $users = $userRepository->findAllByGroups($groups);   
+        }
+
+        return $this->render('user/index.html.twig', ['users' => $users]);
     }
 
     /**

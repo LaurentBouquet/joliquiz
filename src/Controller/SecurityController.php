@@ -67,7 +67,7 @@ class SecurityController extends AbstractController
             $email = (new TemplatedEmail())
                 ->from($admin_email_address)
                 ->to($user->getEmail())
-                ->subject('Please, confirm your email address.')
+                ->subject('� Please, confirm your email address.')
                 // path of the Twig template to render
                 ->htmlTemplate('emails/registration.html.twig')
                 // pass variables (name => value) to the template
@@ -103,7 +103,7 @@ class SecurityController extends AbstractController
         $email = (new TemplatedEmail())
             ->from($admin_email_address)
             ->to($user->getEmail())
-            ->subject('Please, confirm your email address.')
+            ->subject('� Please, confirm your email address.')
             // path of the Twig template to render
             ->htmlTemplate('emails/registration.html.twig')
             // pass variables (name => value) to the template
@@ -206,7 +206,7 @@ class SecurityController extends AbstractController
                 $email = (new TemplatedEmail())
                     ->from($admin_email_address)
                     ->to($user->getEmail())
-                    ->subject('Renew your password')
+                    ->subject('🙂 Renew your password')
                     // path of the Twig template to render
                     ->htmlTemplate('emails/passwordresetting.html.twig')
                     // pass variables (name => value) to the template

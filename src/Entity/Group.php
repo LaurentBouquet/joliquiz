@@ -42,6 +42,11 @@ class Group
      */
     private $code;
 
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $shortname;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -49,7 +54,7 @@ class Group
 
     public function __toString(): string
     {
-        return $this->name;
+        return $this->shortname;
     }
 
     public function getId(): ?int
@@ -116,6 +121,18 @@ class Group
     public function setCode(string $code): self
     {
         $this->code = $code;
+
+        return $this;
+    }
+
+    public function getShortname(): ?string
+    {
+        return $this->shortname;
+    }
+
+    public function setShortname(?string $shortname): self
+    {
+        $this->shortname = $shortname;
 
         return $this;
     }

@@ -51,7 +51,21 @@ class QuestionRepository extends ServiceEntityRepository
         return $paginator;
     }
 
-    public function find($id, $lockMode = null, $lockVersion = null, $isTeacher = false, $isAdmin = false)
+    public function find($id, $lockMode = null, $lockVersion = null)
+    {
+        $builder = $this->createQueryBuilder('q');
+
+        $builder->andWhere('q.id = :id');
+        $builder->setParameter('id', $id);
+
+        $builder->andWhere('q.language = :language');
+        $builder->setParameter('language', $this->language);
+
+        $builder->orderBy('q.text', 'ASC');
+        return $builder->getQuery()->getOneOrNullResult();
+    }
+
+    public function findOne($id, $lockMode = null, $lockVersion = null, $isTeacher = false, $isAdmin = false)
     {
         $builder = $this->createQueryBuilder('q');
 
