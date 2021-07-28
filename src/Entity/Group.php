@@ -54,7 +54,11 @@ class Group
 
     public function __toString(): string
     {
-        return $this->shortname;
+        if ($this->shortname) {
+            return $this->shortname;
+        } else {
+            return "";
+        }              
     }
 
     public function getId(): ?int
