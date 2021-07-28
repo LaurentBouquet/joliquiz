@@ -16,16 +16,19 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class QuestionType extends AbstractType
 {
     private $translator;
     private $param;
+    private $tokenStorage;
 
-    public function __construct(TranslatorInterface $translator, ParameterBagInterface $param)
+    public function __construct(TranslatorInterface $translator, ParameterBagInterface $param, TokenStorageInterface $tokenStorage)
     {
         $this->translator = $translator;
         $this->param = $param;
+        $this->tokenStorage = $tokenStorage;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -47,12 +50,13 @@ class QuestionType extends AbstractType
             case 'teacher':
                 $builder->add('text');
                 $builder->add('max_duration', IntegerType::class, array(
+                    'required' => false,
                     'label' => 'Question max duration (seconds)',
                 ));
                 $builder->add('categories', EntityType::class, array(
                     'class' => Category::class,
-                    'query_builder' => function (CategoryRepository $er) {
-                        return $er->createQueryBuilder('c')->andWhere('c.language = :language')->setParameter('language', $this->param->get('locale'))->orderBy('c.shortname', 'ASC');
+                    'query_builder' => function (CategoryRepository $repository) {
+                        return $repository->createQueryBuilder('c')->andWhere('c.created_by = :created_by')->setParameter('created_by', $this->tokenStorage->getToken()->getUser())->andWhere('c.language = :language')->setParameter('language', $this->param->get('locale'))->orderBy('c.shortname', 'ASC');                        
                      },
                     'choice_label' => 'longname',
                     'multiple' => true

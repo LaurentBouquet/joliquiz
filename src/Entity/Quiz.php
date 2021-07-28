@@ -124,7 +124,8 @@ class Quiz
         $this->setUpdatedAt(new \DateTime());
         $this->setShowResultQuestion(false);
         $this->setShowResultQuiz(false);
-        $this->setNumberOfQuestions(10);
+        $this->setNumberOfQuestions(5);
+        $this->setDefaultQuestionMaxDuration(180);
         $this->categories = new ArrayCollection();
         $this->workouts = new ArrayCollection();
         $this->setAllowAnonymousWorkout(false);
@@ -177,7 +178,25 @@ class Quiz
         return $this->active;
     }
 
-    public function setActive(bool $active, EntityManager $em): self
+    public function setActive(bool $active): self
+    {
+        $now = new DateTime();
+
+        if ($active) {
+            if (!$this->getActive()) {
+                $this->actived_at = $now;
+            }
+        } else {
+            $this->actived_at = null;
+            $session = $this->getLastSession();
+        }
+
+        $this->active = $active;
+
+        return $this;
+    }
+
+    public function setActiveInSession(bool $active, EntityManager $em): self
     {
         $now = new DateTime();
 

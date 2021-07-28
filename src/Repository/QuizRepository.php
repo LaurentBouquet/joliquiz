@@ -57,8 +57,10 @@ class QuizRepository extends ServiceEntityRepository
         $builder->andWhere('q.language = :language');
         $builder->setParameter('language', $this->language);
 
-        $builder->andWhere('q.created_by = :created_by');
-        $builder->setParameter('created_by', $this->tokenStorage->getToken()->getUser());
+        // if (!$isAdmin) {
+        //     $builder->andWhere('q.created_by = :created_by');
+        //     $builder->setParameter('created_by', $this->tokenStorage->getToken()->getUser());
+        // }
 
         $builder->orderBy('q.title', 'ASC');
         return $builder->getQuery()->getOneOrNullResult();

@@ -131,7 +131,7 @@ class QuizController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
         if ($quiz->getActive()) {
-            // $quiz->setActive(false, $em); //TODO
+            // $quiz->setActiveInSession(false, $em); //TODO
             $em->persist($quiz);
             $em->flush();
         }
@@ -183,7 +183,7 @@ class QuizController extends AbstractController
     public function activate(Request $request, Quiz $quiz, EntityManagerInterface $em): Response
     {
         $activate = ($request->query->get('active') == 1);
-        $quiz->setActive($activate, $em);
+        $quiz->setActiveInSession($activate, $em);
         $em->persist($quiz);
         $em->flush();
 
@@ -203,7 +203,7 @@ class QuizController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
         if (!$quiz->getActive()) {
-            $quiz->setActive(true, $em);
+            $quiz->setActiveInSession(true, $em);
             $em->persist($quiz);
             $em->flush();
         }

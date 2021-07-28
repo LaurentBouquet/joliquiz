@@ -12,16 +12,20 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class QuizType extends AbstractType
 {
     private $translator;
     private $param;
+    private $tokenStorage;
 
-    public function __construct(TranslatorInterface $translator, ParameterBagInterface $param)
+    public function __construct(TranslatorInterface $translator, ParameterBagInterface $param, TokenStorageInterface $tokenStorage)
     {
         $this->translator = $translator;
         $this->param = $param;
+        $this->tokenStorage = $tokenStorage;
+        
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -32,7 +36,7 @@ class QuizType extends AbstractType
         $builder->add('categories', EntityType::class, array(
                 'class' => Category::class,
                 'query_builder' => function (CategoryRepository $er) {
-                    return $er->createQueryBuilder('c')->andWhere('c.language = :language')->setParameter('language', $this->param->get('locale'))->orderBy('c.shortname', 'ASC');
+                    return $er->createQueryBuilder('c')->andWhere('c.created_by = :created_by')->setParameter('created_by', $this->tokenStorage->getToken()->getUser())->andWhere('c.language = :language')->setParameter('language', $this->param->get('locale'))->orderBy('c.shortname', 'ASC');
                  },
                 'choice_label' => 'longname',
                 'multiple' => true
