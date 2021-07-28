@@ -134,17 +134,17 @@ class UserType extends AbstractType
                     'label' => $this->translator->trans('To receive result by email'),
                     'required' => false,
                 ]);
-                if ($this->checker->isGranted('ROLE_SUPER_ADMIN')) {
-                    $builder->add(
-                        'plainPassword',
-                        RepeatedType::class,
-                        [
-                            'type' => PasswordType::class,
-                            'first_options'  => array('label' => $this->translator->trans('Password')),
-                            'second_options' => array('label' => $this->translator->trans('Repeat Password'))
-                        ]
-                    );
-                }
+                // if ($this->checker->isGranted('ROLE_SUPER_ADMIN')) {
+                //     $builder->add(
+                //         'plainPassword',
+                //         RepeatedType::class,
+                //         [
+                //             'type' => PasswordType::class,
+                //             'first_options'  => array('label' => $this->translator->trans('Password')),
+                //             'second_options' => array('label' => $this->translator->trans('Repeat Password'))
+                //         ]
+                //     );
+                // }
                 break;
             case 'profile':
                 $builder->add('toReceiveMyResultByEmail', CheckboxType::class, [
