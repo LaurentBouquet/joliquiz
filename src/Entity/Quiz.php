@@ -420,7 +420,11 @@ class Quiz
      */
     public function getLastSession(): Session
     {
-        return $this->sessions->last();
+        if ($this->sessions->last()) {
+            return $this->sessions->last();
+        } else {
+            return new Session($this, new DateTime());
+        }             
     }
 
     public function addSession(Session $session): self
