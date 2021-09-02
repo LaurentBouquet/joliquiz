@@ -265,7 +265,7 @@ class QuizController extends AbstractController
         }
 
         if (!$quiz->getActive()) {
-            $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Access not allowed');
+            $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
         }
 
         // Re-read (from the database) the previous question
