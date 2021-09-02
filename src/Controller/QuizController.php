@@ -539,6 +539,7 @@ class QuizController extends AbstractController
     public function start(Request $request, Quiz $quiz, EntityManagerInterface $em, UserInterface $user = null): Response
     {
         $now = new \DateTime();
+
         if (!$quiz->getAllowAnonymousWorkout()) {
             $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
         } else {
@@ -556,7 +557,7 @@ class QuizController extends AbstractController
         }
 
         if (!$quiz->getActive()) {
-            $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Access not allowed');
+            $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
         }
 
         // $workoutRepository = $em->getRepository(Workout::class);
