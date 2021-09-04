@@ -31,7 +31,7 @@ class QuestionController extends AbstractController
         
         if ($categoryId > 0 ) {
             $questions = $questionRepository->findAllByCategories([$categoryId], $this->isGranted('ROLE_TEACHER'), $this->isGranted('ROLE_ADMIN'));
-            $category = $categoryRepository->findOne($categoryId);
+            $category = $categoryRepository->find($categoryId);
             $categoryLongName = $category->getLongName();
         }
         else {

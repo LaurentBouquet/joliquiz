@@ -590,7 +590,7 @@ class QuizController extends AbstractController
         $categoryLongName = "";
         if ($categoryId > 0) {
             $quizzes = $quizRepository->findAllByCategories([$categoryId], $this->isGranted('ROLE_TEACHER'), $this->isGranted('ROLE_ADMIN'));
-            $category = $categoryRepository->findOne($categoryId);
+            $category = $categoryRepository->find($categoryId);
             $categoryLongName = $category->getLongName();
         } else {
             $quizzes = $quizRepository->findAll($this->isGranted('ROLE_TEACHER'), $this->isGranted('ROLE_ADMIN'));
