@@ -167,8 +167,7 @@ class User implements UserInterface, \Serializable
         $this->groups = new ArrayCollection();
         $this->quizzes = new ArrayCollection();
         $this->questions = new ArrayCollection();
-        $this->categories = new ArrayCollection();
-        $this->setToReceiveMyResultByEmail(false);
+        $this->categories = new ArrayCollection();        
     }
     
     public function __toString(): string
@@ -476,6 +475,9 @@ class User implements UserInterface, \Serializable
 
     public function getToReceiveMyResultByEmail(): ?bool
     {
+        if (!isset($this->toReceiveMyResultByEmail)) {
+            $this->toReceiveMyResultByEmail = false;
+        }
         return $this->toReceiveMyResultByEmail;
     }
 
