@@ -475,7 +475,7 @@ class User implements UserInterface, \Serializable
 
     public function getToReceiveMyResultByEmail(): ?bool
     {
-        if (!isset($this->toReceiveMyResultByEmail)) {
+        if (is_null($this->toReceiveMyResultByEmail)) {
             $this->toReceiveMyResultByEmail = false;
         }
         return $this->toReceiveMyResultByEmail;
