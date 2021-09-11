@@ -168,6 +168,7 @@ class User implements UserInterface, \Serializable
         $this->quizzes = new ArrayCollection();
         $this->questions = new ArrayCollection();
         $this->categories = new ArrayCollection();
+        $this->setToReceiveMyResultByEmail(false);
     }
     
     public function __toString(): string
