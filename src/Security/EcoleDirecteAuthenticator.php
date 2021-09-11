@@ -196,6 +196,7 @@ class EcoleDirecteAuthenticator extends AbstractGuardAuthenticator
                 $user->setLoginType('ED');
                 //$user->setToken($ecoleDirecteToken);
                 $user->setEmail($userEmail);
+                $user->setToReceiveMyResultByEmail(false);
                 $user->setAccountType($typeCompte);
                 $user->setOrganizationCode($codeOgec);
                 $user->setOrganizationLabel($nomEtablissement);
