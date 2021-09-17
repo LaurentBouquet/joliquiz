@@ -621,6 +621,10 @@
         <source>Please wait, a questionnaire will be displayed/started in a few moments...</source>
         <target>Veuillez patienter, un questionnaire va s'afficher/démarrer dans quelques instants...</target>
       </trans-unit>
+      <trans-unit id="Db1SJ4w" resname="Please click on the 'Next' button to begin ...">
+        <source>Please click on the 'Next' button to begin...</source>
+        <target>Veuillez cliquer sur le bouton 'Suivant' pour commencer...</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
