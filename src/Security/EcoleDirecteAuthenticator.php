@@ -235,7 +235,7 @@ class EcoleDirecteAuthenticator extends AbstractGuardAuthenticator
         //redirect the user to where they wanted to go or redirect them to home by default
         $targetPath = $request->getSession()->get('_security.main.target_path');
         if (!$targetPath) {
-            $targetPath = $this->urlGenerator->generate('index');
+            $targetPath = $this->urlGenerator->generate('quiz');
         }
         return new RedirectResponse($targetPath);
     }
