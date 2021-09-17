@@ -189,8 +189,8 @@ class EcoleDirecteAuthenticator extends AbstractGuardAuthenticator
                         $group->setName($ecoleDirecteAccount->profile->classes[$i]->libelle.' ('.$schoolYearName.')');
                         $group->setShortname($ecoleDirecteAccount->profile->classes[$i]->code);
                     }
-                    $user->addGroup($group);
                     $em->persist($group);
+                    $user->addGroup($group);
                 }
                 // Save user
                 $user->setLoginType('ED');
