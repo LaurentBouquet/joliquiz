@@ -34,9 +34,6 @@ class User implements UserInterface, \Serializable
      *
      * @ORM\Column(type="string", length=255, unique=true)
      * @Assert\NotBlank()
-     * @Assert\Regex(
-     *     pattern = "/^[a-z0-9]+$/i"
-     * )
      */
     private $username;
 
