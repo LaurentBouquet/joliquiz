@@ -105,7 +105,7 @@ window.location.reload(true);
 				</tr>
 			{% else %}
 				<tr>
-					{% if is_granted('ROLE_USER') and (quizzes|length) < 1 %}
+					{% if is_granted('ROLE_USER') and (not is_granted('ROLE_TEACHER')) and (quizzes|length) < 1 %}
 						<td colspan="8">{{'Please wait, a questionnaire will be displayed/started in a few moments...'|trans}}</td>
 					{% endif %}
 				</tr>
