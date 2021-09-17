@@ -21,7 +21,10 @@ window.location.reload(true);
 		{% if category_long_name %}
 			{% trans %}of the "%category_long_name%" category{% endtrans %}
 		{% endif %}
-		({{ quizzes|length }})
+		{% if not is_granted('ROLE_USER') %}
+			({{ quizzes|length }})
+		{% endif %}
+		
 	</h1>
 
 	{% if is_granted('ROLE_TEACHER') %}
@@ -101,10 +104,10 @@ window.location.reload(true);
 					{% endif %}
 				</tr>
 			{% else %}
-				<tr>					
-                {% if is_granted('ROLE_USER') and (quizzes|length) < 1 %}
-                    <td colspan="8">{{'Please wait, a questionnaire will be displayed/started in a few moments...'|trans}}</td>
-                {% endif %}
+				<tr>
+					{% if is_granted('ROLE_USER') and (quizzes|length) < 1 %}
+						<td colspan="8">{{'Please wait, a questionnaire will be displayed/started in a few moments...'|trans}}</td>
+					{% endif %}
 				</tr>
 			{% endfor %}
 		</tbody>

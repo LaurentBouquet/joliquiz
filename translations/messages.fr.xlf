@@ -617,6 +617,10 @@
         <source>started on</source>
         <target>démarré le</target>
       </trans-unit>
+      <trans-unit id="RYA3RKZ" resname="Please wait, a questionnaire will be displayed/started in a few moments...">
+        <source>Please wait, a questionnaire will be displayed/started in a few moments...</source>
+        <target>Veuillez patienter, un questionnaire va s'afficher/démarrer dans quelques instants...</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
