@@ -308,7 +308,7 @@ class QuizController extends AbstractController
                                 ->htmlTemplate('emails/quiz_result.html.twig')
                                 // pass variables (name => value) to the template
                                 ->context([
-                                    'username' => $user->toString(),
+                                    'username' => $user->getName(),
                                     'useremail' => $user->getEmail(),
                                     'quiz' => $quiz,
                                     'score' => $score,
@@ -503,7 +503,7 @@ class QuizController extends AbstractController
                 ->htmlTemplate('emails/quiz_result.html.twig')
                 // pass variables (name => value) to the template
                 ->context([
-                    'username' => $user->toString(),
+                    'username' => $user->getName(),
                     'useremail' => $user->getEmail(),
                     'quiz' => $quiz,
                     'score' => $score,
