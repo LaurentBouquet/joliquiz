@@ -51,8 +51,9 @@ class QuestionController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
         $categoryId = $request->query->get('category');
-        $category = $categoryRepository->find($categoryId);
-        
+        if ($categoryId > 0) {            
+            $category = $categoryRepository->find($categoryId);
+        }
 
         $question = $em->getRepository(Question::class)->create();
         if ($categoryId > 0) {            
@@ -123,9 +124,17 @@ class QuestionController extends AbstractController
 
             return $this->redirectToRoute('question_edit', ['id' => $question->getId()]);
         }
+        $questionFirstCategory = $question->getFirstCategory();
+        if (isset($questionFirstCategory)) {
+            $questionFirstCategoryId = $questionFirstCategory->getId();
+        } else {
+            $questionFirstCategoryId = 0;
+        }
+        
 
         return $this->render('question/edit.html.twig', [
             'question' => $question,
+            'category_id' => $questionFirstCategoryId, 
             'form' => $form->createView(),
         ]);
     }

@@ -135,6 +135,20 @@ class Question
         return $this->categories;
     }
 
+    /**
+     * @return Category
+     */
+    public function getFirstCategory(): ?Category
+    {
+        if (sizeof($this->categories) > 0) {
+            return $this->categories[0];
+        }
+        else {
+            return null;
+        }        
+    }
+    
+
     public function addCategory(Category $category): self
     {
         if (!$this->categories->contains($category)) {
