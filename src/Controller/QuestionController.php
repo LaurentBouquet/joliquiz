@@ -30,6 +30,7 @@ class QuestionController extends AbstractController
         $categoryLongName = "";
         
         if ($categoryId > 0 ) {
+            $page = -1;
             $questions = $questionRepository->findAllByCategories([$categoryId], $page, $this->isGranted('ROLE_TEACHER'), $this->isGranted('ROLE_ADMIN'));
             $category = $categoryRepository->find($categoryId);
             $categoryLongName = $category->getLongName();
@@ -38,18 +39,25 @@ class QuestionController extends AbstractController
             $questions = $questionRepository->findAll($page, $this->isGranted('ROLE_TEACHER'), $this->isGranted('ROLE_ADMIN'));
         }
 
-        return $this->render('question/index.html.twig', ['questions' => $questions, 'category_id' => $categoryId, 'category_long_name' => $categoryLongName]);
+        return $this->render('question/index.html.twig', ['page' => $page, 'questions' => $questions, 'category_id' => $categoryId, 'category_long_name' => $categoryLongName]);
 
     }
 
     /**
      * @Route("/new", name="question_new", methods="GET|POST")
      */
-    public function new(Request $request, EntityManagerInterface $em): Response
+    public function new(Request $request, EntityManagerInterface $em, CategoryRepository $categoryRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
+        $categoryId = $request->query->get('category');
+        $category = $categoryRepository->find($categoryId);
+        
+
         $question = $em->getRepository(Question::class)->create();
+        if ($categoryId > 0) {            
+            $question->addCategory($category);
+        }
 
         $form = $this->createForm(QuestionType::class, $question, array('form_type'=>'teacher'));
         $form->handleRequest($request);
@@ -72,6 +80,7 @@ class QuestionController extends AbstractController
 
         return $this->render('question/new.html.twig', [
             'question' => $question,
+            'category_id' => $categoryId, 
             'form' => $form->createView(),
         ]);
     }

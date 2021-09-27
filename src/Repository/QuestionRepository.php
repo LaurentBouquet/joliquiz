@@ -121,8 +121,12 @@ class QuestionRepository extends ServiceEntityRepository
         //     $builder->setParameter('active', true);
         // }
         $builder->orderBy('q.text', 'ASC');
-        //return $builder->getQuery()->getResult();
-        return $this->createPaginator($builder->getQuery(), $page);
+        
+        if ($page == -1) {            
+            return $builder->getQuery()->getResult();
+        } else {
+            return $this->createPaginator($builder->getQuery(), $page);
+        }
     }
 
     public function findOneRandomByCategories($categories, $isTeacher = false, $isAdmin = false): ?Question
