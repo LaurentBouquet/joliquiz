@@ -38,8 +38,13 @@ class AnswerType extends AbstractType
                 ));
                 $builder->add('correct');
                 break;
+            case 'admin':
+                $builder->add('text', null, array(
+                    'label' => false,
+                ));
+                $builder->add('correct');
+                break;
         }
-
     }
 
     public function configureOptions(OptionsResolver $resolver)

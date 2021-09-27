@@ -30,7 +30,7 @@ class QuestionController extends AbstractController
         $categoryLongName = "";
         
         if ($categoryId > 0 ) {
-            $questions = $questionRepository->findAllByCategories([$categoryId], $this->isGranted('ROLE_TEACHER'), $this->isGranted('ROLE_ADMIN'));
+            $questions = $questionRepository->findAllByCategories([$categoryId], $page, $this->isGranted('ROLE_TEACHER'), $this->isGranted('ROLE_ADMIN'));
             $category = $categoryRepository->find($categoryId);
             $categoryLongName = $category->getLongName();
         }
@@ -93,7 +93,11 @@ class QuestionController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
-        $form = $this->createForm(QuestionType::class, $question, array('form_type'=>'teacher'));
+        $formType = 'teacher';
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $formType = 'admin';
+        }
+        $form = $this->createForm(QuestionType::class, $question, array('form_type'=>$formType));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

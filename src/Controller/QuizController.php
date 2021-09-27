@@ -432,7 +432,7 @@ class QuizController extends AbstractController
 
             $questionHasBeenPosted = true;
             while ($questionHasBeenPosted) {
-                // Draw a random question
+                // Find a random question
                 $nextQuestion = $questionRepository->findOneRandomByCategories($quiz->getCategories());
                 // Check if this question has not already been posted
                 $questionHasBeenPosted = false;
@@ -467,8 +467,7 @@ class QuizController extends AbstractController
                 'quiz/workout.html.twig',
                 [
                     'id' => $workout->getId(),
-                    'quiz' => $quiz,
-                    'question' => $nextQuestion,
+                    'quiz' => $quiz,                    
                     'questionNumber' => $questionNumber,
                     'questionResult' => 0,
                     'progress' => (($questionNumber - 1) / $quiz->getNumberOfQuestions()) * 100,

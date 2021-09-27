@@ -56,8 +56,33 @@ class QuestionType extends AbstractType
                 $builder->add('categories', EntityType::class, array(
                     'class' => Category::class,
                     'query_builder' => function (CategoryRepository $repository) {
-                        return $repository->createQueryBuilder('c')->andWhere('c.created_by = :created_by')->setParameter('created_by', $this->tokenStorage->getToken()->getUser())->andWhere('c.language = :language')->setParameter('language', $this->param->get('locale'))->orderBy('c.shortname', 'ASC');                        
-                     },
+                        return $repository->createQueryBuilder('c')->andWhere('c.created_by = :created_by')->setParameter('created_by', $this->tokenStorage->getToken()->getUser())->andWhere('c.language = :language')->setParameter('language', $this->param->get('locale'))->orderBy('c.shortname', 'ASC');
+                    },
+                    'choice_label' => 'longname',
+                    'multiple' => true
+                ));
+                $builder->add('answers', CollectionType::class, array(
+                    'entry_type' => AnswerType::class,
+                    'entry_options' => array(
+                        'label' => false,
+                        'form_type' => $options['form_type'],
+                    ),
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'by_reference' => false,
+                ));
+                break;
+            case 'admin':
+                $builder->add('text');
+                $builder->add('max_duration', IntegerType::class, array(
+                    'required' => false,
+                    'label' => 'Question max duration (seconds)',
+                ));
+                $builder->add('categories', EntityType::class, array(
+                    'class' => Category::class,
+                    'query_builder' => function (CategoryRepository $repository) {
+                        return $repository->createQueryBuilder('c')->andWhere('c.language = :language')->setParameter('language', $this->param->get('locale'))->orderBy('c.shortname', 'ASC');
+                    },
                     'choice_label' => 'longname',
                     'multiple' => true
                 ));
@@ -73,7 +98,6 @@ class QuestionType extends AbstractType
                 ));
                 break;
         }
-
     }
 
     public function configureOptions(OptionsResolver $resolver)
