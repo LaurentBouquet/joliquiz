@@ -70,10 +70,12 @@
             </div>
         {% endif %}
     {% else %}
-        {% if is_granted('ROLE_TEACHER') %}
-            <div class="mb-3">
-                <a class="btn btn-primary" href="{{ path('question_new', {'category': category_id}) }}"><i class="fas fa-plus"></i> {{'Create new question'|trans}}</a>
-            </div>
+        {% if (questions|length) > 10 %}
+            {% if is_granted('ROLE_TEACHER') %}
+                <div class="mb-3">
+                    <a class="btn btn-primary" href="{{ path('question_new', {'category': category_id}) }}"><i class="fas fa-plus"></i> {{'Create new question'|trans}}</a>
+                </div>
+            {% endif %}
         {% endif %}
     {% endif %}
 
