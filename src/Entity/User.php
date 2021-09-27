@@ -154,6 +154,21 @@ class User implements UserInterface, \Serializable
      */
     private $categories;
 
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $firstname;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $lastname;
+
+    /**
+     * @ORM\Column(type="string", length=20, nullable=true)
+     */
+    private $current_school_year;
+
 
 
     public function __construct()
@@ -168,8 +183,12 @@ class User implements UserInterface, \Serializable
     }
     
     public function __toString(): string
-    {
-        return $this->username;
+    {    
+        if (empty($this->getFirstname()) && empty($this->getLastname())) {
+            return $this->username;
+        } else {
+            return trim($this->getFirstname() . " " . $this->getLastname());
+        }             
     }
 
     public function getId()
@@ -571,6 +590,42 @@ class User implements UserInterface, \Serializable
                 $category->setCreatedBy(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFirstname(): ?string
+    {
+        return $this->firstname;
+    }
+
+    public function setFirstname(?string $firstname): self
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    public function getLastname(): ?string
+    {
+        return $this->lastname;
+    }
+
+    public function setLastname(?string $lastname): self
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function getCurrentSchoolYear(): ?string
+    {
+        return $this->current_school_year;
+    }
+
+    public function setCurrentSchoolYear(?string $current_school_year): self
+    {
+        $this->current_school_year = $current_school_year;
 
         return $this;
     }

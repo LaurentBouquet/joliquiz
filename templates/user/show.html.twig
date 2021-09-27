@@ -20,6 +20,14 @@
                 <td>{{ user.email }}</td>
             </tr>
             <tr>
+                <th>{{ 'Firstname'|trans }}</th>
+                <td>{{ user.firstname }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Lastname'|trans }}</th>
+                <td>{{ user.lastname }}</td>
+            </tr>
+            <tr>
                 <th>{{ 'Is active'|trans }}</th>
                 <td>{{ user.isActive ? 'Yes' : 'No' }}</td>
             </tr>

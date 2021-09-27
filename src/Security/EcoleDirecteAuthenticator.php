@@ -110,7 +110,7 @@ class EcoleDirecteAuthenticator extends AbstractGuardAuthenticator
         );
 
         $codeOgec = "";
-        //$this->logger->debug(print_r($response->getContent(), true)); // to debug
+        $this->logger->debug(print_r($response->getContent(), true)); // to debug
         $ecoleDirecteResponse = json_decode($response->getContent());
 
         $httpEcoleDirecteApiResponse = $ecoleDirecteResponse->code;
@@ -121,11 +121,15 @@ class EcoleDirecteAuthenticator extends AbstractGuardAuthenticator
         $ecoleDirecteData = $ecoleDirecteResponse->data;
         if (sizeof($ecoleDirecteData->accounts) > 0) {
             $ecoleDirecteAccount = $ecoleDirecteData->accounts[0];
+            $this->logger->debug(print_r($ecoleDirecteAccount, true)); // to debug
             $this->logger->info('codeOgec = "' . $ecoleDirecteAccount->codeOgec . '"');
+            $userPrenom = $ecoleDirecteAccount->prenom;
+            $userNom = $ecoleDirecteAccount->nom;
             $userEmail = $ecoleDirecteAccount->email;
             $typeCompte = $ecoleDirecteAccount->typeCompte;
             $codeOgec = $ecoleDirecteAccount->codeOgec;
             $nomEtablissement = $ecoleDirecteAccount->nomEtablissement;
+            $userAnneeScolaireCourante = $ecoleDirecteAccount->anneeScolaireCourante;
             $telPortable = $ecoleDirecteAccount->profile->telPortable;
             $comment = "";
             $classesCount = sizeof($ecoleDirecteAccount->profile->classes);
@@ -178,6 +182,7 @@ class EcoleDirecteAuthenticator extends AbstractGuardAuthenticator
                 } else {
                     $schoolYearName = strval((intval($currentYear)) - 1) . '-' . $currentYear;
                 }
+                // $userAnneeScolaireCourante
 
                 $classesCount = sizeof($ecoleDirecteAccount->profile->classes);
                 for ($i = 0; $i < $classesCount; $i++) {
@@ -201,6 +206,10 @@ class EcoleDirecteAuthenticator extends AbstractGuardAuthenticator
                 $user->setOrganizationCode($codeOgec);
                 $user->setOrganizationLabel($nomEtablissement);
                 $user->setPhone($telPortable);
+                $user->setFirstname($userPrenom);
+                $user->setLastname($userNom);
+                $user->setCurrentSchoolYear($userAnneeScolaireCourante);
+
                 $user->setComment($comment); 
                 if ($typeCompte == "P") {
                     $user->addRole('ROLE_TEACHER');

@@ -16,6 +16,8 @@
             <tr>
                 <th>{{ 'Username'|trans }}</th>
                 <th>{{ 'Email'|trans }}</th>
+                <th>{{ 'Firstname'|trans }}</th>
+                <th>{{ 'Lastname'|trans }}</th>
                 <th>{{ 'IsActive'|trans }}</th>
                 {% if is_granted('ROLE_ADMIN') %}
                 <th>{{ 'Roles'|trans }}</th>
@@ -31,6 +33,8 @@
             <tr {{ 'ROLE_SUPER_ADMIN' in user.roles ? 'class="table-danger"' : 'ROLE_ADMIN' in user.roles ? 'class="table-warning"' : 'ROLE_TEACHER' in user.roles ? 'class="table-primary"' : 'class="table-success"' }}>
                 <td {{ user.loginType=='ED' ? 'class="text-warning font-weight-bold"' : '' }} title="{{ 'LoginType'|trans }} : {{ user.loginType }}"><i class="fas fa-user"></i> {{ user.username }}</td>
                 <td>{{ user.email }}</td>
+                <td>{{ user.firstname }}</td>
+                <td>{{ user.lastname }}</td>
                 <td>{{ user.isActive ? 'Yes' : 'No' }}</td>
                 {% if is_granted('ROLE_ADMIN') %}
                 <td>{{ user.roles ? user.roles|join(', ') : '' }}</td>

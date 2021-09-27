@@ -67,6 +67,8 @@ class UserType extends AbstractType
 
             case 'new':
                 $builder->add('email', EmailType::class);
+                $builder->add('firstname', TextType::class);
+                $builder->add('lastname', TextType::class);
                 $builder->add(
                     'plainPassword',
                     RepeatedType::class,
@@ -107,6 +109,8 @@ class UserType extends AbstractType
 
             case 'update':
                 $builder->add('email', EmailType::class);
+                $builder->add('firstname', TextType::class);
+                $builder->add('lastname', TextType::class);
                 if ($this->checker->isGranted('ROLE_SUPER_ADMIN')) {
                     $builder->add('roles', ChoiceType::class, array(
                         'multiple' => true,
