@@ -59,7 +59,8 @@ class QuestionType extends AbstractType
                         return $repository->createQueryBuilder('c')->andWhere('c.created_by = :created_by')->setParameter('created_by', $this->tokenStorage->getToken()->getUser())->andWhere('c.language = :language')->setParameter('language', $this->param->get('locale'))->orderBy('c.shortname', 'ASC');
                     },
                     'choice_label' => 'longname',
-                    'multiple' => true
+                    'multiple' => true,
+                    'attr' => array('rows' => '10'),
                 ));
                 $builder->add('answers', CollectionType::class, array(
                     'entry_type' => AnswerType::class,
