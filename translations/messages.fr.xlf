@@ -625,6 +625,94 @@
         <source>Please click on the 'Next' button to begin...</source>
         <target>Veuillez cliquer sur le bouton 'Suivant' pour commencer...</target>
       </trans-unit>
+      <trans-unit id="ZHz6kbI" resname="Firstname">
+        <source>Firstname</source>
+        <target>Prénom</target>
+      </trans-unit>
+      <trans-unit id="htiPHRy" resname="Lastname">
+        <source>Lastname</source>
+        <target>Nom</target>
+      </trans-unit>
+      <trans-unit id="F2nCXSV" resname="A quiz has just been completed!">
+        <source>A quiz has just been completed!</source>
+        <target>Un questionnaire vient d'être terminé !</target>
+      </trans-unit>
+      <trans-unit id="ylHOH7F" resname="Hi!">
+        <source>Hi!</source>
+        <target>Bonjour,</target>
+      </trans-unit>
+      <trans-unit id="dOBbwsl" resname="A quiz has just been completed by">
+        <source>A quiz has just been completed by</source>
+        <target>Un questionnaire vient d'être terminé, par</target>
+      </trans-unit>
+      <trans-unit id="gUZMlRY" resname="got the following result">
+        <source>got the following result</source>
+        <target>avec le résultat suivant</target>
+      </trans-unit>
+      <trans-unit id="HMis_g8" resname="for the quiz">
+        <source>for the quiz</source>
+        <target>pour le questionnaire</target>
+      </trans-unit>
+      <trans-unit id="zgj1r7S" resname="To consult quiz results, goto:">
+        <source>To consult quiz results, goto:</source>
+        <target>Pour consulter les résultats du questionnaire, veuillez cliquer sur ce lien :</target>
+      </trans-unit>
+      <trans-unit id="l2VJL_p" resname="or press the button below">
+        <source>or press the button below</source>
+        <target>ou cliquer sur le bouton ci-dessous</target>
+      </trans-unit>
+      <trans-unit id="8m79NXS" resname="View results">
+        <source>View results</source>
+        <target>Consulter les résultats</target>
+      </trans-unit>
+      <trans-unit id="1EN7jke" resname="You did not request to receive this email?">
+        <source>You did not request to receive this email?</source>
+        <target>Vous n'avez pas demandé recevoir cet e-mail ?</target>
+      </trans-unit>
+      <trans-unit id="TEK9d8n" resname="No problem! Your address was probably entered by mistake.">
+        <source>No problem! Your address was probably entered by mistake.</source>
+        <target>Aucun problème ! Votre adresse a probablement été saisie par erreur.</target>
+      </trans-unit>
+      <trans-unit id="72H4Cmg" resname="You can ignore or delete this email.">
+        <source>You can ignore or delete this email.</source>
+        <target>Vous pouvez ignorer ou supprimer cet e-mail.</target>
+      </trans-unit>
+      <trans-unit id="GqexwdX" resname="Thanks!">
+        <source>Thanks!</source>
+        <target>Merci !</target>
+      </trans-unit>
+      <trans-unit id="ZrBFc6m" resname="The quiz">
+        <source>The quiz</source>
+        <target>Le questionnaire</target>
+      </trans-unit>
+      <trans-unit id="7RuAcBr" resname="A quiz has just been completed by %username%!">
+        <source>A quiz has just been completed by %username%!</source>
+        <target>Un questionnaire vient d'être terminé par %username% !</target>
+      </trans-unit>
+      <trans-unit id="1pq5agG" resname="has just been completed,">
+        <source>has just been completed,</source>
+        <target>vient d'être terminé,</target>
+      </trans-unit>
+      <trans-unit id="KKsFYrO" resname="A quiz has just been completed by %username% (before the end)!">
+        <source>A quiz has just been completed by %username% (before the end)!</source>
+        <target>Un questionnaire vient d'être terminé (avant la fin) par %username% !</target>
+      </trans-unit>
+      <trans-unit id="iGPMuKH" resname="Quiz &quot;%title%&quot; by %username% = %score%% (%grade%) - Before the end !">
+        <source>Quiz "%title%" by %username% = %score%% (%grade%) - Before the end !</source>
+        <target>QCM "%title%" par %username% = %score%% (%grade%) - Avant la fin !</target>
+      </trans-unit>
+      <trans-unit id="PlDU1q3" resname="Quiz &quot;%title%&quot; by %username% = %score%% (%grade%)">
+        <source>Quiz "%title%" by %username% = %score%% (%grade%)</source>
+        <target>QCM "%title%" par %username% = %score%% (%grade%)</target>
+      </trans-unit>
+      <trans-unit id="4h.PFEn" resname="Quiz &quot;%title%&quot; by %username% = %score%% (%grade%/20) - Before the end!">
+        <source>Quiz "%title%" by %username% = %score%% (%grade%/20) - Before the end!</source>
+        <target>QCM "%title%" par %username% = %score%% (%grade%/20) - Avant la fin !</target>
+      </trans-unit>
+      <trans-unit id="pCI0Jcj" resname="Quiz &quot;%title%&quot; by %username% = %score%% (%grade%/20)">
+        <source>Quiz "%title%" by %username% = %score%% (%grade%/20)</source>
+        <target>QCM "%title%" par %username% = %score%% (%grade%/20)</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

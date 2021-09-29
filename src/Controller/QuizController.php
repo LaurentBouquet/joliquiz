@@ -254,6 +254,7 @@ class QuizController extends AbstractController
         $questionResult = 0;
         $question_duration = 0;
         $score = $workout->getScore();
+        $grade = round($score/5, 1);
         $quiz = $workout->getQuiz();
 
         if (!$quiz->getAllowAnonymousWorkout()) {
@@ -303,7 +304,7 @@ class QuizController extends AbstractController
                             $email = (new TemplatedEmail())
                                 ->from($admin_email_address)
                                 ->to($admin_email_address)
-                                ->subject('🙂 A quiz has just been completed by ' . $user->getUsername() . ' (before the end) !')
+                                ->subject('🙂 ' . $translator->trans('Quiz "%title%" by %username% = %score%% (%grade%/20) - Before the end!', ['%title%' => $quiz->getTitle(), '%username%' => $user->getName(), '%score%' => $score, '%grade%' => $grade]))
                                 // path of the Twig template to render
                                 ->htmlTemplate('emails/quiz_result.html.twig')
                                 // pass variables (name => value) to the template
@@ -312,6 +313,7 @@ class QuizController extends AbstractController
                                     'useremail' => $user->getEmail(),
                                     'quiz' => $quiz,
                                     'score' => $score,
+                                    'grade' => $grade,
                                     'workout_id' => $workout->getId(),
                                     'workout_token' => $workout->getToken(),
                                 ]);
@@ -479,6 +481,7 @@ class QuizController extends AbstractController
         } else {
             // Quiz is completed then display end
             $score = $workout->getScore();
+            $grade = round($score/5, 1);
             $comment = '';
             $commentLines = explode("\n", $quiz->getResultQuizComment());
             foreach ($commentLines as $commentLine) {
@@ -498,7 +501,7 @@ class QuizController extends AbstractController
             $email = (new TemplatedEmail())
                 ->from($admin_email_address)
                 ->to($admin_email_address)
-                ->subject('🙂 A quiz has just been completed by ' . $user->getUsername() . '!')
+                ->subject('🙂 ' . $translator->trans('Quiz "%title%" by %username% = %score%% (%grade%/20)', ['%title%' => $quiz->getTitle(), '%username%' => $user->getName(), '%score%' => $score, '%grade%' => $grade]))
                 // path of the Twig template to render
                 ->htmlTemplate('emails/quiz_result.html.twig')
                 // pass variables (name => value) to the template
@@ -507,6 +510,7 @@ class QuizController extends AbstractController
                     'useremail' => $user->getEmail(),
                     'quiz' => $quiz,
                     'score' => $score,
+                    'grade' => $grade,
                     'workout_id' => $workout->getId(),
                     'workout_token' => $workout->getToken(),
                 ]);

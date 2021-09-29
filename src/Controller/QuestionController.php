@@ -76,7 +76,12 @@ class QuestionController extends AbstractController
 
             $this->addFlash('success', sprintf('Question #%s is created.', $question->getId()));
 
-            return $this->redirectToRoute('question_index');
+            //return $this->redirectToRoute('question_index');
+            $newQuestion = new Question();
+            foreach ($question->getCategories() as $newCategory) {
+                $newQuestion->addCategory($newCategory);
+            }
+            $form = $this->createForm(QuestionType::class, $newQuestion, array('form_type'=>'teacher'));
         }
 
         return $this->render('question/new.html.twig', [
