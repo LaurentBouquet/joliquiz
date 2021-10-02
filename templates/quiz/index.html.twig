@@ -24,7 +24,7 @@ window.location.reload(true);
 		{% if not is_granted('ROLE_USER') %}
 			({{ quizzes|length }})
 		{% endif %}
-		
+
 	</h1>
 
 	{% if is_granted('ROLE_TEACHER') %}
@@ -84,19 +84,23 @@ window.location.reload(true);
 									<i class="fas fa-pencil-alt"></i>
 								</a>
 								{{ include('quiz/_delete_form.html.twig') }}
-								<a class="btn btn-primary btn-sm mr-2" href="{{ path('quiz_start', {'id': quiz.id}) }}">{{'Start'|trans}}
+								<a class="btn btn-warning btn-sm mr-2" href="{{ path('quiz_start', {'id': quiz.id}) }}" title="{{'Start exercise'|trans}}">{{'Start'|trans}}
 									<i class="fas fa-arrow-circle-right"></i>
 								</a>
-								<a class="btn btn-warning btn-sm mr-2" href="{{ path('quiz_monitor', {'id': quiz.id}) }}">
+								<a class="btn btn-primary btn-sm mr-2" href="{{ path('quiz_monitor', {'id': quiz.id}) }}" title="{{'Follow the progress'|trans}}">
 									<i class="fas fa-chalkboard-teacher"></i>
 								</a>
-
+								<a class="btn btn-success btn-sm mr-2" href="{{ path('quiz_monitor', {'id': quiz.id}) }}" title="{{'View history'|trans}}">
+									<i class="fas fa-th-list"></i>
+									<!-- fa-stream -->
+									<!-- fa-chart-bar -->
+								</a>
 							</div>
 						</td>
 					{% else %}
 						{% if is_granted('ROLE_USER') %}
 							<td>
-								<a class="btn btn-primary btn-sm mr-2" href="{{ path('quiz_start', {'id': quiz.id}) }}">{{'Start'|trans}}
+								<a class="btn btn-warning btn-sm mr-2" href="{{ path('quiz_start', {'id': quiz.id}) }}" title="{{'Start exercise'|trans}}">{{'Start'|trans}}
 									<i class="fas fa-arrow-circle-right"></i>
 								</a>
 							</td>

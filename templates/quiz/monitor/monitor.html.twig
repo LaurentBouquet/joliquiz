@@ -69,17 +69,17 @@
     </table>
 
     <div class="mb-3">
-        {% if workouts|length > 2 %}
-        <a class="btn btn-primary mx-1 float-right" href="{{ path('quiz_podium', {'id': quiz.id}) }}">
-            {{ 'Podium'|trans }} <i class="fas fa-arrow-circle-right"></i>
-        </a>
-        {% endif %}
         {% if workouts|length > 0 %}
         <a class="btn btn-info mx-1 float-right" href="{{ path('quiz_analyse', {'id': quiz.id}) }}">
-            {{ 'Answers analyse'|trans }} <i class="fas fa-arrow-circle-right"></i>
+            {{ 'Answers analyse'|trans }} <i class="fas fa-list-ol"></i> <!-- fa-tasks -->
         </a>
         {% endif %}
-        <a class="btn btn-warning mx-1 float-right" {% if showStudentsName %} title="{{'Hide users name'|trans}}"
+        {% if workouts|length > 2 %}
+        <a class="btn btn-primary mx-1 float-right" href="{{ path('quiz_podium', {'id': quiz.id}) }}">
+            {{ 'Podium'|trans }} <i class="fas fa-poll"></i>
+        </a>
+        {% endif %}
+        <a class="btn btn-warning mx-1 float-left" {% if showStudentsName %} title="{{'Hide users name'|trans}}"
             href="{{ path('quiz_monitor', {'id': quiz.id, 'show': 0}) }}">
             <i class="far fa-user"></i>
             {% else %}

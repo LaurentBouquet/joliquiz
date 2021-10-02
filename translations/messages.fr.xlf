@@ -713,6 +713,18 @@
         <source>Quiz "%title%" by %username% = %score%% (%grade%/20)</source>
         <target>QCM "%title%" par %username% = %score%% (%grade%/20)</target>
       </trans-unit>
+      <trans-unit id="v5n7lbh" resname="Follow the progress">
+        <source>Follow the progress</source>
+        <target>Suivre le déroulement</target>
+      </trans-unit>
+      <trans-unit id="pZMrxM5" resname="View history">
+        <source>View history</source>
+        <target>Consulter l'historique</target>
+      </trans-unit>
+      <trans-unit id="ZETErSr" resname="Start exercise">
+        <source>Start exercise</source>
+        <target>Démarrer l'exercice</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
