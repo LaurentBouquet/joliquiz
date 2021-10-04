@@ -12,7 +12,6 @@ use App\Entity\AnswerHistory;
 use App\Entity\QuestionHistory;
 use App\Repository\QuizRepository;
 use App\Repository\CategoryRepository;
-use Symfony\Component\Mime\RawMessage;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
@@ -571,6 +570,11 @@ class QuizController extends AbstractController
         $workout->setNumberOfQuestions(0);
         $workout->setToken($this->tokenGenerator->generateToken());
         $em->persist($workout);
+
+        $session = $quiz->getLastSession();
+        $session->addWorkout($workout);
+        $em->persist($session);
+
         $em->flush();
 
         return $this->render(

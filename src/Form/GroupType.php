@@ -2,12 +2,12 @@
 
 namespace App\Form;
 
+use App\Entity\User;
 use App\Entity\Group;
-use App\Form\UserType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class GroupType extends AbstractType
 {
@@ -17,14 +17,13 @@ class GroupType extends AbstractType
             ->add('name')
             ->add('code')
             ->add('school')
-            ->add('users')         
+            // ->add('users')         
         ;
-        // $builder->add('users', CollectionType::class, array(
-        //     'entry_type' => UserType::class,
-        //     'entry_options' => array(
-        //         'attr' => array('rows' => '7'),
-        //     ),
-        // ));
+        $builder->add('users', EntityType::class, array(
+            'class' => User::class,
+            'choice_label' => 'name',
+            'multiple' => true
+        ));    
     }
 
     public function configureOptions(OptionsResolver $resolver)

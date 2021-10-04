@@ -72,6 +72,11 @@ class Workout
      */
     private $token;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Session::class, inversedBy="workouts")
+     */
+    private $session;
+
 
     public function __construct()
     {
@@ -220,6 +225,18 @@ class Workout
     public function setToken(?string $token): self
     {
         $this->token = $token;
+
+        return $this;
+    }
+
+    public function getSession(): ?Session
+    {
+        return $this->session;
+    }
+
+    public function setSession(?Session $session): self
+    {
+        $this->session = $session;
 
         return $this;
     }

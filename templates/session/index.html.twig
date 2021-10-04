@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Session index
+{% endblock %}
+
+{% block body %}
+	<h1>{{ 'Quiz "%quiz-title%" history'|trans({'%quiz-title%': quiz.title}) }}</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>{{ 'Started_at'|trans }}</th>
+				<th>{{ 'Ended_at'|trans }}</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for session in sessions %}
+				<tr>
+					<td>{{ session.startedAt ? session.startedAt|date('d/m/Y H:i') : '' }}</td>
+					<td>{{ session.endedAt ? session.endedAt|date('d/m/Y H:i') : '' }}</td>
+					<td>
+						{% if session.workouts|length > 2 %}
+							<a class="btn btn-primary mx-1" href="{{ path('quiz_podium', {'id': quiz.id}) }}">			
+								<i class="fas fa-poll"></i>
+							</a>
+						{% endif %}
+						{% if session.workouts|length > 0 %}
+							<a class="btn btn-info mx-1" href="{{ path('quiz_analyse', {'id': quiz.id}) }}">                                
+								{{ 'Answers analyse'|trans }}
+								<i class="fas fa-list-ol"></i>
+                                ({{ session.workouts|length }})
+								<!-- fa-tasks -->
+							</a>
+						{% endif %}
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="4">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+{% endblock %}

@@ -33,7 +33,6 @@ class Group
 
     /**
      * @ORM\ManyToMany(targetEntity=User::class, mappedBy="groups")
-     * @ORM\JoinTable(name="tbl_group_user")
      */
     private $users;
 

@@ -18,7 +18,18 @@ class SessionRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Session::class);
     }
-
+    
+    public function findByQuizId($quiz_id)
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.quiz = :val')
+            ->setParameter('val', $quiz_id)
+            ->orderBy('s.id', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    
     // /**
     //  * @return Session[] Returns an array of Session objects
     //  */

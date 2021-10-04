@@ -725,6 +725,18 @@
         <source>Start exercise</source>
         <target>Démarrer l'exercice</target>
       </trans-unit>
+      <trans-unit id="7RuwS9Q" resname="Quiz &quot;%quiz-title%&quot; history">
+        <source>Quiz "%quiz-title%" history</source>
+        <target>Historique du questionnaire "%quiz-title%"</target>
+      </trans-unit>
+      <trans-unit id="e41SSRv" resname="Started_at">
+        <source>Started_at</source>
+        <target>Commencé le</target>
+      </trans-unit>
+      <trans-unit id="yNQLZpP" resname="Ended_at">
+        <source>Ended_at</source>
+        <target>Terminé le</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

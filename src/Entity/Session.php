@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -34,9 +36,15 @@ class Session
      */
     private $quiz;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Workout::class, mappedBy="session")
+     */
+    private $workouts;
+
     public function __construct(Quiz $quiz, DateTime $started_at) {
         $this->setQuiz($quiz);
         $this->setStartedAt($started_at);
+        $this->workouts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -79,4 +87,35 @@ class Session
 
         return $this;
     }
+
+    /**
+     * @return Collection|Workout[]
+     */
+    public function getWorkouts(): Collection
+    {
+        return $this->workouts;
+    }
+
+    public function addWorkout(Workout $workout): self
+    {
+        if (!$this->workouts->contains($workout)) {
+            $this->workouts[] = $workout;
+            $workout->setSession($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWorkout(Workout $workout): self
+    {
+        if ($this->workouts->removeElement($workout)) {
+            // set the owning side to null (unless already changed)
+            if ($workout->getSession() === $this) {
+                $workout->setSession(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

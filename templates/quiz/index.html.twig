@@ -38,7 +38,7 @@ window.location.reload(true);
 	<table class="table">
 		<thead>
 			<tr>
-				<th class="text-center align-middle">{{ 'Title'|trans }}</th>
+				<th>{{ 'Title'|trans }}</th>
 				<th class="text-center align-middle">{{ 'Questions'|trans }}</th>
 				<th class="text-center align-middle">{{ 'Categories'|trans }}</th>
 				{% if is_granted('ROLE_TEACHER') %}
@@ -46,7 +46,7 @@ window.location.reload(true);
 					{# <th class="text-center align-middle">{{ 'Anonymous'|trans }}</th> #}
 				{% endif %}
 				{% if is_granted('ROLE_USER') %}
-					<th class="text-center align-middle">{{ 'Actions'|trans }}</th>
+					<th></th>
 				{% endif %}
 			</tr>
 		</thead>
@@ -87,14 +87,20 @@ window.location.reload(true);
 								<a class="btn btn-warning btn-sm mr-2" href="{{ path('quiz_start', {'id': quiz.id}) }}" title="{{'Start exercise'|trans}}">{{'Start'|trans}}
 									<i class="fas fa-arrow-circle-right"></i>
 								</a>
-								<a class="btn btn-primary btn-sm mr-2" href="{{ path('quiz_monitor', {'id': quiz.id}) }}" title="{{'Follow the progress'|trans}}">
-									<i class="fas fa-chalkboard-teacher"></i>
-								</a>
-								<a class="btn btn-success btn-sm mr-2" href="{{ path('quiz_monitor', {'id': quiz.id}) }}" title="{{'View history'|trans}}">
-									<i class="fas fa-th-list"></i>
-									<!-- fa-stream -->
-									<!-- fa-chart-bar -->
-								</a>
+								{% if quiz.active > 0 %}
+									<a class="btn btn-primary btn-sm mr-2 px-2" href="{{ path('quiz_monitor', {'id': quiz.id}) }}" title="{{'Follow the progress'|trans}}">
+										<i class="fas fa-chalkboard-teacher"></i>
+									</a>
+								{% endif %}
+								{% if quiz.active < 1 %}
+									{% if quiz.sessions|length > 0 %}
+										<a class="btn btn-success btn-sm mr-2 px-3" href="{{ path('session_quiz', {'id': quiz.id}) }}" title="{{'View history'|trans}}">
+											<i class="fas fa-th-list"></i>
+											<!-- fa-stream -->
+											<!-- fa-chart-bar -->
+										</a>
+									{% endif %}
+								{% endif %}
 							</div>
 						</td>
 					{% else %}
