@@ -234,13 +234,23 @@ class QuizController extends AbstractController
 
         $startedAt = $quiz->getActivedAt();
 
+        $activate = $request->query->get('active');
+        if (isset($activate)) {
+            if ($activate == -1) {
+                $quiz->setActiveInSession(false, $em);
+                $em->persist($quiz);
+                $em->flush();        
+            }
+        }
+
         $session = null;
         $session_id = $request->query->get('session');
         if ($session_id > 0) {
             $session = $sessionRepository->find($session_id);
         }
         if (isset($session)) {
-            $workouts = $workoutRepository->findFirstThreeByQuizAndSession($quiz, $session);
+            // $workouts = $workoutRepository->findFirstThreeByQuizAndSession($quiz, $session);
+            $workouts = $session->getWorkouts();
         } else {
             $workouts = $workoutRepository->findByQuizAndDate($quiz, $startedAt);
         }
