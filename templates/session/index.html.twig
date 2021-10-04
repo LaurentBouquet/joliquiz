@@ -11,26 +11,31 @@
 			<tr>
 				<th>{{ 'Started_at'|trans }}</th>
 				<th>{{ 'Ended_at'|trans }}</th>
+				<th class="text-center">{{ 'Students'|trans }}</th>
 				<th></th>
 			</tr>
 		</thead>
 		<tbody>
 			{% for session in sessions %}
 				<tr>
-					<td>{{ session.startedAt ? session.startedAt|date('d/m/Y H:i') : '' }}</td>
-					<td>{{ session.endedAt ? session.endedAt|date('d/m/Y H:i') : '' }}</td>
-					<td>
-						{% if session.workouts|length > 2 %}
-							<a class="btn btn-primary mx-1" href="{{ path('quiz_podium', {'id': quiz.id}) }}">			
-								<i class="fas fa-poll"></i>
+					<td class="align-middle">{{ session.startedAt ? session.startedAt|date('d/m/Y H:i') : '' }}</td>
+					<td class="align-middle">{{ session.endedAt ? session.endedAt|date('d/m/Y H:i') : '' }}</td>
+					<td class="text-center align-middle">{{ session.workouts|length }}</td>
+					<td class="align-middle">
+						{% if session.workouts|length > 0 %}
+							<a class="btn btn-primary mx-1" href="{{ path('quiz_monitor', {'id': quiz.id, 'session': session.id}) }}" title="{{ 'Follow the progress'|trans }}">                                								
+								<i class="fas fa-chalkboard-teacher"></i>
 							</a>
 						{% endif %}
 						{% if session.workouts|length > 0 %}
-							<a class="btn btn-info mx-1" href="{{ path('quiz_analyse', {'id': quiz.id}) }}">                                
+							<a class="btn btn-info mx-1" href="{{ path('quiz_analyse', {'id': quiz.id, 'session': session.id}) }}">                                
 								{{ 'Answers analyse'|trans }}
 								<i class="fas fa-list-ol"></i>
-                                ({{ session.workouts|length }})
-								<!-- fa-tasks -->
+							</a>
+						{% endif %}
+						{% if session.workouts|length > 2 %}
+							<a class="btn btn-warning mx-1" href="{{ path('quiz_podium', {'id': quiz.id, 'session': session.id}) }}">			
+							{{ 'Podium'|trans }} <i class="fas fa-poll"></i>
 							</a>
 						{% endif %}
 					</td>

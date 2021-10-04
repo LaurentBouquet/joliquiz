@@ -70,21 +70,21 @@
 
     <div class="mb-3">
         {% if workouts|length > 0 %}
-        <a class="btn btn-info mx-1 float-right" href="{{ path('quiz_analyse', {'id': quiz.id}) }}">
+        <a class="btn btn-info mx-1 float-right" href="{{ path('quiz_analyse', {'id': quiz.id, 'session': session_id}) }}">
             {{ 'Answers analyse'|trans }} <i class="fas fa-list-ol"></i> <!-- fa-tasks -->
         </a>
         {% endif %}
         {% if workouts|length > 2 %}
-        <a class="btn btn-primary mx-1 float-right" href="{{ path('quiz_podium', {'id': quiz.id}) }}">
+        <a class="btn btn-warning mx-1 float-right" href="{{ path('quiz_podium', {'id': quiz.id, 'session': session_id}) }}">
             {{ 'Podium'|trans }} <i class="fas fa-poll"></i>
         </a>
         {% endif %}
         <a class="btn btn-warning mx-1 float-left" {% if showStudentsName %} title="{{'Hide users name'|trans}}"
-            href="{{ path('quiz_monitor', {'id': quiz.id, 'show': 0}) }}">
+            href="{{ path('quiz_monitor', {'id': quiz.id, 'show': 0, 'session': session_id}) }}">
             <i class="far fa-user"></i>
             {% else %}
             title="{{'Show users name'|trans}}"
-            href="{{ path('quiz_monitor', {'id': quiz.id, 'show': 1}) }}">
+            href="{{ path('quiz_monitor', {'id': quiz.id, 'show': 1, 'session': session_id}) }}">
             <i class="fas fa-user"></i>
             {% endif %}
         </a>

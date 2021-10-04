@@ -11,6 +11,8 @@ use App\Form\QuestionType;
 use App\Entity\AnswerHistory;
 use App\Entity\QuestionHistory;
 use App\Repository\QuizRepository;
+use App\Repository\SessionRepository;
+use App\Repository\WorkoutRepository;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -103,14 +105,26 @@ class QuizController extends AbstractController
     /**
      * @Route("/{id}/analyse", name="quiz_analyse", methods="GET")
      */
-    public function analyse(Request $request, Quiz $quiz, EntityManagerInterface $em): Response
+    public function analyse(Request $request, Quiz $quiz, EntityManagerInterface $em, SessionRepository $sessionRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
         $startedAt = $quiz->getActivedAt();
 
         $questionHistoryRepository = $em->getRepository(QuestionHistory::class);
-        $questionsHistory = $questionHistoryRepository->findAllByQuizAndDate($quiz, $startedAt);
+
+
+        $session = null;
+        $session_id = $request->query->get('session');
+        if ($session_id > 0) {
+            $session = $sessionRepository->find($session_id);
+        }
+        if (isset($session)) {
+            // $workouts = $workoutRepository->findFirstThreeByQuizAndSession($quiz, $session);
+            $questionsHistory = $questionHistoryRepository->findAllByQuizAndSession($quiz, $session);
+        } else {
+            $questionsHistory = $questionHistoryRepository->findAllByQuizAndDate($quiz, $startedAt);
+        }
 
         return $this->render(
             'quiz/monitor/analyse.html.twig',
@@ -125,12 +139,12 @@ class QuizController extends AbstractController
     /**
      * @Route("/{id}/podium", name="quiz_podium", methods="GET")
      */
-    public function podium(Request $request, Quiz $quiz, EntityManagerInterface $em): Response
+    public function podium(Request $request, Quiz $quiz, EntityManagerInterface $em, SessionRepository $sessionRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
         if ($quiz->getActive()) {
-            // $quiz->setActiveInSession(false, $em); //TODO
+            $quiz->setActiveInSession(false, $em); //TODO
             $em->persist($quiz);
             $em->flush();
         }
@@ -138,7 +152,17 @@ class QuizController extends AbstractController
         $startedAt = $quiz->getActivedAt();
 
         $workoutRepository = $em->getRepository(Workout::class);
-        $workouts = $workoutRepository->findFirstThreeByQuizAndDate($quiz, $startedAt);
+
+        $session = null;
+        $session_id = $request->query->get('session');
+        if ($session_id > 0) {
+            $session = $sessionRepository->find($session_id);
+        }
+        if (isset($session)) {
+            $workouts = $workoutRepository->findFirstThreeByQuizAndSession($quiz, $session);
+        } else {
+            $workouts = $workoutRepository->findFirstThreeByQuizAndDate($quiz, $startedAt);
+        }
 
         $firstStudent = new User();
         $firstStudentScore = 0;
@@ -165,6 +189,7 @@ class QuizController extends AbstractController
             [
                 'workouts' => $workouts,
                 'quiz' => $quiz,
+                'session_id' => $session_id,
                 'startedAt' => $startedAt,
                 'firstStudent' => $firstStudent,
                 'secondStudent' => $secondStudent,
@@ -197,17 +222,28 @@ class QuizController extends AbstractController
     /**
      * @Route("/{id}/monitor", name="quiz_monitor", methods="GET")
      */
-    public function monitor(Request $request, Quiz $quiz, EntityManagerInterface $em): Response
+    public function monitor(Request $request, Quiz $quiz, EntityManagerInterface $em, WorkoutRepository $workoutRepository, SessionRepository $sessionRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
-        if (!$quiz->getActive()) {
-            $quiz->setActiveInSession(true, $em);
-            $em->persist($quiz);
-            $em->flush();
-        }
+        // if (!$quiz->getActive()) {
+        //     $quiz->setActiveInSession(true, $em);
+        //     $em->persist($quiz);
+        //     $em->flush();
+        // }
 
         $startedAt = $quiz->getActivedAt();
+
+        $session = null;
+        $session_id = $request->query->get('session');
+        if ($session_id > 0) {
+            $session = $sessionRepository->find($session_id);
+        }
+        if (isset($session)) {
+            $workouts = $workoutRepository->findFirstThreeByQuizAndSession($quiz, $session);
+        } else {
+            $workouts = $workoutRepository->findByQuizAndDate($quiz, $startedAt);
+        }
 
         $showStudentsName = false;
         $show = $request->query->get('show');
@@ -215,14 +251,12 @@ class QuizController extends AbstractController
             $showStudentsName = ($show == 1);
         }
 
-        $workoutRepository = $em->getRepository(Workout::class);
-        $workouts = $workoutRepository->findByQuizAndDate($quiz, $startedAt);
-
         return $this->render(
             'quiz/monitor/monitor.html.twig',
             [
                 'workouts' => $workouts,
                 'quiz' => $quiz,
+                'session_id' => $session_id,
                 'startedAt' => $startedAt,
                 'showStudentsName' => $showStudentsName,
             ]
@@ -253,7 +287,7 @@ class QuizController extends AbstractController
         $questionResult = 0;
         $question_duration = 0;
         $score = $workout->getScore();
-        $grade = round($score/5, 1);
+        $grade = round($score / 5, 1);
         $quiz = $workout->getQuiz();
 
         if (!$quiz->getAllowAnonymousWorkout()) {
@@ -468,7 +502,7 @@ class QuizController extends AbstractController
                 'quiz/workout.html.twig',
                 [
                     'id' => $workout->getId(),
-                    'quiz' => $quiz,                    
+                    'quiz' => $quiz,
                     'questionNumber' => $questionNumber,
                     'questionResult' => 0,
                     'progress' => (($questionNumber - 1) / $quiz->getNumberOfQuestions()) * 100,
@@ -480,7 +514,7 @@ class QuizController extends AbstractController
         } else {
             // Quiz is completed then display end
             $score = $workout->getScore();
-            $grade = round($score/5, 1);
+            $grade = round($score / 5, 1);
             $comment = '';
             $commentLines = explode("\n", $quiz->getResultQuizComment());
             foreach ($commentLines as $commentLine) {

@@ -69,6 +69,25 @@ class WorkoutRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findFirstThreeByQuizAndSession($quiz, $session): ?array
+    {
+        return $this->createQueryBuilder('w')
+            ->andWhere('w.quiz = :quiz')
+            ->setParameter('quiz', $quiz)
+
+            ->andWhere('w.session >= :session')
+            ->setParameter('session', $session)
+
+            ->groupBy('w.student')
+            ->orderBy('w.score', 'DESC')
+            ->addOrderBy('w.started_at', 'ASC')
+            ->getQuery()
+            ->setMaxResults(3)
+            ->getResult()
+        ;
+    }
+
+    
 //    /**
 //     * @return Workout[] Returns an array of Workout objects
 //     */

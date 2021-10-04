@@ -81,7 +81,7 @@
 
 	{% if is_granted('ROLE_TEACHER') %}
         <div class="podium">
-            <a class="" href="{{ path('quiz_analyse', {'id': quiz.id}) }}">
+            <a class="" href="{{ path('quiz_analyse', {'id': quiz.id, 'session': session_id}) }}">
                 <img src="/images/podium.gif" alt="Podium" id="podium">
             </a>
             <div class="firstStudent">

@@ -87,19 +87,12 @@ window.location.reload(true);
 								<a class="btn btn-warning btn-sm mr-2" href="{{ path('quiz_start', {'id': quiz.id}) }}" title="{{'Start exercise'|trans}}">{{'Start'|trans}}
 									<i class="fas fa-arrow-circle-right"></i>
 								</a>
-								{% if quiz.active > 0 %}
-									<a class="btn btn-primary btn-sm mr-2 px-2" href="{{ path('quiz_monitor', {'id': quiz.id}) }}" title="{{'Follow the progress'|trans}}">
-										<i class="fas fa-chalkboard-teacher"></i>
+								{% if quiz.sessions|length > 0 %}
+									<a class="btn btn-success btn-sm mr-2 px-3" href="{{ path('session_quiz', {'id': quiz.id}) }}" title="{{'View history'|trans}}">
+										<i class="fas fa-th-list"></i>
+										<!-- fa-stream -->
+										<!-- fa-chart-bar -->
 									</a>
-								{% endif %}
-								{% if quiz.active < 1 %}
-									{% if quiz.sessions|length > 0 %}
-										<a class="btn btn-success btn-sm mr-2 px-3" href="{{ path('session_quiz', {'id': quiz.id}) }}" title="{{'View history'|trans}}">
-											<i class="fas fa-th-list"></i>
-											<!-- fa-stream -->
-											<!-- fa-chart-bar -->
-										</a>
-									{% endif %}
 								{% endif %}
 							</div>
 						</td>
