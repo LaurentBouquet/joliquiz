@@ -3,7 +3,7 @@
 namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Entity\User;
 
@@ -32,6 +32,7 @@ class UserFixtures extends Fixture
         $superadmin->setRoles(array('ROLE_SUPER_ADMIN'));
         $password = $this->passwordEncoder->encodePassword($superadmin, $superadmin->getPlainPassword());
         $superadmin->setPassword($password);
+        $superadmin->setToReceiveMyResultByEmail(false);
         $manager->persist($superadmin);
         $this->addReference(self::SUPER_ADMIN_USER_REFERENCE, $superadmin);
 
@@ -42,6 +43,7 @@ class UserFixtures extends Fixture
         $admin->setRoles(array('ROLE_ADMIN'));
         $password = $this->passwordEncoder->encodePassword($admin, $admin->getPlainPassword());
         $admin->setPassword($password);
+        $admin->setToReceiveMyResultByEmail(false);
         $manager->persist($admin);
         $this->addReference(self::ADMIN_USER_REFERENCE, $admin);
 
@@ -52,6 +54,7 @@ class UserFixtures extends Fixture
         $teacher->setRoles(array('ROLE_TEACHER'));
         $password = $this->passwordEncoder->encodePassword($teacher, $teacher->getPlainPassword());
         $teacher->setPassword($password);
+        $teacher->setToReceiveMyResultByEmail(false);
         $manager->persist($teacher);
         $this->addReference(self::TEACHER_USER_REFERENCE, $teacher);
 
@@ -62,6 +65,7 @@ class UserFixtures extends Fixture
         $user->setRoles(array('ROLE_USER'));
         $password = $this->passwordEncoder->encodePassword($user, $user->getPlainPassword());
         $user->setPassword($password);
+        $user->setToReceiveMyResultByEmail(false);
         $manager->persist($user);
         $this->addReference(self::BASIC_USER_REFERENCE, $user);
 
