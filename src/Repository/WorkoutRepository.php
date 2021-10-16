@@ -62,7 +62,7 @@ class WorkoutRepository extends ServiceEntityRepository
 
             ->groupBy('w.student')
             ->orderBy('w.score', 'DESC')
-            ->addOrderBy('w.ended_at', 'DESC')
+            ->addOrderBy('TIME_DIFF(w.ended_at, w.started_at, \'second\')', 'ASC')
             ->getQuery()
             ->setMaxResults(3)
             ->getResult()
@@ -80,7 +80,7 @@ class WorkoutRepository extends ServiceEntityRepository
 
             ->groupBy('w.student')
             ->orderBy('w.score', 'DESC')
-            ->addOrderBy('w.started_at', 'ASC')
+            ->addOrderBy('TIME_DIFF(w.ended_at, w.started_at, \'second\')', 'ASC')
             ->getQuery()
             ->setMaxResults(3)
             ->getResult()

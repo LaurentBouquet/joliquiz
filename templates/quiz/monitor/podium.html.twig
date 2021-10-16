@@ -67,7 +67,7 @@
 			top: 75%; /* Adjust this value to move the positioned div up and down */
 			text-align: center;
 			width: 100%; /* Set the width of the positioned div */
-		}
+		}	
 	</style>
 {% endblock %}
 
@@ -86,19 +86,23 @@
             </a>
             <div class="firstStudent">
                 <h4 class="font-weight-bold">{{ firstStudent.username }}</h4>
-                {{ firstStudentScore }} %</div>
+				<h7>&nbsp; {{ firstStudentDuration }}</h7>
+                {{ firstStudentScore }} %
+				</div>
             <div class="secondStudent">
                 {% if secondStudentScore > 0 %}
-                <h5 class="">{{ secondStudent.username }}</h5>
-                {{ secondStudentScore }} %
+                <h5 class="">{{ secondStudent.username }}</h5>                
+				<h7>&nbsp; {{ secondStudentDuration }}</h7>
+				{{ secondStudentScore }} %
                 {% else %}
                 ?
                 {% endif %}
             </div>
             <div class="thirdStudent">
                 {% if thirdStudentScore > 0 %}
-                <h6 class="">{{ thirdStudent.username }}</h6>
-                {{ thirdStudentScore }} %
+                <h6 class="">{{ thirdStudent.username }}</h6>                
+				<h7>&nbsp; {{ thirdStudentDuration }}</h7>
+				{{ thirdStudentScore }} %
                 {% else %}
                 ?
                 {% endif %}

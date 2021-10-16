@@ -169,18 +169,21 @@ class QuizController extends AbstractController
         if (sizeof($workouts) > 0) {
             $firstStudent = ($workouts[0])->getStudent();
             $firstStudentScore = ($workouts[0])->getScore();
+            $firstStudentDuration = ($workouts[0])->getDuration()->format('%I:%S');            
         }
         $secondStudent = new User();
         $secondStudentScore = 0;
         if (sizeof($workouts) > 1) {
             $secondStudent = ($workouts[1])->getStudent();
             $secondStudentScore = ($workouts[1])->getScore();
+            $secondStudentDuration = ($workouts[1])->getDuration()->format('%I:%S');            
         }
         $thirdStudent = new User();
         $thirdStudentScore = 0;
         if (sizeof($workouts) > 2) {
             $thirdStudent = ($workouts[2])->getStudent();
             $thirdStudentScore = ($workouts[2])->getScore();
+            $thirdStudentDuration = ($workouts[2])->getDuration()->format('%I:%S');            
         }
 
 
@@ -197,6 +200,9 @@ class QuizController extends AbstractController
                 'firstStudentScore' => $firstStudentScore,
                 'secondStudentScore' => $secondStudentScore,
                 'thirdStudentScore' => $thirdStudentScore,
+                'firstStudentDuration' => $firstStudentDuration,
+                'secondStudentDuration' => $secondStudentDuration,
+                'thirdStudentDuration' => $thirdStudentDuration,
             ]
         );
     }

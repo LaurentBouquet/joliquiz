@@ -37,12 +37,12 @@
 
                         <tr>
                             {% if showStudentsName %}
-                                <td width="10%" class="align-left align-middle {{ workout.student.loginType=='ED' ? 'text-warning font-weight-bold' : '' }}" style="padding: 1px;" title="{{ 'LoginType'|trans }} : {{ workout.student.loginType }}">
+                                <td width="20%" class="align-left align-middle {{ workout.student.loginType=='ED' ? 'text-warning font-weight-bold' : '' }}" style="padding: 1px;" title="{{ 'LoginType'|trans }} : {{ workout.student.loginType }}">
                                     <i class="fas fa-user"></i>
-                                    {{  workout.student.username }}
+                                    {{  workout.student.name }}
                                 </td>
                                 <td width="5%" class="text-center align-middle text-secondary">{{ workout.numberOfQuestions<1?0:workout.completed?workout.numberOfQuestions:(workout.numberOfQuestions-1) }}/{{ quiz.numberOfQuestions }}</td>                                
-                                <td width="75%" class="text-center align-middle">
+                                <td width="65%" class="text-center align-middle">
                             {% else %}
                                 <td width="5%" class="text-center align-middle text-secondary">{{ workout.numberOfQuestions<1?0:workout.completed?workout.numberOfQuestions:(workout.numberOfQuestions-1) }}/{{ quiz.numberOfQuestions }}</td>
                                 <td width="85%" class="text-center align-middle">

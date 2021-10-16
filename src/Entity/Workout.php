@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -137,6 +136,11 @@ class Workout
 
         return $this;
     }
+
+    public function getDuration(): ?\DateInterval
+    {
+        return $this->ended_at->diff($this->started_at);
+    }    
 
     public function getNumberOfQuestions(): ?int
     {
