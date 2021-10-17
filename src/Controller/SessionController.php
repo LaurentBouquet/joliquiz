@@ -7,9 +7,11 @@ use App\Form\SessionType;
 use App\Repository\QuizRepository;
 use App\Repository\SessionRepository;
 use App\Repository\WorkoutRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
@@ -17,6 +19,22 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class SessionController extends AbstractController
 {
+    /**
+     * @Route("/clean", name="session_clean", methods={"GET"})
+     */
+    public function clean(SessionRepository $sessionRepository, QuizRepository $quizRepository, WorkoutRepository $workoutRepository, Request $request): Response
+    {
+        $quiz_id = $request->query->get('id');
+        $quiz = $quizRepository->find($quiz_id);
+
+        $sessionRepository->cleanByQuizId($quiz_id);
+
+        return $this->render('session/index.html.twig', [
+            'sessions' => $sessionRepository->findByQuizId($quiz_id),
+            'quiz' => $quiz,           
+        ]);
+    }
+    
     /**
      * @Route("/quiz", name="session_quiz", methods={"GET"})
      */
@@ -72,16 +90,21 @@ class SessionController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="session_delete", methods={"POST"})
+     * @Route("/{id}", name="session_delete", methods="DELETE")
      */
-    public function delete(Request $request, Session $session): Response
+    public function delete(Request $request, Session $session, EntityManagerInterface $em, TranslatorInterface $translator): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
+
+        $quizId = $session->getQuiz()->getId();
         if ($this->isCsrfTokenValid('delete'.$session->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($session);
-            $entityManager->flush();
+            $em->remove($session);
+            $em->flush();
+
+            $this->addFlash('success', sprintf($translator->trans('Session started at %s is deleted.'), $session->getStartedAt()->format("d/m/Y h:m")));
         }
 
-        return $this->redirectToRoute('session_index');
+        return $this->redirectToRoute('session_quiz', ['id'=> $quizId]);
     }
+
 }

@@ -37,7 +37,7 @@ class Session
     private $quiz;
 
     /**
-     * @ORM\OneToMany(targetEntity=Workout::class, mappedBy="session")
+     * @ORM\OneToMany(targetEntity=Workout::class, mappedBy="session", cascade={"remove"})
      */
     private $workouts;
 

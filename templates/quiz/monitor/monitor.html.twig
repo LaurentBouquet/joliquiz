@@ -100,7 +100,7 @@
                     </a>
                 {% endif %}
                 {% if quiz.active %}
-                    <a class="btn btn-primary mx-1 float-right" href="{{ path('quiz_monitor', {'id': quiz.id, 'session': session_id, 'show': showStudentsName, 'active': -1}) }}" title="{{'Disactivate'|trans}}">
+                    <a class="btn btn-warning mx-1 float-right" href="{{ path('quiz_monitor', {'id': quiz.id, 'session': session_id, 'show': showStudentsName, 'active': -1}) }}" title="{{'Disactivate'|trans}}">
                         <i class="fas fa-toggle-on"></i>
                     </a>
                 {% endif %}

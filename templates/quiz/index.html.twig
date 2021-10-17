@@ -52,13 +52,17 @@
 		</thead>
 		<tbody>
 			{% for quiz in quizzes %}
+				{% if quiz.active %}
+				<tr class="text-warning font-weight-bold" id="quiz-{{ quiz.id }}">
+				{% else %}
 				<tr id="quiz-{{ quiz.id }}">
+				{% endif %}			
 					<td title="{{ quiz.summary }}">{{ quiz.title }}</td>
 					<td class="text-center">{{ quiz.numberOfQuestions }}</td>
 					<td>
 						{% for category in quiz.categories %}
 							-
-							<a href="{{ path('quiz_index', {'category': category.id}) }}">{{ category.longname }}</a>
+							<a {{ quiz.active ? 'class="text-warning"' : '' }} href="{{ path('quiz_index', {'category': category.id}) }}">{{ category.longname }}</a>
 							<br>
 						{% endfor %}
 					</td>
@@ -66,7 +70,7 @@
 						{# <td class="text-center">{{ quiz.active ? 'Yes' : 'No' }}</td> #}
 						<td class="text-center h4">
 							{% if quiz.active %}
-								<a class="mr-2" href="{{ path('quiz_activate', {'id': quiz.id, 'active': not(quiz.active)}) }}" title="{{'Disactivate'|trans}}">
+								<a class="mr-2 text-warning" href="{{ path('quiz_activate', {'id': quiz.id, 'active': not(quiz.active)}) }}" title="{{'Disactivate'|trans}}">
 									<i class="fas fa-toggle-on"></i>
 								</a>
 							{% else %}

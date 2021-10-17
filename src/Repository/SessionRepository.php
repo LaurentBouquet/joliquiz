@@ -19,6 +19,17 @@ class SessionRepository extends ServiceEntityRepository
         parent::__construct($registry, Session::class);
     }
     
+    public function cleanByQuizId(int $quiz_id)
+    {
+        $conn = $this->getEntityManager()->getConnection();        
+        $sql = "delete from tbl_session where quiz_id = :quiz_id 
+                and :quiz_id not in (select id as quiz_id from tbl_quiz where active > 0)
+                and id not in (select session_id as id from tbl_workout where session_id is not null and quiz_id = :quiz_id);";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam('quiz_id', $quiz_id);
+        $stmt->executeStatement();
+    }
+       
     public function findByQuizId($quiz_id)
     {
         return $this->createQueryBuilder('s')
