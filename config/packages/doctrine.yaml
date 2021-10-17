@@ -36,6 +36,6 @@ doctrine:
                 alias: App
         dql:
             numeric_functions:
-                time_diff: DQL\TimeDiff
-                time_add: DQL\TimeAdd
-                time_sub: DQL\TimeSub
+                time_diff: App\DQL\TimeDiff
+                time_add: App\DQL\TimeAdd
+                time_sub: App\DQL\TimeSub
