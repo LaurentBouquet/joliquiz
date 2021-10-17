@@ -85,13 +85,13 @@
                 <img src="/images/podium.gif" alt="Podium" id="podium">
             </a>
             <div class="firstStudent">
-                <h4 class="font-weight-bold">{{ firstStudent.username }}</h4>
+                <h4 class="font-weight-bold">{{ firstStudent.name }}</h4>
 				<h7>&nbsp; {{ firstStudentDuration }}</h7>
                 {{ firstStudentScore }} %
 				</div>
             <div class="secondStudent">
                 {% if secondStudentScore > 0 %}
-                <h5 class="">{{ secondStudent.username }}</h5>                
+                <h5 class="">{{ secondStudent.name }}</h5>                
 				<h7>&nbsp; {{ secondStudentDuration }}</h7>
 				{{ secondStudentScore }} %
                 {% else %}
@@ -100,7 +100,7 @@
             </div>
             <div class="thirdStudent">
                 {% if thirdStudentScore > 0 %}
-                <h6 class="">{{ thirdStudent.username }}</h6>                
+                <h6 class="">{{ thirdStudent.name }}</h6>                
 				<h7>&nbsp; {{ thirdStudentDuration }}</h7>
 				{{ thirdStudentScore }} %
                 {% else %}
