@@ -41,6 +41,11 @@ class Session
      */
     private $workouts;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $sended_to_ed;
+
     public function __construct(Quiz $quiz, DateTime $started_at) {
         $this->setQuiz($quiz);
         $this->setStartedAt($started_at);
@@ -114,6 +119,18 @@ class Session
                 $workout->setSession(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSendedToED(): ?bool
+    {
+        return $this->sended_to_ed;
+    }
+
+    public function setSendedToED(?bool $sended_to_ed): self
+    {
+        $this->sended_to_ed = $sended_to_ed;
 
         return $this;
     }

@@ -117,7 +117,7 @@ class EcoleDirecteAuthenticator extends AbstractGuardAuthenticator
         $this->logger->info("HTTP EcoleDirecte API response for '" . $username . "' login = " . $httpEcoleDirecteApiResponse);
 
         $ecoleDirecteMessage = $ecoleDirecteResponse->message;
-        //$ecoleDirecteToken = $ecoleDirecteResponse->token;
+        $ecoleDirecteToken = $ecoleDirecteResponse->token;
         $ecoleDirecteData = $ecoleDirecteResponse->data;
         if (sizeof($ecoleDirecteData->accounts) > 0) {
             $ecoleDirecteAccount = $ecoleDirecteData->accounts[0];
@@ -199,7 +199,7 @@ class EcoleDirecteAuthenticator extends AbstractGuardAuthenticator
                 }
                 // Save user
                 $user->setLoginType('ED');
-                //$user->setToken($ecoleDirecteToken);
+                $user->setToken($ecoleDirecteToken);
                 $user->setEmail($userEmail);
                 $user->setToReceiveMyResultByEmail(false);
                 $user->setAccountType($typeCompte);
