@@ -46,6 +46,11 @@ class Group
      */
     private $shortname;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $ed_id;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -136,6 +141,18 @@ class Group
     public function setShortname(?string $shortname): self
     {
         $this->shortname = $shortname;
+
+        return $this;
+    }
+
+    public function getEdId(): ?int
+    {
+        return $this->ed_id;
+    }
+
+    public function setEdId(?int $ed_id): self
+    {
+        $this->ed_id = $ed_id;
 
         return $this;
     }

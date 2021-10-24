@@ -169,6 +169,11 @@ class User implements UserInterface, \Serializable
      */
     private $current_school_year;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $ed_id;
+
 
 
     public function __construct()
@@ -631,6 +636,18 @@ class User implements UserInterface, \Serializable
     public function setCurrentSchoolYear(?string $current_school_year): self
     {
         $this->current_school_year = $current_school_year;
+
+        return $this;
+    }
+
+    public function getEdId(): ?int
+    {
+        return $this->ed_id;
+    }
+
+    public function setEdId(?int $ed_id): self
+    {
+        $this->ed_id = $ed_id;
 
         return $this;
     }

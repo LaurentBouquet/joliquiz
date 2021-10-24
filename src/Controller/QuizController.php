@@ -105,7 +105,7 @@ class QuizController extends AbstractController
     /**
      * @Route("/{id}/analyse", name="quiz_analyse", methods="GET")
      */
-    public function analyse(Request $request, Quiz $quiz, EntityManagerInterface $em, SessionRepository $sessionRepository): Response
+    public function analyse(Quiz $quiz, Request $request, EntityManagerInterface $em, SessionRepository $sessionRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 

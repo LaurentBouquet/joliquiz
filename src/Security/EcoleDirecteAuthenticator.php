@@ -126,6 +126,7 @@ class EcoleDirecteAuthenticator extends AbstractGuardAuthenticator
             $userPrenom = $ecoleDirecteAccount->prenom;
             $userNom = $ecoleDirecteAccount->nom;
             $userEmail = $ecoleDirecteAccount->email;
+            $user_ed_id = $ecoleDirecteAccount->id;
             $typeCompte = $ecoleDirecteAccount->typeCompte;
             $codeOgec = $ecoleDirecteAccount->codeOgec;
             $nomEtablissement = $ecoleDirecteAccount->nomEtablissement;
@@ -186,21 +187,23 @@ class EcoleDirecteAuthenticator extends AbstractGuardAuthenticator
 
                 $classesCount = sizeof($ecoleDirecteAccount->profile->classes);
                 for ($i = 0; $i < $classesCount; $i++) {
-                    $group = $em->getRepository(Group::class)->findOneBy(['code' => $codeOgec.'-'.$ecoleDirecteAccount->profile->classes[$i]->code.'-'.$schoolYearName]);
+                    $group = $em->getRepository(Group::class)->findOneBy(['code' => $codeOgec . '-' . $ecoleDirecteAccount->profile->classes[$i]->code . '-' . $schoolYearName]);
                     if (!$group) {
                         $group = new Group();
-                        $group->setSchool($school);
-                        $group->setCode($codeOgec.'-'.$ecoleDirecteAccount->profile->classes[$i]->code.'-'.$schoolYearName);
-                        $group->setName($ecoleDirecteAccount->profile->classes[$i]->libelle.' ('.$schoolYearName.')');
-                        $group->setShortname($ecoleDirecteAccount->profile->classes[$i]->code);
-                        $em->persist($group);
                     }
+                    $group->setSchool($school);
+                    $group->setCode($codeOgec . '-' . $ecoleDirecteAccount->profile->classes[$i]->code . '-' . $schoolYearName);
+                    $group->setName($ecoleDirecteAccount->profile->classes[$i]->libelle . ' (' . $schoolYearName . ')');
+                    $group->setShortname($ecoleDirecteAccount->profile->classes[$i]->code);
+                    $group->setEdId($ecoleDirecteAccount->profile->classes[$i]->id);
+                    $em->persist($group);
                     $user->addGroup($group);
                 }
                 // Save user
                 $user->setLoginType('ED');
                 $user->setToken($ecoleDirecteToken);
                 $user->setEmail($userEmail);
+                $user->setEdId($user_ed_id);
                 $user->setToReceiveMyResultByEmail(false);
                 $user->setAccountType($typeCompte);
                 $user->setOrganizationCode($codeOgec);
@@ -210,10 +213,10 @@ class EcoleDirecteAuthenticator extends AbstractGuardAuthenticator
                 $user->setLastname($userNom);
                 $user->setCurrentSchoolYear($userAnneeScolaireCourante);
 
-                $user->setComment($comment); 
+                $user->setComment($comment);
                 if ($typeCompte == "P") {
                     $user->addRole('ROLE_TEACHER');
-                }    
+                }
                 $em->persist($user);
                 $em->flush();
                 return true;
