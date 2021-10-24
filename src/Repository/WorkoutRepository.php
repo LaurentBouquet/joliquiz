@@ -58,29 +58,21 @@ class WorkoutRepository extends ServiceEntityRepository
 
     public function findFirstThreeByQuizAndDate($quiz, $date): ?array
     {
-        return $this->createQueryBuilder('w')
-            ->andWhere('w.quiz = :quiz')
-            ->setParameter('quiz', $quiz)
-
-            ->andWhere('w.started_at >= :started_at')
-            ->setParameter('started_at', $date)
-
-            ->groupBy('w.student')
+        $builder = $this->createQueryBuilder('w');
+        $builder->andWhere('w.quiz = :quiz')->setParameter('quiz', $quiz);
+        $builder->andWhere('w.started_at >= :started_at')->setParameter('started_at', $date);
+        $builder->groupBy('w.student')
             ->orderBy('w.score', 'DESC')
-            ->addOrderBy('TIME_DIFF(w.ended_at, w.started_at, \'second\')', 'ASC')
-            ->getQuery()
-            ->setMaxResults(3)
-            ->getResult();
+            ->addOrderBy('TIME_DIFF(w.ended_at, w.started_at, \'second\')', 'ASC');
+        return $builder->getQuery()->setMaxResults(3)->getResult();
     }
 
     public function findByQuizAndSession($quiz, $session, string $orderBy = 'number_of_questions'): ?array
     {
-        $builder = $this->createQueryBuilder('w')
-            ->andWhere('w.quiz = :quiz')
-            ->setParameter('quiz', $quiz)
-            ->andWhere('w.session >= :session')
-            ->setParameter('session', $session)
-            ->groupBy('w.student');
+        $builder = $this->createQueryBuilder('w');
+        $builder->andWhere('w.quiz = :quiz')->setParameter('quiz', $quiz);
+        $builder->andWhere('w.session >= :session')->setParameter('session', $session);
+        $builder->groupBy('w.student');
         switch ($orderBy) {
             case 'number_of_questions':
                 $builder->orderBy('w.number_of_questions', 'ASC');
