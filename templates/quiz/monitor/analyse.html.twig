@@ -57,7 +57,7 @@
         </tbody>
     </table>
 
-    {% if (is_granted('ROLE_USER')) %}
+    {% if (is_granted('ROLE_TEACHER')) %}
         {# <a class="mt-3 btn btn-secondary mr-2" href="{{ path('quiz_index') }}"> #}
         <a class="mt-3 btn btn-secondary mr-2" href="{{ path('session_quiz', {'id': quiz.id}) }}" title="{{'View history'|trans}}">
             <i class="fas fa-arrow-circle-left"></i>

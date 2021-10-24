@@ -382,7 +382,7 @@
         <target>Langue</target>
       </trans-unit>
       <trans-unit id="D5lam8." resname="no records found">
-        <source>{{'no records found'|trans}}</source>
+        <source>no records found</source>
         <target>Aucun enregistrement trouvé</target>
       </trans-unit>
       <trans-unit id="u3I07BJ" resname="Register">
@@ -739,7 +739,7 @@
       </trans-unit>
       <trans-unit id="9hPyGH_" resname="Back to quiz history">
         <source>Back to quiz history</source>
-        <target>__Back to quiz history</target>
+        <target>Retour à l'historique du questionnaire</target>
       </trans-unit>
       <trans-unit id="Khm7eN4" resname="Students">
         <source>Students</source>
@@ -757,9 +757,13 @@
         <source>Are you sure you want to delete this session?</source>
         <target>Etes-vous sûr de vouloir supprimer cette session ?</target>
       </trans-unit>
-      <trans-unit id="WNpHUoH" resname="Session started at %s is deleted.">
+      <trans-unit id="IE6Ac4r" resname="Session started at %s is deleted.">
         <source>Session started at %s is deleted.</source>
         <target>La session démarrée le %s a été effacée.</target>
+      </trans-unit>
+      <trans-unit id="dpAPG.0" resname="Back">
+        <source>Back</source>
+        <target>Retour</target>
       </trans-unit>
     </body>
   </file>
