@@ -36,8 +36,15 @@
 									{{ include('session/_delete_form.html.twig') }}
 								{% endif %}
 								{% if session.workouts|length > 0 %}
-									<a class="btn btn-primary mx-1" href="{{ path('quiz_monitor', {'id': quiz.id, 'session': session.id}) }}" title="{{ 'Follow the progress'|trans }}">
+									<a class="btn btn-primary mx-1" href="{{ path('quiz_monitor', {'id': quiz.id, 'session': session.id}) }}">
+										{{ 'Follow the progress'|trans }}
 										<i class="fas fa-chalkboard-teacher"></i>
+									</a>
+								{% endif %}
+								{% if session.workouts|length > 2 %}
+									<a class="btn btn-warning mx-1" href="{{ path('quiz_podium', {'id': quiz.id, 'session': session.id}) }}">
+										{{ 'Podium'|trans }}
+										<i class="fas fa-poll"></i>
 									</a>
 								{% endif %}
 								{% if session.workouts|length > 0 %}
@@ -46,11 +53,13 @@
 										<i class="fas fa-list-ol"></i>
 									</a>
 								{% endif %}
-								{% if session.workouts|length > 2 %}
-									<a class="btn btn-warning mx-1" href="{{ path('quiz_podium', {'id': quiz.id, 'session': session.id}) }}">
-										{{ 'Podium'|trans }}
-										<i class="fas fa-poll"></i>
-									</a>
+								{% if ONLY_OGEC %}
+									{% if not session.sendedToED %}
+										<a class="btn mx-1" href="{{ path('quiz_analyse', {'id': quiz.id, 'session': session.id}) }}" title="{{ 'Send to EcoleDirecte'|trans }}">
+											{{ 'Send to ED'|trans }}
+											<i class="fas fa-share-square"></i>
+										</a>
+									{% endif %}
 								{% endif %}
 							</div>
 						</td>

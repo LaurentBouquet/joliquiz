@@ -765,6 +765,14 @@
         <source>Back</source>
         <target>Retour</target>
       </trans-unit>
+      <trans-unit id="RK.vXtb" resname="Send to EcoleDirecte">
+        <source>Send to EcoleDirecte</source>
+        <target>Envoyer sur EcoleDirecte</target>
+      </trans-unit>
+      <trans-unit id="78_Mo9b" resname="Send to ED">
+        <source>Send to ED</source>
+        <target>Envoyer sur ED</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
