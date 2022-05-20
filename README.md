@@ -65,12 +65,10 @@ Uncomment and update the password in this line of **.env.local** file :
 
 Enter this commands in a terminal prompt :
 ```bash
-# cd joliquiz
 bin/console doctrine:migrations:latest
 ```
 If an error occured "could not find driver":
 ```bash
-# cd joliquiz
 bin/console doctrine:migrations:latest
 sudo apt install php-mysql
 ```
@@ -114,12 +112,10 @@ Uncomment and update the password in this line of **.env** file :
 
 Enter these commands in a terminal prompt :
 ```bash
-# cd joliquiz
 php bin/console doctrine:database:create
 ```
 If an error occured ("could not find driver") :
 ```bash
-# cd joliquiz
 php bin/console doctrine:database:create
 sudo apt install php-pgsql
 ```
@@ -129,7 +125,6 @@ sudo apt install php-pgsql
 
 Enter this commands in a terminal prompt :
 ```bash
-# cd joliquiz
 php bin/console doctrine:migrations:migrate
 php bin/console doctrine:fixtures:load
 php bin/console server:start
