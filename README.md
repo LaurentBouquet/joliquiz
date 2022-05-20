@@ -32,6 +32,11 @@ Here are the steps to create the database, either with MySQL or with PostgreSQL.
 
 #### MySQL
 
+Check that you have the PHP MySQL driver installed with :
+```bash
+sudo apt install php-mysql
+```
+
 Enter these commands in a terminal prompt :
 ```sql
 sudo mysql
@@ -67,14 +72,14 @@ Enter this commands in a terminal prompt :
 ```bash
 bin/console doctrine:migrations:latest
 ```
-If an error occured "could not find driver":
-```bash
-bin/console doctrine:migrations:latest
-sudo apt install php-mysql
-```
 
 
 #### PostgreSQL
+
+First, start by checking that you have the PHP PostgreSQL driver installed with :
+```bash
+sudo apt install -y php-pgsql
+```
 
 Enter these commands in a terminal prompt :
 ```bash
@@ -106,18 +111,13 @@ doctrine:
         charset: utf8
 ```
 
-Uncomment and update the password in this line of **.env** file :
+Uncomment and update the password in this line of the `.env` file :
 `DATABASE_URL=pgsql://joliquiz:**aSecurePassword**@127.0.0.1:5432/joliquiz?charset=UTF-8`
 
 
-Enter these commands in a terminal prompt :
+Then, enter the following commands :
 ```bash
 php bin/console doctrine:database:create
-```
-If an error occured ("could not find driver") :
-```bash
-php bin/console doctrine:database:create
-sudo apt install php-pgsql
 ```
 
 
