@@ -114,6 +114,10 @@ doctrine:
 Uncomment and update the password in this line of the `.env` file :
 `DATABASE_URL=pgsql://joliquiz:**aSecurePassword**@127.0.0.1:5432/joliquiz?charset=UTF-8`
 
+Copy then the `.env` file to `.env.local`
+```bash
+cp .env .env.local
+```
 
 Then, enter the following commands :
 ```bash
@@ -123,7 +127,7 @@ php bin/console doctrine:database:create
 
 ### 3) Init database and start the built-in server
 
-Enter this commands in a terminal prompt :
+Migrate and start the server with the following commands :
 ```bash
 php bin/console doctrine:migrations:migrate
 php bin/console doctrine:fixtures:load
