@@ -1,35 +1,32 @@
-.pagerfanta {
-}
-
 .pagerfanta a,
 .pagerfanta span {
-    display: inline-block;
-    border: 1px solid blue;
-    color: blue;
-    margin-right: .2em;
-    padding: .25em .35em;
+  display: inline-block;
+  border: 1px solid blue;
+  color: blue;
+  margin-right: 0.2em;
+  padding: 0.25em 0.35em;
 }
 
 .pagerfanta a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .pagerfanta a:hover {
-    background: #ccf;
+  background: #ccf;
 }
 
 .pagerfanta .dots {
-    border-width: 0;
+  border-width: 0;
 }
 
 .pagerfanta .current {
-    background: #ccf;
-    font-weight: bold;
+  background: #ccf;
+  font-weight: bold;
 }
 
 .pagerfanta .disabled {
-    border-color: #ccf;
-    color: #ccf;
+  border-color: #ccf;
+  color: #ccf;
 }
 
 /*

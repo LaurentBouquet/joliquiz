@@ -5,12 +5,10 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/laurentbouquet/joliquiz/badge)](https://www.codefactor.io/repository/github/laurentbouquet/joliquiz)
 
 ## Description
-Joliquiz is an online quiz software, a PHP web application developed using the Symfony framework (version 4).
-
-Thanks to [Symfony](https://symfony.com/)
+Joliquiz is an online quiz software, a PHP web application developed using the [Symfony framework (version 4)](https://symfony.com/).
 
 
-## Screenshot of a quiz in progress
+## Screenshots
 
 ![Workout page](https://raw.githubusercontent.com/LaurentBouquet/joliquiz/assets/quiz_symf3_question10.png?raw=true)
 
@@ -29,12 +27,17 @@ composer install
 
 In the commands below, replace **aSecurePassword** with a secure password.
 
-Here are the steps to create the database, either with MySQL or with PostreSQL.
+Here are the steps to create the database, either with MySQL or with PostgreSQL.
 
 
-#### Either with MySQL
+#### MySQL
 
-Enter this commands in a terminal prompt :
+Check that you have the PHP MySQL driver installed with :
+```bash
+sudo apt install php-mysql
+```
+
+Enter these commands in a terminal prompt :
 ```sql
 sudo mysql
 CREATE USER 'joliquiz'@'localhost' IDENTIFIED BY 'aSecurePassword';
@@ -42,7 +45,7 @@ CREATE DATABASE joliquiz CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 GRANT ALL PRIVILEGES ON joliquiz.* TO 'joliquiz'@'localhost';
 ```
 
-Update config/packages/doctrine.yaml :
+Update `config/packages/doctrine.yaml` :
 ```yaml
 doctrine:
     dbal:
@@ -59,26 +62,26 @@ doctrine:
         # charset: utf8
 ```
 
-Copy **.env** file to **.env.local**
+Copy `.env` file to `.env.local`
 
 Uncomment and update the password in this line of **.env.local** file :
-DATABASE_URL=mysql://joliquiz:**aSecurePassword**@127.0.0.1:3306/joliquiz
+`DATABASE_URL=mysql://joliquiz:**aSecurePassword**@127.0.0.1:3306/joliquiz`
 
 
 Enter this commands in a terminal prompt :
 ```bash
-# cd joliquiz
 bin/console doctrine:migrations:latest
 ```
-If an error occured "could not find driver", enter this command in a terminal prompt (and re-enter the command above) :
+
+
+#### PostgreSQL
+
+First, start by checking that you have the PHP PostgreSQL driver installed with :
 ```bash
-sudo apt install php-mysql
+sudo apt install -y php-pgsql
 ```
 
-
-#### Or with PostgreSQL
-
-Enter this commands in a terminal prompt :
+Enter these commands in a terminal prompt :
 ```bash
 sudo -i -u postgres
 createuser --interactive
@@ -91,7 +94,7 @@ ALTER USER joliquiz SET search_path = public;
 exit
 ```
 
-Update config/packages/doctrine.yaml :
+Update the following config file located at `config/packages/doctrine.yaml` :
 ```yaml
 doctrine:
     dbal:
@@ -108,50 +111,51 @@ doctrine:
         charset: utf8
 ```
 
-Uncomment and update the password in this line of **.env** file :
-DATABASE_URL=pgsql://joliquiz:**aSecurePassword**@127.0.0.1:5432/joliquiz?charset=UTF-8
+Uncomment and update the password in this line of the `.env` file :
+`DATABASE_URL=pgsql://joliquiz:**aSecurePassword**@127.0.0.1:5432/joliquiz?charset=UTF-8`
 
-
-Enter this commands in a terminal prompt :
+Copy then the `.env` file to `.env.local`
 ```bash
-# cd joliquiz
+cp .env .env.local
+```
+
+Then, enter the following commands :
+```bash
 php bin/console doctrine:database:create
 ```
-If an error occured "could not find driver", enter this command in a terminal prompt (and re-enter the command above) :
+
+
+### 3) Init database and start the built-in server
+
+Migrate and start the server with the following commands :
 ```bash
-sudo apt install php-pgsql
-```
-
-
-### 3) Fill database and start built-in server
-
-Enter this commands in a terminal prompt :
-```bash
-# cd joliquiz
+php bin/console doctrine:migrations:diff
 php bin/console doctrine:migrations:migrate
 php bin/console doctrine:fixtures:load
 php bin/console server:start
 ```
 
-### 4) With your web browser open url where server is listening on
+### 4) With your browser, open the URL where the server is listening
 
-For example, with your browser open this page :  http://127.0.0.1:8000 and GO !
+Open the following page : http://127.0.0.1:8000 and GO !
 
 ![Workout page](https://raw.githubusercontent.com/LaurentBouquet/joliquiz/assets/home_page.png?raw=true)
 
-Here is initial credentials of the student user.
+Here are the defaults credentials for the following roles :
+
+User
  - Username : user
  - Password : user
 
-Here is initial credentials of the teacher user.
+Teacher
  - Username : teacher
  - Password : teacher
 
-Here is initial credentials of the admin user.
+Administrator
  - Username : admin
  - Password : admin
 
-Here is initial credentials of the super-admin user.
+Superadministrator
  - Username : superadmin
  - Password : superadmin
 
