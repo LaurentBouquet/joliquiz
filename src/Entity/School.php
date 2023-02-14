@@ -7,32 +7,22 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=SchoolRepository::class)
- * @ORM\Table(name="`tbl_school`")* 
- */
+#[ORM\Entity(repositoryClass: SchoolRepository::class)]
+#[ORM\Table(name: 'tbl_school')]
 class School
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(length: 255)]
     private $name;
 
-    /**
-     * @ORM\Column(type="string", length=16)
-     */
+    #[ORM\Column(length: 16)]
     private $code;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Group::class, mappedBy="school", orphanRemoval=true)
-     */
+    #[ORM\OneToMany(targetEntity: Group::class, mappedBy: 'school', orphanRemoval: true)]
     private $groups;
 
     public function __construct()

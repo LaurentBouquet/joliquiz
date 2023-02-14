@@ -7,43 +7,29 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\SessionRepository")
- * @ORM\Table(name="tbl_session")
- */
+#[ORM\Entity(repositoryClass: SessionRepository::class)]
+#[ORM\Table(name: 'tbl_session')]
 class Session
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $started_at;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $ended_at;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Quiz", inversedBy="sessions")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: Quiz::class, inversedBy:'sessions')]
+    #[ORM\JoinColumn(nullable: false)]
     private $quiz;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Workout::class, mappedBy="session", cascade={"remove"})
-     */
+    #[ORM\OneToMany(targetEntity: Workout::class, mappedBy: 'session', orphanRemoval: true)]
     private $workouts;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $sended_to_ed;
 
     public function __construct(Quiz $quiz, DateTime $started_at) {

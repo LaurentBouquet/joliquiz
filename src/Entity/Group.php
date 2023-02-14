@@ -7,49 +7,36 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=GroupRepository::class)
- * @ORM\Table(name="`tbl_group`")
- */
+#[ORM\Entity(repositoryClass: GroupRepository::class)]
+#[ORM\Table(name: 'tbl_group')]
 class Group
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;    
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(length: 255)]
     private $name;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=School::class, inversedBy="groups")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: School::class, inversedBy:'groups')]
+    #[ORM\JoinColumn(nullable: false)]
     private $school;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="groups")
-     */
-    private $users;
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'groups')]
+    private Collection $users;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(length: 255)]
     private $code;
 
-    /**
-     * @ORM\Column(type="string", length=50, nullable=true)
-     */
+
+    #[ORM\Column(length: 50, nullable: true)]
     private $shortname;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $ed_id;
+
+
 
     public function __construct()
     {

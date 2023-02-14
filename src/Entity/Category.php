@@ -2,72 +2,47 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="tbl_category")
- * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
- */
+#[ORM\Entity(repositoryClass: CategoryRepository::class)]
+#[ORM\Table(name: 'tbl_category')]
 class Category
 {
-    /**
-     * @var int The id of this category
-     * @ORM\Id()
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(type="integer")
-     */
+
+    #[ORM\Id()]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @var string The shortname of the category
-     * @ORM\Column(type="string", length=50)
-     */
+    #[ORM\Column(length: 50)]
     private $shortname;
 
-    /**
-     * @var string The longname of the category
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(length: 255)]
     private $longname;
 
-    // /**
-    //  * @var string The quizzes list in this category
-    //  *
-    //  * @ORM\ManyToMany(targetEntity="App\Entity\Quiz", mappedBy="category", cascade={"persist", "remove"})
-    //  */
-    // private $quizzes;
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Quiz", mappedBy="categories")
-     */
+    #[ORM\ManyToMany(targetEntity: Quiz::class, mappedBy: 'categories')]
     private $quizzes;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Question", mappedBy="categories")
-     */
+    #[ORM\ManyToMany(targetEntity: Question::class, mappedBy: 'categories')]
     private $questions;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Language", inversedBy="categories")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: Language::class, inversedBy:'categories')]
+    #[ORM\JoinColumn(nullable: false)]
     private $language;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $created_at;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $updated_at;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="categories")
-     */
-    private $created_by;
+    #[ORM\ManyToOne(inversedBy: 'categories')]
+    private ?User $created_by = null;
+
+    // #[ORM\ManyToOne(targetEntity: User::class, inversedBy:'categories')]
+    // private $created_by;
 
     public function __construct($shortname = null)
     {

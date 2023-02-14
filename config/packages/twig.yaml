@@ -1,10 +1,10 @@
 twig:
-    paths: ['%kernel.project_dir%/templates']
-    debug: '%kernel.debug%'
-    strict_variables: '%kernel.debug%'
+    default_path: '%kernel.project_dir%/templates'
     form_themes:
         - 'bootstrap_4_layout.html.twig'
     globals:
         locale: '%env(LOCALE)%'
-        ONLY_OGEC: '%env(ONLY_OGEC)%'         
-    exception_controller: null
+                
+when@test:
+    twig:
+        strict_variables: true

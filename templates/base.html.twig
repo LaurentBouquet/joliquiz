@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ (locale ?? 'en') }}">
+<html lang="{{ (locale ?? 'en')|upper }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -33,6 +33,8 @@
                     <!-- <li>
                         <span class="nav-link active text-dark">{{ (locale ?? 'en')|upper }}</span>
                     </li> -->
+
+                    {#
                     {% if is_granted('ROLE_USER') %}
                         <li>
                             <a class="nav-link {% if '/quiz/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('quiz_index') }}">{{'Quizzes'|trans}}</a>
@@ -61,28 +63,30 @@
                         </li>
                     -->
                     {% endif %}
+                    #}
+
                 </ul>
                 <ul class="navbar-nav">
                     {% if is_granted('ROLE_USER') %}
                         <li>
-                            <a class="nav-link {{ app.user.loginType=='ED' ? 'text-warning' : '' }}" title="{{ 'LoginType'|trans }} : {{ app.user.loginType }}" href="{{ path('user_profile') }}">
+                        {#
+                            <a class="nav-link href="{{ path('user_profile') }}">
                                 <i class="fas fa-user"></i>
                                 {% if app.user %}
                                     <strong>{{ app.user.username }}</strong>
                                 {% endif %}
                             </a>
                         </li>
+                        #}
                         <li>
-                            <a class="nav-link" href="{{ path('logout') }}">{{'Logout'|trans}}</a>
+                            <a class="nav-link" href="{{ path('app_logout') }}">{{'Logout'|trans}}</a>
                         </li>
                     {% else %}
-                        {% if not ONLY_OGEC %}
                         <li>
-                            <a class="nav-link {% if '/register' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('register') }}">{{'Sign up'|trans}}</a>
+                            <a class="nav-link {% if '/register' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('app_register') }}">{{'Sign up'|trans}}</a>
                         </li>
-                        {% endif %}
                         <li>
-                            <a class="nav-link {% if '/login' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('login') }}">{{'Sign in'|trans}}</a>
+                            <a class="nav-link {% if '/login' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('app_login') }}">{{'Sign in'|trans}}</a>
                         </li>
                     {% endif %}
                 </ul>

@@ -2,149 +2,102 @@
 
 namespace App\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use App\Entity\User;
-use App\Form\UserType;
-use App\Services\Mailer;
-use Psr\Log\LoggerInterface;
-use App\Form\PasswordResettingType;
-use Symfony\Component\Mime\RawMessage;
+use App\Form\RegistrationFormType;
+use App\Repository\UserRepository;
+use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints\Email;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 class SecurityController extends AbstractController
 {
-    private $logger;
+    private EmailVerifier $emailVerifier;
 
-    public function __construct(LoggerInterface $logger)
+    public function __construct(EmailVerifier $emailVerifier)
     {
-        $this->logger = $logger;
+        $this->emailVerifier = $emailVerifier;
     }
 
-    /**
-     * @Route("/register", name="register")
-     */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, MailerInterface $mailer, TokenGeneratorInterface $tokenGenerator, EntityManagerInterface $em)
+    #[Route('/register', name: 'app_register')]
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
-        $ONLY_OGEC = $this->getParameter('ONLY_OGEC');
-        if (isset($ONLY_OGEC)) {
-            $this->addFlash('info', sprintf('Please log in with your EcoleDirecte login/password.'));
-            return $this->redirectToRoute('login');
-        }
-
-        // 1) build the form
         $user = new User();
-        $form = $this->createForm(UserType::class, $user, array('form_type' => 'register'));
-
-        // 2) handle the submit (will only happen on POST)
+        $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
+            // encode the plain password
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
 
-            // 3) Encode the password (you could also do this via Doctrine listener)
-            $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
-            $user->setPassword($password);
-            $user->setToken($tokenGenerator->generateToken());
+            $entityManager->persist($user);
+            $entityManager->flush();
 
-            // 4) save the User!
-            //$em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
-
-            // $this->addFlash('success', sprintf('User "%s" is registred.', $user->getUsername()));
-
-            // TODO : Mettre l'envoi du mail dans un service
+            // generate a signed url and email it to the user
             $admin_email_address = $this->getParameter('ADMIN_EMAIL_ADDRESS');
-            $email = (new TemplatedEmail())
-                ->from($admin_email_address)
-                ->to($user->getEmail())
-                ->subject('� Please, confirm your email address.')
-                // path of the Twig template to render
-                ->htmlTemplate('emails/registration.html.twig')
-                // pass variables (name => value) to the template
-                ->context([
-                    'username' => $user->getUsername(),
-                    'useremail' => $user->getEmail(),
-                    'token' => $user->getToken(),
-                ]);
-            $mailer->send($email);
+            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+                (new TemplatedEmail())
+                    ->from(new Address($admin_email_address, 'JoliQuiz'))
+                    ->to($user->getEmail())
+                    ->subject('Please Confirm your Email')
+                    ->htmlTemplate('security/confirmation_email.html.twig')
+            );
+            // do anything else you need here, like send an email
 
-            $this->addFlash('success', sprintf('We have sent you an email, please click on the link in it to confirm your email address "%s".', $user->getEmail()));
-
-            return $this->redirectToRoute('login');
+            return $this->redirectToRoute('index');
         }
 
-        return $this->render(
-            'security/register.html.twig',
-            array('form' => $form->createView())
-        );
+        return $this->render('security/register.html.twig', [
+            'registrationForm' => $form->createView(),
+        ]);
     }
 
-    /**
-     * @Route("/sendmail/{id}", name="user_sendmail")
-     */
-    public function sendmail(Request $request, User $user, TokenGeneratorInterface $tokenGenerator, EntityManagerInterface $em, MailerInterface $mailer)
+    #[Route('/verify/email', name: 'app_verify_email')]
+    public function verifyUserEmail(Request $request, TranslatorInterface $translator, UserRepository $userRepository): Response
     {
-        $token = $tokenGenerator->generateToken();
-        $user->setToken($token);
-        $em->flush();
+        $id = $request->get('id');
 
-        // TODO : Mettre l'envoi du mail dans un service
-        $admin_email_address = $this->getParameter('ADMIN_EMAIL_ADDRESS');
-        $email = (new TemplatedEmail())
-            ->from($admin_email_address)
-            ->to($user->getEmail())
-            ->subject('� Please, confirm your email address.')
-            // path of the Twig template to render
-            ->htmlTemplate('emails/registration.html.twig')
-            // pass variables (name => value) to the template
-            ->context([
-                'username' => $user->getUsername(),
-                'useremail' => $user->getEmail(),
-                'token' => $token,
-            ]);
-        $mailer->send($email);
-
-        $this->addFlash('success', sprintf('A confirmation mail was sended to %s.', $user->getEmail()));
-
-        return $this->render('user/show.html.twig', ['user' => $user]);
-    }
-
-    /**
-     * @Route("/confirm", name="user_confirm")
-     */
-    public function confirm(Request $request, EntityManagerInterface $em)
-    {
-        $email = $request->query->get('email');
-        $token = $request->query->get('token');
-
-        $user = $em->getRepository(User::class)->findOneByEmail($email);
-
-        if ($user->getToken() == $token) {
-            $user->setIsActive(true);
-            $user->setToken('');
-            $em->flush();
-            $this->addFlash('success', sprintf('Thank you! You can now log into JoliQuiz with your username : %s', $user->getUsername()));
-        } else {
-            $this->addFlash('error', sprintf('Your email address (%s) has not been confirmed.', $user->getEmail()));
+        if (null === $id) {
+            return $this->redirectToRoute('app_register');
         }
-        return $this->redirectToRoute("login");
+
+        $user = $userRepository->find($id);
+
+        if (null === $user) {
+            return $this->redirectToRoute('app_register');
+        }
+
+        // validate email confirmation link, sets User::isVerified=true and persists
+        try {
+            $this->emailVerifier->handleEmailConfirmation($request, $user);
+        } catch (VerifyEmailExceptionInterface $exception) {
+            $this->addFlash('verify_email_error', $translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
+
+            return $this->redirectToRoute('app_register');
+        }
+
+        // @TODO Change the redirect on success and handle or remove the flash message in your templates
+        $this->addFlash('success', 'Your email address has been verified.');
+
+        return $this->redirectToRoute('app_register');
     }
 
-    /**
-     * @Route("/login", name="login")
-     */
-    public function login(AuthenticationUtils $authenticationUtils)
-    {
+    #[Route('/login', name:'app_login')]
+    function index(AuthenticationUtils $authenticationUtils): Response
+        {
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         if ($error) {
@@ -154,128 +107,18 @@ class SecurityController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        // 1) build the form
-        $user = new User();
-        $user->setUsername($lastUsername);
-        $form = $this->createForm(UserType::class, $user, array('form_type' => 'login'));
-
-        return $this->render('security/login.html.twig', array(
-            'form' => $form->createView(),
+        return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
-        ));
-    }
-
-    /**
-     * The road to disconnect.
-     * But this one should never be executed because symfony will intercept it before.
-     * @Route("/logout", name="logout")
-     */
-    public function logout(): void
-    {
-        throw new \Exception('This should never be reached!');
-    }
-
-    /**
-     * @Route("/newpassword", name="password_new")
-     */
-    public function requestNewPassword(Request $request, MailerInterface $mailer, TokenGeneratorInterface $tokenGenerator, EntityManagerInterface $em)
-    {
-        // Creation of a form "on the fly", so that the user can inform his email
-        $form = $this->createFormBuilder()
-            ->add('email', EmailType::class, [
-                'constraints' => [
-                    new Email(),
-                    new NotBlank(),
-                ],
-            ])
-            ->getForm();
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $user = $em->getRepository(User::class)->findOneByEmail($form->getData()['email']);
-
-            if (!$user) {
-                $this->addFlash('warning', 'This email does not exist.');
-            } else {
-                $user->setToken($tokenGenerator->generateToken());
-                $user->setPasswordRequestedAt(new \Datetime());
-                $em->flush();
-
-                $admin_email_address = $this->getParameter('ADMIN_EMAIL_ADDRESS');
-                $email = (new TemplatedEmail())
-                    ->from($admin_email_address)
-                    ->to($user->getEmail())
-                    ->subject('🙂 Renew your password')
-                    // path of the Twig template to render
-                    ->htmlTemplate('emails/passwordresetting.html.twig')
-                    // pass variables (name => value) to the template
-                    ->context([
-                        'user' => $user,
-                    ]);
-                $mailer->send($email);
-
-                $this->addFlash('success', 'An email will be sent to you so you can renew your password. The link you receive will be valid 24h.');
-
-                return $this->redirectToRoute("login");
-            }
-        }
-
-        return $this->render('security/passwordrequest.html.twig', [
-            'form' => $form->createView(),
+            'error' => $error,
         ]);
+
     }
 
-    /**
-     * @Route("resetpassword/{id}/{token}", name="password_reset")
-     */
-    public function resetPassword(User $user, $token, Request $request, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em)
+    #[Route('/logout', name: 'app_logout', methods: ['GET'])]
+    public function logout()
     {
-        // Forbid access to the page if:
-        // the token associated with the member is null
-        // the token registered in base and the token present in the url are not equal
-        // the token is more than 10 minutes old
-        if ($user->getToken() === null || $token !== $user->getToken() || !$this->isRequestInTime($user->getPasswordRequestedAt())) {
-            throw new AccessDeniedHttpException();
-        }
-
-        $form = $this->createForm(PasswordResettingType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
-            $user->setPassword($password);
-
-            // Reset the token to null so that it is no longer reusable
-            $user->setToken(null);
-            $user->setPasswordRequestedAt(null);
-
-            //$em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
-
-            $request->getSession()->getFlashBag()->add('success', "Votre mot de passe a été renouvelé.");
-
-            return $this->redirectToRoute('login');
-        }
-
-        return $this->render('security/passwordreset.html.twig', [
-            'form' => $form->createView()
-        ]);
+        // controller can be blank: it will never be called!
+        throw new \Exception('Don\'t forget to activate logout in security.yaml');
     }
 
-    // if greater than 10 min, return false, otherwise return true
-    private function isRequestInTime(\Datetime $passwordRequestedAt = null)
-    {
-        if ($passwordRequestedAt === null) {
-            return false;
-        }
-
-        $now = new \DateTime();
-        $interval = $now->getTimestamp() - $passwordRequestedAt->getTimestamp();
-
-        $daySeconds = 60 * 10;
-        $response = $interval > $daySeconds ? false : $reponse = true;
-        return $response;
-    }
 }

@@ -2,10 +2,10 @@
 
 namespace App\DataFixtures;
 
-use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Persistence\ObjectManager;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Entity\User;
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\Bundle\FixturesBundle\Fixture;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFixtures extends Fixture
 {
@@ -16,11 +16,11 @@ class UserFixtures extends Fixture
     public const SUPER_ADMIN_USER_REFERENCE = 'super_admin_user';
 
 
-    private $passwordEncoder;
+    private $userPasswordHasher;
 
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(UserPasswordHasherInterface $userPasswordHasher)
     {
-        $this->passwordEncoder = $passwordEncoder;
+        $this->userPasswordHasher = $userPasswordHasher;
     }
 
     public function load(ObjectManager $manager)
@@ -30,7 +30,7 @@ class UserFixtures extends Fixture
         $superadmin->setEmail('superadmin@domain.tld');
         $superadmin->setPlainPassword('superadmin');
         $superadmin->setRoles(array('ROLE_SUPER_ADMIN'));
-        $password = $this->passwordEncoder->encodePassword($superadmin, $superadmin->getPlainPassword());
+        $password = $this->userPasswordHasher->encodePassword($superadmin, $superadmin->getPlainPassword());
         $superadmin->setPassword($password);
         $superadmin->setToReceiveMyResultByEmail(false);
         $manager->persist($superadmin);
@@ -41,7 +41,7 @@ class UserFixtures extends Fixture
         $admin->setEmail('admin@domain.tld');
         $admin->setPlainPassword('admin');
         $admin->setRoles(array('ROLE_ADMIN'));
-        $password = $this->passwordEncoder->encodePassword($admin, $admin->getPlainPassword());
+        $password = $this->userPasswordHasher->encodePassword($admin, $admin->getPlainPassword());
         $admin->setPassword($password);
         $admin->setToReceiveMyResultByEmail(false);
         $manager->persist($admin);
@@ -52,7 +52,7 @@ class UserFixtures extends Fixture
         $teacher->setEmail('teacher@domain.tld');
         $teacher->setPlainPassword('teacher');
         $teacher->setRoles(array('ROLE_TEACHER'));
-        $password = $this->passwordEncoder->encodePassword($teacher, $teacher->getPlainPassword());
+        $password = $this->userPasswordHasher->encodePassword($teacher, $teacher->getPlainPassword());
         $teacher->setPassword($password);
         $teacher->setToReceiveMyResultByEmail(false);
         $manager->persist($teacher);
@@ -63,7 +63,7 @@ class UserFixtures extends Fixture
         $user->setEmail('user@domain.tld');
         $user->setPlainPassword('user');
         $user->setRoles(array('ROLE_USER'));
-        $password = $this->passwordEncoder->encodePassword($user, $user->getPlainPassword());
+        $password = $this->userPasswordHasher->encodePassword($user, $user->getPlainPassword());
         $user->setPassword($password);
         $user->setToReceiveMyResultByEmail(false);
         $manager->persist($user);

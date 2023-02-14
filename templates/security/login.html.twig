@@ -1,49 +1,50 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{'Sign in'|trans}}{% endblock %}
+{% block title %}
+	{{'Sign in'|trans}}
+{% endblock %}
 
 {% block body %}
 
-<div class="example-wrapper">
+<div
+	class="example-wrapper">
 
-    <!-- <img src="/images/JoliQuiz-300x111.png" alt="JoliQuiz"> -->
-    <img src="/images/JoliQuiz-300x111_smiley.png" alt="JoliQuiz">
-    
+	<img src="/images/JoliQuiz-300x111_smiley.png" alt="JoliQuiz">
 
-    <div class="jumbotron">
-        <h1><i class="fa fa-lock"></i> {{'Sign in'|trans}}</h1>
+	<div class="jumbotron">
+		<h1>
+			<i class="fa fa-lock"></i>
+			{{'Sign in'|trans}}</h1>
 
-        {{ form_start(form) }}
+		{% if error %}
+			<div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+		{% endif %}
 
-        {{ form_row(form.username, {'id': 'username', 'full_name': '_username'}) }}
-        {{ form_row(form.plainPassword, {'id': 'password', 'full_name': '_password'}) }}
+		<form action="{{ path('app_login') }}" method="post">
+			<label for="username">Email:</label>
+			<input type="text" id="username" name="_username" value="{{ last_username }}">
 
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+			<label for="password">Password:</label>
+			<input type="password" id="password" name="_password">
 
-        <button class="btn btn-primary float-md-right" type="submit"><i class="fas fa-sign-in-alt"></i>
-            {{'Login'|trans}}</button>
+			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-    {% if not ONLY_OGEC %}
-        <a href="{{ path('password_new') }}">{{'Forgot your password'|trans}}</a>
-    {% endif %}
+			<button class="btn btn-primary float-md-right" type="submit">
+				<i class="fas fa-sign-in-alt"></i>
+				{{'Login'|trans}}</button>
 
-        {{ form_end(form) }}
+            {#
+			<a href="{{ path('password_new') }}">{{'Forgot your password'|trans}}</a>
+            #}
 
-    </div>
+		</div>
 
-    {% if ONLY_OGEC %}
-    <h6 class="text-center">
-        {% trans %}Please log in with your EcoleDirecte login/password.{% endtrans %}
-        <a href="https://www.ecoledirecte.com/" target="_blank">https://www.ecoledirecte.com/</a>
-    </h6>
-    {% else%}
-    <h6 class="text-center">
-        {% trans %}Sign up if you do not have an account. It's simple and fast.{% endtrans %}
-        <a href="{{ path('register') }}">{{'I create my free account...'|trans}}</a>
-    </h6>
-    {% endif %}
-
-</div>
+        <h6 class="text-center">
+            {% trans %}Sign up if you do not have an account. It's simple and fast.{% endtrans %}
+            <a href="{{ path('app_register') }}">{{'I create my free account...'|trans}}</a>
+        </h6>
+		
+	</div>
 
 {% include '_home_bottom.html.twig' %}
 

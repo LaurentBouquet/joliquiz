@@ -6,76 +6,49 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\WorkoutRepository")
- * @ORM\Table(name="tbl_workout")
- */
+#[ORM\Entity(repositoryClass: WorkoutRepository::class)]
+#[ORM\Table(name: 'tbl_workout')]
 class Workout
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="workouts")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $student;
+    #[ORM\ManyToOne(inversedBy: 'workouts')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $student = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Quiz", inversedBy="workouts")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: Quiz::class, inversedBy:'workouts')]
+    #[ORM\JoinColumn(nullable: false)]
     private $quiz;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $started_at;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $ended_at;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: 'integer')]
     private $number_of_questions;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $completed;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\QuestionHistory", mappedBy="workout", orphanRemoval=true)
-     */
+    #[ORM\OneToMany(targetEntity: QuestionHistory::class, mappedBy: 'workout', orphanRemoval: true)]
     private $questionsHistory;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
+    #[ORM\Column(type: 'float', nullable: true)]
     private $score;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $comment;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(length: 255, nullable: true)]
     private $token;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Session::class, inversedBy="workouts")
-     */
+    #[ORM\ManyToOne(targetEntity: Session::class, inversedBy:'workouts')]
     private $session;
-
 
     public function __construct()
     {

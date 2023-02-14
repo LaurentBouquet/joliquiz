@@ -6,63 +6,41 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\QuestionHistoryRepository")
- * @ORM\Table(name="tbl_history_question")
- */
+#[ORM\Entity(repositoryClass: QuestionHistoryRepository::class)]
+#[ORM\Table(name: 'tbl_history_question')]
 class QuestionHistory
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Workout", inversedBy="questionsHistory")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: Workout::class, inversedBy:'questionsHistory')]
+    #[ORM\JoinColumn(nullable: false)]
     private $workout;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: 'integer')]
     private $question_id;
 
-    /**
-     * @ORM\Column(type="text")
-     */
+    #[ORM\Column(type: 'text')]
     private $question_text;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $completed;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $question_success;
 
-    /**
-     * @ORM\Column(type="dateinterval", nullable=true)
-     */
+    #[ORM\Column(type: 'dateinterval', nullable: true)]
     private $duration;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\AnswerHistory", mappedBy="question_history", orphanRemoval=true)
-     */
+    #[ORM\OneToMany(targetEntity: AnswerHistory::class, mappedBy: 'question_history', orphanRemoval: true)]
     private $answersHistory;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $started_at;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $ended_at;
 
 

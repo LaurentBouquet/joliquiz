@@ -10,112 +10,71 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\QuizRepository")
- * @ORM\Table(name="tbl_quiz")
- */
+#[ORM\Entity(repositoryClass: QuizRepository::class)]
+#[ORM\Table(name: 'tbl_quiz')]
 class Quiz
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(length: 255)]
     private $title;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $summary;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: 'integer')]
     private $number_of_questions;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $active;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $created_at;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $updated_at;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="quizzes")
-     */
-    private $created_by;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="quizzes")
-     * @ORM\JoinTable(name="tbl_quiz_category")
-     */
+    #[ORM\ManyToOne(inversedBy: 'quizzes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $created_by = null;
+    
+    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy:'quizzes')]
+    #[ORM\JoinTable(name: 'tbl_quiz_category')]
     private $categories;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Workout", mappedBy="quiz", orphanRemoval=true)
-     */
+    #[ORM\OneToMany(targetEntity: Workout::class, mappedBy: 'quiz', orphanRemoval: true)]
     private $workouts;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $show_result_question;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $show_result_quiz;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Language", inversedBy="quizzes")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: Language::class, inversedBy:'quizzes')]
+    #[ORM\JoinColumn(nullable: false)]
     private $language;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $allow_anonymous_workout;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $result_quiz_comment;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $start_quiz_comment;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $default_question_max_duration;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $actived_at;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Session", mappedBy="quiz", orphanRemoval=true)
-     */
+    #[ORM\OneToMany(targetEntity: Session::class, mappedBy: 'quiz', orphanRemoval: true)]
     private $sessions;
-
-
 
     public function __construct()
     {
@@ -241,19 +200,7 @@ class Quiz
 
         return $this;
     }
-
-    public function getCreatedBy(): ?User
-    {
-        return $this->created_by;
-    }
-
-    public function setCreatedBy(?User $created_by): self
-    {
-        $this->created_by = $created_by;
-
-        return $this;
-    }
-    
+   
     /**
      * @return Collection|Category[]
      */
@@ -446,6 +393,18 @@ class Quiz
                 $session->setQuiz(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCreatedBy(): ?User
+    {
+        return $this->created_by;
+    }
+
+    public function setCreatedBy(?User $created_by): self
+    {
+        $this->created_by = $created_by;
 
         return $this;
     }
