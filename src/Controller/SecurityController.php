@@ -57,7 +57,7 @@ class SecurityController extends AbstractController
             );
             // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('index');
+            return $this->redirectToRoute('app_home');
         }
 
         return $this->render('security/register.html.twig', [

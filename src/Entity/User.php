@@ -2,14 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use InvalidArgumentException;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`tbl_user`')]
@@ -102,11 +103,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __construct()
     {
+        $this->roles = array('ROLE_USER');
+        $this->isActive = true;        
         $this->workouts = new ArrayCollection();
         $this->quizzes = new ArrayCollection();
         $this->groups = new ArrayCollection();
         $this->questions = new ArrayCollection();
         $this->categories = new ArrayCollection();
+    }
+
+    public function __toString(): string
+    {    
+        if (empty($this->getFirstname()) && empty($this->getLastname())) {
+            return $this->username;
+        } else {
+            return trim($this->getFirstname() . " " . $this->getLastname());
+        }             
     }
 
     public function getId(): ?int
@@ -136,21 +148,56 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return (string) $this->email;
     }
 
-    /**
-     * @see UserInterface
-     */
+    // /**
+    //  * @see UserInterface
+    //  */
+    // public function getRoles(): array
+    // {
+    //     $roles = $this->roles;
+    //     // guarantee every user at least has ROLE_USER
+    //     $roles[] = 'ROLE_USER';
+
+    //     return array_unique($roles);
+    // }
+
+    // public function setRoles(array $roles): self
+    // {
+    //     $this->roles = $roles;
+
+    //     return $this;
+    // }
     public function getRoles(): array
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        // for the user entity has always at least the role 'ROLE_USER'
+        return array_unique(array_merge(['ROLE_USER'], $this->roles));
+    }
+    
+    public function setRoles($roles): self
+    {
+        if (!in_array('ROLE_USER', $roles)) {
+            $roles[] = 'ROLE_USER';
+        }
 
-        return array_unique($roles);
+        foreach ($roles as $role) {
+            if (substr($role, 0, 5) !== 'ROLE_') {
+                throw new InvalidArgumentException('A role name should start with "ROLE_"');
+            }
+        }
+
+        $this->roles = $roles;
+
+        return $this;
     }
 
-    public function setRoles(array $roles): self
+    public function addRole(string $role): self
     {
-        $this->roles = $roles;
+        if (!$this->roles) {
+            $this->roles[] = $role;
+        }
+        
+        if (!in_array($role, $this->roles)) {
+            $this->roles[] = $role;
+        }
 
         return $this;
     }
