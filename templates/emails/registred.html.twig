@@ -14,7 +14,7 @@
                                     <tr>
                                         <td>
 
-                                            <img src="{{ absolute_url(path('index')) }}/images/JoliQuiz-300x111_smiley.png"
+                                            <img src="{{ absolute_url(path('app_home')) }}/images/JoliQuiz-300x111_smiley.png"
                                                 alt="JoliQuiz" />
 
                                             <h1 style="font-size: 30px; padding-right: 30px; padding-left: 30px;">
@@ -25,7 +25,7 @@
                                                 Hi {{ username }}! You're successfully registered, on JoliQuiz, with {{ useremail }}
                                                 email.
 
-                                                To login, go to: <a href="{{ url('login') }}">{{ url('login') }}</a>.
+                                                To login, go to: <a href="{{ url('app_login') }}">{{ url('app_login') }}</a>.
 
                                                 Thanks!
 
@@ -44,7 +44,7 @@
                                                                     style="display: inline-block; position:relative; border-radius:4px; background-color:#007BFF; "
                                                                     class="sm_full_width">
                                                                     <a class="button_link sm_full_width sm_border_box"
-                                                                        href="{{ url('login') }}"
+                                                                        href="{{ url('app_login') }}"
                                                                         style="min-width:196px; border-top:13px solid; border-bottom:13px solid; border-right:24px solid; border-left:24px solid; border-color:#007BFF; border-radius:4px; background-color:#007BFF; color:#ffffff; font-size:18px; line-height:18px; word-break:break-word; text-shadow:0 1px 1px #2e9a5f;  display: inline-block; text-align: center; font-weight: 900; text-decoration: none !important;">
                                                                         Confirm e-mail address
                                                                     </a>

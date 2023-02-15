@@ -148,24 +148,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return (string) $this->email;
     }
 
-    // /**
-    //  * @see UserInterface
-    //  */
-    // public function getRoles(): array
-    // {
-    //     $roles = $this->roles;
-    //     // guarantee every user at least has ROLE_USER
-    //     $roles[] = 'ROLE_USER';
-
-    //     return array_unique($roles);
-    // }
-
-    // public function setRoles(array $roles): self
-    // {
-    //     $this->roles = $roles;
-
-    //     return $this;
-    // }
     public function getRoles(): array
     {
         // for the user entity has always at least the role 'ROLE_USER'
@@ -223,7 +205,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        $this->plainPassword = null;
+    }
+
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword($password): self
+    {
+        $this->plainPassword = $password;
+
+        return $this;
     }
 
     public function isVerified(): bool

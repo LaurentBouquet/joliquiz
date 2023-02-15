@@ -449,14 +449,30 @@
         <source>Send</source>
         <target>Envoyer</target>
       </trans-unit>
+      <trans-unit id="9vRoj2" resname="To change password">
+        <source>To change password</source>
+        <target>Changer son mot de passe</target>
+      </trans-unit>      
       <trans-unit id="BPtM3Pd" resname="Renew password">
         <source>Renew password</source>
         <target>Modifier le mot de passe</target>
+      </trans-unit>
+      <trans-unit id="BPtM3Pd2" resname="Renew your password">
+        <source>Renew your password</source>
+        <target>Modifier votre mot de passe</target>
+      </trans-unit>
+      <trans-unit id="BPtM3Pd3" resname="Renew my password">
+        <source>Renew my password</source>
+        <target>Modifier mon mot de passe</target>
       </trans-unit>
       <trans-unit id="a7FhNlK" resname="Forgot your password">
         <source>Forgot your password</source>
         <target>Mot de passe oublié</target>
       </trans-unit>
+      <trans-unit id="AJR3lMs2" resname="An email will be sent to you so you can renew your password. The link you receive will be valid 24h.">
+        <source>An email will be sent to you so you can renew your password. The link you receive will be valid 24h.</source>
+        <target>Un courriel vous sera envoyé afin que vous puissiez renouveler votre mot de passe. Le lien que vous recevrez sera valide pendant 24 heures.</target>
+      </trans-unit>   
       <trans-unit id="vFCURyP" resname="Hi,">
         <source>Hi,</source>
         <target>Bonjour,</target>
