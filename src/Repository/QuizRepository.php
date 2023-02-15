@@ -109,8 +109,10 @@ class QuizRepository extends ServiceEntityRepository
         $builder->andWhere('q.language = :language');
         $builder->setParameter('language', $this->language);
 
-        $builder->andWhere('q.created_by = :created_by');
-        $builder->setParameter('created_by', $this->tokenStorage->getToken()->getUser());
+        if (!$isAdmin) {
+            $builder->andWhere('q.created_by = :created_by');
+            $builder->setParameter('created_by', $this->tokenStorage->getToken()->getUser());
+        }
 
         $builder->innerJoin('q.categories', 'categories');
         $builder->andWhere($builder->expr()->in('categories', ':categories'))->setParameter('categories', $categories);
@@ -123,32 +125,5 @@ class QuizRepository extends ServiceEntityRepository
         $builder->orderBy('q.title', 'ASC');
         return $builder->getQuery()->getResult();
     }
-    //    /**
-    //     * @return Quiz[] Returns an array of Quiz objects
-    //     */
-    /*
-    public function findByExampleField($value)
-    {
-    return $this->createQueryBuilder('q')
-    ->andWhere('q.exampleField = :val')
-    ->setParameter('val', $value)
-    ->orderBy('q.id', 'ASC')
-    ->setMaxResults(10)
-    ->getQuery()
-    ->getResult()
-    ;
-    }
-     */
 
-    /*
-public function findOneBySomeField($value): ?Quiz
-{
-return $this->createQueryBuilder('q')
-->andWhere('q.exampleField = :val')
-->setParameter('val', $value)
-->getQuery()
-->getOneOrNullResult()
-;
-}
- */
 }
