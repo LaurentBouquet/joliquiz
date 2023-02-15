@@ -39,7 +39,7 @@ class Quiz
     private $updated_at;
 
     #[ORM\ManyToOne(inversedBy: 'quizzes')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?User $created_by = null;
     
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy:'quizzes')]
