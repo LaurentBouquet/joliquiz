@@ -15,13 +15,9 @@
 </div>    
 
 {{ form_start(form) }}
-
-    {% if not (user.loginType=='ED') %}
-        {{ form_row(form.username) }}
-        {{ form_row(form.plainPassword) }}
-    {% endif %}    
-
-
+ 
+    {{ form_row(form.username) }}
+    {{ form_row(form.plainPassword) }}
 
     {{ form_row(form.toReceiveMyResultByEmail) }}
 

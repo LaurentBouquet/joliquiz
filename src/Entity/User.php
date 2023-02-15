@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Assert\NotBlank;
 use InvalidArgumentException;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -100,6 +101,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(nullable: true)]
     private ?int $ed_id = null;
+
+    #[NotBlank]
+    private $plainPassword;
 
     public function __construct()
     {
@@ -210,9 +214,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        $this->plainPassword = null;
     }
     
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword($password): self
+    {
+        $this->plainPassword = $password;
+
+        return $this;
+    }
+
     public function isVerified(): bool
     {
         return $this->isVerified;

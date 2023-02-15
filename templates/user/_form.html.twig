@@ -10,10 +10,7 @@
     {{ form_row(form.roles) }}
 
     {% if (user.id==null) or (app.user == user) %}
-        {% if not (user.loginType=='ED') %}
-            {{ form_row(form.username) }}
-            {{ form_row(form.plainPassword) }}
-        {% endif %} 
+        {{ form_row(form.plainPassword) }}
     {% endif %} 
 
     <a class="btn btn-secondary" href="{{ path('user_index') }}"><i class="fas fa-arrow-circle-left"></i> {{'Back to list'|trans}}</a>

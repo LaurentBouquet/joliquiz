@@ -37,7 +37,7 @@ window.location.reload(true);
 
 							<tr>
 								{% if showStudentsName %}
-									<td width="20%" class="align-left align-middle {{ workout.student.loginType=='ED' ? 'text-warning font-weight-bold' : '' }}" style="padding: 1px;" title="{{ 'LoginType'|trans }} : {{ workout.student.loginType }}">
+									<td width="20%" class="align-left align-middle" style="padding: 1px;" title="{{ 'LoginType'|trans }} : {{ workout.student.loginType }}">
 										<i class="fas fa-user"></i>
 										{{  workout.student.name }}
 									</td>

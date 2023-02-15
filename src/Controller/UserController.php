@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/user")
@@ -23,7 +22,7 @@ class UserController extends AbstractController
     /**
      * @Route("/profile", name="user_profile", methods="GET|POST")
      */
-    public function profile(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function profile(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
 
@@ -34,7 +33,7 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             if (strlen($user->getPlainPassword()) > 0) {
                 // Encode the password
-                $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+                $password = $passwordHasher->hashPassword($user, $user->getPlainPassword());
                 $user->setPassword($password);
             }
 
@@ -71,7 +70,7 @@ class UserController extends AbstractController
     /**
      * @Route("/new", name="user_new", methods="GET|POST")
      */
-    public function new(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function new(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN', null, 'Access not allowed');
 
@@ -81,7 +80,7 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Encode the password
-            $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+            $password = $passwordHasher->hashPassword($user, $user->getPlainPassword());
             $user->setPassword($password);
 
             $em->persist($user);
@@ -125,7 +124,7 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             if (strlen($user->getPlainPassword()) > 0) {
                 // Encode the password
-                $password = $passwordHasher->encodePassword($user, $user->getPlainPassword());
+                $password = $passwordHasher->hashPassword($user, $user->getPlainPassword());
                 $user->setPassword($password);
             }
 

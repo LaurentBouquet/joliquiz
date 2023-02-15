@@ -34,9 +34,7 @@ class UserType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if ($options['login_type'] != 'ED') {
-            $builder->add('username', TextType::class);
-        }
+        $builder->add('username', TextType::class);
 
         switch ($options['form_type']) {
             case 'register':
@@ -155,17 +153,15 @@ class UserType extends AbstractType
                     'label' => $this->translator->trans('To receive my result by email'),
                     'required' => false,
                 ]);
-                if ($options['login_type'] != 'ED') {
-                    $builder->add(
-                        'plainPassword',
-                        RepeatedType::class,
-                        [
-                            'type' => PasswordType::class,
-                            'first_options'  => array('label' => $this->translator->trans('Password')),
-                            'second_options' => array('label' => $this->translator->trans('Repeat Password'))
-                        ]
-                    );
-                }
+                $builder->add(
+                    'plainPassword',
+                    RepeatedType::class,
+                    [
+                        'type' => PasswordType::class,
+                        'first_options'  => array('label' => $this->translator->trans('Password')),
+                        'second_options' => array('label' => $this->translator->trans('Repeat Password'))
+                    ]
+                );
                 break;
         }
     }
