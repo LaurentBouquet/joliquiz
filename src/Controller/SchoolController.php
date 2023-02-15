@@ -5,10 +5,11 @@ namespace App\Controller;
 use App\Entity\School;
 use App\Form\SchoolType;
 use App\Repository\SchoolRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/school")
@@ -28,16 +29,15 @@ class SchoolController extends AbstractController
     /**
      * @Route("/new", name="school_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, EntityManagerInterface $em): Response
     {
         $school = new School();
         $form = $this->createForm(SchoolType::class, $school);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($school);
-            $entityManager->flush();
+            $em->persist($school);
+            $em->flush();
 
             return $this->redirectToRoute('school_index');
         }
@@ -61,14 +61,13 @@ class SchoolController extends AbstractController
     /**
      * @Route("/{id}/edit", name="school_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, School $school): Response
+    public function edit(Request $request, School $school, EntityManagerInterface $em): Response
     {
         $form = $this->createForm(SchoolType::class, $school);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
+            $em->flush();
             return $this->redirectToRoute('school_index');
         }
 
@@ -81,12 +80,11 @@ class SchoolController extends AbstractController
     /**
      * @Route("/{id}", name="school_delete", methods={"POST"})
      */
-    public function delete(Request $request, School $school): Response
+    public function delete(Request $request, School $school, EntityManagerInterface $em): Response
     {
         if ($this->isCsrfTokenValid('delete'.$school->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($school);
-            $entityManager->flush();
+            $em->remove($school);
+            $em->flush();
         }
 
         return $this->redirectToRoute('school_index');

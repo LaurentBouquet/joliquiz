@@ -126,6 +126,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->id;
     }
 
+    public function getName(): ?string
+    {
+        return $this->__toString();
+    }
+
     public function getEmail(): ?string
     {
         return $this->email;
@@ -205,21 +210,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
-        $this->plainPassword = null;
+        // $this->plainPassword = null;
     }
-
-    public function getPlainPassword()
-    {
-        return $this->plainPassword;
-    }
-
-    public function setPlainPassword($password): self
-    {
-        $this->plainPassword = $password;
-
-        return $this;
-    }
-
+    
     public function isVerified(): bool
     {
         return $this->isVerified;

@@ -33,14 +33,7 @@
 													{% for matiere in periode.matieres %}
 													<tr>
 														<td>
-															{% if ONLY_OGEC and not session.sendedToEd %}
-																	<a class="btn mx-1" href="{{ path('session_send_to_ed2', {'id': session.id, 'quiz': quiz.id, 'classe': classe.id, 'periode': periode.codePeriode, 'subject': matiere.code}) }}" title="{{ 'Create evaluation to this subject in EcoleDirecte'|trans }}">																		
-																		<i class="fas fa-share-square"></i>
-																		{{ matiere.libelle }}
-																	</a>
-															{% else %}								
-																{{ matiere.libelle }}
-															{% endif %}
+															{{ matiere.libelle }}
 														</td>
 													</tr>
 													{% endfor %}

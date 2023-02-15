@@ -53,14 +53,6 @@
 										<i class="fas fa-list-ol"></i>
 									</a>
 								{% endif %}
-								{% if ONLY_OGEC %}
-									{% if not session.sendedToEd %}
-										<a class="btn mx-1" href="{{ path('session_send_to_ed', {'id': session.id, 'quiz': quiz.id}) }}" title="{{ 'Send to EcoleDirecte'|trans }}">
-											{{ 'Send to ED'|trans }} 											
-										</a>
-									{% endif %}
-								{% endif %}
-
 							</div>
 						</td>
 					</tr>

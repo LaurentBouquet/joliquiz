@@ -319,14 +319,13 @@ class SessionController extends AbstractController
     /**
      * @Route("/{id}/edit", name="session_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Session $session): Response
+    public function edit(Request $request, Session $session, EntityManagerInterface $em): Response
     {
         $form = $this->createForm(SessionType::class, $session);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
+            $em->flush();
             return $this->redirectToRoute('session_index');
         }
 

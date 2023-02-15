@@ -366,7 +366,7 @@ class QuizController extends AbstractController
                                     'workout_id' => $workout->getId(),
                                     'workout_token' => $workout->getToken(),
                                 ]);
-                            if ($user->getToReceiveMyResultByEmail()) {
+                            if ($user->isToReceiveMyResultByEmail()) {
                                 $email->addTo($user->getEmail());
                             }
                             $mailer->send($email);
@@ -563,7 +563,7 @@ class QuizController extends AbstractController
                     'workout_id' => $workout->getId(),
                     'workout_token' => $workout->getToken(),
                 ]);
-            if ($user->getToReceiveMyResultByEmail()) {
+            if ($user->isToReceiveMyResultByEmail()) {
                 $email->addTo($user->getEmail());
             }
             $mailer->send($email);
@@ -723,12 +723,8 @@ class QuizController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $quiz->setUpdatedAt($now);
-
-            //$this->getDoctrine()->getManager()->flush();
             $em->flush();
-
             $this->addFlash('success', sprintf('Quiz "%s" is updated.', $quiz->getTitle()));
-
             return $this->redirectToRoute('quiz_edit', ['id' => $quiz->getId()]);
         }
 
@@ -746,10 +742,8 @@ class QuizController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
         if ($this->isCsrfTokenValid('delete' . $quiz->getId(), $request->request->get('_token'))) {
-            //$em = $this->getDoctrine()->getManager();
             $em->remove($quiz);
             $em->flush();
-
             $this->addFlash('success', sprintf('Quiz "%s" is deleted.', $quiz->getTitle()));
         }
 

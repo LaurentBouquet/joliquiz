@@ -41,14 +41,10 @@ class CategoryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //$em = $this->getDoctrine()->getManager();
-
             $category->setCreatedBy($this->getUser());
             $em->persist($category);
             $em->flush();
-
             $this->addFlash('success', sprintf('Category "%s" is created.', $category->getShortname()));
-
             return $this->redirectToRoute('category_index');
         }
 
@@ -79,12 +75,8 @@ class CategoryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            
-            //$this->getDoctrine()->getManager()->flush();
             $em->flush();
-
             $this->addFlash('success', sprintf('Category "%s" is updated.', $category->getShortname()));
-
             return $this->redirectToRoute('category_edit', ['id' => $category->getId()]);
         }
 
@@ -102,10 +94,8 @@ class CategoryController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
         if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
-            //$em = $this->getDoctrine()->getManager();
             $em->remove($category);
             $em->flush();
-
             $this->addFlash('success', sprintf('Category "%s" is deleted.', $category->getShortname()));
         }
 

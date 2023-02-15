@@ -7,9 +7,9 @@ use App\Entity\User;
 use App\Entity\Category;
 use App\Entity\Question;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\LanguageRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use phpDocumentor\Reflection\Types\Integer;
 
 #[ORM\Entity(repositoryClass: LanguageRepository::class)]
 #[ORM\Table(name: 'tbl_language')]

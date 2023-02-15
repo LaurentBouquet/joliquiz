@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\AnswerHistoryRepository;
 
 #[ORM\Entity(repositoryClass: AnswerHistoryRepository::class)]
 #[ORM\Table(name: 'tbl_history_answer')]

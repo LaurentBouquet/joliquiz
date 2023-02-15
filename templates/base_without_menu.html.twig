@@ -49,7 +49,7 @@
                         <!-- if (app.request.attributes.get('_route') in ['quiz_result']) -->
                         {% if (score is defined) %}
                             <li>
-                                <a class="nav-link" href="{{ path('logout') }}">{{'Logout'|trans}}</a>
+                                <a class="nav-link" href="{{ path('app_logout') }}">{{'Logout'|trans}}</a>
                             </li>
                         {% endif %}
                     {% endif %}

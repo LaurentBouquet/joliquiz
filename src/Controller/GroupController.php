@@ -5,10 +5,11 @@ namespace App\Controller;
 use App\Entity\Group;
 use App\Form\GroupType;
 use App\Repository\GroupRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/group")
@@ -28,17 +29,15 @@ class GroupController extends AbstractController
     /**
      * @Route("/new", name="group_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, EntityManagerInterface $em): Response
     {
         $group = new Group();
         $form = $this->createForm(GroupType::class, $group);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($group);
-            $entityManager->flush();
-
+            $em->persist($group);
+            $em->flush();
             return $this->redirectToRoute('group_index');
         }
 
@@ -61,14 +60,13 @@ class GroupController extends AbstractController
     /**
      * @Route("/{id}/edit", name="group_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Group $group): Response
+    public function edit(Request $request, Group $group, EntityManagerInterface $em): Response
     {
         $form = $this->createForm(GroupType::class, $group);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
+            $em->flush();
             return $this->redirectToRoute('group_index');
         }
 
@@ -81,12 +79,11 @@ class GroupController extends AbstractController
     /**
      * @Route("/{id}", name="group_delete", methods={"POST"})
      */
-    public function delete(Request $request, Group $group): Response
+    public function delete(Request $request, Group $group, EntityManagerInterface $em): Response
     {
         if ($this->isCsrfTokenValid('delete' . $group->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($group);
-            $entityManager->flush();
+            $em->remove($group);
+            $em->flush();
         }
 
         return $this->redirectToRoute('group_index');

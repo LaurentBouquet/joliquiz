@@ -38,7 +38,6 @@ class AnswerController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //$em = $this->getDoctrine()->getManager();
             $em->persist($answer);
             $em->flush();
 
@@ -75,7 +74,6 @@ class AnswerController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             
-            //$this->getDoctrine()->getManager()->flush();
             $em->flush();
             
             $this->addFlash('success', sprintf('Answer #%s is updated.', $answer->getId()));
@@ -97,7 +95,6 @@ class AnswerController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
         if ($this->isCsrfTokenValid('delete'.$answer->getId(), $request->request->get('_token'))) {
-            //$em = $this->getDoctrine()->getManager();
             $em->remove($answer);
             $em->flush();
 
