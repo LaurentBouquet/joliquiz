@@ -49,7 +49,7 @@ class QuestionHistory
         $this->answersHistory = new ArrayCollection();
     }
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }

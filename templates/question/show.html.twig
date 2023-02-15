@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{'Question'|trans}}{% endblock %}
+
+{% block body %}
+    <h1>{{'Question'|trans}}</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>{{ 'Id'|trans }}</th>
+                <td>{{ question.id }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Language'|trans }}</th>
+                <td>{{ question.language }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Text'|trans }}</th>
+                <td>{{ question.text }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Categories'|trans }}</th>
+                <td>
+                  {% for category in question.categories %}
+                     - {{ category.longname }} <br>
+                  {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <th>{{ 'Answers'|trans }}</th>
+                <td>
+                  {% for answer in question.answers %}
+                     {% if answer.correct %}+{% else %}-{% endif %} {{ answer.text }} <br>
+                  {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <th>{{ 'Created_at'|trans }}</th>
+                <td>{{ question.createdAt ? question.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Updated_at'|trans }}</th>
+                <td>{{ question.updatedAt ? question.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary mr-2" href="{{ path('question_index') }}"><i class="fas fa-arrow-circle-left"></i> {{'Back to list'|trans}}</a>
+
+    {% if is_granted('ROLE_TEACHER') %}
+        <a class="btn btn-primary" href="{{ path('question_edit', {'id': question.id}) }}"><i class="fas fa-pencil-alt"></i> {{'Edit'|trans}}</a>
+    {% endif %}
+
+{% endblock %}

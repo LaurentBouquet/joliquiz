@@ -7,6 +7,7 @@ use App\Entity\Session;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\QuizRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -91,7 +92,7 @@ class Quiz
         $this->sessions = new ArrayCollection();
     }
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }

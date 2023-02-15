@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{'Edit Quiz'|trans}} "{{ quiz.title }}"{% endblock %}
+
+{% block body %}
+    <h1>{{'Edit Quiz'|trans}} "{{ quiz.title }}"</h1>
+
+    {% if is_granted('ROLE_TEACHER') %}
+        {{ include('quiz/_form.html.twig', {'button_label': 'Save'|trans}) }}
+    {% endif %}
+
+{% endblock %}

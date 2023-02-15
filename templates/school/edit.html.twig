@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{'Edit School'|trans}} "{{ school.name }}"{% endblock %}
+
+{% block body %}
+    <h1>{{'Edit School'|trans}} "{{ school.name }}"</h1>
+
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        {{ include('school/_form.html.twig', {'button_label': 'Save'|trans}) }}
+    {% endif %}
+
+{% endblock %}

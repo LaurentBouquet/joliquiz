@@ -57,7 +57,7 @@ class Question
         $this->answers = new ArrayCollection();
     }
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }

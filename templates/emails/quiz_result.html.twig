@@ -1,0 +1,98 @@
+{# templates/emails/quiz_result.html.twig #}
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" class="background_main"
+        style="background-color: #ffffff; padding-top: 20px; color: #434245; width: 100%; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; ">
+        <tr>
+            <td valign="top" class="sm_full_width"
+                style="margin: 0 auto; width: 100%; max-width: 600px; display: block;">
+                <div class="sm_no_padding"
+                    style="margin: 0 auto; padding: 30px 0 40px; display: block; box-sizing: border-box;">
+
+                    <table style="width: 100%; color: #434245;" border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td style="box-sizing: border-box;">
+                                <table border="0" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td>
+
+                                            <img src="{{ absolute_url(path('index')) }}/images/JoliQuiz-300x111_smiley.png"
+                                                alt="JoliQuiz" />
+
+                                            <h1 style="font-size: 30px; padding-right: 30px; padding-left: 30px;">
+                                                {{ 'A quiz has just been completed!'|trans }}</h1>
+
+                                            <p style="font-size: 17px; padding-right: 30px; padding-left: 30px;">
+                                                <br/>
+                                                {{ 'Hi!'|trans }}  <br/>
+                                                <br/>                                    
+                                                {{ 'The quiz'|trans }} "<strong>{{quiz.title}}</strong>" {{ 'has just been completed,'|trans }} <br/>
+                                                {{ 'by'|trans }} <strong>{{ username }}</strong>, 
+                                                {{ 'got the following result'|trans }} : <strong>{{ score }}%</strong> ({{ grade }}/20). <br/>
+                                                <br/>
+                                                
+                                                {{ 'To consult quiz results, goto:'|trans }} <br/>
+                                                <a href="{{ app.request.schemeAndHttpHost }}{{ path('quiz_result', {'id':quiz.id, 'workout':workout_id, 'token':workout_token}) }}">
+                                                    {{ app.request.schemeAndHttpHost  }}</a>.                                        
+
+                                                <p
+                                                    style="font-size: 17px; padding-right: 30px; padding-left: 30px; margin-bottom: 20px;">
+                                                    {{ 'or press the button below'|trans }} :</p>
+
+                                                <div
+                                                    style="padding-right: 30px; padding-left: 30px; margin-top: 5px; margin-bottom: 30px;">
+                                                    <table style="width: 100%; " class="sm_table">
+                                                        <tr style="width: 100%;">
+                                                            <td style="width: 100%;">
+                                                                <span
+                                                                    style="display: inline-block; position:relative; border-radius:4px; background-color:#007BFF; "
+                                                                    class="sm_full_width">
+                                                                    <a class="button_link sm_full_width sm_border_box"
+                                                                        href="{{ app.request.schemeAndHttpHost }}{{ path('quiz_result', {'id':quiz.id, 'workout':workout_id, 'token':workout_token}) }}"
+                                                                        style="min-width:196px; border-top:13px solid; border-bottom:13px solid; border-right:24px solid; border-left:24px solid; border-color:#007BFF; border-radius:4px; background-color:#007BFF; color:#ffffff; font-size:18px; line-height:18px; word-break:break-word; text-shadow:0 1px 1px #2e9a5f;  display: inline-block; text-align: center; font-weight: 900; text-decoration: none !important;">
+                                                                        {{ 'View results'|trans }}
+                                                                    </a>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+
+                                                <p
+                                                style="font-size: 17px; padding-right: 30px; padding-left: 30px; margin-bottom: 20px;">
+                                                {{ 'Thanks!'|trans }}</p>
+                                                
+
+                                                <p
+                                                    style="font-size: 17px; padding-right: 30px; padding-left: 30px; margin-top: 40px; margin-bottom: 30px;">
+                                                    <strong>{{ 'You did not request to receive this email?'|trans }}</strong><br />
+                                                    {{ 'No problem! Your address was probably entered by mistake.'|trans }}
+                                                    {{ 'You can ignore or delete this email.'|trans }}</p>
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="email_footer"
+                style="padding: 0 30px 40px; border-top: 1px solid #E1E1E4; line-height: 24px; font-size: 15px; color: #717274; text-align: center; width: 100%;">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" align="center"
+                    style="margin-top: 20px; background-color: white;">
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>
+                            <span style="display: block;">
+                                Powered by <a href="{{ app.request.schemeAndHttpHost }}"
+                                    style="text-decoration: none; color: #434245;">JoliQuiz</a>
+                                <br />
+                            </span>
+                        </td>
+                        <td>&nbsp;</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>

@@ -32,7 +32,7 @@ class AnswerHistory
     #[ORM\Column(type: 'boolean')]
     private $answer_succes;
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }

@@ -1,0 +1,786 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="BERQBOo" resname="Create new category">
+        <source>Create new category</source>
+        <target>Créer une catégorie</target>
+      </trans-unit>
+      <trans-unit id="DfbxytN" resname="Show">
+        <source>Show</source>
+        <target>Voir</target>
+      </trans-unit>
+      <trans-unit id="RkxP.QG" resname="Edit">
+        <source>Edit</source>
+        <target>Modifier</target>
+      </trans-unit>
+      <trans-unit id="Xaj3_8K" resname="Back to list">
+        <source>Back to list</source>
+        <target>Retourner à la liste</target>
+      </trans-unit>
+      <trans-unit id="4tClSWj" resname="Delete">
+        <source>Delete</source>
+        <target>Supprimer</target>
+      </trans-unit>
+      <trans-unit id="GNaOPCC" resname="I create my free account...">
+        <source>I create my free account...</source>
+        <target>Je crée mon compte gratuit ...</target>
+      </trans-unit>
+      <trans-unit id="w9BnAje" resname="Let's start now">
+        <source>Let's start now</source>
+        <target>Commençons dès maintenant</target>
+      </trans-unit>
+      <trans-unit id="0ziYMaR" resname="Create new question">
+        <source>Create new question</source>
+        <target>Créer une question</target>
+      </trans-unit>
+      <trans-unit id="EhVukhv" resname="Id">
+        <source>Id</source>
+        <target>N°</target>
+      </trans-unit>
+      <trans-unit id="cZiMTY4" resname="Text">
+        <source>Text</source>
+        <target>Texte</target>
+      </trans-unit>
+      <trans-unit id="uLHYlMa" resname="Categories">
+        <source>Categories</source>
+        <target>Catégories</target>
+      </trans-unit>
+      <trans-unit id="StCgpq5" resname="Answers">
+        <source>Answers</source>
+        <target>Réponses</target>
+      </trans-unit>
+      <trans-unit id=".4BZ3Gd" resname="Actions">
+        <source>Actions</source>
+        <target>Actions</target>
+      </trans-unit>
+      <trans-unit id="hDMatXa" resname="Create new user">
+        <source>Create new user</source>
+        <target>Créer un utilisateur</target>
+      </trans-unit>
+      <trans-unit id="8shDXvL" resname="Create new quiz">
+        <source>Create new quiz</source>
+        <target>Créer un questionnaire</target>
+      </trans-unit>
+      <trans-unit id="5LufHs6" resname="Start">
+        <source>Start</source>
+        <target>Démarrer</target>
+      </trans-unit>
+      <trans-unit id="H.V6Kdf" resname="Next">
+        <source>Next</source>
+        <target>Suivant</target>
+      </trans-unit>
+      <trans-unit id="8eY4uub" resname="Quizzes">
+        <source>Quizzes</source>
+        <target>Questionnaires</target>
+      </trans-unit>
+      <trans-unit id="mnIiGid" resname="Questions">
+        <source>Questions</source>
+        <target>Questions</target>
+      </trans-unit>
+      <trans-unit id="awzJBNC" resname="Users">
+        <source>Users</source>
+        <target>Utilisateurs</target>
+      </trans-unit>
+      <trans-unit id="0FJ_Sz1" resname="Logout">
+        <source>Logout</source>
+        <target>Se déconnecter</target>
+      </trans-unit>
+      <trans-unit id="XiuOllA" resname="Sign up">
+        <source>Sign up</source>
+        <target>Créer un compte</target>
+      </trans-unit>
+      <trans-unit id="v9QCsvb" resname="Sign in">
+        <source>Sign in</source>
+        <target>Connexion</target>
+      </trans-unit>
+      <trans-unit id="nWMiwfT" resname="Login">
+        <source>Login</source>
+        <target>Se connecter</target>
+      </trans-unit>
+      <trans-unit id="B2vCfcB" resname="Create new answer">
+        <source>Create new answer</source>
+        <target>Créer une réponse</target>
+      </trans-unit>
+      <trans-unit id="JDGJ6tc" resname="Shortname">
+        <source>Shortname</source>
+        <target>Nom court</target>
+      </trans-unit>
+      <trans-unit id="9iiazAv" resname="Longname">
+        <source>Longname</source>
+        <target>Nom long</target>
+      </trans-unit>
+      <trans-unit id="S9iCKr8" resname="Created_at">
+        <source>Created_at</source>
+        <target>Créé le</target>
+      </trans-unit>
+      <trans-unit id="0Y.II8I" resname="Updated_at">
+        <source>Updated_at</source>
+        <target>Modifié le</target>
+      </trans-unit>
+      <trans-unit id="47ienTP" resname="Username">
+        <source>Username</source>
+        <target>Identifiant</target>
+      </trans-unit>
+      <trans-unit id="588_9PF" resname="Password">
+        <source>Password</source>
+        <target>Mot de passe</target>
+      </trans-unit>
+      <trans-unit id="Hkmh4Tp" resname="Repeat Password">
+        <source>Repeat Password</source>
+        <target>Répéter le mot de passe</target>
+      </trans-unit>
+      <trans-unit id="4MFfyNz" resname="I have read and accept the terms and conditions">
+        <source>I have read and accept the terms and conditions</source>
+        <target>J'ai lu et j'accepte les conditions générales</target>
+      </trans-unit>
+      <trans-unit id="zJ7bm.q" resname="the terms and conditions">
+        <source>the terms and conditions</source>
+        <target>les conditions générales</target>
+      </trans-unit>
+      <trans-unit id="w_Om7eq" resname="Terms and conditions">
+        <source>Terms and conditions</source>
+        <target>Conditions générales</target>
+      </trans-unit>
+      <trans-unit id="lpzL089" resname="Email">
+        <source>Email</source>
+        <target>Email</target>
+      </trans-unit>
+      <trans-unit id="V0AeWYH" resname="IsActive">
+        <source>IsActive</source>
+        <target>Actif</target>
+      </trans-unit>
+      <trans-unit id="tvGq1da" resname="Account activated">
+        <source>Account activated</source>
+        <target>Compte activé</target>
+      </trans-unit>
+      <trans-unit id="wlM3BVR" resname="Roles">
+        <source>Roles</source>
+        <target>Rôles</target>
+      </trans-unit>
+      <trans-unit id="jnapSsg" resname="Summary">
+        <source>Summary</source>
+        <target>Résumé</target>
+      </trans-unit>
+      <trans-unit id="S73jn82" resname="Number of questions">
+        <source>Number of questions</source>
+        <target>Nombre de questions</target>
+      </trans-unit>
+      <trans-unit id="fozSBW2" resname="Title">
+        <source>Title</source>
+        <target>Titre</target>
+      </trans-unit>
+      <trans-unit id="L7wMRKk" resname="Result after question">
+        <source>Result after question</source>
+        <target>Résultat après chaque question</target>
+      </trans-unit>
+      <trans-unit id="kjQGlYm" resname="Active">
+        <source>Active</source>
+        <target>Actif</target>
+      </trans-unit>
+      <trans-unit id="rKAaGjo" resname="Correct">
+        <source>Correct</source>
+        <target>Réponse correcte</target>
+      </trans-unit>
+      <trans-unit id="8BDNijH" resname="Sign up if you do not have an account. It's simple and fast.">
+        <source>Sign up if you do not have an account. It's simple and fast.</source>
+        <target>Inscrivez-vous si vous n'avez pas de compte. C'est simple et rapide.</target>
+      </trans-unit>
+      <trans-unit id="xo05DSt" resname="Category index">
+        <source>Category index</source>
+        <target>Liste des catégories</target>
+      </trans-unit>
+      <trans-unit id="2p1awvt" resname="Question index">
+        <source>Question index</source>
+        <target>Liste des questions</target>
+      </trans-unit>
+      <trans-unit id="ezuwN7u" resname="User index">
+        <source>User index</source>
+        <target>Liste des utilisateurs</target>
+      </trans-unit>
+      <trans-unit id="PGfaCYB" resname="Quiz index">
+        <source>Quiz index</source>
+        <target>Liste des questionnaires</target>
+      </trans-unit>
+      <trans-unit id="VSfIL5D" resname="Answer index">
+        <source>Answer index</source>
+        <target>Liste des réponses</target>
+      </trans-unit>
+      <trans-unit id="DZO3ehf" resname="Edit Category">
+        <source>Edit Category</source>
+        <target>Modifier la catégorie</target>
+      </trans-unit>
+      <trans-unit id="Ogh45Pp" resname="New Category">
+        <source>New Category</source>
+        <target>Nouvelle catégorie</target>
+      </trans-unit>
+      <trans-unit id="KSwG8AR" resname="Category">
+        <source>Category</source>
+        <target>Catégorie</target>
+      </trans-unit>
+      <trans-unit id="zI.Z63_" resname="Welcome!">
+        <source>Welcome!</source>
+        <target>Bienvenue !</target>
+      </trans-unit>
+      <trans-unit id="nibTd3r" resname="Edit Question">
+        <source>Edit Question</source>
+        <target>Modifier la question</target>
+      </trans-unit>
+      <trans-unit id="zI7aMg3" resname="New Question">
+        <source>New Question</source>
+        <target>Nouvelle question</target>
+      </trans-unit>
+      <trans-unit id="KJr.ErB" resname="Question">
+        <source>Question</source>
+        <target>Question</target>
+      </trans-unit>
+      <trans-unit id="6KiDUxl" resname="Edit User">
+        <source>Edit User</source>
+        <target>Modifier l'utilisateur</target>
+      </trans-unit>
+      <trans-unit id="MVJ_u5A" resname="New User">
+        <source>New User</source>
+        <target>Nouvel utilisateur</target>
+      </trans-unit>
+      <trans-unit id="tRLZfny" resname="User">
+        <source>User</source>
+        <target>Utilisateur</target>
+      </trans-unit>
+      <trans-unit id="H9zH_jC" resname="End Quiz">
+        <source>End Quiz</source>
+        <target>Fin du questionnaire</target>
+      </trans-unit>
+      <trans-unit id="aWZgqZ5" resname="Edit Quiz">
+        <source>Edit Quiz</source>
+        <target>Modifier le questionnaire</target>
+      </trans-unit>
+      <trans-unit id="ZCtYop0" resname="New Quiz">
+        <source>New Quiz</source>
+        <target>Nouveau questionnaire</target>
+      </trans-unit>
+      <trans-unit id="A6p9wWe" resname="Quiz">
+        <source>Quiz</source>
+        <target>Questionnaire</target>
+      </trans-unit>
+      <trans-unit id="zUNQC5P" resname="Starting Quiz">
+        <source>Starting Quiz</source>
+        <target>Démarrer le questionnaire</target>
+      </trans-unit>
+      <trans-unit id="nVRn3MP" resname="Edit Answer">
+        <source>Edit Answer</source>
+        <target>Modifier une réponse</target>
+      </trans-unit>
+      <trans-unit id="n8b.YPP" resname="New Answer">
+        <source>New Answer</source>
+        <target>Nouvelle réponse</target>
+      </trans-unit>
+      <trans-unit id="sqOqYCd" resname="Answer">
+        <source>Answer</source>
+        <target>Réponse</target>
+      </trans-unit>
+      <trans-unit id="FQn1YfJ" resname="Save">
+        <source>Save</source>
+        <target>Enregistrer</target>
+      </trans-unit>
+      <trans-unit id="wcEAnT8" resname="Update">
+        <source>Update</source>
+        <target>Modifier</target>
+      </trans-unit>
+      <trans-unit id="4NIzX9Q" resname="Show result question">
+        <source>Show result question</source>
+        <target>Afficher le résultat après chaque question</target>
+      </trans-unit>
+      <trans-unit id="MCVzYc0" resname="Are you sure you want to delete this answer?">
+        <source>Are you sure you want to delete this answer?</source>
+        <target>Etes vous sûr de vouloir supprimer cette réponse ?</target>
+      </trans-unit>
+      <trans-unit id="Pb6GDOq" resname="Are you sure you want to delete this category?">
+        <source>Are you sure you want to delete this category?</source>
+        <target>Etes vous sûr de vouloir supprimer cette catégorie ?</target>
+      </trans-unit>
+      <trans-unit id="QwzEeCc" resname="Are you sure you want to delete this question?">
+        <source>Are you sure you want to delete this question?</source>
+        <target>Etes vous sûr de vouloir supprimer cette question ?</target>
+      </trans-unit>
+      <trans-unit id="REE8PZe" resname="Are you sure you want to delete this item?">
+        <source>Are you sure you want to delete this item?</source>
+        <target>Etes vous sûr de vouloir supprimer cet élément ?</target>
+      </trans-unit>
+      <trans-unit id="JwjWOvo" resname="Are you sure you want to delete this quiz?">
+        <source>Are you sure you want to delete this quiz?</source>
+        <target>Etes vous sûr de vouloir supprimer ce questionnaire ?</target>
+      </trans-unit>
+      <trans-unit id="10m5Ia3" resname="Are you sure you want to delete this user?">
+        <source>Are you sure you want to delete this user?</source>
+        <target>Etes vous sûr de vouloir supprimer cet utilisateur ?</target>
+      </trans-unit>
+      <trans-unit id="zIdMVLd" resname="Request a new feature">
+        <source>Request a new feature</source>
+        <target>Demander une nouvelle fonctionnalité</target>
+      </trans-unit>
+      <trans-unit id="q7KJbcP" resname="MIT License">
+        <source>MIT License</source>
+        <target>Licence MIT</target>
+      </trans-unit>
+      <trans-unit id="aGfFdqg" resname="Powered by Symfony">
+        <source>Powered by Symfony</source>
+        <target>Propulsé par Symfony</target>
+      </trans-unit>
+      <trans-unit id="9oqzB2f" resname="Code hosted by GitHub">
+        <source>Code hosted by GitHub</source>
+        <target>Code hébergé par GitHub</target>
+      </trans-unit>
+      <trans-unit id="oyJZkxE" resname="Need to check on students’ performance?">
+        <source>Need to check on students’ performance?</source>
+        <target>Besoin de vérifier la performance de vos élèves ?</target>
+      </trans-unit>
+      <trans-unit id="Cr_2UHK" resname="JoliQuiz is an online quiz software.">
+        <source>JoliQuiz is an online quiz software.</source>
+        <target>JoliQuiz est un logiciel de QCM en ligne.</target>
+      </trans-unit>
+      <trans-unit id="GHIguwW" resname="A simple and free tool.">
+        <source>A simple and free tool.</source>
+        <target>Un outil simple et gratuit.</target>
+      </trans-unit>
+      <trans-unit id="VpfQPa7" resname="Features">
+        <source>Features</source>
+        <target>Fonctionnalités</target>
+      </trans-unit>
+      <trans-unit id="MSOyT2B" resname="Automatic scoring">
+        <source>Automatic scoring</source>
+        <target>Notation automatique</target>
+      </trans-unit>
+      <trans-unit id="u1NAMKc" resname="Real-time activity tracking (receive the results of students by email)">
+        <source>Real-time activity tracking (receive the results of students by email)</source>
+        <target>Suivi d'activité en temps réel (recevez les résultats des élèves par email)</target>
+      </trans-unit>
+      <trans-unit id="v3rVIzc" resname="Test your audience via smartphone and provide live results during a presentation">
+        <source>Test your audience via smartphone and provide live results during a presentation</source>
+        <target>Testez vos élèves via un smartphone et fournissez des résultats en direct lors d'une présentation</target>
+      </trans-unit>
+      <trans-unit id="XhpKdyT" resname="It is free software that you can copy and modify.">
+        <source>It is free software that you can copy and modify.</source>
+        <target>C'est un logiciel libre que vous pouvez copier et modifier.</target>
+      </trans-unit>
+      <trans-unit id="Lzz1Nub" resname="Motivating interactive content">
+        <source>Motivating interactive content</source>
+        <target>Contenu interactif motivant</target>
+      </trans-unit>
+      <trans-unit id="qTfbbJp" resname="Image support, automatic social media integration">
+        <source>Image support, automatic social media integration</source>
+        <target>Prise en charge des images, intégration automatique des médias sociaux</target>
+      </trans-unit>
+      <trans-unit id="r4Jc_Qa" resname="License:">
+        <source>License:</source>
+        <target>Licence :</target>
+      </trans-unit>
+      <trans-unit id="pP5lJk7" resname="Language">
+        <source>Language</source>
+        <target>Langue</target>
+      </trans-unit>
+      <trans-unit id="D5lam8." resname="no records found">
+        <source>no records found</source>
+        <target>Aucun enregistrement trouvé</target>
+      </trans-unit>
+      <trans-unit id="u3I07BJ" resname="Register">
+        <source>Register</source>
+        <target>S'enregistrer</target>
+      </trans-unit>
+      <trans-unit id="1BoNRvC" resname="Here is the tool you need!">
+        <source>Here is the tool you need!</source>
+        <target>Voici l'outil qu'il vous faut !</target>
+      </trans-unit>
+      <trans-unit id="DmY3P0X" resname="Label">
+        <source>Label</source>
+        <target>Libellé</target>
+      </trans-unit>
+      <trans-unit id="akbPQ7Z" resname="Start quiz comment">
+        <source>Start quiz comment</source>
+        <target>Commentaire de démarrage du questionnaire</target>
+      </trans-unit>
+      <trans-unit id="qq45sgA" resname="Result quiz comment">
+        <source>Result quiz comment</source>
+        <target>Commentaire du résultat du questionnaire</target>
+      </trans-unit>
+      <trans-unit id="AdiCba8" resname="Allow anonymous workout">
+        <source>Allow anonymous workout</source>
+        <target>Autoriser un entrainement anonyme</target>
+      </trans-unit>
+      <trans-unit id="56iqLff" resname="Anonymous">
+        <source>Anonymous</source>
+        <target>Anonyme</target>
+      </trans-unit>
+      <trans-unit id="OOWkbLx" resname="Score">
+        <source>Score</source>
+        <target>Résultat</target>
+      </trans-unit>
+      <trans-unit id="RPXj__x" resname="Comment">
+        <source>Comment</source>
+        <target>Commentaire</target>
+      </trans-unit>
+      <trans-unit id="1eTTQ3e" resname="Your result is not enough, please review and redo this quiz.">
+        <source>Your result is not enough, please review and redo this quiz.</source>
+        <target>Votre résultat n'est pas suffisant, veuillez réviser puis refaire ce questionnaire.</target>
+      </trans-unit>
+      <trans-unit id="ZUp9uuA" resname="Your result is fairly average, we advise you to review the questions on which you made mistakes, then redo this quiz.">
+        <source>Your result is fairly average, we advise you to review the questions on which you made mistakes, then redo this quiz.</source>
+        <target>Votre résultat est assez moyen, nous vous conseillons de revoir les questions sur lesquelles vous avez fait des erreurs, puis de refaire ce questionnaire.</target>
+      </trans-unit>
+      <trans-unit id="M7bZWFJ" resname="Good result. You have acquired most of the concepts covered in this quiz.">
+        <source>Good result. You have acquired most of the concepts covered in this quiz.</source>
+        <target>Bon résultat. Vous avez acquis l'essentiel des notions abordées dans ce questionnaire.</target>
+      </trans-unit>
+      <trans-unit id="1mteIRx" resname="Congratulations! Your answers showed that you have a good knowledge of the concepts covered in this quiz.">
+        <source>Congratulations! Your answers showed that you have a good knowledge of the concepts covered in this quiz.</source>
+        <target>Félicitations ! Vos réponses ont montré que vous aviez une bonne connaissance des notions abordées dans ce questionnaire.</target>
+      </trans-unit>
+      <trans-unit id="r9Jf3xf" resname="Forgot your password?">
+        <source>Forgot your password?</source>
+        <target>Vous avez oublié votre mot de passe ?</target>
+      </trans-unit>
+      <trans-unit id="TustTAc" resname="Please enter your email address, we will send you an email to re-initialize your password.">
+        <source>Please enter your email address, we will send you an email to re-initialize your password.</source>
+        <target>Veuillez saisir votre adresse e-mail, nous vous enverrons un e-mail pour réinitialiser votre mot de passe.</target>
+      </trans-unit>
+      <trans-unit id="9vRoj.I" resname="Send">
+        <source>Send</source>
+        <target>Envoyer</target>
+      </trans-unit>
+      <trans-unit id="BPtM3Pd" resname="Renew password">
+        <source>Renew password</source>
+        <target>Modifier le mot de passe</target>
+      </trans-unit>
+      <trans-unit id="a7FhNlK" resname="Forgot your password">
+        <source>Forgot your password</source>
+        <target>Mot de passe oublié</target>
+      </trans-unit>
+      <trans-unit id="vFCURyP" resname="Hi,">
+        <source>Hi,</source>
+        <target>Bonjour,</target>
+      </trans-unit>
+      <trans-unit id="2gKsKOJ" resname="Please click this link to change your password:">
+        <source>Please click this link to change your password:</source>
+        <target>Veuillez cliquer sur ce lien pour changer votre mot de passe :</target>
+      </trans-unit>
+      <trans-unit id="CHZSHd." resname="Change the password">
+        <source>Change the password</source>
+        <target>Changer le mot de passe</target>
+      </trans-unit>
+      <trans-unit id="WfAG1jv" resname="seconds">
+        <source>seconds</source>
+        <target>secondes</target>
+      </trans-unit>
+      <trans-unit id="OnFP0N0" resname="Response time (%question_duration% s) exceeded time limit (%question_max_duration% s) by question">
+        <source>Response time (%question_duration% s) exceeded time limit (%question_max_duration% s) by question</source>
+        <target>La durée de la réponse (%question_duration% s) a dépassé le délai imparti (%question_max_duration% s)</target>
+      </trans-unit>
+      <trans-unit id="_Dw4_iO" resname="Change my password">
+        <source>Change my password</source>
+        <target>Changer mon mot de passe</target>
+      </trans-unit>
+      <trans-unit id="pJ_s9ej" resname="of the &quot;%category_long_name%&quot; category">
+        <source>of the "%category_long_name%" category</source>
+        <target>de la catégorie "%category_long_name%"</target>
+      </trans-unit>
+      <trans-unit id="s7wLORW" resname="Disactivate">
+        <source>Disactivate</source>
+        <target>Désactiver</target>
+      </trans-unit>
+      <trans-unit id="JEM8cOu" resname="Activate">
+        <source>Activate</source>
+        <target>Activer</target>
+      </trans-unit>
+      <trans-unit id="xyfvR_W" resname="started at">
+        <source>started at</source>
+        <target>démarré à</target>
+      </trans-unit>
+      <trans-unit id="iYj_XZ2" resname="Waiting for students...">
+        <source>Waiting for students...</source>
+        <target>En attente d'étudiants ...</target>
+      </trans-unit>
+      <trans-unit id="X3Vy1Cz" resname="Podium">
+        <source>Podium</source>
+        <target>Podium</target>
+      </trans-unit>
+      <trans-unit id="crtgHwF" resname="Answers analyse">
+        <source>Answers analyse</source>
+        <target>Analyser les réponses</target>
+      </trans-unit>
+      <trans-unit id="UIhK67c" resname="Hide users name">
+        <source>Hide users name</source>
+        <target>Cacher le nom des utilisateurs</target>
+      </trans-unit>
+      <trans-unit id="54g8dXJ" resname="Show users name">
+        <source>Show users name</source>
+        <target>Voir le nom des utilisateurs</target>
+      </trans-unit>
+      <trans-unit id="b758cB5" resname="Send confirmation mail">
+        <source>Send confirmation mail</source>
+        <target>Envoyer le mail de confirmation</target>
+      </trans-unit>
+      <trans-unit id="Vxf9Ofb" resname="Edit my account">
+        <source>Edit my account</source>
+        <target>Modifier mon compte</target>
+      </trans-unit>
+      <trans-unit id="hJCgPR." resname="LoginType">
+        <source>LoginType</source>
+        <target>Type d'authentification</target>
+      </trans-unit>
+      <trans-unit id="3f5lbAb" resname="Please log in with your EcoleDirecte login/password.">
+        <source>Please log in with your EcoleDirecte login/password.</source>
+        <target>Veuillez vous connecter avec votre login/mot de passe d'EcoleDirecte.</target>
+      </trans-unit>
+      <trans-unit id="Obu3Gfo" resname="Groups">
+        <source>Groups</source>
+        <target>Classes</target>
+      </trans-unit>
+      <trans-unit id="ry6RKWk" resname="Schools">
+        <source>Schools</source>
+        <target>Ecoles</target>
+      </trans-unit>
+      <trans-unit id=".oWqpuT" resname="Role(s)">
+        <source>Role(s)</source>
+        <target>Rôle(s)</target>
+      </trans-unit>
+      <trans-unit id="BmCW3vv" resname="Group(s)">
+        <source>Group(s)</source>
+        <target>Classe(s)</target>
+      </trans-unit>
+      <trans-unit id="uA9Flqv" resname="Group index">
+        <source>Group index</source>
+        <target>Liste des classes</target>
+      </trans-unit>
+      <trans-unit id="7Au8I9y" resname="Create new group">
+        <source>Create new group</source>
+        <target>Créer une nouvelle classe</target>
+      </trans-unit>
+      <trans-unit id="zwEkdPf" resname="School index">
+        <source>School index</source>
+        <target>Liste des écoles</target>
+      </trans-unit>
+      <trans-unit id="IsDfL0J" resname="Create new school">
+        <source>Create new school</source>
+        <target>Créer une nouvelle école</target>
+      </trans-unit>
+      <trans-unit id="NMoOdmC" resname="Group">
+        <source>Group</source>
+        <target>Classe</target>
+      </trans-unit>
+      <trans-unit id="bNLjMYV" resname="School">
+        <source>School</source>
+        <target>Ecole</target>
+      </trans-unit>
+      <trans-unit id="3NHVIj9" resname="Name">
+        <source>Name</source>
+        <target>Nom</target>
+      </trans-unit>
+      <trans-unit id="NA9GMDP" resname="Code">
+        <source>Code</source>
+        <target>Code</target>
+      </trans-unit>
+      <trans-unit id="3V8tns5" resname="Edit Group">
+        <source>Edit Group</source>
+        <target>Modifier la classe</target>
+      </trans-unit>
+      <trans-unit id="YWsHuOJ" resname="Edit School">
+        <source>Edit School</source>
+        <target>Modifier l'école</target>
+      </trans-unit>
+      <trans-unit id="6S3XAUJ" resname="Is active">
+        <source>Is active</source>
+        <target>Compte activé</target>
+      </trans-unit>
+      <trans-unit id="TznhcES" resname="To receive result by email">
+        <source>To receive result by email</source>
+        <target>Recevoir le résultat par mail</target>
+      </trans-unit>
+      <trans-unit id="DNedzED" resname="To receive my result by email">
+        <source>To receive my result by email</source>
+        <target>Recevoir mon résultat par mail</target>
+      </trans-unit>
+      <trans-unit id="p_LSbo0" resname="by">
+        <source>by</source>
+        <target>par</target>
+      </trans-unit>
+      <trans-unit id="uNMehSc" resname="on">
+        <source>on</source>
+        <target>le</target>
+      </trans-unit>
+      <trans-unit id="sda5G2f" resname="at">
+        <source>at</source>
+        <target>à</target>
+      </trans-unit>
+      <trans-unit id="0jAU9EI" resname="started on">
+        <source>started on</source>
+        <target>démarré le</target>
+      </trans-unit>
+      <trans-unit id="RYA3RKZ" resname="Please wait, a questionnaire will be displayed/started in a few moments...">
+        <source>Please wait, a questionnaire will be displayed/started in a few moments...</source>
+        <target>Veuillez patienter, un questionnaire va s'afficher/démarrer dans quelques instants...</target>
+      </trans-unit>
+      <trans-unit id="EaU1rPZ" resname="Please click on the 'Next' button to begin...">
+        <source>Please click on the 'Next' button to begin...</source>
+        <target>Veuillez cliquer sur le bouton 'Suivant' pour commencer...</target>
+      </trans-unit>
+      <trans-unit id="ZHz6kbI" resname="Firstname">
+        <source>Firstname</source>
+        <target>Prénom</target>
+      </trans-unit>
+      <trans-unit id="htiPHRy" resname="Lastname">
+        <source>Lastname</source>
+        <target>Nom</target>
+      </trans-unit>
+      <trans-unit id="F2nCXSV" resname="A quiz has just been completed!">
+        <source>A quiz has just been completed!</source>
+        <target>Un questionnaire vient d'être terminé !</target>
+      </trans-unit>
+      <trans-unit id="ylHOH7F" resname="Hi!">
+        <source>Hi!</source>
+        <target>Bonjour,</target>
+      </trans-unit>
+      <trans-unit id="dOBbwsl" resname="A quiz has just been completed by">
+        <source>A quiz has just been completed by</source>
+        <target>Un questionnaire vient d'être terminé, par</target>
+      </trans-unit>
+      <trans-unit id="gUZMlRY" resname="got the following result">
+        <source>got the following result</source>
+        <target>avec le résultat suivant</target>
+      </trans-unit>
+      <trans-unit id="HMis_g8" resname="for the quiz">
+        <source>for the quiz</source>
+        <target>pour le questionnaire</target>
+      </trans-unit>
+      <trans-unit id="zgj1r7S" resname="To consult quiz results, goto:">
+        <source>To consult quiz results, goto:</source>
+        <target>Pour consulter les résultats du questionnaire, veuillez cliquer sur ce lien :</target>
+      </trans-unit>
+      <trans-unit id="l2VJL_p" resname="or press the button below">
+        <source>or press the button below</source>
+        <target>ou cliquer sur le bouton ci-dessous</target>
+      </trans-unit>
+      <trans-unit id="8m79NXS" resname="View results">
+        <source>View results</source>
+        <target>Consulter les résultats</target>
+      </trans-unit>
+      <trans-unit id="1EN7jke" resname="You did not request to receive this email?">
+        <source>You did not request to receive this email?</source>
+        <target>Vous n'avez pas demandé recevoir cet e-mail ?</target>
+      </trans-unit>
+      <trans-unit id="TEK9d8n" resname="No problem! Your address was probably entered by mistake.">
+        <source>No problem! Your address was probably entered by mistake.</source>
+        <target>Aucun problème ! Votre adresse a probablement été saisie par erreur.</target>
+      </trans-unit>
+      <trans-unit id="72H4Cmg" resname="You can ignore or delete this email.">
+        <source>You can ignore or delete this email.</source>
+        <target>Vous pouvez ignorer ou supprimer cet e-mail.</target>
+      </trans-unit>
+      <trans-unit id="GqexwdX" resname="Thanks!">
+        <source>Thanks!</source>
+        <target>Merci !</target>
+      </trans-unit>
+      <trans-unit id="ZrBFc6m" resname="The quiz">
+        <source>The quiz</source>
+        <target>Le questionnaire</target>
+      </trans-unit>
+      <trans-unit id="7RuAcBr" resname="A quiz has just been completed by %username%!">
+        <source>A quiz has just been completed by %username%!</source>
+        <target>Un questionnaire vient d'être terminé par %username% !</target>
+      </trans-unit>
+      <trans-unit id="1pq5agG" resname="has just been completed,">
+        <source>has just been completed,</source>
+        <target>vient d'être terminé,</target>
+      </trans-unit>
+      <trans-unit id="KKsFYrO" resname="A quiz has just been completed by %username% (before the end)!">
+        <source>A quiz has just been completed by %username% (before the end)!</source>
+        <target>Un questionnaire vient d'être terminé (avant la fin) par %username% !</target>
+      </trans-unit>
+      <trans-unit id="iGPMuKH" resname="Quiz &quot;%title%&quot; by %username% = %score%% (%grade%) - Before the end !">
+        <source>Quiz "%title%" by %username% = %score%% (%grade%) - Before the end !</source>
+        <target>QCM "%title%" par %username% = %score%% (%grade%) - Avant la fin !</target>
+      </trans-unit>
+      <trans-unit id="PlDU1q3" resname="Quiz &quot;%title%&quot; by %username% = %score%% (%grade%)">
+        <source>Quiz "%title%" by %username% = %score%% (%grade%)</source>
+        <target>QCM "%title%" par %username% = %score%% (%grade%)</target>
+      </trans-unit>
+      <trans-unit id="4h.PFEn" resname="Quiz &quot;%title%&quot; by %username% = %score%% (%grade%/20) - Before the end!">
+        <source>Quiz "%title%" by %username% = %score%% (%grade%/20) - Before the end!</source>
+        <target>QCM "%title%" par %username% = %score%% (%grade%/20) - Avant la fin !</target>
+      </trans-unit>
+      <trans-unit id="pCI0Jcj" resname="Quiz &quot;%title%&quot; by %username% = %score%% (%grade%/20)">
+        <source>Quiz "%title%" by %username% = %score%% (%grade%/20)</source>
+        <target>QCM "%title%" par %username% = %score%% (%grade%/20)</target>
+      </trans-unit>
+      <trans-unit id="v5n7lbh" resname="Follow the progress">
+        <source>Follow the progress</source>
+        <target>Suivre le déroulement</target>
+      </trans-unit>
+      <trans-unit id="pZMrxM5" resname="View history">
+        <source>View history</source>
+        <target>Consulter l'historique</target>
+      </trans-unit>
+      <trans-unit id="ZETErSr" resname="Start exercise">
+        <source>Start exercise</source>
+        <target>Démarrer l'exercice</target>
+      </trans-unit>
+      <trans-unit id="7RuwS9Q" resname="Quiz &quot;%quiz-title%&quot; history">
+        <source>Quiz "%quiz-title%" history</source>
+        <target>Historique du questionnaire "%quiz-title%"</target>
+      </trans-unit>
+      <trans-unit id="e41SSRv" resname="Started_at">
+        <source>Started_at</source>
+        <target>Commencé le</target>
+      </trans-unit>
+      <trans-unit id="yNQLZpP" resname="Ended_at">
+        <source>Ended_at</source>
+        <target>Terminé le</target>
+      </trans-unit>
+      <trans-unit id="9hPyGH_" resname="Back to quiz history">
+        <source>Back to quiz history</source>
+        <target>Retour à l'historique du questionnaire</target>
+      </trans-unit>
+      <trans-unit id="Khm7eN4" resname="Students">
+        <source>Students</source>
+        <target>Apprenants</target>
+      </trans-unit>
+      <trans-unit id=".na__Aw" resname="Clean history">
+        <source>Clean history</source>
+        <target>Nettoyer l'historique</target>
+      </trans-unit>
+      <trans-unit id="Tpu_Hm9" resname="Delete inactive sessions that are without learners and/or not completed">
+        <source>Delete inactive sessions that are without learners and/or not completed</source>
+        <target>Supprimer les sessions inactives qui sont sans apprenants et/ou non terminées</target>
+      </trans-unit>
+      <trans-unit id="52Fp.VY" resname="Are you sure you want to delete this session?">
+        <source>Are you sure you want to delete this session?</source>
+        <target>Etes-vous sûr de vouloir supprimer cette session ?</target>
+      </trans-unit>
+      <trans-unit id="IE6Ac4r" resname="Session started at %s is deleted.">
+        <source>Session started at %s is deleted.</source>
+        <target>La session démarrée le %s a été effacée.</target>
+      </trans-unit>
+      <trans-unit id="dpAPG.0" resname="Back">
+        <source>Back</source>
+        <target>Retour</target>
+      </trans-unit>
+      <trans-unit id="RK.vXtb" resname="Send to EcoleDirecte">
+        <source>Send to EcoleDirecte</source>
+        <target>Envoyer sur EcoleDirecte</target>
+      </trans-unit>
+      <trans-unit id="78_Mo9b" resname="Send to ED">
+        <source>Send to ED</source>
+        <target>Envoyer sur ED</target>
+      </trans-unit>
+      <trans-unit id="TQ5k.UT" resname="EcoleDirecte - Select evaluation subject">
+        <source>EcoleDirecte - Select evaluation subject</source>
+        <target>EcoleDirecte - Sélectionner le sujet de l'évaluation</target>
+      </trans-unit>
+      <trans-unit id="OJ5_2bK" resname="Create evaluation to this subject in EcoleDirecte">
+        <source>Create evaluation to this subject in EcoleDirecte</source>
+        <target>Créer une évaluation pour ce sujet dans EcoleDirecte</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

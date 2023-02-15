@@ -3,8 +3,9 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
+use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 #[ORM\Table(name: 'tbl_category')]
@@ -14,7 +15,7 @@ class Category
     #[ORM\Id()]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private ?int $id = null;
 
     #[ORM\Column(length: 50)]
     private $shortname;
@@ -56,7 +57,7 @@ class Category
         }
     }
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }

@@ -1,0 +1,9 @@
+{% if is_granted('ROLE_TEACHER') %}
+    <form method="post" action="{{ path('session_delete', {'id': session.id}) }}" onsubmit="return confirm('{{'Are you sure you want to delete this session?'|trans}}');">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ session.id) }}">
+        <button class="btn btn-danger btn-sm py-2 mx-1" title="{{'Delete'|trans}}"><i class="fas fa-trash-alt"></i></button>
+    </form>
+{% endif %}
+
+

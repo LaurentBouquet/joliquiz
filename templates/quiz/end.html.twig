@@ -1,0 +1,86 @@
+{% extends 'base_without_menu.html.twig' %}
+
+{% block title %}
+    {{'Quiz'|trans}} "{{ quiz.title }}" {{'by'|trans}} {{ user.username }} {{'on'|trans}} {{ questionsHistory[0].startedAt|date('d/m/Y') }} {{'at'|trans}} {{ questionsHistory[0].startedAt|date('H:i:s') }}
+{% endblock %}
+
+{% block body %}    
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>{{ 'Score'|trans }}</th>
+                <td>
+                    <h1>
+                        <span class="badge {{ score>75? 'badge-success' : score>50? 'badge-primary' : score>25? 'badge-warning' : 'badge-danger'}}">{{ score }}%</span>
+                    </h1>
+                </td>
+            </tr>
+            <tr>
+                <th>{{ 'Questions'|trans }}</th>
+                <td>
+                    <div id="accordion">
+                        {% for questionHistory in questionsHistory | reverse %}
+                            {% set questionNumber = loop.index %}
+                            <div class="card">
+                                <div class="card-header" id="heading{{questionNumber}}">
+                                    <h5 class="mb-0">
+                                        {{questionNumber}}
+                                        <button style="text-align: left;" class="mb-0 btn btn-link collapsed" data-toggle="collapse" data-target="#collapse{{questionNumber}}" aria-expanded="false" aria-controls="collapse{{questionNumber}}">
+                                            <div class="mb-0 alert {{ questionHistory.questionSuccess ? 'alert-success' : 'alert-danger' }}" role="alert">
+                                                {{ questionHistory.questionText|nl2br }}
+                                            </div>
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapse{{questionNumber}}" class="collapse" aria-labelledby="heading{{questionNumber}}" data-parent="#accordion">
+                                    <div class="card-body">
+                                        {% for answerHistory in questionHistory.answersHistory %}
+                                            {% set answerNumber = questionNumber ~ '-' ~ loop.index %}
+                                            <fieldset class="form-group">
+                                                <div id="question_answers_0">
+                                                    <div class="form-group">
+                                                        <div class="form-check">
+                                                            <input type="checkbox" id="{{answerNumber}}" name="question[{{questionNumber}}][{{loop.index}}]" disabled="disabled" class="form-check-input" value="{{answerNumber}}" {{answerHistory.correctGiven ? 'checked' : ''}}/>
+                                                            <!--
+                                                            <input type="checkbox" id="{{answerNumber}}" name="question[{{questionNumber}}][{{loop.index}}]" disabled="disabled" class="form-check-input" value="{{answerNumber}}" {{answerHistory.correctGiven ? 'checked' : ''}}/>
+                                                            <label class="{{ answerHistory.answerSucces ? 'alert-success' : 'alert-danger' }} form-check-label" for="question[{{questionNumber}}][{{loop.index}}]">
+                                                                {{ answerHistory.answerText }}
+                                                            </label>
+                                                            -->
+                                                            <label class="{{ answerHistory.answerCorrect ? 'alert-success' }} form-check-label" for="question[{{questionNumber}}][{{loop.index}}]">
+                                                                {{ answerHistory.answerText }}
+                                                            </label>                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </td>
+            </tr>
+            {% if comment %}
+            <tr>
+                <th>{{ 'Comment'|trans }}</th>
+                <td>{{ comment }}</td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+
+    <div class="progress" style="height: 10px;">
+        <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+
+    {% if (is_granted('ROLE_TEACHER')) %}
+        <a class="mt-3 btn btn-secondary mr-2" href="{{ path('quiz_index') }}">
+            <i class="fas fa-arrow-circle-left"></i>
+            {{'Back to list'|trans}}</a>
+    {% endif %}
+
+    {% include '_home_bottom.html.twig' %}
+
+{% endblock %}

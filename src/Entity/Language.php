@@ -9,15 +9,15 @@ use App\Entity\Question;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use phpDocumentor\Reflection\Types\Integer;
 
 #[ORM\Entity(repositoryClass: LanguageRepository::class)]
 #[ORM\Table(name: 'tbl_language')]
 class Language
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Column(length: 2)]
+    private ?string $id = null;
 
     #[ORM\Column(length: 50, unique:true, nullable:false)]
     private $english_name;
@@ -45,6 +45,11 @@ class Language
         $this->quizzes = new ArrayCollection();
         $this->users = new ArrayCollection();
         $this->categories = new ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     public function __toString(): string

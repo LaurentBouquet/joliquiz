@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{'Edit Group'|trans}} "{{ group.name }}"{% endblock %}
+
+{% block body %}
+    <h1>{{'Edit Group'|trans}} "{{ group.name }}"</h1>
+
+    {% if is_granted('ROLE_ADMIN') %}
+        {{ include('group/_form.html.twig', {'button_label': 'Save'|trans}) }}
+    {% endif %}
+
+{% endblock %}

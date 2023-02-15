@@ -1,0 +1,92 @@
+{# templates/emails/registred.html.twig #}
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" class="background_main"
+        style="background-color: #ffffff; padding-top: 20px; color: #434245; width: 100%; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; ">
+        <tr>
+            <td valign="top" class="sm_full_width"
+                style="margin: 0 auto; width: 100%; max-width: 600px; display: block;">
+                <div class="sm_no_padding"
+                    style="margin: 0 auto; padding: 30px 0 40px; display: block; box-sizing: border-box;">
+
+                    <table style="width: 100%; color: #434245;" border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td style="box-sizing: border-box;">
+                                <table border="0" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td>
+
+                                            <img src="{{ absolute_url(path('index')) }}/images/JoliQuiz-300x111_smiley.png"
+                                                alt="JoliQuiz" />
+
+                                            <h1 style="font-size: 30px; padding-right: 30px; padding-left: 30px;">
+                                                You did it! You registered!</h1>
+
+                                            <p style="font-size: 17px; padding-right: 30px; padding-left: 30px;">
+                                                <br/>
+                                                Hi {{ username }}! You're successfully registered, on JoliQuiz, with {{ useremail }}
+                                                email.
+
+                                                To login, go to: <a href="{{ url('login') }}">{{ url('login') }}</a>.
+
+                                                Thanks!
+
+                                                <p
+                                                    style="font-size: 17px; padding-right: 30px; padding-left: 30px; margin-bottom: 20px;">
+                                                    To login, please press the button below :</p>
+
+                                                <div
+                                                    style="padding-right: 30px; padding-left: 30px; margin-top: 40px; margin-bottom: 30px;">
+
+
+                                                    <table style="width: 100%; " class="sm_table">
+                                                        <tr style="width: 100%;">
+                                                            <td style="width: 100%;">
+                                                                <span
+                                                                    style="display: inline-block; position:relative; border-radius:4px; background-color:#007BFF; "
+                                                                    class="sm_full_width">
+                                                                    <a class="button_link sm_full_width sm_border_box"
+                                                                        href="{{ url('login') }}"
+                                                                        style="min-width:196px; border-top:13px solid; border-bottom:13px solid; border-right:24px solid; border-left:24px solid; border-color:#007BFF; border-radius:4px; background-color:#007BFF; color:#ffffff; font-size:18px; line-height:18px; word-break:break-word; text-shadow:0 1px 1px #2e9a5f;  display: inline-block; text-align: center; font-weight: 900; text-decoration: none !important;">
+                                                                        Confirm e-mail address
+                                                                    </a>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+
+                                                <p
+                                                    style="font-size: 17px; padding-right: 30px; padding-left: 30px; margin-top: 40px; margin-bottom: 30px;">
+                                                    <strong>Vous n'avez pas demandé recevoir cet e-mail ?</strong><br />
+                                                    Aucun problème ! Votre adresse a probablement été saisie par erreur.
+                                                    Vous pouvez ignorer ou supprimer cet e-mail.</p>
+
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="email_footer"
+                style="padding: 0 30px 40px; border-top: 1px solid #E1E1E4; line-height: 24px; font-size: 15px; color: #717274; text-align: center; width: 100%;">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" align="center"
+                    style="margin-top: 20px; background-color: white;">
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>
+                            <span style="display: block;">
+                                Powered by <a href="{{ app.request.schemeAndHttpHost }}"
+                                    style="text-decoration: none; color: #434245;">JoliQuiz</a>
+                                <br />
+                            </span>
+                        </td>
+                        <td>&nbsp;</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
