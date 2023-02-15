@@ -129,6 +129,10 @@
         <source>Password</source>
         <target>Mot de passe</target>
       </trans-unit>
+      <trans-unit id="Hkmh4To" resname="New Password">
+        <source>New Password</source>
+        <target>Nouveau mot de passe</target>
+      </trans-unit>
       <trans-unit id="Hkmh4Tp" resname="Repeat Password">
         <source>Repeat Password</source>
         <target>Répéter le mot de passe</target>
@@ -807,7 +811,7 @@
       </trans-unit>
       <trans-unit id="FmrMHS6" resname="If an account matching your email exists, then an email was just sent that contains a link that you can use to reset your password.">
         <source>If an account matching your email exists, then an email was just sent that contains a link that you can use to reset your password.</source>
-        <target>Si un compte correspondant à votre adresse e-mail existe, alors un e-mail vient d'être envoyé contenant un lien que vous pouvez utiliser pour réinitialiser votre mot de passe.</target>
+        <target>Si un compte correspondant à votre adresse email existe, alors un email vient d'être envoyé contenant un lien que vous pouvez utiliser pour réinitialiser votre mot de passe.</target>
       </trans-unit>
       <trans-unit id="87wG9uu" resname="This link will expire in">
         <source>This link will expire in</source>
@@ -815,7 +819,7 @@
       </trans-unit>
       <trans-unit id="bs9avOq" resname="If you don't receive an email please check your spam folder or">
         <source>If you don't receive an email please check your spam folder or</source>
-        <target>Si vous ne recevez pas d'e-mail, vérifiez votre dossier de courrier indésirable (spam) ou</target>
+        <target>Si vous ne recevez pas d'email, veuillez vérifier votre dossier de courriers indésirables (spams) ou</target>
       </trans-unit>
       <trans-unit id="W13t7jL" resname="try again">
         <source>try again</source>
@@ -824,6 +828,34 @@
       <trans-unit id="WfpDeb4" resname="Reset your password">
         <source>Reset your password</source>
         <target>Réinitialiser votre mot de passe</target>
+      </trans-unit>
+      <trans-unit id="vQH5j0c" resname="To reset your password, please visit the following link">
+        <source>To reset your password, please visit the following link</source>
+        <target>Pour réinitialiser votre mot de passe, veuillez consulter le lien suivant</target>
+      </trans-unit>
+      <trans-unit id="F7WctIl" resname="Cheers!">
+        <source>Cheers!</source>
+        <target>Cordialement</target>
+      </trans-unit>
+      <trans-unit id="UIS5VWd" resname="Sincerely">
+        <source>Sincerely</source>
+        <target>Cordialement</target>
+      </trans-unit>
+      <trans-unit id="Ry3Xo6w" resname="Please confirm your email address by clicking the following link:">
+        <source>Please confirm your email address by clicking the following link:</source>
+        <target>Veuillez confirmer votre adresse électronique en cliquant sur le lien suivant :</target>
+      </trans-unit>
+      <trans-unit id="ITaQX9q" resname="Confirm my Email">
+        <source>Confirm my Email</source>
+        <target>Confirmer mon adresse email</target>
+      </trans-unit>
+      <trans-unit id="ATJ8qA9" resname="Your password reset request">
+        <source>Your password reset request</source>
+        <target>Votre demande de réinitialisation du mot de passe</target>
+      </trans-unit>
+      <trans-unit id="4O3_s6c" resname="Reset password">
+        <source>Reset password</source>
+        <target>Réinitialiser le mot de passe</target>
       </trans-unit>
     </body>
   </file>

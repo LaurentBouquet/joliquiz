@@ -262,8 +262,8 @@ class SecurityController extends AbstractController
         $email = (new TemplatedEmail())
             ->from(new Address($admin_email_address, 'JoliQuiz'))
             ->to($user->getEmail())
-            ->subject('Your password reset request')
-            ->htmlTemplate('security/reset_password/email.html.twig')
+            ->subject('🙂 ' . $translator->trans('Your password reset request'))
+            ->htmlTemplate('emails/passwordresetting.html.twig')
             ->context([
                 'resetToken' => $resetToken,
             ])
