@@ -673,7 +673,7 @@ class QuizController extends AbstractController
 
         $quiz = $em->getRepository(Quiz::class)->create();
 
-        $form = $this->createForm(QuizType::class, $quiz);
+        $form = $this->createForm(QuizType::class, $quiz, ['isAdmin' => $this->isGranted('ROLE_ADMIN')]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -735,11 +735,11 @@ class QuizController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="quiz_delete", methods="DELETE")
+     * @Route("/{id}", name="quiz_delete", methods="POST")
      */
     public function delete(Request $request, Quiz $quiz, EntityManagerInterface $em): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Access not allowed');
 
         if ($this->isCsrfTokenValid('delete' . $quiz->getId(), $request->request->get('_token'))) {
             $em->remove($quiz);

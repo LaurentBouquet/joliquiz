@@ -82,6 +82,8 @@ class SchoolController extends AbstractController
      */
     public function delete(Request $request, School $school, EntityManagerInterface $em): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN', null, 'Access not allowed');
+
         if ($this->isCsrfTokenValid('delete'.$school->getId(), $request->request->get('_token'))) {
             $em->remove($school);
             $em->flush();

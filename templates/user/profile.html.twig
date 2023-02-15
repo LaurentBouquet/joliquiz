@@ -5,21 +5,33 @@
 {% block body %}
     <h1>{{'Edit my account'|trans}}</h1>
 
-<div class="form-group">
-    <label class="required" for="user_groups">{{'Groups'|trans}}</label>
-    <div class="alert alert-warning" role="alert">
-        {% for group in user.groups %}
-            {{ group.name }} <br/>
-        {% endfor %}
-    </div>
-</div>    
+ 
 
 {{ form_start(form) }}
- 
+     
+    {{ form_row(form.firstname) }}
+    {{ form_row(form.lastname) }}    
     {{ form_row(form.username) }}
+    {{ form_row(form.email) }}  
+    <div class="form-group">
+        <label class="required" for="user_roles">{{'Roles'|trans}}</label>
+        <div class="alert alert-warning" role="alert">
+            {% for role in user.roles %}
+                {{ role }} <br/>
+            {% endfor %}
+        </div>
+    </div>        
+    <div class="form-group">
+        <label class="required" for="user_groups">{{'Groups'|trans}}</label>
+        <div class="alert alert-warning" role="alert">
+            {% for group in user.groups %}
+                {{ group.name }} <br/>
+            {% endfor %}
+        </div>
+    </div>   
     {{ form_row(form.plainPassword) }}
-
-    {{ form_row(form.toReceiveMyResultByEmail) }}
+    {{ form_row(form.toReceiveMyResultByEmail) }}    
+  
 
     <button class="btn btn-primary"><i class="fas fa-check"></i> {{ button_label|default('Save'|trans) }}</button>
 

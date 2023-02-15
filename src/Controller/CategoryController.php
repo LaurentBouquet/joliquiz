@@ -87,11 +87,11 @@ class CategoryController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="category_delete", methods="DELETE")
+     * @Route("/{id}", name="category_delete", methods="POST")
      */
     public function delete(Request $request, Category $category, EntityManagerInterface $em): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Access not allowed');
 
         if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
             $em->remove($category);

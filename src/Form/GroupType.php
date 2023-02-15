@@ -22,7 +22,8 @@ class GroupType extends AbstractType
         $builder->add('users', EntityType::class, array(
             'class' => User::class,
             'choice_label' => 'name',
-            'multiple' => true
+            'multiple' => true,
+            'expanded' => true, // render check-boxes
         ));    
     }
 

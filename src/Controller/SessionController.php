@@ -336,11 +336,11 @@ class SessionController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="session_delete", methods="DELETE")
+     * @Route("/{id}", name="session_delete", methods="POST")
      */
     public function delete(Request $request, Session $session, EntityManagerInterface $em, TranslatorInterface $translator): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Access not allowed');
 
         $quizId = $session->getQuiz()->getId();
         if ($this->isCsrfTokenValid('delete' . $session->getId(), $request->request->get('_token'))) {

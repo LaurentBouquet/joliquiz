@@ -81,6 +81,8 @@ class GroupController extends AbstractController
      */
     public function delete(Request $request, Group $group, EntityManagerInterface $em): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN', null, 'Access not allowed');
+
         if ($this->isCsrfTokenValid('delete' . $group->getId(), $request->request->get('_token'))) {
             $em->remove($group);
             $em->flush();

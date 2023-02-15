@@ -145,11 +145,11 @@ class QuestionController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="question_delete", methods="DELETE")
+     * @Route("/{id}", name="question_delete", methods="POST")
      */
     public function delete(Request $request, Question $question, EntityManagerInterface $em): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Access not allowed');
 
         if ($this->isCsrfTokenValid('delete'.$question->getId(), $request->request->get('_token'))) {
             $em->remove($question);

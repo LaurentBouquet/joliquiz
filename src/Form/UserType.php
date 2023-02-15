@@ -97,7 +97,8 @@ class UserType extends AbstractType
                     //     return $er->createQueryBuilder('c')->andWhere('c.language = :language')->setParameter('language', $this->param->get('locale'))->orderBy('c.shortname', 'ASC');
                     //  },
                     'choice_label' => 'name',
-                    'multiple' => true
+                    'multiple' => true,
+                    'expanded' => true, // render check-boxes   
                 ));
                 $builder->add('toReceiveMyResultByEmail', CheckboxType::class, [
                     'label' => $this->translator->trans('To receive result by email'),
@@ -126,7 +127,7 @@ class UserType extends AbstractType
                     //     return $er->createQueryBuilder('c')->andWhere('c.language = :language')->setParameter('language', $this->param->get('locale'))->orderBy('c.shortname', 'ASC');
                     //  },
                     'choice_label' => 'name',
-                    'multiple' => true
+                    'multiple' => true,
                 ));
                 $builder->add('isActive', CheckboxType::class, array(
                     'required' => false,
@@ -149,6 +150,21 @@ class UserType extends AbstractType
                 // }
                 break;
             case 'profile':
+                $builder->add('email', TextType::class, array(
+                    'attr' => array(
+                        'readonly' => true,
+                    ),
+                ));
+                $builder->add('firstname', TextType::class, array(
+                    'attr' => array(
+                        'readonly' => true,
+                    ),
+                ));
+                $builder->add('lastname', TextType::class, array(
+                    'attr' => array(
+                        'readonly' => true,
+                    ),
+                ));
                 $builder->add('toReceiveMyResultByEmail', CheckboxType::class, [
                     'label' => $this->translator->trans('To receive my result by email'),
                     'required' => false,

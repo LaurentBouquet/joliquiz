@@ -40,7 +40,9 @@ class QuizType extends AbstractType
                     return $er->createQueryBuilder('c')->andWhere('c.language = :language')->setParameter('language', $this->param->get('locale'))->orderBy('c.shortname', 'ASC');
                  },
                 'choice_label' => 'longname',
-                'multiple' => true
+                'multiple' => true,            
+                // 'attr' => array('rows' => '50'),    
+                'expanded' => true, // render check-boxes                         
             ));
         } else {
             $builder->add('categories', EntityType::class, array(
@@ -49,7 +51,9 @@ class QuizType extends AbstractType
                     return $er->createQueryBuilder('c')->andWhere('c.created_by = :created_by')->setParameter('created_by', $this->tokenStorage->getToken()->getUser())->andWhere('c.language = :language')->setParameter('language', $this->param->get('locale'))->orderBy('c.shortname', 'ASC');
                  },
                 'choice_label' => 'longname',
-                'multiple' => true
+                'multiple' => true,
+                // 'attr' => array('rows' => '50'),
+                'expanded' => true, // render check-boxes   
             ));
         }
         

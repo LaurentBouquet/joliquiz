@@ -88,7 +88,7 @@ class AnswerController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="answer_delete", methods="DELETE")
+     * @Route("/{id}", name="answer_delete", methods="POST")
      */
     public function delete(Request $request, Answer $answer, EntityManagerInterface $em): Response
     {

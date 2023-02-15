@@ -29,9 +29,7 @@
 
 	{% if is_granted('ROLE_TEACHER') %}
 		<div class="mb-3">
-			<a class="btn btn-primary" href="{{ path('quiz_new') }}">
-				<i class="fas fa-plus"></i>
-				{{'Create new quiz'|trans}}</a>
+			<a class="btn btn-primary" href="{{ path('quiz_new', {'category': category_id}) }}"><i class="fas fa-plus"></i> {{'Create new quiz'|trans}}</a>
 		</div>
 	{% endif %}
 
