@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
+  <file source-language="fr" target-language="fr" datatype="plaintext" original="file.ext">
     <header>
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
@@ -449,19 +449,19 @@
         <source>Send</source>
         <target>Envoyer</target>
       </trans-unit>
-      <trans-unit id="9vRoj2" resname="To change password">
+      <trans-unit id="xczmhJC" resname="To change password">
         <source>To change password</source>
         <target>Changer son mot de passe</target>
-      </trans-unit>      
+      </trans-unit>
       <trans-unit id="BPtM3Pd" resname="Renew password">
         <source>Renew password</source>
         <target>Modifier le mot de passe</target>
       </trans-unit>
-      <trans-unit id="BPtM3Pd2" resname="Renew your password">
+      <trans-unit id="hzEOreh" resname="Renew your password">
         <source>Renew your password</source>
         <target>Modifier votre mot de passe</target>
       </trans-unit>
-      <trans-unit id="BPtM3Pd3" resname="Renew my password">
+      <trans-unit id="PVYpLQ3" resname="Renew my password">
         <source>Renew my password</source>
         <target>Modifier mon mot de passe</target>
       </trans-unit>
@@ -469,10 +469,10 @@
         <source>Forgot your password</source>
         <target>Mot de passe oublié</target>
       </trans-unit>
-      <trans-unit id="AJR3lMs2" resname="An email will be sent to you so you can renew your password. The link you receive will be valid 24h.">
+      <trans-unit id="WBeEQsI" resname="An email will be sent to you so you can renew your password. The link you receive will be valid 24h.">
         <source>An email will be sent to you so you can renew your password. The link you receive will be valid 24h.</source>
         <target>Un courriel vous sera envoyé afin que vous puissiez renouveler votre mot de passe. Le lien que vous recevrez sera valide pendant 24 heures.</target>
-      </trans-unit>   
+      </trans-unit>
       <trans-unit id="vFCURyP" resname="Hi,">
         <source>Hi,</source>
         <target>Bonjour,</target>
@@ -796,6 +796,34 @@
       <trans-unit id="OJ5_2bK" resname="Create evaluation to this subject in EcoleDirecte">
         <source>Create evaluation to this subject in EcoleDirecte</source>
         <target>Créer une évaluation pour ce sujet dans EcoleDirecte</target>
+      </trans-unit>
+      <trans-unit id="y2XxXvP" resname="Send password reset email">
+        <source>Send password reset email</source>
+        <target>Envoyer un courriel de réinitialisation du mot de passe</target>
+      </trans-unit>
+      <trans-unit id="U28cTzJ" resname="Password Reset Email Sent">
+        <source>Password Reset Email Sent</source>
+        <target>Envoi du courriel de réinitialisation du mot de passe</target>
+      </trans-unit>
+      <trans-unit id="FmrMHS6" resname="If an account matching your email exists, then an email was just sent that contains a link that you can use to reset your password.">
+        <source>If an account matching your email exists, then an email was just sent that contains a link that you can use to reset your password.</source>
+        <target>Si un compte correspondant à votre adresse e-mail existe, alors un e-mail vient d'être envoyé contenant un lien que vous pouvez utiliser pour réinitialiser votre mot de passe.</target>
+      </trans-unit>
+      <trans-unit id="87wG9uu" resname="This link will expire in">
+        <source>This link will expire in</source>
+        <target>Ce lien expirera dans</target>
+      </trans-unit>
+      <trans-unit id="bs9avOq" resname="If you don't receive an email please check your spam folder or">
+        <source>If you don't receive an email please check your spam folder or</source>
+        <target>Si vous ne recevez pas d'e-mail, vérifiez votre dossier de courrier indésirable (spam) ou</target>
+      </trans-unit>
+      <trans-unit id="W13t7jL" resname="try again">
+        <source>try again</source>
+        <target>réessayer</target>
+      </trans-unit>
+      <trans-unit id="WfpDeb4" resname="Reset your password">
+        <source>Reset your password</source>
+        <target>Réinitialiser votre mot de passe</target>
       </trans-unit>
     </body>
   </file>
