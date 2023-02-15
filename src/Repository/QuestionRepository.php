@@ -42,15 +42,6 @@ class QuestionRepository extends ServiceEntityRepository
         return $question;
     }
 
-    private function createPaginator(Query $query, int $page): Pagerfanta
-    {
-        $paginator = new Pagerfanta(new DoctrineORMAdapter($query));
-        $paginator->setMaxPerPage(Question::NUM_ITEMS);
-        $paginator->setCurrentPage($page);
-
-        return $paginator;
-    }
-
     public function find($id, $lockMode = null, $lockVersion = null)
     {
         $builder = $this->createQueryBuilder('q');
@@ -84,7 +75,7 @@ class QuestionRepository extends ServiceEntityRepository
         return $builder->getQuery()->getOneOrNullResult();
     }
 
-    public function findAll(int $page = 1, $isTeacher = false, $isAdmin = false): Pagerfanta
+    public function findAll(int $page = 1, $isTeacher = false, $isAdmin = false): Array //Pagerfanta
     {
         $builder = $this->createQueryBuilder('q');
 
@@ -98,8 +89,7 @@ class QuestionRepository extends ServiceEntityRepository
 
         $builder->orderBy('q.text', 'ASC');
 
-        //return $builder->getQuery()->getResult();
-        return $this->createPaginator($builder->getQuery(), $page);
+        return $builder->getQuery()->getResult();
     }
 
     public function findAllByCategories($categories, int $page = 1, $isTeacher = false, $isAdmin = false)
@@ -122,11 +112,8 @@ class QuestionRepository extends ServiceEntityRepository
         // }
         $builder->orderBy('q.text', 'ASC');
         
-        if ($page == -1) {            
-            return $builder->getQuery()->getResult();
-        } else {
-            return $this->createPaginator($builder->getQuery(), $page);
-        }
+
+        return $builder->getQuery()->getResult();
     }
 
     public function findOneRandomByCategories($categories, $isTeacher = false, $isAdmin = false): ?Question
@@ -156,32 +143,4 @@ class QuestionRepository extends ServiceEntityRepository
         $questions = $builder->getQuery()->getResult();
         return sizeof($questions);
     }
-    //    /**
-    //     * @return Question[] Returns an array of Question objects
-    //     */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('q')
-            ->andWhere('q.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('q.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Question
-    {
-        return $this->createQueryBuilder('q')
-            ->andWhere('q.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

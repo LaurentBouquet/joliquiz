@@ -63,20 +63,10 @@
         </tbody>
     </table>
 
-    {% if (page > -1) %}
-        {% if questions.haveToPaginate %}
-            <div class="navigation text-center">
-                {{ pagerfanta(questions, 'twitter_bootstrap4_translated', {routeName: 'question_index_paginated', 'routeParams': {category: category_id } }) }}
-            </div>
-        {% endif %}
-    {% else %}
-        {% if (questions|length) > 10 %}
-            {% if is_granted('ROLE_TEACHER') %}
-                <div class="mb-3">
-                    <a class="btn btn-primary" href="{{ path('question_new', {'category': category_id}) }}"><i class="fas fa-plus"></i> {{'Create new question'|trans}}</a>
-                </div>
-            {% endif %}
-        {% endif %}
+    {% if is_granted('ROLE_TEACHER') %}
+        <div class="mb-3">
+            <a class="btn btn-primary" href="{{ path('question_new', {'category': category_id}) }}"><i class="fas fa-plus"></i> {{'Create new question'|trans}}</a>
+        </div>
     {% endif %}
 
 {% endblock %}
