@@ -50,12 +50,13 @@ class QuestionController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
+        $question = $em->getRepository(Question::class)->create();
+        
+        // Auto select category
         $categoryId = $request->query->get('category');
         if ($categoryId > 0) {            
             $category = $categoryRepository->find($categoryId);
-        }
-
-        $question = $em->getRepository(Question::class)->create();
+        }        
         if ($categoryId > 0) {            
             $question->addCategory($category);
         }

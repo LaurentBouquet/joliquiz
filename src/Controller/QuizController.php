@@ -667,11 +667,22 @@ class QuizController extends AbstractController
     /**
      * @Route("/new", name="quiz_new", methods="GET|POST")
      */
-    public function new(Request $request, EntityManagerInterface $em): Response
+    public function new(Request $request, EntityManagerInterface $em, CategoryRepository $categoryRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
-        $quiz = $em->getRepository(Quiz::class)->create();
+        $quiz = $em->getRepository(Quiz::class)->create();        
+
+        // Auto select category
+        $categoryId = $request->query->get('category');
+        if ($categoryId > 0) {            
+            $category = $categoryRepository->find($categoryId);
+        }
+        if ($categoryId > 0) {            
+            $quiz->addCategory($category);
+            $quiz->setTitle($category->getLongname());
+            $quiz->setNumberOfQuestions(sizeof($category->getQuestions()));
+        }
 
         $form = $this->createForm(QuizType::class, $quiz, ['isAdmin' => $this->isGranted('ROLE_ADMIN')]);
         $form->handleRequest($request);

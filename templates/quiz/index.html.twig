@@ -60,7 +60,9 @@
 					<td>
 						{% for category in quiz.categories %}
 							-
+							<span {{ category.id == category_id ? 'style="background-color: #ffff00;"' : '' }}>
 							<a {{ quiz.active ? 'class="text-warning"' : '' }} href="{{ path('quiz_index', {'category': category.id}) }}">{{ category.longname }}</a>
+							</span>
 							<br>
 						{% endfor %}
 					</td>
