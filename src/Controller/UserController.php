@@ -143,13 +143,14 @@ class UserController extends AbstractController
                 // Encode the password
                 $password = $passwordHasher->hashPassword($user, $user->getPlainPassword());
                 $user->setPassword($password);
-            }
+            }    
 
+            $em->persist($user);
             $em->flush();
 
             $this->addFlash('success', sprintf('User "%s" is updated.', $user->getUsername()));
 
-            return $this->redirectToRoute('user_edit', ['id' => $user->getId()]);
+            // return $this->redirectToRoute('user_edit', ['id' => $user->getId()]);
         }
 
         return $this->render('user/edit.html.twig', [

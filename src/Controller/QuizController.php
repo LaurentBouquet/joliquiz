@@ -232,12 +232,6 @@ class QuizController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
-        // if (!$quiz->getActive()) {
-        //     $quiz->setActiveInSession(true, $em);
-        //     $em->persist($quiz);
-        //     $em->flush();
-        // }
-
         $startedAt = $quiz->getActivedAt();
 
         $activate = $request->query->get('active');

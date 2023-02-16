@@ -37,7 +37,15 @@ class GroupController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($group);
+            $em->persist($group);  
+
+            ///////////////////////////////////////
+            // Ne fonctionne pas
+            foreach ($group->getUsers() as $user) {
+                $em->persist($user);
+            }            
+            ///////////////////////////////////////
+            
             $em->flush();
             return $this->redirectToRoute('group_index');
         }
@@ -67,6 +75,15 @@ class GroupController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($group);            
+
+            ///////////////////////////////////////
+            // Ne fonctionne pas
+            foreach ($group->getUsers() as $user) {
+                $em->persist($user);
+            }            
+            ///////////////////////////////////////
+
             $em->flush();
             return $this->redirectToRoute('user_index', ['group' => $group->getId()]);
         }
