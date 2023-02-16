@@ -71,7 +71,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             }
         }
 
-        $builder->orderBy('u.username', 'ASC');
+        $builder->orderBy('u.lastname', 'ASC');
         return $builder->getQuery()->getResult();
     }
 
@@ -92,7 +92,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         }        
         // dd($builder->getQuery()->getSQL());
 
-        $builder->orderBy('u.username', 'ASC');
+        $builder->orderBy('u.lastname', 'ASC');
         return $builder->getQuery()->getResult();
     }
 

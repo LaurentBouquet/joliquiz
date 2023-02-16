@@ -24,10 +24,10 @@
     <table class="table">
         <thead>
             <tr>
+                <th>{{ 'Lastname'|trans }}</th>
+                <th>{{ 'Firstname'|trans }}</th>
                 <th>{{ 'Username'|trans }}</th>
                 <th>{{ 'Email'|trans }}</th>
-                <th>{{ 'Firstname'|trans }}</th>
-                <th>{{ 'Lastname'|trans }}</th>
                 <th>{{ 'IsActive'|trans }}</th>
                 {% if is_granted('ROLE_ADMIN') %}
                 <th>{{ 'Roles'|trans }}</th>
@@ -41,10 +41,10 @@
         <tbody>
         {% for user in users %}
             <tr {{ 'ROLE_SUPER_ADMIN' in user.roles ? 'class="table-danger"' : 'ROLE_ADMIN' in user.roles ? 'class="table-warning"' : 'ROLE_TEACHER' in user.roles ? 'class="table-primary"' : 'class="table-success"' }}>
+                <td>{{ user.lastname }}</td>
+                <td>{{ user.firstname }}</td>
                 <td title="{{ 'LoginType'|trans }} : {{ user.loginType }}"><i class="fas fa-user"></i> {{ user.username }}</td>
                 <td>{{ user.email }}</td>
-                <td>{{ user.firstname }}</td>
-                <td>{{ user.lastname }}</td>
                 <td>{{ user.isActive ? 'Yes' : 'No' }}</td>
                 {% if is_granted('ROLE_ADMIN') %}
                 <td>{{ user.roles ? user.roles|join(', ') : '' }}</td>
@@ -52,9 +52,9 @@
                 <td>
                     {# {{ user.groups ? user.groups|join(', ') : '' }} #}
                     {% for group in user.groups %}
-                    <span {{ group.id == group_id ? 'style="background-color: #ffff00;"' : '' }}>
-                    <a href="{{ path('group_index', {'group': group.id}) }}">{{ group.shortname }}</a><br/>
-                    </span>
+                        <span {{ group.id == group_id ? 'style="background-color: #ffff00;"' : '' }}>
+                        <a href="{{ path('group_edit', {'id': group.id}) }}">{{ group.shortname }}</a><br/>
+                        </span>
                     {% endfor %}
                 </td>
                 <td>

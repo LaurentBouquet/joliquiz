@@ -35,7 +35,7 @@ class Question
     
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'questions')]
     #[ORM\JoinTable(name: 'tbl_question_category')]
-    private $categories;
+    private Collection $categories;
 
     #[ORM\OneToMany(targetEntity: Answer::class, mappedBy: 'question', orphanRemoval: true)]
     private $answers;

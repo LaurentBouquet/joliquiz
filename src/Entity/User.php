@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use Assert\NotBlank;
 use InvalidArgumentException;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -102,7 +101,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?int $ed_id = null;
 
-    #[NotBlank]
     private $plainPassword;
 
     public function __construct()

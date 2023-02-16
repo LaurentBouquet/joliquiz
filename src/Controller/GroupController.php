@@ -68,7 +68,7 @@ class GroupController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
-            return $this->redirectToRoute('group_index');
+            return $this->redirectToRoute('user_index', ['group' => $group->getId()]);
         }
 
         return $this->render('group/edit.html.twig', [
