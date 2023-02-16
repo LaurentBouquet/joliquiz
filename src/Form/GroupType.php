@@ -15,6 +15,7 @@ class GroupType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('shortname')
             ->add('code')
             ->add('school')
             // ->add('users')         

@@ -14,10 +14,11 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Code</th>
-                <th>actions</th>
+                <th>{{'Id'|trans}}</th>
+                <th>{{'Name'|trans}}</th>
+                <th>{{'Shortname'|trans}}</th>
+                <th>{{'Code'|trans}}</th>
+                <th>{{'Actions'|trans}}</th>
             </tr>
         </thead>
         <tbody>
@@ -25,6 +26,7 @@
             <tr>
                 <td>{{ group.id }}</td>
                 <td>{{ group.name }}</td>
+                <td>{{ group.shortname }}</td>
                 <td>{{ group.code }}</td>
                 <td>
                     <div class="form-check-inline">

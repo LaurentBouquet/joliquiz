@@ -26,10 +26,10 @@ class Group
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'groups')]
     private Collection $users;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private $code;
 
-    #[ORM\Column(length: 50, nullable: true)]
+    #[ORM\Column(length: 50, nullable: false)]
     private $shortname;
 
     #[ORM\Column(type: 'integer', nullable: true)]
