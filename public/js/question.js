@@ -1,7 +1,7 @@
 var $collectionHolder;
 
 // setup an "add an answer" link
-// var $addAnswerButton = $('<button class="btn btn-primary mr-2" type="button"><i class="fas fa-plus"></i> Add an answer</button>');
+// var $addAnswerButton = $('<button class="btn btn-warning mr-2" type="button"><i class="fas fa-plus"></i> Add an answer</button>');
 var $addAnswerButton = $("#answers-add");
 var $newLinkLi = $('<div id="answers"></div>').append($addAnswerButton);
 

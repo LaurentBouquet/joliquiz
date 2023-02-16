@@ -29,7 +29,6 @@ class Group
     #[ORM\Column(length: 255)]
     private $code;
 
-
     #[ORM\Column(length: 50, nullable: true)]
     private $shortname;
 

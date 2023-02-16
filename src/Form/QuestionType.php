@@ -47,7 +47,9 @@ class QuestionType extends AbstractType
                 ));
                 break;
             case 'teacher':
-                $builder->add('text');
+                $builder->add('text', TextareaType::class, array(
+                    'label' => $this->translator->trans('Question wording'),
+                ));
                 $builder->add('max_duration', IntegerType::class, array(
                     'required' => false,
                     'label' => $this->translator->trans('Question max duration (seconds)'),
@@ -74,7 +76,9 @@ class QuestionType extends AbstractType
                 ));
                 break;
             case 'admin':
-                $builder->add('text');
+                $builder->add('text', TextareaType::class, array(
+                    'label' => $this->translator->trans('Question wording'),
+                ));
                 $builder->add('max_duration', IntegerType::class, array(
                     'required' => false,
                     'label' => $this->translator->trans('Question max duration (seconds)'),

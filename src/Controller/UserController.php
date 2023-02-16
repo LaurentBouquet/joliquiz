@@ -54,18 +54,33 @@ class UserController extends AbstractController
     /**
      * @Route("/", name="user_index", methods="GET")
      */
-    public function index(UserRepository $userRepository, GroupRepository $groupRepository): Response
+    public function index(UserRepository $userRepository, GroupRepository $groupRepository, Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
-        if ($this->isGranted('ROLE_ADMIN')) {
-            $users = $userRepository->findAll($this->isGranted('ROLE_TEACHER'), $this->isGranted('ROLE_ADMIN'));
-        } else {
-            $groups = $this->getUser()->getGroups();
-            $users = $userRepository->findAllByGroups($groups);   
+        $groupId = $request->query->get('group');        
+        $groupName = "";        
+        if ($groupId > 0 ) {
+            if ($this->isGranted('ROLE_ADMIN')) {
+                $users = $userRepository->findAllByGroups([$groupId],  $this->isGranted('ROLE_TEACHER'), $this->isGranted('ROLE_ADMIN'));
+                $group = $groupRepository->find($groupId);
+                $groupName = $group->getName();
+                dump($groupName);
+            } else {
+                $groups = $this->getUser()->getGroups();
+                $users = $userRepository->findAllByGroups($groups);   
+            }
+        }
+        else {        
+            if ($this->isGranted('ROLE_ADMIN')) {
+                $users = $userRepository->findAll($this->isGranted('ROLE_TEACHER'), $this->isGranted('ROLE_ADMIN'));
+            } else {
+                $groups = $this->getUser()->getGroups();
+                $users = $userRepository->findAllByGroups($groups);   
+            }
         }
 
-        return $this->render('user/index.html.twig', ['users' => $users]);
+        return $this->render('user/index.html.twig', ['users' => $users, 'group_id' => $groupId, 'group_name' => $groupName]);
     }
 
     /**

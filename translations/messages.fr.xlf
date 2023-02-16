@@ -877,6 +877,26 @@
         <source>Default question max duration (seconds)</source>
         <target>Durée maximale de la question par défaut (secondes)</target>
       </trans-unit>
+      <trans-unit id="2pK.Pfw" resname="Question wording">
+        <source>Question wording</source>
+        <target>Libellé de la question</target>
+      </trans-unit>
+      <trans-unit id="qBTARCG" resname="Create new Answer">
+        <source>Create new Answer</source>
+        <target>Créer une réponse</target>
+      </trans-unit>
+      <trans-unit id="95eyQfW" resname="Create new School">
+        <source>Create new School</source>
+        <target>Créer une école</target>
+      </trans-unit>
+      <trans-unit id="s65z0h4" resname="Create new Session">
+        <source>Create new Session</source>
+        <target>Créer une session</target>
+      </trans-unit>
+      <trans-unit id="UsGREkj" resname="of the &quot;%group_name%&quot; group">
+        <source>of the "%group_name%" group</source>
+        <target>de la classe "%group_name%"</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

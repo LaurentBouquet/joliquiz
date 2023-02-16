@@ -26,9 +26,7 @@ class QuestionController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
         $categoryId = $request->query->get('category');
-
-        $categoryLongName = "";
-        
+        $categoryLongName = "";        
         if ($categoryId > 0 ) {
             $page = -1;
             $questions = $questionRepository->findAllByCategories([$categoryId], $page, $this->isGranted('ROLE_TEACHER'), $this->isGranted('ROLE_ADMIN'));
@@ -60,8 +58,12 @@ class QuestionController extends AbstractController
         if ($categoryId > 0) {            
             $question->addCategory($category);
         }
-
-        $form = $this->createForm(QuestionType::class, $question, array('form_type'=>'teacher'));
+        
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $form = $this->createForm(QuestionType::class, $question, array('form_type'=>'admin'));
+        } else {
+            $form = $this->createForm(QuestionType::class, $question, array('form_type'=>'teacher'));
+        }    
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -82,7 +84,11 @@ class QuestionController extends AbstractController
             foreach ($question->getCategories() as $newCategory) {
                 $newQuestion->addCategory($newCategory);
             }
-            $form = $this->createForm(QuestionType::class, $newQuestion, array('form_type'=>'teacher'));
+            if ($this->isGranted('ROLE_ADMIN')) {
+                $form = $this->createForm(QuestionType::class, $newQuestion, array('form_type'=>'admin'));
+            } else {
+                $form = $this->createForm(QuestionType::class, $newQuestion, array('form_type'=>'teacher'));
+            }                       
         }
 
         return $this->render('question/new.html.twig', [

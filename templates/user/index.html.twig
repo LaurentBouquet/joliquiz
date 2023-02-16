@@ -3,11 +3,16 @@
 {% block title %}{{'User index'|trans}}{% endblock %}
 
 {% block body %}
-    <h1>{{'User index'|trans}}</h1>
+    <h1>
+        {{'User index'|trans}}
+        {% if group_name %}
+            {% trans %}of the "%group_name%" group{% endtrans %}
+        {% endif %}
+    </h1>
 
     {% if is_granted('ROLE_SUPER_ADMIN') %}
         <div class="mb-3">
-            <a class="btn btn-primary" href="{{ path('user_new') }}"><i class="fas fa-plus"></i> {{'Create new user'|trans}}</a>
+            <a class="btn btn-warning" href="{{ path('user_new') }}"><i class="fas fa-plus"></i> {{'Create new user'|trans}}</a>
         </div>
     {% endif %}
 
@@ -39,7 +44,14 @@
                 {% if is_granted('ROLE_ADMIN') %}
                 <td>{{ user.roles ? user.roles|join(', ') : '' }}</td>
                 {% endif %}                
-                <td>{{ user.groups ? user.groups|join(', ') : '' }}</td>
+                <td>
+                    {# {{ user.groups ? user.groups|join(', ') : '' }} #}
+                    {% for group in user.groups %}
+                    <span {{ group.id == group_id ? 'style="background-color: #ffff00;"' : '' }}>
+                    <a href="{{ path('group_index', {'group': group.id}) }}">{{ group.name }}</a><br/>
+                    </span>
+                    {% endfor %}
+                </td>
                 <td>
                     {% if is_granted('ROLE_SUPER_ADMIN') %}
                     <div class="form-check-inline">

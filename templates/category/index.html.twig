@@ -7,7 +7,7 @@
 
     {% if is_granted('ROLE_TEACHER') %}
         <div class="mb-3">
-            <a class="btn btn-primary" href="{{ path('category_new') }}"><i class="fas fa-plus"></i> {{'Create new category'|trans}}</a>
+            <a class="btn btn-warning" href="{{ path('category_new') }}"><i class="fas fa-plus"></i> {{'Create new category'|trans}}</a>
         </div>
     {% endif %}
 
@@ -28,9 +28,9 @@
                 <td>{{ category.longname }}</td>
                 <td>
                     <div class="form-check-inline">
-                        <a class="btn btn-primary btn-sm mr-2" href="{{ path('category_show', {'id': category.id}) }}"><i class="fas fa-eye"></i> {{'Show'|trans}}</a>
+                        <a class="btn btn-primary btn-sm mr-2" href="{{ path('category_show', {'id': category.id}) }}"><i class="fas fa-eye"></i></a>
                         {% if is_granted('ROLE_TEACHER') %}
-                            <a class="btn btn-primary btn-sm mr-2" href="{{ path('category_edit', {'id': category.id}) }}"><i class="fas fa-pencil-alt"></i> {{'Edit'|trans}}</a>
+                            <a class="btn btn-primary btn-sm mr-2" href="{{ path('category_edit', {'id': category.id}) }}"><i class="fas fa-pencil-alt"></i></a>
                             {{ include('category/_delete_form.html.twig') }}
                         {% endif %}
                     </div>

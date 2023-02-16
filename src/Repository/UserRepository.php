@@ -79,11 +79,18 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     {
         $builder = $this->createQueryBuilder('u');
 
-                $builder->innerJoin('u.groups', 'groups');
-                $builder->andWhere($builder->expr()->in('groups', ':groups'))->setParameter('groups', $groups);
-
-                // dd($builder->getQuery()->getSQL());
-
+        if ($groups) {
+            $builder->innerJoin('u.groups', 'groups');
+            $builder->andWhere($builder->expr()->in('groups', ':groups'))->setParameter('groups', $groups);
+        } else {
+            if (!$isAdmin) {
+                if (!$isTeacher) {
+                    $builder->innerJoin('u.groups', 'groups');
+                    $builder->andWhere($builder->expr()->in('groups', ':groups'))->setParameter('groups', $groups);
+                }
+            }
+        }        
+        // dd($builder->getQuery()->getSQL());
 
         $builder->orderBy('u.username', 'ASC');
         return $builder->getQuery()->getResult();
