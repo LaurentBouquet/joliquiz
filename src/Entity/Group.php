@@ -23,9 +23,9 @@ class Group
     #[ORM\JoinColumn(nullable: false)]
     private $school;
 
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'groups')]
-    // #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'groups')]
-    // #[ORM\JoinTable(name: 'tbl_user_group')]    
+    // #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'groups')]
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'groups')]
+    #[ORM\JoinTable(name: 'tbl_user_group')]    
     private Collection $users;
 
     #[ORM\Column(length: 255, nullable: true)]

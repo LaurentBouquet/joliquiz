@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
+use App\Entity\Language;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
-#[ORM\Table(name: 'tbl_category')]
+#[ORM\Table(name: 'tbl_category')] 
 class Category
 {
 
@@ -24,7 +25,7 @@ class Category
     private $longname;
 
     #[ORM\ManyToMany(targetEntity: Quiz::class, mappedBy: 'categories')]
-    private $quizzes;
+    private Collection $quizzes;
 
     #[ORM\ManyToMany(targetEntity: Question::class, mappedBy: 'categories')]
     private Collection $questions;

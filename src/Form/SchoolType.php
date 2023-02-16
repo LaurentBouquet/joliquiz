@@ -14,6 +14,7 @@ class SchoolType extends AbstractType
         $builder
             ->add('name')
             ->add('code')
+            ->add('groups')
         ;
     }
 

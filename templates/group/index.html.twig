@@ -3,7 +3,10 @@
 {% block title %}Group index{% endblock %}
 
 {% block body %}
-    <h1>{{'Group index'|trans}}</h1>
+    <h1>
+        {{'Group index'|trans}}
+        ({{ groups|length }})
+    </h1>
 
     {% if is_granted('ROLE_ADMIN') %}
         <div class="mb-3">

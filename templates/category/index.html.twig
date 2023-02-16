@@ -3,7 +3,10 @@
 {% block title %}{{'Category index'|trans}}{% endblock %}
 
 {% block body %}
-    <h1>{{'Category index'|trans}}</h1>
+    <h1>
+        {{'Category index'|trans}}
+        ({{ categories|length }})
+    </h1>
 
     {% if is_granted('ROLE_TEACHER') %}
         <div class="mb-3">

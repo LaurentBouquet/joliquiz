@@ -13,6 +13,7 @@
         {% if group_name %}
             {% trans %}of the "%group_name%" group{% endtrans %} <span style="background-color: #ffff00;" }}>{{ group_shortname }}</span>
         {% endif %}
+        ({{ users|length }})
     </h1>
 
     {% if is_granted('ROLE_SUPER_ADMIN') %}
