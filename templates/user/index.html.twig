@@ -1,12 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{'User index'|trans}}{% endblock %}
+{% block title %}
+    {{'User index'|trans}}
+        {% if group_name %}
+            {% trans %}of the "%group_name%" group{% endtrans %}
+        {% endif %}
+{% endblock %}
 
 {% block body %}
     <h1>
         {{'User index'|trans}}
         {% if group_name %}
-            {% trans %}of the "%group_name%" group{% endtrans %}
+            {% trans %}of the "%group_name%" group{% endtrans %} <span style="background-color: #ffff00;" }}>{{ group_shortname }}</span>
         {% endif %}
     </h1>
 
@@ -48,7 +53,7 @@
                     {# {{ user.groups ? user.groups|join(', ') : '' }} #}
                     {% for group in user.groups %}
                     <span {{ group.id == group_id ? 'style="background-color: #ffff00;"' : '' }}>
-                    <a href="{{ path('group_index', {'group': group.id}) }}">{{ group.name }}</a><br/>
+                    <a href="{{ path('group_index', {'group': group.id}) }}">{{ group.shortname }}</a><br/>
                     </span>
                     {% endfor %}
                 </td>
@@ -57,6 +62,9 @@
                     <div class="form-check-inline">
                         <a class="btn btn-primary btn-sm mr-2" href="{{ path('user_show', {'id': user.id}) }}" title="{{'Show'|trans}}"><i class="fas fa-eye"></i></a>
                         <a class="btn btn-primary btn-sm mr-2" href="{{ path('user_edit', {'id': user.id}) }}" title="{{'Edit'|trans}}"><i class="fas fa-pencil-alt"></i></a>
+                        {% if group_name %}
+                            <a class="btn btn-warning btn-sm mr-2" href="{{ path('group_remove_user', {'id': group_id, 'user': user.id}) }}" title="{{'Remove from group'|trans}}"><i class="fas fa-sign-out-alt"></i></a>
+                        {% endif %}                        
                         {{ include('user/_delete_form.html.twig') }}
                     </div>
                     {% endif %}

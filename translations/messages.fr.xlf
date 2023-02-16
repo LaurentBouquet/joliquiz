@@ -897,6 +897,10 @@
         <source>of the "%group_name%" group</source>
         <target>de la classe "%group_name%"</target>
       </trans-unit>
+      <trans-unit id="A17dm9c" resname="Remove from group">
+        <source>Remove from group</source>
+        <target>Retirer de la classe</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

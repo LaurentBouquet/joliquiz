@@ -60,12 +60,13 @@ class UserController extends AbstractController
 
         $groupId = $request->query->get('group');        
         $groupName = "";        
+        $groupShortName = "";
         if ($groupId > 0 ) {
             if ($this->isGranted('ROLE_ADMIN')) {
                 $users = $userRepository->findAllByGroups([$groupId],  $this->isGranted('ROLE_TEACHER'), $this->isGranted('ROLE_ADMIN'));
                 $group = $groupRepository->find($groupId);
-                $groupName = $group->getName();
-                dump($groupName);
+                $groupName = $group->getName();    
+                $groupShortName = $group->getShortName(); 
             } else {
                 $groups = $this->getUser()->getGroups();
                 $users = $userRepository->findAllByGroups($groups);   
@@ -80,7 +81,7 @@ class UserController extends AbstractController
             }
         }
 
-        return $this->render('user/index.html.twig', ['users' => $users, 'group_id' => $groupId, 'group_name' => $groupName]);
+        return $this->render('user/index.html.twig', ['users' => $users, 'group_id' => $groupId, 'group_name' => $groupName, 'group_shortname' => $groupShortName]);
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Group;
 use App\Form\GroupType;
+use App\Repository\UserRepository;
 use App\Repository\GroupRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -90,4 +91,23 @@ class GroupController extends AbstractController
 
         return $this->redirectToRoute('group_index');
     }
+
+    /**
+     * @Route("remove_user/{id}", name="group_remove_user", methods={"GET"})
+     */
+    public function remove_user(Request $request, Group $group, UserRepository $userRepository, EntityManagerInterface $em): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Access not allowed');
+
+        $groupId = $group->getId();
+        $userId = $request->query->get('user');
+        if ($userId > 0 ) {
+            $user = $userRepository->find($userId);
+            $group->removeUser($user);
+        }
+        $em->flush();
+
+        return $this->redirectToRoute('user_index', ['group' => $groupId]);
+    }
+
 }
