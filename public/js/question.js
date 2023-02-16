@@ -53,11 +53,10 @@ function addAnswerForm($collectionHolder, $newLinkLi) {
 }
 
 function addAnswerFormDeleteLink($answerFormLi) {
-    var $removeFormButton = $('<button class="btn btn-danger btn-sm mr-2 align-self-end" type="button"><i class="fas fa-trash-alt"></i></button>');    
+    var $removeFormButton = $('<div style="text-align: right;"><button class="btn btn-danger btn-sm mr-2 align-self-end" type="button"><i class="fas fa-trash-alt"></i></button><div>');    
     $answerFormLi.addClass('card bg-light border-dark p-3 mb-3');    
     $answerFormLi.append($removeFormButton);
-    // $removeFormButton.css("float", "right");
-
+    
     $removeFormButton.on('click', function(e) {
         // remove the li for the answer form
         $answerFormLi.remove();

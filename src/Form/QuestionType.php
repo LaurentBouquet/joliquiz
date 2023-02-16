@@ -61,7 +61,9 @@ class QuestionType extends AbstractType
                     },
                     'choice_label' => 'longname',
                     'multiple' => true,                    
-                    // 'attr' => array('rows' => '10'), // Fonctionne avec EntityType ?
+                    'attr' => [
+                        'size' => 30,              
+                    ],
                     // 'expanded' => true, // render check-boxes   
                 ));
                 $builder->add('answers', CollectionType::class, array(
@@ -90,7 +92,9 @@ class QuestionType extends AbstractType
                     },
                     'choice_label' => 'longname',
                     'multiple' => true,
-                    // 'attr' => array('rows' => '10'), // Fonctionne avec EntityType ?
+                    'attr' => [
+                        'size' => 3,                
+                    ],
                     //'expanded' => true, // render check-boxes   
                 ));
                 $builder->add('answers', CollectionType::class, array(

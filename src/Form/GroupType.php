@@ -25,6 +25,9 @@ class GroupType extends AbstractType
             'choice_label' => 'name',
             'multiple' => true,
             // 'expanded' => true, // render check-boxes
+            'attr' => [
+                'size' => 50,
+            ],
         ));    
     }
 

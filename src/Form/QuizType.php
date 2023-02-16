@@ -40,7 +40,9 @@ class QuizType extends AbstractType
                  },
                 'choice_label' => 'longname',
                 'multiple' => true,            
-                // 'attr' => array('rows' => '50'), // Fonctionne avec EntityType ?
+                'attr' => [
+                    'size' => 30,              
+                ],
                 // 'expanded' => true, // render check-boxes                         
             ));
         } else {
@@ -51,7 +53,9 @@ class QuizType extends AbstractType
                  },
                 'choice_label' => 'longname',
                 'multiple' => true,
-                // 'attr' => array('rows' => '50'), // Fonctionne avec EntityType ?
+                'attr' => [
+                    'size' => 30,             
+                ],
                 // 'expanded' => true, // render check-boxes   
             ));
         }
