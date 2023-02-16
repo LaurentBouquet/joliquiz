@@ -158,6 +158,8 @@ class QuestionController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Access not allowed');
 
+        $categoryId = $request->query->get('category');
+        
         if ($this->isCsrfTokenValid('delete'.$question->getId(), $request->request->get('_token'))) {
             $em->remove($question);
             $em->flush();
@@ -165,6 +167,11 @@ class QuestionController extends AbstractController
             $this->addFlash('success', sprintf('Question #%s is deleted.', $question->getId()));
         }
 
-        return $this->redirectToRoute('question_index');
+        if ($categoryId > 0) {            
+            return $this->redirectToRoute('question_index', ['category' => $categoryId]);
+        } else {
+            return $this->redirectToRoute('question_index');
+        }
+        
     }
 }

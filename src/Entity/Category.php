@@ -27,7 +27,7 @@ class Category
     private $quizzes;
 
     #[ORM\ManyToMany(targetEntity: Question::class, mappedBy: 'categories')]
-    private $questions;
+    private Collection $questions;
 
     #[ORM\ManyToOne(targetEntity: Language::class, inversedBy:'categories')]
     #[ORM\JoinColumn(nullable: false)]

@@ -1,5 +1,9 @@
 {% if is_granted('ROLE_TEACHER') %}
+    {% if category_id %}
+    <form method="post" action="{{ path('question_delete', {'id': question.id, 'category': category_id}) }}" onsubmit="return confirm('{{'Are you sure you want to delete this question?'|trans}}');">
+    {% else %}
     <form method="post" action="{{ path('question_delete', {'id': question.id}) }}" onsubmit="return confirm('{{'Are you sure you want to delete this question?'|trans}}');">
+    {% endif %}
         <input type="hidden" name="_method" value="DELETE">
         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ question.id) }}">
         <button class="btn btn-danger btn-sm mr-2" title="{{'Delete'|trans}}"><i class="fas fa-trash-alt"></i></button>
