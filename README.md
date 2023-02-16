@@ -3,7 +3,7 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/laurentbouquet/joliquiz/badge)](https://www.codefactor.io/repository/github/laurentbouquet/joliquiz)
 
 ## Description
-Joliquiz is an online quiz software, a PHP web application developed using the [Symfony framework (version 4)](https://symfony.com/).
+Joliquiz is an online quiz software, a PHP web application developed using the [Symfony framework (version 6)](https://symfony.com/).
 
 
 ## Screenshots
@@ -156,17 +156,6 @@ Administrator
 Superadministrator
  - Username : superadmin
  - Password : superadmin
-
-
-
-## Live Demo
-
-[https://joliquiz.herokuapp.com/](https://joliquiz.herokuapp.com/)
-
-Thanks to [Heroku](https://www.heroku.com/)
-
-<!-- French version of JoliQuiz : [https://joliquiz.joliciel.fr/](https://joliquiz.joliciel.fr/) -->
-
 
 
 
