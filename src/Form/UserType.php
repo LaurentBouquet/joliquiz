@@ -98,7 +98,7 @@ class UserType extends AbstractType
                     //  },
                     'choice_label' => 'name',
                     'multiple' => true,
-                    'expanded' => true, // render check-boxes   
+                    // 'expanded' => true, // render check-boxes   
                 ));
                 $builder->add('toReceiveMyResultByEmail', CheckboxType::class, [
                     'label' => $this->translator->trans('To receive result by email'),

@@ -23,7 +23,7 @@ class GroupType extends AbstractType
             'class' => User::class,
             'choice_label' => 'name',
             'multiple' => true,
-            'expanded' => true, // render check-boxes
+            // 'expanded' => true, // render check-boxes
         ));    
     }
 

@@ -2,6 +2,9 @@
 
     {{ form_widget(form) }}
 
+    <div id="answers"></div>
+    <button id="answers-add" class="btn btn-warning mr-2" type="button"><i class="fas fa-plus"></i> {{ 'Add an answer'|trans }}</button>
+
     <a class="btn btn-secondary" href="{{ path('question_index') }}"><i class="fas fa-arrow-circle-left"></i> {{'Back to list'|trans}}</a>
     {% if is_granted('ROLE_TEACHER') %}
         <button class="btn btn-primary"><i class="fas fa-check"></i> {{ button_label|default('Save'|trans) }}</button>

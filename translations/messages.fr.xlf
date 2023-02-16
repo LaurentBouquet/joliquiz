@@ -129,7 +129,7 @@
         <source>Password</source>
         <target>Mot de passe</target>
       </trans-unit>
-      <trans-unit id="Hkmh4To" resname="New Password">
+      <trans-unit id="fEUeD0N" resname="New Password">
         <source>New Password</source>
         <target>Nouveau mot de passe</target>
       </trans-unit>
@@ -856,6 +856,26 @@
       <trans-unit id="4O3_s6c" resname="Reset password">
         <source>Reset password</source>
         <target>Réinitialiser le mot de passe</target>
+      </trans-unit>
+      <trans-unit id="Y869ktX" resname="Add an answer">
+        <source>Add an answer</source>
+        <target>Ajouter une réponse</target>
+      </trans-unit>
+      <trans-unit id="PdnfREH" resname="New password">
+        <source>New password</source>
+        <target>Nouveau mot de passe</target>
+      </trans-unit>
+      <trans-unit id="TdLhlyP" resname="The password fields must match.">
+        <source>The password fields must match.</source>
+        <target>Les champs du mot de passe doivent correspondre.</target>
+      </trans-unit>
+      <trans-unit id="MYRhxv." resname="Question max duration (seconds)">
+        <source>Question max duration (seconds)</source>
+        <target>Durée maximale de la question (secondes)</target>
+      </trans-unit>
+      <trans-unit id="Uy.WE2d" resname="Default question max duration (seconds)">
+        <source>Default question max duration (seconds)</source>
+        <target>Durée maximale de la question par défaut (secondes)</target>
       </trans-unit>
     </body>
   </file>

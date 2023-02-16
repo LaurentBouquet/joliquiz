@@ -50,7 +50,7 @@ class QuestionType extends AbstractType
                 $builder->add('text');
                 $builder->add('max_duration', IntegerType::class, array(
                     'required' => false,
-                    'label' => 'Question max duration (seconds)',
+                    'label' => $this->translator->trans('Question max duration (seconds)'),
                 ));
                 $builder->add('categories', EntityType::class, array(
                     'class' => Category::class,
@@ -59,8 +59,8 @@ class QuestionType extends AbstractType
                     },
                     'choice_label' => 'longname',
                     'multiple' => true,                    
-                    // 'attr' => array('rows' => '10'),
-                    'expanded' => true, // render check-boxes   
+                    // 'attr' => array('rows' => '10'), // Fonctionne avec EntityType ?
+                    // 'expanded' => true, // render check-boxes   
                 ));
                 $builder->add('answers', CollectionType::class, array(
                     'entry_type' => AnswerType::class,
@@ -77,7 +77,7 @@ class QuestionType extends AbstractType
                 $builder->add('text');
                 $builder->add('max_duration', IntegerType::class, array(
                     'required' => false,
-                    'label' => 'Question max duration (seconds)',
+                    'label' => $this->translator->trans('Question max duration (seconds)'),
                 ));
                 $builder->add('categories', EntityType::class, array(
                     'class' => Category::class,
@@ -86,8 +86,8 @@ class QuestionType extends AbstractType
                     },
                     'choice_label' => 'longname',
                     'multiple' => true,
-                    // 'attr' => array('rows' => '10'),
-                    'expanded' => true, // render check-boxes   
+                    // 'attr' => array('rows' => '10'), // Fonctionne avec EntityType ?
+                    //'expanded' => true, // render check-boxes   
                 ));
                 $builder->add('answers', CollectionType::class, array(
                     'entry_type' => AnswerType::class,

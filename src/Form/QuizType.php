@@ -24,8 +24,7 @@ class QuizType extends AbstractType
     {
         $this->translator = $translator;
         $this->param = $param;
-        $this->tokenStorage = $tokenStorage;
-        
+        $this->tokenStorage = $tokenStorage;        
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -41,8 +40,8 @@ class QuizType extends AbstractType
                  },
                 'choice_label' => 'longname',
                 'multiple' => true,            
-                // 'attr' => array('rows' => '50'),    
-                'expanded' => true, // render check-boxes                         
+                // 'attr' => array('rows' => '50'), // Fonctionne avec EntityType ?
+                // 'expanded' => true, // render check-boxes                         
             ));
         } else {
             $builder->add('categories', EntityType::class, array(
@@ -52,8 +51,8 @@ class QuizType extends AbstractType
                  },
                 'choice_label' => 'longname',
                 'multiple' => true,
-                // 'attr' => array('rows' => '50'),
-                'expanded' => true, // render check-boxes   
+                // 'attr' => array('rows' => '50'), // Fonctionne avec EntityType ?
+                // 'expanded' => true, // render check-boxes   
             ));
         }
         
@@ -62,7 +61,7 @@ class QuizType extends AbstractType
         $builder->add('result_quiz_comment');
         $builder->add('allow_anonymous_workout');
         $builder->add('default_question_max_duration', IntegerType::class, array(
-            'label' => 'Default question max duration (seconds)',
+            'label' => $this->translator->trans('Default question max duration (seconds)'),
         ));
         $builder->add('active');
     }
