@@ -77,9 +77,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $login_type = null;
 
     #[ORM\ManyToMany(targetEntity: Group::class, inversedBy: 'users')]
-    // #[ORM\ManyToMany(targetEntity: Group::class, mappedBy: 'users')]
     #[ORM\JoinTable(name: 'tbl_user_group')]
-    private Collection $groups;
+    private ?Collection $groups;
 
     #[ORM\Column(nullable: true)]
     private ?bool $toReceiveMyResultByEmail = null;
@@ -435,15 +434,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection<int, Group>
      */
-    public function getGroups(): Collection
+    public function getGroups(): ?Collection
     {
         return $this->groups;
     }
 
-    public function addGroup(Group $group): self
+    public function addGroup(?Group $group): self
     {
         if (!$this->groups->contains($group)) {
             $this->groups->add($group);
+            $group->addUser($this);
         }
 
         return $this;
@@ -451,7 +451,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeGroup(Group $group): self
     {
-        $this->groups->removeElement($group);
+        if ($this->groups->removeElement($group)) {
+            $group->removeUser($this);
+        }
 
         return $this;
     }

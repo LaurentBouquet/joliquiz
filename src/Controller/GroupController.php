@@ -28,24 +28,41 @@ class GroupController extends AbstractController
     }
 
     /**
+     * @Route("/{id}", name="group_show", methods={"GET"})
+     */
+    public function show(Group $group): Response
+    {
+        return $this->render('group/show.html.twig', [
+            'group' => $group,
+        ]);
+    }    
+
+    /**
      * @Route("/new", name="group_new", methods={"GET","POST"})
      */
-    public function new(Request $request, EntityManagerInterface $em): Response
+    public function new(Request $request, EntityManagerInterface $em, UserRepository $userRepository): Response
     {
         $group = new Group();
         $form = $this->createForm(GroupType::class, $group);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($group);  
-
-            ///////////////////////////////////////
-            // Ne fonctionne pas
-            foreach ($group->getUsers() as $user) {
-                $em->persist($user);
+            $em->persist($group);     
+            ////////////////////////////////////////////////
+            // To save "Inverse Side" of ManyToMany relation
+            $usersInGroup = $group->getUsers();
+            $allUsers = $userRepository->findAll($this->isGranted('ROLE_TEACHER'), $this->isGranted('ROLE_ADMIN'));
+            foreach ($allUsers as $user) {
+                if (!$usersInGroup->contains($user)) {
+                    $user->removeGroup($group);
+                    $em->persist($user);   
+                }
+            }
+            foreach ($usersInGroup as $user) {
+                $user->addGroup($group);
+                $em->persist($user);   
             }            
-            ///////////////////////////////////////
-            
+            ////////////////////////////////////////////////
             $em->flush();
             return $this->redirectToRoute('group_index');
         }
@@ -57,34 +74,32 @@ class GroupController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="group_show", methods={"GET"})
-     */
-    public function show(Group $group): Response
-    {
-        return $this->render('group/show.html.twig', [
-            'group' => $group,
-        ]);
-    }
-
-    /**
      * @Route("/{id}/edit", name="group_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Group $group, EntityManagerInterface $em): Response
+    public function edit(Request $request, Group $group, EntityManagerInterface $em, UserRepository $userRepository): Response
     {
         $form = $this->createForm(GroupType::class, $group);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($group);            
-
-            ///////////////////////////////////////
-            // Ne fonctionne pas
-            foreach ($group->getUsers() as $user) {
-                $em->persist($user);
+        if ($form->isSubmitted() && $form->isValid()) {        
+            $em->persist($group);   
+            ////////////////////////////////////////////////
+            // To save "Inverse Side" of ManyToMany relation
+            $usersInGroup = $group->getUsers();
+            $allUsers = $userRepository->findAll($this->isGranted('ROLE_TEACHER'), $this->isGranted('ROLE_ADMIN'));
+            foreach ($allUsers as $user) {
+                if (!$usersInGroup->contains($user)) {
+                    $user->removeGroup($group);
+                    $em->persist($user);   
+                }
+            }
+            foreach ($usersInGroup as $user) {
+                $user->addGroup($group);
+                $em->persist($user);   
             }            
-            ///////////////////////////////////////
-
+            ////////////////////////////////////////////////
             $em->flush();
+
             return $this->redirectToRoute('user_index', ['group' => $group->getId()]);
         }
 
