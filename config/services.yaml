@@ -7,6 +7,7 @@ parameters:
     locale: '%env(LOCALE)%'
     env(LOCALE): en
     ADMIN_EMAIL_ADDRESS: '%env(ADMIN_EMAIL_ADDRESS)%'   
+    FROM_EMAIL_ADDRESS: '%env(FROM_EMAIL_ADDRESS)%'   
 
 services:
     # default configuration for services in *this* file
