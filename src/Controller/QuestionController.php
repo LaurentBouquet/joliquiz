@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
@@ -111,7 +112,7 @@ class QuestionController extends AbstractController
     /**
      * @Route("/{id}/edit", name="question_edit", methods="GET|POST")
      */
-    public function edit(Request $request, Question $question, EntityManagerInterface $em): Response
+    public function edit(Request $request, Question $question, EntityManagerInterface $em, TranslatorInterface $translator): Response
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
@@ -132,7 +133,7 @@ class QuestionController extends AbstractController
 
             $em->flush();
 
-            $this->addFlash('success', sprintf('Question #%s is updated.', $question->getId()));
+            $this->addFlash('success', sprintf($translator->trans('Question #%s is updated.'), $question->getId()));
 
             return $this->redirectToRoute('question_edit', ['id' => $question->getId()]);
         }

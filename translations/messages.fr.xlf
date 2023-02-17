@@ -901,6 +901,26 @@
         <source>Remove from group</source>
         <target>Retirer de la classe</target>
       </trans-unit>
+      <trans-unit id="i4hkcW." resname="Answer #%s is updated.">
+        <source>Answer #%s is updated.</source>
+        <target>La réponse #%s a été mise à jour.</target>
+      </trans-unit>
+      <trans-unit id="_6nCDIq" resname="Category &quot;%s&quot; is updated.">
+        <source>Category "%s" is updated.</source>
+        <target>La catégorie "%s" a été mise à jour.</target>
+      </trans-unit>
+      <trans-unit id="VaUzL0R" resname="Question #%s is updated.">
+        <source>Question #%s is updated.</source>
+        <target>La question #%s a été mise à jour.</target>
+      </trans-unit>
+      <trans-unit id="0w7JUPV" resname="Quiz &quot;%s&quot; is updated.">
+        <source>Quiz "%s" is updated.</source>
+        <target>Le questionnaire "%s" a été mis à jour.</target>
+      </trans-unit>
+      <trans-unit id="j1CUK77" resname="User &quot;%s&quot; is updated.">
+        <source>User "%s" is updated.</source>
+        <target>L'utilisateur "%s" a été mis à jour.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

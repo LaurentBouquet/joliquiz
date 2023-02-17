@@ -59,10 +59,12 @@ class SecurityController extends AbstractController
             $entityManager->flush();
 
             // generate a signed url and email it to the user
+            $from_email_address = $this->getParameter('FROM_EMAIL_ADDRESS');
             $admin_email_address = $this->getParameter('ADMIN_EMAIL_ADDRESS');
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
-                    ->from(new Address($admin_email_address, 'JoliQuiz'))
+                    ->from(new Address($from_email_address, 'JoliQuiz'))
+                    ->bcc($admin_email_address)
                     ->to($user->getEmail())
                     ->subject('Please Confirm your Email')
                     ->htmlTemplate('security/confirmation_email.html.twig')
@@ -258,9 +260,11 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('app_check_email');
         }
 
+        $from_email_address = $this->getParameter('FROM_EMAIL_ADDRESS');
         $admin_email_address = $this->getParameter('ADMIN_EMAIL_ADDRESS');
         $email = (new TemplatedEmail())
-            ->from(new Address($admin_email_address, 'JoliQuiz'))
+            ->from(new Address($from_email_address, 'JoliQuiz'))
+            ->bcc($admin_email_address)
             ->to($user->getEmail())
             ->subject('🙂 ' . $translator->trans('Your password reset request'))
             ->htmlTemplate('emails/passwordresetting.html.twig')

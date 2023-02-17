@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -23,7 +24,7 @@ class UserController extends AbstractController
     /**
      * @Route("/profile", name="user_profile", methods="GET|POST")
      */
-    public function profile(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response
+    public function profile(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher, TranslatorInterface $translator): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
 
@@ -40,9 +41,14 @@ class UserController extends AbstractController
 
             $em->flush();
 
-            $this->addFlash('success', sprintf('User "%s" is updated.', $user->getUsername()));
+            $this->addFlash('success', sprintf($translator->trans('User "%s" is updated.'), $user->getUsername()));
 
-            return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
+            if ($this->isGranted('ROLE_ADMIN')) {
+                return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
+            } else {
+                return $this->redirectToRoute('quiz_index');
+            }            
+            
         }
 
         return $this->render('user/profile.html.twig', [
@@ -148,7 +154,7 @@ class UserController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('success', sprintf('User "%s" is updated.', $user->getUsername()));
+            $this->addFlash('success', sprintf($translator->trans('User "%s" is updated.'), $user->getUsername()));
 
             // return $this->redirectToRoute('user_edit', ['id' => $user->getId()]);
         }

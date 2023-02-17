@@ -343,9 +343,10 @@ class QuizController extends AbstractController
                             $em->persist($workout);
                             $em->flush();
 
-                            $admin_email_address = $this->getParameter('ADMIN_EMAIL_ADDRESS');
+                            $from_email_address = $this->getParameter('FROM_EMAIL_ADDRESS');
+                            $admin_email_address = $this->getParameter('ADMIN_EMAIL_ADDRESS');                            
                             $email = (new TemplatedEmail())
-                                ->from($admin_email_address)
+                                ->from($from_email_address)                                
                                 ->to($admin_email_address)
                                 ->subject('🙂 ' . $translator->trans('Quiz "%title%" by %username% = %score%% (%grade%/20) - Before the end!', ['%title%' => $quiz->getTitle(), '%username%' => $user->getName(), '%score%' => $score, '%grade%' => $grade]))
                                 // path of the Twig template to render
@@ -717,7 +718,7 @@ class QuizController extends AbstractController
     /**
      * @Route("/{id}/edit", name="quiz_edit", methods="GET|POST")
      */
-    public function edit(Request $request, Quiz $quiz, EntityManagerInterface $em): Response
+    public function edit(Request $request, Quiz $quiz, EntityManagerInterface $em, TranslatorInterface $translator): Response
     {
         $now = new \DateTime();
 
@@ -729,7 +730,7 @@ class QuizController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $quiz->setUpdatedAt($now);
             $em->flush();
-            $this->addFlash('success', sprintf('Quiz "%s" is updated.', $quiz->getTitle()));
+            $this->addFlash('success', sprintf($translator->trans('Quiz "%s" is updated.'), $quiz->getTitle()));
             return $this->redirectToRoute('quiz_edit', ['id' => $quiz->getId()]);
         }
 

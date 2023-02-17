@@ -66,15 +66,23 @@
                 </ul>
                 <ul class="navbar-nav">
                     {% if is_granted('ROLE_USER') %}
-                        <li>                        
-                            <a class="nav-link href="{{ path('user_profile') }}">
-                                <i class="fas fa-user"></i>
-                                {% if app.user %}
-                                    <strong>{{ app.user.username }}</strong>
-                                {% endif %}
-                            </a>
-                        </li>
-                        
+                        {% if app.user %}   
+                            {% if (is_granted('ROLE_TEACHER')) %}
+                                    <li>                                             
+                                        <a class="nav-link" href="{{ path('user_profile') }}">
+                                            <span><i class="fas fa-user"></i> <strong>{{ app.user.username }}</strong></span>
+                                        </a>
+                                    </li>
+                            {% else %}
+                                {% if quiz is not defined %}
+                                    <li>                                             
+                                        <a class="nav-link" href="{{ path('user_profile') }}">
+                                            <span><i class="fas fa-user"></i> <strong>{{ app.user.username }}</strong></span>
+                                        </a>
+                                    </li>
+                                {% endif %}                            
+                            {% endif %}
+                        {% endif %}                        
                         <li>
                             <a class="nav-link" href="{{ path('app_logout') }}">{{'Logout'|trans}}</a>
                         </li>

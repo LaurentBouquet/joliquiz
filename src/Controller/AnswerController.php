@@ -5,11 +5,12 @@ namespace App\Controller;
 use App\Entity\Answer;
 use App\Form\AnswerType;
 use App\Repository\AnswerRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/answer")
@@ -65,7 +66,7 @@ class AnswerController extends AbstractController
     /**
      * @Route("/{id}/edit", name="answer_edit", methods="GET|POST")
      */
-    public function edit(Request $request, Answer $answer, EntityManagerInterface $em): Response
+    public function edit(Request $request, Answer $answer, EntityManagerInterface $em, TranslatorInterface $translator): Response
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
@@ -76,7 +77,7 @@ class AnswerController extends AbstractController
             
             $em->flush();
             
-            $this->addFlash('success', sprintf('Answer #%s is updated.', $answer->getId()));
+            $this->addFlash('success', sprintf($translator->trans('Answer #%s is updated.'), $answer->getId()));
 
             return $this->redirectToRoute('answer_edit', ['id' => $answer->getId()]);
         }
