@@ -23,7 +23,7 @@ class Group
     #[ORM\JoinColumn(nullable: false)]
     private $school;
 
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'groups', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'groups', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: true)]
     private Collection $users;
 
