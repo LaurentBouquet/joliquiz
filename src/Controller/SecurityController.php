@@ -64,7 +64,7 @@ class SecurityController extends AbstractController
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
                     ->from(new Address($from_email_address, 'JoliQuiz'))
-                    ->bcc($admin_email_address)
+                    // ->bcc($admin_email_address)
                     ->to($user->getEmail())
                     ->subject('Please Confirm your Email')
                     ->htmlTemplate('security/confirmation_email.html.twig')
@@ -264,7 +264,7 @@ class SecurityController extends AbstractController
         $admin_email_address = $this->getParameter('ADMIN_EMAIL_ADDRESS');
         $email = (new TemplatedEmail())
             ->from(new Address($from_email_address, 'JoliQuiz'))
-            ->bcc($admin_email_address)
+            // ->bcc($admin_email_address)
             ->to($user->getEmail())
             ->subject('🙂 ' . $translator->trans('Your password reset request'))
             ->htmlTemplate('emails/passwordresetting.html.twig')
