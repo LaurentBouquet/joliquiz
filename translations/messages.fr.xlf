@@ -447,7 +447,7 @@
       </trans-unit>
       <trans-unit id="TustTAc" resname="Please enter your email address, we will send you an email to re-initialize your password.">
         <source>Please enter your email address, we will send you an email to re-initialize your password.</source>
-        <target>Veuillez saisir votre adresse e-mail, nous vous enverrons un e-mail pour réinitialiser votre mot de passe.</target>
+        <target>Veuillez saisir votre adresse e-mail, nous vous enverrons un email pour réinitialiser votre mot de passe.</target>
       </trans-unit>
       <trans-unit id="9vRoj.I" resname="Send">
         <source>Send</source>
