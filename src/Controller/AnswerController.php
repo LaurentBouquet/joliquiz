@@ -54,16 +54,6 @@ class AnswerController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="answer_show", methods="GET")
-     */
-    public function show(Answer $answer): Response
-    {
-        $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
-
-        return $this->render('answer/show.html.twig', ['answer' => $answer]);
-    }
-
-    /**
      * @Route("/{id}/edit", name="answer_edit", methods="GET|POST")
      */
     public function edit(Request $request, Answer $answer, EntityManagerInterface $em, TranslatorInterface $translator): Response
@@ -104,4 +94,15 @@ class AnswerController extends AbstractController
 
         return $this->redirectToRoute('answer_index');
     }
+    
+    /**
+     * @Route("/{id}", name="answer_show", methods="GET")
+     */
+    public function show(Answer $answer): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
+
+        return $this->render('answer/show.html.twig', ['answer' => $answer]);
+    }
+
 }

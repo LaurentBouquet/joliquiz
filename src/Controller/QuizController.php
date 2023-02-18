@@ -706,16 +706,6 @@ class QuizController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="quiz_show", methods="GET")
-     */
-    public function show(Quiz $quiz): Response
-    {
-        $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
-
-        return $this->render('quiz/show.html.twig', ['quiz' => $quiz]);
-    }
-
-    /**
      * @Route("/{id}/edit", name="quiz_edit", methods="GET|POST")
      */
     public function edit(Request $request, Quiz $quiz, EntityManagerInterface $em, TranslatorInterface $translator): Response
@@ -755,4 +745,15 @@ class QuizController extends AbstractController
 
         return $this->redirectToRoute('quiz_index');
     }
+
+    /**
+     * @Route("/{id}", name="quiz_show", methods="GET")
+     */
+    public function show(Quiz $quiz): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
+
+        return $this->render('quiz/show.html.twig', ['quiz' => $quiz]);
+    }
+
 }

@@ -48,4 +48,10 @@
         </tbody>
     </table>
 
+    {% if is_granted('ROLE_TEACHER') %}
+        <div class="mb-3">
+            <a class="btn btn-warning" href="{{ path('category_new') }}"><i class="fas fa-plus"></i> {{'Create new category'|trans}}</a>
+        </div>
+    {% endif %}    
+
 {% endblock %}

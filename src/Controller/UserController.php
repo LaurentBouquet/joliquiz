@@ -121,20 +121,6 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="user_show", methods="GET")
-     */
-    public function show(User $user): Response
-    {
-        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
-
-        if ($this->isGranted('ROLE_SUPER_ADMIN')) {
-            return $this->render('user/show.html.twig', ['user' => $user]);
-        } else {
-            return $this->render('user/show.html.twig', ['user' => $this->getUser()]);
-        }
-    }
-
-    /**
      * @Route("/{id}/edit", name="user_edit", methods="GET|POST")
      */
     public function edit(Request $request, User $user, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response
@@ -180,4 +166,19 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('user_index');
     }
+
+    /**
+     * @Route("/{id}", name="user_show", methods="GET")
+     */
+    public function show(User $user): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
+
+        if ($this->isGranted('ROLE_SUPER_ADMIN')) {
+            return $this->render('user/show.html.twig', ['user' => $user]);
+        } else {
+            return $this->render('user/show.html.twig', ['user' => $this->getUser()]);
+        }
+    }
+        
 }

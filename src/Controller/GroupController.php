@@ -22,26 +22,20 @@ class GroupController extends AbstractController
      */
     public function index(GroupRepository $groupRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Access not allowed');
+
         return $this->render('group/index.html.twig', [
             'groups' => $groupRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="group_show", methods={"GET"})
-     */
-    public function show(Group $group): Response
-    {
-        return $this->render('group/show.html.twig', [
-            'group' => $group,
-        ]);
-    }    
-
-    /**
-     * @Route("/new", name="group_new", methods={"GET","POST"})
+     * @Route("/new", name="group_new", methods={"GET|POST"})
      */
     public function new(Request $request, EntityManagerInterface $em, UserRepository $userRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Access not allowed');
+
         $group = new Group();
         $form = $this->createForm(GroupType::class, $group);
         $form->handleRequest($request);
@@ -78,6 +72,8 @@ class GroupController extends AbstractController
      */
     public function edit(Request $request, Group $group, EntityManagerInterface $em, UserRepository $userRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Access not allowed');
+
         $form = $this->createForm(GroupType::class, $group);
         $form->handleRequest($request);
 
@@ -114,7 +110,7 @@ class GroupController extends AbstractController
      */
     public function delete(Request $request, Group $group, EntityManagerInterface $em): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN', null, 'Access not allowed');
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Access not allowed');
 
         if ($this->isCsrfTokenValid('delete' . $group->getId(), $request->request->get('_token'))) {
             $em->remove($group);
@@ -141,5 +137,15 @@ class GroupController extends AbstractController
 
         return $this->redirectToRoute('user_index', ['group' => $groupId]);
     }
+
+    /**
+     * @Route("/{id}", name="group_show", methods={"GET"})
+     */
+    public function show(Group $group): Response
+    {
+        return $this->render('group/show.html.twig', [
+            'group' => $group,
+        ]);
+    }    
 
 }

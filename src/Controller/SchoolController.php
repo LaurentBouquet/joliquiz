@@ -49,16 +49,6 @@ class SchoolController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="school_show", methods={"GET"})
-     */
-    public function show(School $school): Response
-    {
-        return $this->render('school/show.html.twig', [
-            'school' => $school,
-        ]);
-    }
-
-    /**
      * @Route("/{id}/edit", name="school_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, School $school, EntityManagerInterface $em): Response
@@ -91,4 +81,15 @@ class SchoolController extends AbstractController
 
         return $this->redirectToRoute('school_index');
     }
+
+    /**
+     * @Route("/{id}", name="school_show", methods={"GET"})
+     */
+    public function show(School $school): Response
+    {
+        return $this->render('school/show.html.twig', [
+            'school' => $school,
+        ]);
+    }
+
 }
