@@ -14,7 +14,7 @@
         {% block stylesheets %}{% endblock %}
 
         <!-- Bootstrap core CSS -->
-        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/bootstrap.css">
 
         <!-- Custom styles for this template -->
         <link rel="stylesheet" href="/css/style.css">
@@ -26,10 +26,17 @@
 
     <body>
 
-        <nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
+        <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
             <a class="navbar-brand text-warning" title="JoliQuiz" href="/"><img src="/images/logo_MENU.png" height="32" alt="JoliQuiz"></a>
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="navbar-nav mr-auto">
+
+                    <li>                                             
+                        <a class="nav-link text-warning switch" id="test" href="#">
+                            <i id="light-dark-mode-toggle-button" class="fas fa-toggle-off"></i>
+                        </a>
+                    </li>  
+                            
                     <li>
                         <span class="nav-link active text-dark">{{ (locale ?? 'en')|upper }}</span>
                     </li>
@@ -64,7 +71,7 @@
                     {% endif %}                    
 
                 </ul>
-                <ul class="navbar-nav">
+                <ul class="navbar-nav">                    
                     {% if is_granted('ROLE_USER') %}
                         {% if app.user %}   
                             {% if (is_granted('ROLE_TEACHER')) %}
@@ -132,6 +139,7 @@
         <script src="/js/jquery-3.3.1.slim.min.js"></script>
         <script src="/js/popper.min.js"></script>
         <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/darkmode.js"></script>
 
         {% block javascripts %}{% endblock %}
 

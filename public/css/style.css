@@ -1,5 +1,19 @@
-body {
-    /* padding-top: 5rem; */
+.html-light {
+    background-color: white;
+    mix-blend-mode: difference;
+}
+
+.img-light {
+    mix-blend-mode: difference;
+}
+
+.html-dark {
+    background-color: black;
+    mix-blend-mode: difference;
+}
+
+.img-dark {
+    mix-blend-mode: difference;
 }
 
 .navbar {
