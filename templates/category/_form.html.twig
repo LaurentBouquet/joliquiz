@@ -3,8 +3,8 @@
 
     <a class="btn btn-secondary" href="{{ path('category_index') }}"><i class="fas fa-arrow-circle-left"></i> {{'Back to list'|trans}}</a>
     {% if is_granted('ROLE_TEACHER') %}
-        <a class="btn btn-info" href="{{ path('quiz_index', {'category': category.id}) }}"><i class="fas fa-list-ul"></i> {{'Quizzes'|trans}}</a>
-        <a class="btn btn-info" href="{{ path('question_index', {'category': category.id}) }}"><i class="fas fa-list-ul"></i> {{'Questions'|trans}}</a>
+        <a class="btn btn-info" href="{{ path('quiz_index', {'category': category.id}) }}"><i class="fas fa-question-ul"></i> {{'Quizzes'|trans}}</a>
+        <a class="btn btn-info" href="{{ path('question_index', {'category': category.id}) }}"><i class="fas fa-tasks"></i> {{'Questions'|trans}}</a>
         <button class="btn btn-primary"><i class="fas fa-check"></i> {{ button_label|default('Save'|trans) }}</button>
     {% endif %}
 

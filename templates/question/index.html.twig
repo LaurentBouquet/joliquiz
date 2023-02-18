@@ -4,9 +4,10 @@
 
 {% block body %}
     <h1>
+        <i class="fa fa-tasks"></i>
         {{'Question index'|trans}} 
-        {% if category_long_name %}
-            {% trans %}of the "%category_long_name%" category{% endtrans %} <span style="background-color: #ffff00;" }}>{{ category_short_name }}</span>
+        {% if category_short_name %}
+            {% trans %}of the category{% endtrans %} "<span style="background-color: #ffff00;" }}>{{ category_short_name }}</span>"
         {% endif %}
         ({{ questions|length }})
     </h1>    

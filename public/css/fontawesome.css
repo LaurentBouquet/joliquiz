@@ -2517,16 +2517,16 @@ readers do not read off random characters that represent icons */
 .fa-lira-sign:before {
   content: "\f195"; }
 
-.fa-list:before {
+.fa-question:before {
   content: "\f03a"; }
 
-.fa-list-alt:before {
+.fa-question-alt:before {
   content: "\f022"; }
 
-.fa-list-ol:before {
+.fa-question-ol:before {
   content: "\f0cb"; }
 
-.fa-list-ul:before {
+.fa-question-ul:before {
   content: "\f0ca"; }
 
 .fa-location-arrow:before {
@@ -3174,10 +3174,10 @@ readers do not read off random characters that represent icons */
 .fa-qrcode:before {
   content: "\f029"; }
 
-.fa-question:before {
+.'Name'|trans:before {
   content: "\f128"; }
 
-.fa-question-circle:before {
+.'Name'|trans-circle:before {
   content: "\f059"; }
 
 .fa-quidditch:before {

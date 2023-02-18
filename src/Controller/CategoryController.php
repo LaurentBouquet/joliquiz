@@ -32,7 +32,7 @@ class CategoryController extends AbstractController
     /**
      * @Route("/new", name="category_new", methods="GET|POST")
      */
-    public function new(Request $request, EntityManagerInterface $em): Response
+    public function new(Request $request, EntityManagerInterface $em, TranslatorInterface $translator): Response
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
@@ -45,7 +45,7 @@ class CategoryController extends AbstractController
             $category->setCreatedBy($this->getUser());
             $em->persist($category);
             $em->flush();
-            $this->addFlash('success', sprintf('Category "%s" is created.', $category->getShortname()));
+            $this->addFlash('success', sprintf($translator->trans('Category "%s" is created.'), $category->getShortname()));
             return $this->redirectToRoute('category_index');
         }
 
@@ -87,7 +87,7 @@ class CategoryController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
             $em->remove($category);
             $em->flush();
-            $this->addFlash('success', sprintf('Category "%s" is deleted.', $category->getShortname()));
+            $this->addFlash('success', sprintf($translator->trans('Category "%s" is deleted.'), $category->getShortname()));
         }
 
         return $this->redirectToRoute('category_index');

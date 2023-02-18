@@ -1,13 +1,14 @@
 {{ form_start(form) }}
 
+    {{ form_row(form.lastname) }}
+    {{ form_row(form.firstname) }}
     {{ form_row(form.username) }}
     {{ form_row(form.email) }}
-    {{ form_row(form.firstname) }}
-    {{ form_row(form.lastname) }}
     {{ form_row(form.isActive) }}
     {{ form_row(form.toReceiveMyResultByEmail) }}
-    {{ form_row(form.groups) }}    
     {{ form_row(form.roles) }}
+    {{ form_row(form.groups) }}    
+    
 
     {% if (user.id==null) or (app.user == user) %}
         {{ form_row(form.plainPassword) }}

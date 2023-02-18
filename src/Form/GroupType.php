@@ -8,14 +8,29 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class GroupType extends AbstractType
 {
+    private $translator;
+    private $param;
+    private $tokenStorage;
+
+    public function __construct(TranslatorInterface $translator, ParameterBagInterface $param, TokenStorageInterface $tokenStorage)
+    {
+        $this->translator = $translator;
+        $this->param = $param;
+        $this->tokenStorage = $tokenStorage;        
+    }
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('shortname')
+            ->add('shortname', TextType::class, array('label' => $this->translator->trans('Name')))
+            ->add('name', TextType::class, array('label' => $this->translator->trans('Description')))            
             ->add('code')
             ->add('school')
             // ->add('users')         

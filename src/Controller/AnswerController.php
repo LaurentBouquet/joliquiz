@@ -30,7 +30,7 @@ class AnswerController extends AbstractController
     /**
      * @Route("/new", name="answer_new", methods="GET|POST")
      */
-    public function new(Request $request, EntityManagerInterface $em): Response
+    public function new(Request $request, EntityManagerInterface $em, TranslatorInterface $translator): Response
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
@@ -42,7 +42,7 @@ class AnswerController extends AbstractController
             $em->persist($answer);
             $em->flush();
 
-            $this->addFlash('success', sprintf('Answer #%s is created.', $answer->getId()));
+            $this->addFlash('success', sprintf($translator->trans('Answer #%s is created.'), $answer->getId()));
 
             return $this->redirectToRoute('answer_index');
         }
@@ -89,7 +89,7 @@ class AnswerController extends AbstractController
             $em->remove($answer);
             $em->flush();
 
-            $this->addFlash('success', sprintf('Answer #%s is deleted.', $answer->getId()));
+            $this->addFlash('success', sprintf($translator->trans('Answer #%s is deleted.'), $answer->getId()));
         }
 
         return $this->redirectToRoute('answer_index');

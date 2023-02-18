@@ -36,7 +36,7 @@
                     
                     {% if is_granted('ROLE_USER') %}
                         <li>
-                            <a class="nav-link {% if '/quiz/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('quiz_index') }}">{{'Quizzes'|trans}}</a>
+                            <a class="nav-link {% if '/quiz/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('quiz_index') }}"><i class="fa fa-graduation-cap"></i> {{'Quizzes'|trans}}</a>
                         </li>
                     {% endif %}
                     {% if is_granted('ROLE_TEACHER') %}
@@ -44,15 +44,15 @@
                             <a class="nav-link {% if '/question/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('question_index') }}">{{'Questions'|trans}}</a>
                         </li> #}
                         <li>
-                            <a class="nav-link {% if '/category/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('category_index') }}">{{'Categories'|trans}}</a>
+                            <a class="nav-link {% if '/category/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('category_index') }}"><i class="fa fa-tag"></i> {{'Categories'|trans}}</a>
                         </li>
                     {% endif %}
                     {% if is_granted('ROLE_ADMIN') %}
                         <li>
-                            <a class="nav-link {% if '/group/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('group_index') }}">{{'Groups'|trans}}</a>
+                            <a class="nav-link {% if '/group/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('group_index') }}"><i class="fa fa-users"></i> {{'Groups'|trans}}</a>
                         </li>
                         <li>
-                            <a class="nav-link {% if '/user/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('user_index') }}">{{'Users'|trans}}</a>
+                            <a class="nav-link {% if '/user/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('user_index') }}"><i class="fa fa-user"></i> {{'Users'|trans}}</a>
                         </li>
                     {% endif %}
                     {% if is_granted('ROLE_SUPER_ADMIN') %}

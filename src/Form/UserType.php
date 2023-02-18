@@ -2,11 +2,8 @@
 
 namespace App\Form;
 
-use App\Entity\User;
 use App\Entity\Group;
-use App\Repository\GroupRepository;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -18,7 +15,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class UserType extends AbstractType
@@ -150,21 +146,21 @@ class UserType extends AbstractType
                 // }
                 break;
             case 'profile':
-                $builder->add('email', TextType::class, array(
+                $builder->add('lastname', TextType::class, array(
                     'attr' => array(
                         'readonly' => true,
                     ),
-                ));
+                ));                
                 $builder->add('firstname', TextType::class, array(
                     'attr' => array(
                         'readonly' => true,
                     ),
                 ));
-                $builder->add('lastname', TextType::class, array(
+                $builder->add('email', TextType::class, array(
                     'attr' => array(
                         'readonly' => true,
                     ),
-                ));
+                ));                
                 $builder->add('toReceiveMyResultByEmail', CheckboxType::class, [
                     'label' => $this->translator->trans('To receive my result by email'),
                     'required' => false,

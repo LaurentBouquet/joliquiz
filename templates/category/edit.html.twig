@@ -3,7 +3,7 @@
 {% block title %}{{'Edit Category'|trans}} "{{ category.shortname }}"{% endblock %}
 
 {% block body %}
-    <h1>{{'Edit Category'|trans}} "{{ category.shortname }}"</h1>
+    <h1><i class="fa fa-tag"></i> {{'Edit Category'|trans}} "<span style="background-color: #ffff00;" }}>{{ category.shortname }}</span>"</h1>
 
     {% if is_granted('ROLE_TEACHER') %}
         {{ include('category/_form.html.twig', {'button_label': 'Save'|trans}) }}

@@ -945,6 +945,50 @@
         <source>User index of the group</source>
         <target>Liste des utilisateurs de la classe</target>
       </trans-unit>
+      <trans-unit id="jFbeuBX" resname="Quiz name">
+        <source>Quiz name</source>
+        <target>Nom du questionnaire</target>
+      </trans-unit>
+      <trans-unit id="puni7xP" resname="of the category">
+        <source>of the category</source>
+        <target>de la catégorie</target>
+      </trans-unit>
+      <trans-unit id="WZBuajm" resname="Answer #%s is created.">
+        <source>Answer #%s is created.</source>
+        <target>La réponse #%s a été créé.</target>
+      </trans-unit>
+      <trans-unit id="aB8avBZ" resname="Category &quot;%s&quot; is created.">
+        <source>Category "%s" is created.</source>
+        <target>La catégorie "%s" a été créé.</target>
+      </trans-unit>
+      <trans-unit id="YodMghw" resname="Question #%s is created.">
+        <source>Question #%s is created.</source>
+        <target>La question #%s a été créé.</target>
+      </trans-unit>
+      <trans-unit id="VWSQbPp" resname="Quiz &quot;%s&quot; is created.">
+        <source>Quiz "%s" is created.</source>
+        <target>Le questionnaire "%s" a été créé.</target>
+      </trans-unit>
+      <trans-unit id="M1KE6la" resname="Answer #%s is deleted.">
+        <source>Answer #%s is deleted.</source>
+        <target>La réponse #%s a été supprimée.</target>
+      </trans-unit>
+      <trans-unit id="w19Gjw6" resname="Category &quot;%s&quot; is deleted.">
+        <source>Category "%s" is deleted.</source>
+        <target>La catégorie "%s" a été supprimée.</target>
+      </trans-unit>
+      <trans-unit id="UYIu6oU" resname="Question #%s is deleted.">
+        <source>Question #%s is deleted.</source>
+        <target>La question #%s a été supprimée.</target>
+      </trans-unit>
+      <trans-unit id="Tu1nWMz" resname="Quiz &quot;%s&quot; is deleted.">
+        <source>Quiz "%s" is deleted.</source>
+        <target>Le questionnaire "%s" a été supprimé.</target>
+      </trans-unit>
+      <trans-unit id="0ukKxbN" resname="User &quot;%s&quot; is deleted.">
+        <source>User "%s" is deleted.</source>
+        <target>L'utilisateur "%s" a été supprimé.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

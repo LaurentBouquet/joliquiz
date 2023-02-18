@@ -662,7 +662,7 @@ class QuizController extends AbstractController
     /**
      * @Route("/new", name="quiz_new", methods="GET|POST")
      */
-    public function new(Request $request, EntityManagerInterface $em, CategoryRepository $categoryRepository): Response
+    public function new(Request $request, EntityManagerInterface $em, CategoryRepository $categoryRepository, TranslatorInterface $translator): Response
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
@@ -694,7 +694,7 @@ class QuizController extends AbstractController
                 $em->persist($quiz);
                 $em->flush();
 
-                $this->addFlash('success', sprintf('Quiz "%s" is created.', $quiz->getTitle()));
+                $this->addFlash('success', sprintf($translator->trans('Quiz "%s" is created.'), $quiz->getTitle()));
 
                 return $this->redirectToRoute('quiz_index');
             }
@@ -740,7 +740,7 @@ class QuizController extends AbstractController
         if ($this->isCsrfTokenValid('delete' . $quiz->getId(), $request->request->get('_token'))) {
             $em->remove($quiz);
             $em->flush();
-            $this->addFlash('success', sprintf('Quiz "%s" is deleted.', $quiz->getTitle()));
+            $this->addFlash('success', sprintf($translator->trans('Quiz "%s" is deleted.'), $quiz->getTitle()));
         }
 
         return $this->redirectToRoute('quiz_index');

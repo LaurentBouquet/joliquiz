@@ -161,7 +161,7 @@ class UserController extends AbstractController
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $em->remove($user);
             $em->flush();
-            $this->addFlash('success', sprintf('User "%s" is deleted.', $user->getUsername()));
+            $this->addFlash('success', sprintf($translator->trans('User "%s" is deleted.'), $user->getUsername()));
         }
 
         return $this->redirectToRoute('user_index');

@@ -3,7 +3,7 @@
 {% block title %}{{'Edit User'|trans}} "{{ user.username }}"{% endblock %}
 
 {% block body %}
-    <h1>{{'Edit User'|trans}} "{{ user.username }}"</h1>
+    <h1><i class="fa fa-user"></i> {{'Edit User'|trans}} "<span style="background-color: #ffff00;" }}>{{ user.username }}</span>"</h1>
 
     {% if is_granted('ROLE_SUPER_ADMIN') %}
         {{ include('user/_form.html.twig', {'button_label': 'Save'|trans}) }}

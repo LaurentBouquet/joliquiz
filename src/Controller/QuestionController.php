@@ -47,7 +47,7 @@ class QuestionController extends AbstractController
     /**
      * @Route("/new", name="question_new", methods="GET|POST")
      */
-    public function new(Request $request, EntityManagerInterface $em, CategoryRepository $categoryRepository): Response
+    public function new(Request $request, EntityManagerInterface $em, CategoryRepository $categoryRepository, TranslatorInterface $translator): Response
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
@@ -80,7 +80,7 @@ class QuestionController extends AbstractController
 
             $em->flush();
 
-            $this->addFlash('success', sprintf('Question #%s is created.', $question->getId()));
+            $this->addFlash('success', sprintf($translator->trans('Question #%s is created.'), $question->getId()));
 
             //return $this->redirectToRoute('question_index');
             $newQuestion = new Question();
@@ -157,7 +157,7 @@ class QuestionController extends AbstractController
             $em->remove($question);
             $em->flush();
 
-            $this->addFlash('success', sprintf('Question #%s is deleted.', $question->getId()));
+            $this->addFlash('success', sprintf($translator->trans('Question #%s is deleted.'), $question->getId()));
         }
 
         if ($categoryId > 0) {            

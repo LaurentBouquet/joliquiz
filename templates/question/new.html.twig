@@ -3,7 +3,7 @@
 {% block title %}{{'New Question'|trans}}{% endblock %}
 
 {% block body %}
-    <h1>{{'Create new question'|trans}}</h1>
+    <h1><i class="fa fa-tasks"></i> {{'Create new question'|trans}}</h1>
     
     {% if is_granted('ROLE_TEACHER') %}
         {{ include('question/_form.html.twig') }}
