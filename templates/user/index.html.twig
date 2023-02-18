@@ -68,7 +68,7 @@
                         <a class="btn btn-primary btn-sm mr-2" href="{{ path('user_show', {'id': user.id}) }}" title="{{'Show'|trans}}"><i class="fas fa-eye"></i></a>
                         <a class="btn btn-primary btn-sm mr-2" href="{{ path('user_edit', {'id': user.id}) }}" title="{{'Edit'|trans}}"><i class="fas fa-pencil-alt"></i></a>
                         {% if group_name %}
-                            <a class="btn btn-warning btn-sm mr-2" href="{{ path('group_remove_user', {'id': group_id, 'user': user.id}) }}" title="{{'Remove from group'|trans}}"><i class="fas fa-sign-out-alt"></i></a>
+                            <a class="btn btn-warning btn-sm mr-2" href="{{ path('group_remove_user', {'id': group_id, 'user': user.id}) }}" title="{{'Remove from group'|trans}}"><i class="fas fa-user-times"></i></a>
                         {% endif %}                        
                         {{ include('user/_delete_form.html.twig') }}
                     </div>

@@ -84,7 +84,9 @@
                             {% endif %}
                         {% endif %}                        
                         <li>
-                            <a class="nav-link" href="{{ path('app_logout') }}">{{'Logout'|trans}}</a>
+                            <a class="nav-link" href="{{ path('app_logout') }}">
+                                <i class="fas fa-sign-out-alt"></i> {{'Logout'|trans}}
+                            </a>
                         </li>
                     {% else %}
                         <li>
