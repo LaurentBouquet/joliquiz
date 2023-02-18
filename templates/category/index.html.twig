@@ -17,8 +17,8 @@
     <table class="table">
         <thead>
             <tr>
-                <th>{{ 'Shortname'|trans }}</th>
-                <th>{{ 'Longname'|trans }}</th>
+                <th>{{ 'Name'|trans }}</th>
+                <th>{{ 'Description'|trans }}</th>
                 {% if is_granted('ROLE_TEACHER') %}
                     <th></th>
                 {% endif %}
@@ -33,7 +33,8 @@
                     <div class="form-check-inline">
                         <a class="btn btn-primary btn-sm mr-2" href="{{ path('category_show', {'id': category.id}) }}"><i class="fas fa-eye"></i></a>
                         {% if is_granted('ROLE_TEACHER') %}
-                            <a class="btn btn-primary btn-sm mr-2" href="{{ path('category_edit', {'id': category.id}) }}"><i class="fas fa-pencil-alt"></i></a>
+                            <a class="btn btn-primary btn-sm mr-2" href="{{ path('category_edit', {'id': category.id}) }}" title="{{ 'Edit Category'|trans }}"><i class="fas fa-pencil-alt"></i></a>
+                            <a class="btn btn-warning btn-sm mr-2" href="{{ path('question_index', {'category': category.id}) }}" title="{{ 'Question index of the category'|trans }}"><i class="fas fa-question"></i></a>
                             {{ include('category/_delete_form.html.twig') }}
                         {% endif %}
                     </div>

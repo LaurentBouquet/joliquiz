@@ -921,6 +921,30 @@
         <source>User "%s" is updated.</source>
         <target>L'utilisateur "%s" a été mis à jour.</target>
       </trans-unit>
+      <trans-unit id="mxBYf4S" resname="Identifier">
+        <source>Identifier</source>
+        <target>Identifiant</target>
+      </trans-unit>
+      <trans-unit id="wX8ZYyt" resname="Designation">
+        <source>Designation</source>
+        <target>Désignation</target>
+      </trans-unit>
+      <trans-unit id=".qeI.Qn" resname="N°">
+        <source>N°</source>
+        <target>N°</target>
+      </trans-unit>
+      <trans-unit id="Um4Ah8w" resname="Description">
+        <source>Description</source>
+        <target>Description</target>
+      </trans-unit>
+      <trans-unit id="Fam9lTD" resname="Question index of the category">
+        <source>Question index of the category</source>
+        <target>Liste des questions de la catégorie</target>
+      </trans-unit>
+      <trans-unit id="6yyPrDt" resname="User index of the group">
+        <source>User index of the group</source>
+        <target>Liste des utilisateurs de la classe</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

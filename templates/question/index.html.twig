@@ -4,15 +4,18 @@
 
 {% block body %}
     <h1>
-        {{'Questions'|trans}} 
+        {{'Question index'|trans}} 
         {% if category_long_name %}
-            {% trans %}of the "%category_long_name%" category{% endtrans %}
+            {% trans %}of the "%category_long_name%" category{% endtrans %} <span style="background-color: #ffff00;" }}>{{ category_short_name }}</span>
         {% endif %}
         ({{ questions|length }})
     </h1>    
 
     {% if is_granted('ROLE_TEACHER') %}
         <div class="mb-3">
+            {% if category_id %}
+                <a class="btn btn-primary" href="{{ path('category_edit', {'id': category_id}) }}"><i class="fas fa-pencil-alt"></i> {{'Edit Category'|trans}}</a>
+            {% endif %}
             <a class="btn btn-warning" href="{{ path('question_new', {'category': category_id}) }}"><i class="fas fa-plus"></i> {{'Create new question'|trans}}</a>
         </div>
     {% endif %}
@@ -38,7 +41,7 @@
                   {% for category in question.categories %}
                      - 
                      <span {{ category.id == category_id ? 'style="background-color: #ffff00;"' : '' }}>
-                     <a href="{{ path('question_index', {'category': category.id}) }}">{{ category.longname }}</a>
+                     <a href="{{ path('question_index', {'category': category.id}) }}">{{ category.shortname }}</a>
                      </span>
                      <br>                     
                   {% endfor %}
