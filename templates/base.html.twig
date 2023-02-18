@@ -88,10 +88,14 @@
                         </li>
                     {% else %}
                         <li>
-                            <a class="nav-link {% if '/register' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('app_register') }}">{{'Sign up'|trans}}</a>
+                            <a class="nav-link {% if '/register' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('app_register') }}">
+                                <i class="fas fa-user"></i> {{'Sign up'|trans}}
+                            </a>
                         </li>
                         <li>
-                            <a class="nav-link {% if '/login' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('app_login') }}">{{'Sign in'|trans}}</a>
+                            <a class="nav-link {% if '/login' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('app_login') }}">
+                                <i class="fas fa-lock"></i> {{'Sign in'|trans}}
+                            </a>
                         </li>
                     {% endif %}
                 </ul>
