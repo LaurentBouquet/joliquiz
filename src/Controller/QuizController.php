@@ -301,7 +301,15 @@ class QuizController extends AbstractController
         $quiz = $workout->getQuiz();
 
         if (!$quiz->getAllowAnonymousWorkout()) {
-            // $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
+            $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
+        }        
+
+        if (!$user) {
+            $user = $workout->getStudent();
+        }
+
+        if (!$quiz->getActive()) {
+            $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
             $this->addFlash('danger', $translator->trans('Sorry, the quiz is stopped !'));
             $form = $this->createForm(QuizType::class, $quiz, array('form_type' => 'student_questioning'));
             return $this->render(
@@ -315,15 +323,7 @@ class QuizController extends AbstractController
                     'comment' => $workout->getComment(),
                     'form' => $form->createView(),
                 ]
-            );
-        }        
-
-        if (!$user) {
-            $user = $workout->getStudent();
-        }
-
-        if (!$quiz->getActive()) {
-            $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
+            );            
         }
 
         // Re-read (from the database) the previous question

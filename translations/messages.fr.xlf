@@ -1002,8 +1002,8 @@
         <target>Désolé, le questionnaire a été arrêté !</target>
       </trans-unit>
       <trans-unit id="lAYkn_h" resname="To return to the beginning.">
-        <source>To return to the beginning.</source>
-        <target>Pour retourner au début.</target>
+        <source>To return to the beginning</source>
+        <target>Pour retourner au début</target>
       </trans-unit>
     </body>
   </file>
