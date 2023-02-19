@@ -493,6 +493,10 @@
         <source>seconds</source>
         <target>secondes</target>
       </trans-unit>
+      <trans-unit id="FjZ6rLZ" resname="second">
+        <source>second</source>
+        <target>seconde</target>
+      </trans-unit>      
       <trans-unit id="OnFP0N0" resname="Response time (%question_duration% s) exceeded time limit (%question_max_duration% s) by question">
         <source>Response time (%question_duration% s) exceeded time limit (%question_max_duration% s) by question</source>
         <target>La durée de la réponse (%question_duration% s) a dépassé le délai imparti (%question_max_duration% s)</target>

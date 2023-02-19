@@ -6,6 +6,7 @@
 
 {% block body %}
 <h1>
+    {# <i class="fa fa-tasks"></i>  #}
     {{'Question'|trans}} {{ questionNumber }}/{{ quiz.numberOfQuestions }} &nbsp;
     {% if (questionResult==1) %}
     <i class="fas fa-thumbs-up" style="font-size:30px; color: green"></i>
@@ -37,9 +38,16 @@
     function updateProgressBar() {
         width = width + (100 / {{ question_max_duration }});
         rest = rest - 1;
-        console.log('rest = ' + rest);
+        if (rest < 0) {
+            rest = 0;
+        }
         durationBar.style.width = width + "%";
-        durationLabel.innerHTML = rest + ' {{'seconds'|trans}}';
+        if (rest < 2) {
+            durationLabel.innerHTML = rest + ' {{'second'|trans}}';
+        } 
+        else {
+            durationLabel.innerHTML = rest + ' {{'seconds'|trans}}';
+        }        
         if (width > 101) {
             document.question.submit();
         }
