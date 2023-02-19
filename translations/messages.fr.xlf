@@ -195,23 +195,23 @@
       </trans-unit>
       <trans-unit id="xo05DSt" resname="Category index">
         <source>Category index</source>
-        <target>Liste des catégories</target>
+        <target>Catégories</target>
       </trans-unit>
       <trans-unit id="2p1awvt" resname="Question index">
         <source>Question index</source>
-        <target>Liste des questions</target>
+        <target>Questions</target>
       </trans-unit>
       <trans-unit id="ezuwN7u" resname="User index">
         <source>User index</source>
-        <target>Liste des utilisateurs</target>
+        <target>Utilisateurs</target>
       </trans-unit>
       <trans-unit id="PGfaCYB" resname="Quiz index">
         <source>Quiz index</source>
-        <target>Liste des questionnaires</target>
+        <target>Questionnaires</target>
       </trans-unit>
       <trans-unit id="VSfIL5D" resname="Answer index">
         <source>Answer index</source>
-        <target>Liste des réponses</target>
+        <target>Réponses</target>
       </trans-unit>
       <trans-unit id="DZO3ehf" resname="Edit Category">
         <source>Edit Category</source>
@@ -575,7 +575,7 @@
       </trans-unit>
       <trans-unit id="uA9Flqv" resname="Group index">
         <source>Group index</source>
-        <target>Liste des classes</target>
+        <target>Classes</target>
       </trans-unit>
       <trans-unit id="7Au8I9y" resname="Create new group">
         <source>Create new group</source>
@@ -583,7 +583,7 @@
       </trans-unit>
       <trans-unit id="zwEkdPf" resname="School index">
         <source>School index</source>
-        <target>Liste des écoles</target>
+        <target>Ecoles</target>
       </trans-unit>
       <trans-unit id="IsDfL0J" resname="Create new school">
         <source>Create new school</source>
@@ -943,11 +943,11 @@
       </trans-unit>
       <trans-unit id="Fam9lTD" resname="Question index of the category">
         <source>Question index of the category</source>
-        <target>Liste des questions de la catégorie</target>
+        <target>Questions de la catégorie</target>
       </trans-unit>
       <trans-unit id="6yyPrDt" resname="User index of the group">
         <source>User index of the group</source>
-        <target>Liste des utilisateurs de la classe</target>
+        <target>Utilisateurs de la classe</target>
       </trans-unit>
       <trans-unit id="jFbeuBX" resname="Quiz name">
         <source>Quiz name</source>

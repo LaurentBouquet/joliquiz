@@ -51,4 +51,13 @@
         {% endfor %}
         </tbody>
     </table>
+
+    {% if groups|length > 10 %}
+        {% if is_granted('ROLE_TEACHER') %}
+            <div class="mb-3">
+                <a class="btn btn-warning" href="{{ path('group_new') }}"><i class="fas fa-plus"></i> {{'Create new group'|trans}}</a>
+            </div>
+        {% endif %}
+    {% endif %}
+
 {% endblock %}

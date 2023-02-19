@@ -640,10 +640,12 @@ class QuizController extends AbstractController
 
         $categoryId = $request->query->get('category');
         $categoryLongName = "";
+        $categoryShortName = "";   
         if ($categoryId > 0) {
             $quizzes = $quizRepository->findAllByCategories([$categoryId], $this->isGranted('ROLE_TEACHER'), $this->isGranted('ROLE_ADMIN'));
             $category = $categoryRepository->find($categoryId);
             $categoryLongName = $category->getLongName();
+            $categoryShortName =  $category->getShortName();
         } else {
             $quizzes = $quizRepository->findAll($this->isGranted('ROLE_TEACHER'), $this->isGranted('ROLE_ADMIN'));
         }
@@ -656,7 +658,7 @@ class QuizController extends AbstractController
             }
         }
 
-        return $this->render('quiz/index.html.twig', ['quizzes' => $quizzes, 'category_id' => $categoryId, 'category_long_name' => $categoryLongName]);
+        return $this->render('quiz/index.html.twig', ['quizzes' => $quizzes, 'category_id' => $categoryId, 'category_long_name' => $categoryLongName, 'category_short_name' => $categoryShortName]);
     }
 
     /**

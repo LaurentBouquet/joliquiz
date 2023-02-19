@@ -83,13 +83,15 @@
         </tbody>
     </table>
 
-    {% if is_granted('ROLE_SUPER_ADMIN') %}
-        <div class="mb-3">
-            {% if group_id %}
-                <a class="btn btn-primary" href="{{ path('group_edit', {'id': group_id}) }}"><i class="fas fa-pencil-alt"></i> {{'Edit Group'|trans}}</a>
-            {% endif %}
-            <a class="btn btn-warning" href="{{ path('user_new') }}"><i class="fas fa-plus"></i> {{'Create new user'|trans}}</a>
-        </div>
-    {% endif %}
+    {% if users|length > 10 %}
+        {% if is_granted('ROLE_SUPER_ADMIN') %}
+            <div class="mb-3">
+                {% if group_id %}
+                    <a class="btn btn-primary" href="{{ path('group_edit', {'id': group_id}) }}"><i class="fas fa-pencil-alt"></i> {{'Edit Group'|trans}}</a>
+                {% endif %}
+                <a class="btn btn-warning" href="{{ path('user_new') }}"><i class="fas fa-plus"></i> {{'Create new user'|trans}}</a>
+            </div>
+        {% endif %}
+    {% endif %}    
 
 {% endblock %}
