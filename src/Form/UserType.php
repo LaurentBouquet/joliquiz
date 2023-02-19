@@ -148,14 +148,19 @@ class UserType extends AbstractType
             case 'profile':
                 $builder->add('lastname', TextType::class, array(
                     'attr' => array(
-                        'readonly' => true,
+                        'readonly' => false,
                     ),
                 ));                
                 $builder->add('firstname', TextType::class, array(
                     'attr' => array(
-                        'readonly' => true,
+                        'readonly' => false,
                     ),
                 ));
+                $builder->add('username', TextType::class, array(
+                    'attr' => array(
+                        'readonly' => true,
+                    ),
+                ));  
                 $builder->add('email', TextType::class, array(
                     'attr' => array(
                         'readonly' => true,
