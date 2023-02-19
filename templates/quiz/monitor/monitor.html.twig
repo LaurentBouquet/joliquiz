@@ -18,10 +18,11 @@
 		{% if (quiz.active) %}
 			<script type="text/javascript">
 				setInterval(function () {
-window.location.reload(true);
-}, 5000);
+				window.location.reload(true);
+				}, 5000);
 			</script>
 		{% endif %}
+		{# <p>{{ workouts|length }}</p> #}
 
 		<div class="table-responsive-sm">
 			<table class="table table-striped table-sm">
@@ -43,10 +44,10 @@ window.location.reload(true);
 									</td>
 									<!-- <td width="5%" class="text-center align-middle text-secondary">{{ workout.numberOfQuestions<1?0:workout.completed?workout.numberOfQuestions:(workout.numberOfQuestions-1) }}/{{ quiz.numberOfQuestions }}</td> -->
 									<td width="70%" class="text-center align-middle">
-									{% else %}
-										<!-- <td width="5%" class="text-center align-middle text-secondary">{{ workout.numberOfQuestions<1?0:workout.completed?workout.numberOfQuestions:(workout.numberOfQuestions-1) }}/{{ quiz.numberOfQuestions }}</td> -->
-										<td width="90%" class="text-center align-middle">
-										{% endif %}
+								{% else %}
+									<!-- <td width="5%" class="text-center align-middle text-secondary">{{ workout.numberOfQuestions<1?0:workout.completed?workout.numberOfQuestions:(workout.numberOfQuestions-1) }}/{{ quiz.numberOfQuestions }}</td> -->
+									<td width="90%" class="text-center align-middle">
+								{% endif %}
 										<div class="progress" style="height: 10px;">
 											<div class="progress-bar" role="progressbar" style="width: {{ progress }}%;" aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100"></div>
 										</div>
@@ -90,15 +91,14 @@ window.location.reload(true);
 						<div class="mb-3">
 							{% if workouts|length > 0 %}
 								<a class="btn btn-info mx-1 float-right" href="{{ path('quiz_analyse', {'id': quiz.id, 'session': session_id}) }}">
-									{{ 'Answers analyse'|trans }}
-									<i class="fas fa-question-ol"></i>
+									<i class="fas fa-chart-line"></i> 
+									{{ 'Answers analyse'|trans }}								
 									<!-- fa-tasks -->
 								</a>
 							{% endif %}
 							{% if workouts|length > 2 %}
 								<a class="btn btn-warning mx-1 float-right" href="{{ path('quiz_podium', {'id': quiz.id, 'session': session_id}) }}">
-									{{ 'Podium'|trans }}
-									<i class="fas fa-poll"></i>
+									<i class="fas fa-poll"></i> {{ 'Podium'|trans }}									
 								</a>
 							{% endif %}
                             {% if (is_granted('ROLE_TEACHER')) %}
@@ -111,14 +111,15 @@ window.location.reload(true);
 									<i class="fas fa-toggle-on"></i>
 								</a>
 							{% endif %}
-                                <a class="btn btn-warning mx-1 float-left" {% if showStudentsName %} title="{{'Hide users name'|trans}}" href="{{ path('quiz_monitor', {'id': quiz.id, 'show': 0, 'session': session_id}) }}">
-                                    <i class="far fa-user"></i>
-							{% else %}
-                                    title="{{'Show users name'|trans}}"
-                                                                    href="{{ path('quiz_monitor', {'id': quiz.id, 'show': 1, 'session': session_id}) }}">
-								    <i class="fas fa-user"></i>
-							{% endif %}
-						        </a>
+							<a class="btn btn-warning mx-1 float-left" 
+								{% if showStudentsName %} 
+									title="{{'Hide users name'|trans}}" href="{{ path('quiz_monitor', {'id': quiz.id, 'show': 0, 'session': session_id}) }}">
+									<i class="far fa-user"></i>
+								{% else %}
+									title="{{'Show users name'|trans}}" href="{{ path('quiz_monitor', {'id': quiz.id, 'show': 1, 'session': session_id}) }}">
+									<i class="fas fa-user"></i>
+								{% endif %}
+							</a>
 					</div>
 
 				</tbody>

@@ -123,7 +123,7 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}/edit", name="user_edit", methods="GET|POST")
      */
-    public function edit(Request $request, User $user, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response
+    public function edit(Request $request, User $user, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher, TranslatorInterface $translator): Response
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN', null, 'Access not allowed');
 
@@ -142,7 +142,7 @@ class UserController extends AbstractController
 
             $this->addFlash('success', sprintf($translator->trans('User "%s" is updated.'), $user->getUsername()));
 
-            // return $this->redirectToRoute('user_edit', ['id' => $user->getId()]);
+            return $this->redirectToRoute('user_index');
         }
 
         return $this->render('user/edit.html.twig', [
@@ -154,7 +154,7 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}", name="user_delete", methods="POST")
      */
-    public function delete(Request $request, EntityManagerInterface $em, User $user): Response
+    public function delete(Request $request, EntityManagerInterface $em, User $user, TranslatorInterface $translator): Response
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN', null, 'Access not allowed');
 

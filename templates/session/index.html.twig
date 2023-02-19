@@ -4,7 +4,10 @@
 {% endblock %}
 
 {% block body %}
-	<h1>{{ 'Quiz "%quiz-title%" history'|trans({'%quiz-title%': quiz.title}) }}</h1>
+	<h1>
+		<i class="fa fa-history"></i>
+		{{ 'Quiz "%quiz-title%" history'|trans({'%quiz-title%': quiz.title}) }}
+	</h1>
 
 	{% set show_clean_button = false %}
 
@@ -37,20 +40,17 @@
 								{% endif %}
 								{% if session.workouts|length > 0 %}
 									<a class="btn btn-primary mx-1" href="{{ path('quiz_monitor', {'id': quiz.id, 'session': session.id}) }}">
-										{{ 'Follow the progress'|trans }}
-										<i class="fas fa-chalkboard-teacher"></i>
+										<i class="fas fa-chalkboard-teacher"></i> {{ 'Follow the progress'|trans }}										
 									</a>
 								{% endif %}
 								{% if session.workouts|length > 2 %}
 									<a class="btn btn-warning mx-1" href="{{ path('quiz_podium', {'id': quiz.id, 'session': session.id}) }}">
-										{{ 'Podium'|trans }}
-										<i class="fas fa-poll"></i>
+										<i class="fas fa-poll"></i> {{ 'Podium'|trans }}										
 									</a>
 								{% endif %}
 								{% if session.workouts|length > 0 %}
 									<a class="btn btn-info mx-1" href="{{ path('quiz_analyse', {'id': quiz.id, 'session': session.id}) }}">
-										{{ 'Answers analyse'|trans }}
-										<i class="fas fa-tasks"></i>
+										<i class="fas fa-chart-line"></i> {{ 'Answers analyse'|trans }}										
 									</a>
 								{% endif %}
 							</div>

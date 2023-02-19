@@ -16,9 +16,9 @@
 			<i class="fa fa-lock"></i>
 			{{'Sign in'|trans}}</h1>
 
-		{% if error %}
+		{# {% if error %}
 			<div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-		{% endif %}
+		{% endif %} #}
 
 		<form action="{{ path('app_login') }}" method="post">
 

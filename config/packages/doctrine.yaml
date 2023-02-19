@@ -16,7 +16,11 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
                 alias: App
-
+        dql:
+            numeric_functions:
+                time_diff: App\DQL\TimeDiff
+                time_add: App\DQL\TimeAdd
+                time_sub: App\DQL\TimeSub
 when@test:
     doctrine:
         dbal:

@@ -62,7 +62,7 @@
 						{% for category in quiz.categories %}
 							-
 							<span {{ category.id == category_id ? 'style="background-color: #ffff00;"' : '' }}>
-							<a {{ quiz.active ? 'class="text-warning"' : '' }} href="{{ path('quiz_index', {'category': category.id}) }}">{{ category.longname }}</a>
+							<a {{ quiz.active ? 'class="text-warning"' : '' }} href="{{ path('quiz_index', {'category': category.id}) }}">{{ category.shortname }}</a>
 							</span>
 							<br>
 						{% endfor %}
@@ -89,16 +89,22 @@
 									<i class="fas fa-pencil-alt"></i>
 								</a>
 								{{ include('quiz/_delete_form.html.twig') }}
-								<a class="btn btn-warning btn-sm mr-2" href="{{ path('quiz_start', {'id': quiz.id}) }}" title="{{'Start exercise'|trans}}">{{'Start'|trans}}
+								<a class="btn btn-info btn-sm mr-2" href="{{ path('quiz_start', {'id': quiz.id}) }}" title="{{'Start exercise'|trans}}">
+									{# {{'Start'|trans}} #}
 									<i class="fas fa-arrow-circle-right"></i>
 								</a>
 								{% if quiz.sessions|length > 0 %}
-									<a class="btn btn-success btn-sm mr-2 px-3" href="{{ path('session_quiz', {'id': quiz.id}) }}" title="{{'View history'|trans}}">
-										<i class="fas fa-th-list"></i>
+									<a class="btn btn-warning btn-sm mr-2 px-3" href="{{ path('session_quiz', {'id': quiz.id}) }}" title="{{'View history'|trans}}">
+										<i class="fas fa-history"></i>
 										<!-- fa-stream -->
 										<!-- fa-chart-bar -->
 									</a>
 								{% endif %}
+								{% if quiz.sessions|length > 0 %}
+									<a class="btn btn-primary btn-sm mr-2 px-3" href="{{ path('quiz_monitor', {'id': quiz.id, 'session': quiz.lastsession.id}) }}">
+										<i class="fas fa-chalkboard-teacher"></i> {{ 'Follow the progress'|trans }}									
+									</a>
+								{% endif %}								
 							</div>
 						</td>
 					{% else %}

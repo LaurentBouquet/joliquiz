@@ -496,7 +496,7 @@
       <trans-unit id="FjZ6rLZ" resname="second">
         <source>second</source>
         <target>seconde</target>
-      </trans-unit>      
+      </trans-unit>
       <trans-unit id="OnFP0N0" resname="Response time (%question_duration% s) exceeded time limit (%question_max_duration% s) by question">
         <source>Response time (%question_duration% s) exceeded time limit (%question_max_duration% s) by question</source>
         <target>La durée de la réponse (%question_duration% s) a dépassé le délai imparti (%question_max_duration% s)</target>
@@ -807,11 +807,11 @@
       </trans-unit>
       <trans-unit id="y2XxXvP" resname="Send password reset email">
         <source>Send password reset email</source>
-        <target>Envoyer un courriel de réinitialisation du mot de passe</target>
+        <target>Envoyer un email de réinitialisation du mot de passe</target>
       </trans-unit>
       <trans-unit id="U28cTzJ" resname="Password Reset Email Sent">
         <source>Password Reset Email Sent</source>
-        <target>Envoi du courriel de réinitialisation du mot de passe</target>
+        <target>Envoi un email de réinitialisation du mot de passe</target>
       </trans-unit>
       <trans-unit id="FmrMHS6" resname="If an account matching your email exists, then an email was just sent that contains a link that you can use to reset your password.">
         <source>If an account matching your email exists, then an email was just sent that contains a link that you can use to reset your password.</source>
@@ -855,7 +855,7 @@
       </trans-unit>
       <trans-unit id="ATJ8qA9" resname="Your password reset request">
         <source>Your password reset request</source>
-        <target>Votre demande de réinitialisation du mot de passe</target>
+        <target>Votre demande de réinitialisation de mot de passe</target>
       </trans-unit>
       <trans-unit id="4O3_s6c" resname="Reset password">
         <source>Reset password</source>
@@ -992,6 +992,18 @@
       <trans-unit id="0ukKxbN" resname="User &quot;%s&quot; is deleted.">
         <source>User "%s" is deleted.</source>
         <target>L'utilisateur "%s" a été supprimé.</target>
+      </trans-unit>
+      <trans-unit id="qr0aiUo" resname="Invalid credentials.">
+        <source>Invalid credentials.</source>
+        <target>Informations d'identification non valides.</target>
+      </trans-unit>
+      <trans-unit id="KfOD6wL" resname="Sorry, the quiz is stopped !">
+        <source>Sorry, the quiz is stopped !</source>
+        <target>Désolé, le questionnaire a été arrêté !</target>
+      </trans-unit>
+      <trans-unit id="lAYkn_h" resname="To return to the beginning.">
+        <source>To return to the beginning.</source>
+        <target>Pour retourner au début.</target>
       </trans-unit>
     </body>
   </file>

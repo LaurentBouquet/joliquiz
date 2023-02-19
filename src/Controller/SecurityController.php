@@ -110,12 +110,12 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/login', name:'app_login')]
-    function index(AuthenticationUtils $authenticationUtils): Response
+    public function login(AuthenticationUtils $authenticationUtils, TranslatorInterface $translator): Response
         {
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         if ($error) {
-            $this->addFlash('danger', $error->getMessageKey());
+            $this->addFlash('danger', $translator->trans($error->getMessageKey()));
         }
 
         // last username entered by the user
@@ -225,7 +225,7 @@ class SecurityController extends AbstractController
             // The session is cleaned up after the password has been changed.
             $this->cleanSessionAfterReset();
 
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('security/reset_password/reset.html.twig', [

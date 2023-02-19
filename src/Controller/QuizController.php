@@ -249,8 +249,8 @@ class QuizController extends AbstractController
             $session = $sessionRepository->find($session_id);
         }
         if (isset($session)) {
-            //$workouts = $session->getWorkouts();
-            $workouts = $workoutRepository->findByQuizAndSession($quiz, $session);
+            $workouts = $session->getWorkouts();
+            // $workouts = $workoutRepository->findByQuizAndSession($quiz, $session);
         } else {
             $workouts = $workoutRepository->findByQuizAndDate($quiz, $startedAt);
         }
@@ -301,8 +301,22 @@ class QuizController extends AbstractController
         $quiz = $workout->getQuiz();
 
         if (!$quiz->getAllowAnonymousWorkout()) {
-            $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
-        }
+            // $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
+            $this->addFlash('danger', $translator->trans('Sorry, the quiz is stopped !'));
+            $form = $this->createForm(QuizType::class, $quiz, array('form_type' => 'student_questioning'));
+            return $this->render(
+                'quiz/end.html.twig',
+                [
+                    'id' => $workout->getId(),
+                    'quiz' => $quiz,
+                    'score' => $score,
+                    'questionsHistory' => null,
+                    'user' => $user,
+                    'comment' => $workout->getComment(),
+                    'form' => $form->createView(),
+                ]
+            );
+        }        
 
         if (!$user) {
             $user = $workout->getStudent();

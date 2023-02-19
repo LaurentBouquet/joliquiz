@@ -1,10 +1,18 @@
 {% extends 'base_without_menu.html.twig' %}
 
 {% block title %}
-    {{'Quiz'|trans}} "{{ quiz.title }}" {{'by'|trans}} {{ user.username }} {{'on'|trans}} {{ questionsHistory[0].startedAt|date('d/m/Y') }} {{'at'|trans}} {{ questionsHistory[0].startedAt|date('H:i:s') }}
+    {% if questionsHistory %}
+        {{'Quiz'|trans}} "{{ quiz.title }}" {{'by'|trans}} {{ user.username }} {{'on'|trans}} {{ questionsHistory[0].startedAt|date('d/m/Y') }} {{'at'|trans}} {{ questionsHistory[0].startedAt|date('H:i:s') }}
+    {% else %}
+        {{'Quiz'|trans}} "{{ quiz.title }}" {{'by'|trans}} {{ user.username }}
+    {% endif %}
 {% endblock %}
 
-{% block body %}    
+{% block body %}   
+
+
+{% if questionsHistory %}
+
     <table class="table">
         <tbody>
             <tr>
@@ -81,6 +89,15 @@
             {{'Back to list'|trans}}</a>
     {% endif %}
 
-    {% include '_home_bottom.html.twig' %}
+    
+{% else %}  
+    
+    {% if is_granted('ROLE_USER') %}  
+        <a class="mt-3 btn btn-primary" href="{{ path('quiz_index') }}"><i class="fa fa-graduation-cap"></i> {{'To return to the beginning.'|trans}}</a>
+    {% endif %}    
+
+{% endif %}        
+
+{% include '_home_bottom.html.twig' %}
 
 {% endblock %}

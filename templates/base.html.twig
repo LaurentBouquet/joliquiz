@@ -120,7 +120,7 @@
                         {% for message in messages %}
                             <div class="alert alert-{{ label }}" role="alert">
                                 <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                                {{ message }}
+                                {{ message|trans }}
                             </div>
                         {% endfor %}
                     {% endfor %}
