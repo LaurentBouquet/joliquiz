@@ -21,7 +21,7 @@
 {{ form_widget(form) }}
 
 {% if (question_max_duration) %}
-<div class="text-danger" style="text-align: center;">
+<div id="durationLabel" class="text-danger" style="text-align: center;">
     {{ question_max_duration }} {{'seconds'|trans}}
 </div>
 <div class="progress" style="height: 10px; margin-bottom: 10px;">
@@ -30,11 +30,16 @@
         aria-valuemax="question_max_duration"></div>
 </div>
 <script type="text/javascript">
-    var elem = document.getElementById("durationBar");
+    var durationBar = document.getElementById("durationBar");
+    var durationLabel = document.getElementById("durationLabel");    
     var width = - (100 / {{ question_max_duration }});
+    var rest = {{ question_max_duration }};
     function updateProgressBar() {
         width = width + (100 / {{ question_max_duration }});
-        elem.style.width = width + "%";
+        rest = rest - 1;
+        console.log('rest = ' + rest);
+        durationBar.style.width = width + "%";
+        durationLabel.innerHTML = rest + ' {{'seconds'|trans}}';
         if (width > 101) {
             document.question.submit();
         }

@@ -14,7 +14,7 @@
         {% block stylesheets %}{% endblock %}
 
         <!-- Bootstrap core CSS -->
-        <link rel="stylesheet" href="/css/bootstrap.css">
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
 
         <!-- Custom styles for this template -->
         <link rel="stylesheet" href="/css/style.css">
@@ -31,11 +31,11 @@
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="navbar-nav mr-auto">
 
-                    <li>                                             
+                    {# <li>                                             
                         <a class="nav-link text-warning switch" id="test" href="#">
                             <i id="light-dark-mode-toggle-button" class="fas fa-toggle-off"></i>
                         </a>
-                    </li>  
+                    </li>   #}
                             
                     <li>
                         <span class="nav-link active text-dark">{{ (locale ?? 'en')|upper }}</span>

@@ -24,16 +24,23 @@
 
     <body>
 
-        <nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
-            <!-- <a class="navbar-brand text-warning" title="JoliQuiz">JoliQuiz</a> -->
+        <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">           
             <a class="navbar-brand text-warning" title="JoliQuiz"><img src="/images/logo_MENU.png" height="32" alt="JoliQuiz"></a>
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="navbar-nav mr-auto">
-                    <!-- <li>
+
+                    {# <li>                                             
+                        <a class="nav-link text-warning switch" id="test" href="#">
+                            <i id="light-dark-mode-toggle-button" class="fas fa-toggle-off"></i>
+                        </a>
+                    </li>   #} 
+                            
+                    {# <li>
                         <span class="nav-link active text-dark">{{ (locale ?? 'en')|upper }}</span>
-                    </li> -->
-                    <li class="text-white">
-                        {% block title %}{% endblock %}
+                    </li> #}
+
+                    <li>
+                        <span class="nav-link text-dark">{% block title %}{% endblock %}</span>
                     </li>                     
                 </ul>
                 <ul class="navbar-nav">
