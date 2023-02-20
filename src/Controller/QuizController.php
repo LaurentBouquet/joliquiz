@@ -360,7 +360,7 @@ class QuizController extends AbstractController
                             $from_email_address = $this->getParameter('FROM_EMAIL_ADDRESS');
                             $admin_email_address = $this->getParameter('ADMIN_EMAIL_ADDRESS');                            
                             $email = (new TemplatedEmail())
-                                ->from($from_email_address)                                
+                                ->from(new Address($from_email_address, 'JoliQuiz'))                                
                                 ->to($admin_email_address)
                                 ->subject('🙂 ' . $translator->trans('Quiz "%title%" by %username% = %score%% (%grade%/20) - Before the end!', ['%title%' => $quiz->getTitle(), '%username%' => $user->getName(), '%score%' => $score, '%grade%' => $grade]))
                                 // path of the Twig template to render

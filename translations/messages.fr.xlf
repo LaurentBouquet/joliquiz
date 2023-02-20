@@ -27,7 +27,7 @@
       </trans-unit>
       <trans-unit id="GNaOPCC" resname="I create my free account...">
         <source>I create my free account...</source>
-        <target>Je crée mon compte gratuit ...</target>
+        <target>Je crée mon compte gratuit...</target>
       </trans-unit>
       <trans-unit id="w9BnAje" resname="Let's start now">
         <source>Let's start now</source>
@@ -1012,6 +1012,74 @@
       <trans-unit id="pZPH30k" resname="To return to the beginning">
         <source>To return to the beginning</source>
         <target>Pour retourner au début</target>
+      </trans-unit>
+      <trans-unit id="c1prjRW" resname="Agree terms">
+        <source>Agree terms</source>
+        <target>J'accepte les conditions générales</target>
+      </trans-unit>
+      <trans-unit id="IaE5GBl" resname="You should agree to our terms.">
+        <source>You should agree to our terms.</source>
+        <target>Veuillez accepter les conditions générales.</target>
+      </trans-unit>
+      <trans-unit id="YXZ26gK" resname="Please enter a password">
+        <source>Please enter a password</source>
+        <target>Veuillez saisir un mot de passe</target>
+      </trans-unit>
+      <trans-unit id=".esazsm" resname="Your password should be at least {{ limit }} characters">
+        <source>Your password should be at least {{ limit }} characters</source>
+        <target>Votre mot de passe doit contenir au moins {{ limit }} caractères</target>
+      </trans-unit>
+      <trans-unit id="oRP2tKA" resname="To consult terms and conditions">
+        <source>To consult terms and conditions</source>
+        <target>Consulter les conditions générales</target>
+      </trans-unit>
+      <trans-unit id="hpWlheT" resname="Please Confirm your Email">
+        <source>Please Confirm your Email</source>
+        <target>Veuillez confirmer votre adresse email</target>
+      </trans-unit>
+      <trans-unit id="gOwQVey" resname="Confirm their email address">
+        <source>Confirm their email address</source>
+        <target>Confirmer son adresse email</target>
+      </trans-unit>
+      <trans-unit id="bZtA0FP" resname="To confirm email address">
+        <source>To confirm email address</source>
+        <target>Confirmer son adresse email</target>
+      </trans-unit>
+      <trans-unit id="iorhDWh" resname="To confirm your email address, please visit the following link">
+        <source>To confirm your email address, please visit the following link</source>
+        <target>Pour confirmer votre adresse email, veuillez cliquer sur le lien suivant :</target>
+      </trans-unit>
+      <trans-unit id="DH3x7ex" resname="I confirm my email address">
+        <source>I confirm my email address</source>
+        <target>Je confirme mon adresse email</target>
+      </trans-unit>
+      <trans-unit id="wGNs.qA" resname="To confirm your email address, please visit the following link:">
+        <source>To confirm your email address, please visit the following link:</source>
+        <target>Pour confirmer votre adresse e-mail, veuillez cliquer sur le lien ci-dessous :</target>
+      </trans-unit>
+      <trans-unit id="_CV1_vc" resname="Email address confirmation email sent">
+        <source>Email address confirmation email sent</source>
+        <target>E-mail de confirmation d'adresse email envoyé</target>
+      </trans-unit>
+      <trans-unit id="cH6acjc" resname="Your user account has been successfully created and we thank you.">
+        <source>Your user account has been successfully created and we thank you.</source>
+        <target>Votre compte utilisateur a été créé avec succès et nous vous en remercions.</target>
+      </trans-unit>
+      <trans-unit id="K4RJrXo" resname="Your user account has been successfully created and we thank you :-)">
+        <source>Your user account has been successfully created and we thank you :-)</source>
+        <target>Votre compte utilisateur a été créé avec succès et nous vous en remercions :-)</target>
+      </trans-unit>
+      <trans-unit id="xrDrNj5" resname="If you don't receive an email please check your spam folder.">
+        <source>If you don't receive an email please check your spam folder.</source>
+        <target>Si vous ne recevez pas d'email, veuillez vérifier votre dossier de courriers indésirables (spams).</target>
+      </trans-unit>
+      <trans-unit id="HM.N8H5" resname="An email has just been sent containing a link for you to confirm your email address: %user_email%.">
+        <source>An email has just been sent containing a link for you to confirm your email address: %user_email%.</source>
+        <target>Un email vient d'être envoyé contenant un lien pour que vous puissiez confirmer votre adresse email : %user_email%.</target>
+      </trans-unit>
+      <trans-unit id="kQWnsB7" resname="Your email address has been verified.">
+        <source>Your email address has been verified.</source>
+        <target>Votre adresse email a été vérifiée.</target>
       </trans-unit>
     </body>
   </file>

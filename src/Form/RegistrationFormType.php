@@ -27,13 +27,15 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('email')
-            ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
+            ->add('agreeTerms', CheckboxType::class, [                
+                'label' => $this->translator->trans('Agree terms'),
                 'constraints' => [
                     new IsTrue([
-                        'message' => 'You should agree to our terms.',
+                        'message' => $this->translator->trans('You should agree to our terms.'),
                     ]),
                 ],
+                'mapped' => false,
+                'required' => true,
             ]);
 
             // $builder->add('plainPassword', PasswordType::class, [
@@ -59,16 +61,17 @@ class RegistrationFormType extends AbstractType
                 'options' => [
                     'attr' => [
                         'autocomplete' => 'new-password',
+                        'class' => 'password-field'
                     ],
                 ],
                 'first_options' => [
                     'constraints' => [
                         new NotBlank([
-                            'message' => 'Please enter a password',
+                            'message' => $this->translator->trans('Please enter a password'),
                         ]),
                         new Length([
                             'min' => 6,
-                            'minMessage' => 'Your password should be at least {{ limit }} characters',
+                            'minMessage' => $this->translator->trans('Your password should be at least {{ limit }} characters'),
                             // max length allowed by Symfony for security reasons
                             'max' => 4096,
                         ]),
@@ -82,6 +85,7 @@ class RegistrationFormType extends AbstractType
                 // Instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
+                'required' => true,
             ]);
             
             

@@ -40,7 +40,7 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -68,15 +68,19 @@ class SecurityController extends AbstractController
             $admin_email_address = $this->getParameter('ADMIN_EMAIL_ADDRESS');
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
-                    ->from(new Address($from_email_address, 'JoliQuiz'))
-                    // ->bcc($admin_email_address)
+                    ->from(new Address($from_email_address, 'JoliQuiz'))                                
                     ->to($user->getEmail())
-                    ->subject('Please Confirm your Email')
-                    ->htmlTemplate('security/confirmation_email.html.twig')
+                    ->subject('🙂 ' . $translator->trans('I confirm my email address'))
+                    // path of the Twig template to render
+                    ->htmlTemplate('emails/confirmation_email.html.twig')
+                    // pass variables (name => value) to the template
+                    ->context([
+                        'username' => $user->getName(),
+                        'useremail' => $user->getEmail(),
+                    ])                
             );
-            // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_invit_verify_email', ['id' => $user->getId()]);
         }
 
         return $this->render('security/register.html.twig', [
@@ -109,7 +113,7 @@ class SecurityController extends AbstractController
         }
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
-        $this->addFlash('success', $translator('Your email address has been verified.'));
+        $this->addFlash('success', $translator->trans('Your email address has been verified.'));
 
         return $this->redirectToRoute('quiz_index');
 
@@ -161,7 +165,7 @@ class SecurityController extends AbstractController
         return $this->render('security/reset_password/request.html.twig', [
             'requestForm' => $form->createView(),
         ]);
-    }
+    }    
 
     /**
      * Confirmation page after a user has requested a password reset.
@@ -178,7 +182,24 @@ class SecurityController extends AbstractController
         return $this->render('security/reset_password/check_email.html.twig', [
             'resetToken' => $resetToken,
         ]);
+    }    
+    
+    /**
+     * Confirmation page after a user registers.
+     */
+    #[Route('/{id}/invit-email', name: 'app_invit_verify_email', methods: 'GET')]
+    public function inviteEmail(User $user): Response
+    {
+        if (null === ($resetToken = $this->getTokenObjectFromSession())) {
+            $resetToken = $this->resetPasswordHelper->generateFakeResetToken();
+        }
+
+        return $this->render('security/verify_email/invit_email.html.twig', [
+            'user_email' => $user->getEmail(),
+            'resetToken' => $resetToken,
+        ]);
     }
+
 
     /**
      * Validates and process the reset URL that the user clicked in their email.
