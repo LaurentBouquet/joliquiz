@@ -1095,11 +1095,15 @@
       </trans-unit>
       <trans-unit id="gSarciM" resname="Save my profile">
         <source>Save my profile</source>
-        <target>Enregistrer mon profil</target>
+        <target>Enregistrer mon compte utilisateur</target>
       </trans-unit>
       <trans-unit id="Ij6lH3n" resname="Your request has been taken into account.">
         <source>Your request has been taken into account.</source>
         <target>Votre demande a bien été prise en compte.</target>
+      </trans-unit>
+      <trans-unit id="2gqST6H" resname="Save my password">
+        <source>Save my password</source>
+        <target>Enregistrer mon mot de passe</target>
       </trans-unit>
     </body>
   </file>
