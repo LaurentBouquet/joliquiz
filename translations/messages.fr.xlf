@@ -835,11 +835,11 @@
       </trans-unit>
       <trans-unit id="vQH5j0c" resname="To reset your password, please visit the following link">
         <source>To reset your password, please visit the following link</source>
-        <target>Pour réinitialiser votre mot de passe, veuillez consulter le lien suivant</target>
+        <target>Pour réinitialiser votre mot de passe, veuillez cliquer sur le lien ci-dessous :</target>
       </trans-unit>
       <trans-unit id="F7WctIl" resname="Cheers!">
         <source>Cheers!</source>
-        <target>Cordialement</target>
+        <target>Cordialement.</target>
       </trans-unit>
       <trans-unit id="UIS5VWd" resname="Sincerely">
         <source>Sincerely</source>
