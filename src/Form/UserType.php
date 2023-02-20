@@ -7,6 +7,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\IsTrue;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -29,37 +31,16 @@ class UserType extends AbstractType
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add('username', TextType::class);
+    {        
 
         switch ($options['form_type']) {
-            case 'register':
-                $builder->add('email', EmailType::class);
-                $builder->add(
-                    'plainPassword',
-                    RepeatedType::class,
-                    [
-                        'type' => PasswordType::class,
-                        'first_options'  => array('label' => $this->translator->trans('Password')),
-                        'second_options' => array('label' => $this->translator->trans('Repeat Password')),
-                    ]
-                );
-                $builder->add(
-                    'termsAccepted',
-                    CheckboxType::class,
-                    array(
-                        'mapped' => false,
-                        'constraints' => new IsTrue(),
-                        'label' => $this->translator->trans('I have read and accept the terms and conditions'),
-                    )
-                );
-                break;
-
             case 'login':
+                // $builder->add('username', TextType::class);
                 $builder->add('plainPassword', PasswordType::class, array('label' => $this->translator->trans('Password')));
                 break;
 
             case 'new':
+                $builder->add('username', TextType::class);
                 $builder->add('email', EmailType::class);
                 $builder->add('firstname', TextType::class);
                 $builder->add('lastname', TextType::class);
@@ -103,6 +84,7 @@ class UserType extends AbstractType
                 break;
 
             case 'update':
+                $builder->add('username', TextType::class);
                 $builder->add('email', EmailType::class);
                 $builder->add('firstname', TextType::class);
                 $builder->add('lastname', TextType::class);
@@ -145,31 +127,38 @@ class UserType extends AbstractType
                 //     );
                 // }
                 break;
-            case 'profile':
-                $builder->add('lastname', TextType::class, array(
-                    'attr' => array(
-                        'readonly' => false,
-                    ),
-                ));                
-                $builder->add('firstname', TextType::class, array(
-                    'attr' => array(
-                        'readonly' => false,
-                    ),
-                ));
-                $builder->add('username', TextType::class, array(
-                    'attr' => array(
-                        'readonly' => true,
-                    ),
-                ));  
+                case 'profile':
+                    $builder->add('lastname', TextType::class, array(
+                        'attr' => array(
+                            'readonly' => false,
+                        ),
+                    ));                
+                    $builder->add('firstname', TextType::class, array(
+                        'attr' => array(
+                            'readonly' => false,
+                        ),
+                    ));
+                    $builder->add('username', TextType::class, array(
+                        'attr' => array(
+                            'readonly' => true,
+                        ),
+                    ));  
+                    $builder->add('email', TextType::class, array(
+                        'attr' => array(
+                            'readonly' => true,
+                        ),
+                    ));                
+                    $builder->add('toReceiveMyResultByEmail', CheckboxType::class, [
+                        'label' => $this->translator->trans('To receive my result by email'),
+                        'required' => false,
+                    ]);
+                    break;    
+            case 'password':
                 $builder->add('email', TextType::class, array(
                     'attr' => array(
                         'readonly' => true,
                     ),
-                ));                
-                $builder->add('toReceiveMyResultByEmail', CheckboxType::class, [
-                    'label' => $this->translator->trans('To receive my result by email'),
-                    'required' => false,
-                ]);
+                ));                 
                 $builder->add(
                     'plainPassword',
                     RepeatedType::class,

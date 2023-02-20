@@ -55,6 +55,11 @@ class SecurityController extends AbstractController
                 )
             );
 
+            if (empty($user->getUsername())) {
+                $prefix = substr($user->getEmail(), 0, strrpos($user->getEmail(), '@'));
+                $user->setUsername($prefix);
+            }
+
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -104,9 +109,10 @@ class SecurityController extends AbstractController
         }
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
-        $this->addFlash('success', 'Your email address has been verified.');
+        $this->addFlash('success', $translator('Your email address has been verified.'));
 
-        return $this->redirectToRoute('app_register');
+        return $this->redirectToRoute('quiz_index');
+
     }
 
     #[Route('/login', name:'app_login')]

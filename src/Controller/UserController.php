@@ -22,13 +22,55 @@ class UserController extends AbstractController
 {
 
     /**
+     * @Route("/password", name="user_password", methods="GET|POST")
+     */
+    public function password(Request $request, EntityManagerInterface $em, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher, TranslatorInterface $translator): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
+
+        $user = $this->getUser();        
+        // Convert user type from UserInterface to PasswordAuthenticatedUserInterface
+        $user = $userRepository->find($user->getId());        
+        
+        $form = $this->createForm(UserType::class, $user, array('form_type' => 'password', 'login_type' => $user->getLoginType()));
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if (strlen($user->getPlainPassword()) > 0) {
+                // Encode the password
+                $password = $passwordHasher->hashPassword($user, $user->getPlainPassword());
+                $user->setPassword($password);
+            }
+
+            $em->flush();
+
+            $this->addFlash('success', sprintf($translator->trans('Password for user "%s" has been updated.'), $user->getUsername()));
+
+            if ($this->isGranted('ROLE_ADMIN')) {
+                return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
+            } else {
+                return $this->redirectToRoute('quiz_index');
+            }            
+            
+        }
+
+        return $this->render('user/profilepassword.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
      * @Route("/profile", name="user_profile", methods="GET|POST")
      */
-    public function profile(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher, TranslatorInterface $translator): Response
+    public function profile(Request $request, EntityManagerInterface $em, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher, TranslatorInterface $translator): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
 
         $user = $this->getUser();
+        // Convert user type from UserInterface to PasswordAuthenticatedUserInterface
+        $user = $userRepository->find($user->getId());        
+
         $form = $this->createForm(UserType::class, $user, array('form_type' => 'profile', 'login_type' => $user->getLoginType()));
         $form->handleRequest($request);
 
@@ -106,6 +148,11 @@ class UserController extends AbstractController
             $password = $passwordHasher->hashPassword($user, $user->getPlainPassword());
             $user->setPassword($password);
 
+            if (empty($user->getUsername())) {
+                $prefix = substr($user->getEmail(), 0, strrpos($user->getEmail(), '@'));
+                $user->setUsername($prefix);
+            }
+
             $em->persist($user);
             $em->flush();
 
@@ -137,6 +184,11 @@ class UserController extends AbstractController
                 $user->setPassword($password);
             }    
 
+            if (empty($user->getUsername())) {
+                $prefix = substr($user->getEmail(), 0, strrpos($user->getEmail(), '@'));
+                $user->setUsername($prefix);
+            }
+            
             $em->persist($user);
             $em->flush();
 

@@ -1002,6 +1002,14 @@
         <target>Désolé, le questionnaire a été arrêté !</target>
       </trans-unit>
       <trans-unit id="lAYkn_h" resname="To return to the beginning.">
+        <source>To return to the beginning.</source>
+        <target>Pour retourner au début</target>
+      </trans-unit>
+      <trans-unit id="xHDjlQe" resname="Password for user &quot;%s&quot; has been updated.">
+        <source>Password for user "%s" has been updated.</source>
+        <target>Le mot de passe de l'utilisateur "%s" a été mis à jour</target>
+      </trans-unit>
+      <trans-unit id="pZPH30k" resname="To return to the beginning">
         <source>To return to the beginning</source>
         <target>Pour retourner au début</target>
       </trans-unit>
