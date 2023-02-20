@@ -141,11 +141,13 @@ class UserType extends AbstractType
                     $builder->add('username', TextType::class, array(
                         'attr' => array(
                             'readonly' => true,
+                            'class' => 'bg-light',
                         ),
                     ));  
                     $builder->add('email', TextType::class, array(
                         'attr' => array(
                             'readonly' => true,
+                            'class' => 'bg-light',
                         ),
                     ));                
                     $builder->add('toReceiveMyResultByEmail', CheckboxType::class, [

@@ -11,6 +11,7 @@ use App\Form\QuestionType;
 use App\Entity\AnswerHistory;
 use App\Entity\QuestionHistory;
 use App\Repository\QuizRepository;
+use Symfony\Component\Mime\Address;
 use App\Repository\SessionRepository;
 use App\Repository\WorkoutRepository;
 use App\Repository\CategoryRepository;
@@ -749,7 +750,7 @@ class QuizController extends AbstractController
     /**
      * @Route("/{id}", name="quiz_delete", methods="POST")
      */
-    public function delete(Request $request, Quiz $quiz, EntityManagerInterface $em): Response
+    public function delete(Request $request, Quiz $quiz, EntityManagerInterface $em, TranslatorInterface $translator): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Access not allowed');
 

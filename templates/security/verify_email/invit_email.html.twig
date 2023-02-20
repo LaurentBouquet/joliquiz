@@ -4,7 +4,7 @@
 
 {% block body %}
     <p>
-        {{ 'Your user account has been successfully created and we thank you :-)'|trans }} 
+        {{ message }} 
     </p>
     <p>     
         {{ 'An email has just been sent containing a link for you to confirm your email address: %user_email%.'|trans({'%user_email%': user_email}) }}<br/>

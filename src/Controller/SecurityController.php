@@ -88,6 +88,29 @@ class SecurityController extends AbstractController
         ]);
     }
 
+    #[Route('/{id}/verify/send-email', name: 'app_send_verif_email', methods: 'GET')]
+    public function sendVerificationEmail(User $user, TranslatorInterface $translator): Response
+    {
+        // generate a signed url and email it to the user
+        $from_email_address = $this->getParameter('FROM_EMAIL_ADDRESS');
+        $admin_email_address = $this->getParameter('ADMIN_EMAIL_ADDRESS');
+        $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+            (new TemplatedEmail())
+                ->from(new Address($from_email_address, 'JoliQuiz'))                                
+                ->to($user->getEmail())
+                ->subject('🙂 ' . $translator->trans('I confirm my email address'))
+                // path of the Twig template to render
+                ->htmlTemplate('emails/confirmation_email.html.twig')
+                // pass variables (name => value) to the template
+                ->context([
+                    'username' => $user->getName(),
+                    'useremail' => $user->getEmail(),
+                ])                
+        );
+
+        return $this->redirectToRoute('app_invit_verify_email', ['id' => $user->getId(), 'resent' => true]);
+    }
+
     #[Route('/verify/email', name: 'app_verify_email')]
     public function verifyUserEmail(Request $request, TranslatorInterface $translator, UserRepository $userRepository): Response
     {
@@ -185,11 +208,20 @@ class SecurityController extends AbstractController
     }    
     
     /**
-     * Confirmation page after a user registers.
+     * Information page after a user registers.
      */
     #[Route('/{id}/invit-email', name: 'app_invit_verify_email', methods: 'GET')]
-    public function inviteEmail(User $user): Response
+    public function inviteEmail(Request $request, User $user, TranslatorInterface $translator): Response
     {
+
+        $message = $translator->trans('Your user account has been successfully created and we thank you :-)');
+
+        $resent = $request->get('resent');
+        dump($resent);
+        if ($resent) {
+            $message = $translator->trans('Your request has been taken into account.');
+        }        
+
         if (null === ($resetToken = $this->getTokenObjectFromSession())) {
             $resetToken = $this->resetPasswordHelper->generateFakeResetToken();
         }
@@ -197,6 +229,7 @@ class SecurityController extends AbstractController
         return $this->render('security/verify_email/invit_email.html.twig', [
             'user_email' => $user->getEmail(),
             'resetToken' => $resetToken,
+            'message' => $message,
         ]);
     }
 

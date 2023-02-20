@@ -1,22 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{'Edit my account'|trans}}{% endblock %}
+{% block title %}{{'My user account'|trans}}{% endblock %}
 
 {% block body %}
 
-
-    <a class="float-right" href="{{ path('user_password') }}">
-        <button class="btn btn-info"><i class="fas fa-lock"></i> {{ button_label|default('Change my password'|trans) }}</button>
+    <a class="float-right m-2" href="{{ path('user_password') }}">
+        <button class="btn btn-primary"><i class="fas fa-lock"></i> {{ button_label|default('Change my password'|trans) }}</button>
     </a>
+    {% if not user.isVerified %}
+    <a class="float-right m-2" href="{{ path('app_send_verif_email', {'id': user.id}) }}">
+        <button class="btn btn-danger"><i class="fas fa-at"></i> {{ button_label|default('Check my email address'|trans) }}</button>
+    </a>
+    {% endif %}
 
-    <h1><i class="fas fa-user"></i> {{'Edit my account'|trans}}</h1>
+    <h1><i class="fas fa-user"></i> {{'My user account'|trans}}</h1>
 
     {{ form_start(form) }}
         
         {{ form_row(form.lastname) }}    
         {{ form_row(form.firstname) }}
         {{ form_row(form.username) }}
-        {{ form_row(form.email) }}  
+        {% if user.isVerified %}
+            {{ form_row(form.email, {'attr': {'class': 'text-success'}}) }}  
+        {% else %}
+            {{ form_row(form.email, {'attr': {'class': 'text-danger'}}) }}  
+        {% endif %}
         {# <div class="form-group">
             <label class="required" for="user_roles">{{'Roles'|trans}}</label>
             <div class="alert alert-warning" role="alert">
@@ -37,7 +45,7 @@
         {{ form_row(form.toReceiveMyResultByEmail) }}      
     
         <button class="btn btn-primary">
-            <i class="fas fa-check"></i> {{ button_label|default('Save'|trans) }}
+            <i class="fas fa-check"></i> {{ button_label|default('Save my profile'|trans) }}
         </button>
 
     {{ form_end(form) }}

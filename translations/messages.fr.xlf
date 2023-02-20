@@ -1059,7 +1059,7 @@
       </trans-unit>
       <trans-unit id="_CV1_vc" resname="Email address confirmation email sent">
         <source>Email address confirmation email sent</source>
-        <target>E-mail de confirmation d'adresse email envoyé</target>
+        <target>Email de confirmation d'adresse email envoyé</target>
       </trans-unit>
       <trans-unit id="cH6acjc" resname="Your user account has been successfully created and we thank you.">
         <source>Your user account has been successfully created and we thank you.</source>
@@ -1080,6 +1080,26 @@
       <trans-unit id="kQWnsB7" resname="Your email address has been verified.">
         <source>Your email address has been verified.</source>
         <target>Votre adresse email a été vérifiée.</target>
+      </trans-unit>
+      <trans-unit id="7iWsupM" resname="isVerified">
+        <source>isVerified</source>
+        <target>Vérifié</target>
+      </trans-unit>
+      <trans-unit id="v3a9Mpi" resname="Check my email address">
+        <source>Check my email address</source>
+        <target>Vérifier mon adresse email</target>
+      </trans-unit>
+      <trans-unit id="pasY89s" resname="My user account">
+        <source>My user account</source>
+        <target>Mon compte utilisateur</target>
+      </trans-unit>
+      <trans-unit id="gSarciM" resname="Save my profile">
+        <source>Save my profile</source>
+        <target>Enregistrer mon profil</target>
+      </trans-unit>
+      <trans-unit id="Ij6lH3n" resname="Your request has been taken into account.">
+        <source>Your request has been taken into account.</source>
+        <target>Votre demande a bien été prise en compte.</target>
       </trans-unit>
     </body>
   </file>

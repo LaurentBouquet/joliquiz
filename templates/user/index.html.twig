@@ -32,9 +32,10 @@
                 <th>{{ 'Lastname'|trans }}</th>
                 <th>{{ 'Firstname'|trans }}</th>
                 <th>{{ 'Username'|trans }}</th>
-                <th>{{ 'Email'|trans }}</th>
-                <th>{{ 'IsActive'|trans }}</th>
+                <th>{{ 'Email'|trans }}</th>                
                 {% if is_granted('ROLE_ADMIN') %}
+                <th>{{ 'IsActive'|trans }}</th>
+                <th>{{ 'isVerified'|trans }}</th>
                 <th>{{ 'Roles'|trans }}</th>
                 {% endif %}
                 <th>{{ 'Groups'|trans }}</th>
@@ -50,8 +51,9 @@
                 <td>{{ user.firstname }}</td>
                 <td title="{{ 'LoginType'|trans }} : {{ user.loginType }}"><i class="fas fa-user"></i> {{ user.username }}</td>
                 <td>{{ user.email }}</td>
-                <td>{{ user.isActive ? 'Yes' : 'No' }}</td>
                 {% if is_granted('ROLE_ADMIN') %}
+                <td>{{ user.isActive ? 'Yes' : 'No' }}</td>
+                <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>                
                 <td>{{ user.roles ? user.roles|join(', ') : '' }}</td>
                 {% endif %}                
                 <td>
