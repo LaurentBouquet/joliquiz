@@ -3,6 +3,15 @@
 {% block title %}{{ 'Password Reset Email Sent'|trans }}{% endblock %}
 
 {% block body %}
+
+	{% if (not is_granted('ROLE_TEACHER')) %}
+        <script type="text/javascript">
+            setInterval(function () {
+                window.location.assign("/quiz/");
+            }, 60000);
+        </script>
+	{% endif %}
+    
     <p>
         {{ 'If an account matching your email exists, then an email was just sent that contains a link that you can use to reset your password.'|trans }}
         

@@ -1085,6 +1085,10 @@
         <source>isVerified</source>
         <target>Vérifié</target>
       </trans-unit>
+      <trans-unit id="Kii0BBR" resname="Email address verified">
+        <source>Email address verified</source>
+        <target>Adresse email vérifée</target>
+      </trans-unit>      
       <trans-unit id="v3a9Mpi" resname="Check my email address">
         <source>Check my email address</source>
         <target>Vérifier mon adresse email</target>

@@ -42,6 +42,10 @@ class SecurityController extends AbstractController
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
+        if ($this->isGranted('ROLE_USER')) {
+            return $this->redirectToRoute('quiz_index');
+        }      
+        
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -91,6 +95,10 @@ class SecurityController extends AbstractController
     #[Route('/{id}/verify/send-email', name: 'app_send_verif_email', methods: 'GET')]
     public function sendVerificationEmail(User $user, TranslatorInterface $translator): Response
     {
+        if ($user->isVerified()) {
+            return $this->redirectToRoute('quiz_index');
+        }     
+
         // generate a signed url and email it to the user
         $from_email_address = $this->getParameter('FROM_EMAIL_ADDRESS');
         $admin_email_address = $this->getParameter('ADMIN_EMAIL_ADDRESS');

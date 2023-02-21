@@ -106,10 +106,15 @@ class UserType extends AbstractType
                     //  },
                     'choice_label' => 'name',
                     'multiple' => true,
+                    'required' => false,
                 ));
                 $builder->add('isActive', CheckboxType::class, array(
                     'required' => false,
                     'label' => $this->translator->trans('Account activated'),
+                ));
+                $builder->add('isVerified', CheckboxType::class, array(
+                    'required' => false,
+                    'label' => $this->translator->trans('Email address verified'),
                 ));
                 $builder->add('toReceiveMyResultByEmail', CheckboxType::class, [
                     'label' => $this->translator->trans('To receive result by email'),

@@ -3,6 +3,15 @@
 {% block title %}{{ 'Email address confirmation email sent'|trans }}{% endblock %}
 
 {% block body %}
+
+	{% if (not is_granted('ROLE_TEACHER')) %}
+        <script type="text/javascript">
+            setInterval(function () {
+                window.location.assign("/quiz/");
+            }, 60000);
+        </script>
+	{% endif %}
+    
     <p>
         {{ message }} 
     </p>

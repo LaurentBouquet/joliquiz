@@ -310,7 +310,7 @@ class QuizController extends AbstractController
         }
 
         if (!$quiz->getActive()) {
-            $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
+            // $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
             $this->addFlash('danger', $translator->trans('Sorry, the quiz is stopped !'));
             $form = $this->createForm(QuizType::class, $quiz, array('form_type' => 'student_questioning'));
             return $this->render(

@@ -4,6 +4,14 @@
 
 {% block body %}
 
+	{% if (not is_granted('ROLE_TEACHER')) %}
+        <script type="text/javascript">
+            setInterval(function () {
+                window.location.assign("/quiz/");
+            }, 60000);
+        </script>
+	{% endif %}
+
     <a class="float-right m-2" href="{{ path('user_password') }}">
         <button class="btn btn-primary"><i class="fas fa-lock"></i> {{ button_label|default('Change my password'|trans) }}</button>
     </a>
@@ -17,8 +25,8 @@
 
     {{ form_start(form) }}
         
-        {{ form_row(form.lastname) }}    
         {{ form_row(form.firstname) }}
+        {{ form_row(form.lastname) }}            
         {{ form_row(form.username) }}
         {% if user.isVerified %}
             {{ form_row(form.email, {'attr': {'class': 'text-success'}}) }}  
