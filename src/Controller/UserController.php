@@ -31,7 +31,13 @@ class UserController extends AbstractController
         $user = $this->getUser();        
         // Convert user type from UserInterface to PasswordAuthenticatedUserInterface
         $user = $userRepository->find($user->getId());        
-        
+        $user = $userRepository->find($user->getId());        
+        if ($user) {
+            $user->setLastQuizAccess(null);
+            $em->persist($user);
+            $em->flush();
+        }  
+                
         $form = $this->createForm(UserType::class, $user, array('form_type' => 'password', 'login_type' => $user->getLoginType()));
         $form->handleRequest($request);
 
@@ -70,6 +76,11 @@ class UserController extends AbstractController
         $user = $this->getUser();
         // Convert user type from UserInterface to PasswordAuthenticatedUserInterface
         $user = $userRepository->find($user->getId());        
+        if ($user) {
+            $user->setLastQuizAccess(null);
+            $em->persist($user);
+            $em->flush();
+        }   
 
         $form = $this->createForm(UserType::class, $user, array('form_type' => 'profile', 'login_type' => $user->getLoginType()));
         $form->handleRequest($request);

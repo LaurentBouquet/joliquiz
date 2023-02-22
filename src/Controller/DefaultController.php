@@ -11,14 +11,9 @@ class DefaultController extends AbstractController
 {
 
     #[Route('/', name: 'app_home')]
-    public function index(EntityManagerInterface $em)
+    public function index()
     {
-        $now = new DateTime();
-        $user = $this->getUser();
-        if ($user) {
-            $user->setLastQuizAccess($now);
-            $em->persist($user);
-            $em->flush();
+        if ($this->getUser()) {
             return $this->redirectToRoute('quiz_index');
         }        
 

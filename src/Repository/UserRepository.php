@@ -92,7 +92,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         }        
         // dd($builder->getQuery()->getSQL());
 
-        $builder->orderBy('u.lastname', 'ASC');
+        $builder->orderBy('u.lastQuizAccess', 'ASC');
+        $builder->addOrderBy('u.lastname', 'ASC');
         return $builder->getQuery()->getResult();
     }
 

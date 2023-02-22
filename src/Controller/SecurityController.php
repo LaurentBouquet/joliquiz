@@ -176,7 +176,7 @@ class SecurityController extends AbstractController
             $user->setLastQuizAccess(null);
             $em->persist($user);
             $em->flush();
-                    }   
+        }   
         return $this->redirectToRoute('app_logout');
     }
 

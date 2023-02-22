@@ -26,7 +26,7 @@
         </div>
     {% endif %}
 
-    <table class="table">
+    <table class="table table-hover">
         <thead>
             <tr>
                 <th>{{ 'Firstname'|trans }}</th>
@@ -50,7 +50,7 @@
             <tr 
                 class="{{ 'ROLE_SUPER_ADMIN' in user.roles ? 'table-danger' : 'ROLE_ADMIN' in user.roles ? 'table-warning' : 'ROLE_TEACHER' in user.roles ? 'table-primary' : 'table-success' }}"
                 {% if not user.isActive %}
-                    style="text-decoration: line-through;"
+                    style="text-decoration: line-through;"                    
                 {% endif %}
             >
                 <td>{{ user.firstname }}</td>
@@ -62,8 +62,21 @@
                 <td>{{ user.email }}</td>
                 {% if is_granted('ROLE_ADMIN') %}
                 {# <td>{{ user.isActive ? 'Yes' : 'No' }}</td> #}
-                <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>                
-                <td>{{ user.isReady ? 'Yes' : 'No' }}</td>                
+
+
+                {# <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>  #}
+                {% if user.isVerified%}       
+                    <td class="text-center"><i class="fa fa-at text-success"></i></td> 
+                {% else %}   
+                    <td class="text-center"><i class="fa fa-at text-danger"></i></td>                          
+                {% endif %}
+
+                {% if user.isReady%}       
+                    <td class="text-center"><i class="fa fa-unlock text-success"></i></td> 
+                {% else %}   
+                    <td class="text-center"><i class="fa fa-lock text-danger"></i></td>                          
+                {% endif %}
+
                 <td>{{ user.roles ? user.roles|join(', ') : '' }}</td>
                 {% endif %}                
                 <td>
