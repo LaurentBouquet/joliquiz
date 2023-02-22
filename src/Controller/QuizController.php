@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\Quiz;
 use App\Entity\User;
 use App\Form\QuizType;
@@ -653,6 +654,8 @@ class QuizController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
 
+        $now = new DateTime();
+
         $categoryId = $request->query->get('category');
         $categoryLongName = "";
         $categoryShortName = "";   
@@ -666,11 +669,21 @@ class QuizController extends AbstractController
         }
 
         if ($this->getUser()) {
+            dump('$this->getUser() = Yes');
+            $user->setLastQuizAccess($now);
+            $em->persist($user);
+            $em->flush();
             if (!$this->isGranted('ROLE_TEACHER')) {
                 if (count($quizzes) == 1) {
                     return $this->start($request, $quizzes[0], $em, $user);
                 }
             }
+        }
+        else {
+            dump('$this->getUser() = No');
+            $user->setLastQuizAccess(null);
+            $em->persist($user);
+            $em->flush();
         }
 
         return $this->render('quiz/index.html.twig', ['quizzes' => $quizzes, 'category_id' => $categoryId, 'category_long_name' => $categoryLongName, 'category_short_name' => $categoryShortName]);

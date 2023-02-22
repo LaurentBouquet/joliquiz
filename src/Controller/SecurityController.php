@@ -168,6 +168,18 @@ class SecurityController extends AbstractController
 
     }
 
+    #[Route('/logout2', name: 'app_logout2', methods: ['GET'])]
+    public function logout2(EntityManagerInterface $em)
+    {
+        $user = $this->getUser();
+        if ($user) {
+            $user->setLastQuizAccess(null);
+            $em->persist($user);
+            $em->flush();
+                    }   
+        return $this->redirectToRoute('app_logout');
+    }
+
     #[Route('/logout', name: 'app_logout', methods: ['GET'])]
     public function logout()
     {

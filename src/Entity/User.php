@@ -104,6 +104,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     private $plainPassword;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $lastQuizAccess = null;
+
     public function __construct()
     {
         $this->roles = array('ROLE_USER');
@@ -579,14 +582,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /* essai pour savoir si un utilisateur est connecté
-    public function isConnected(): ?bool
+    public function getLastQuizAccess(): ?\DateTimeInterface
     {
-        dump('time() = "' . time() . '"');
-        // dump('$session->getMetadataBag()->getLastUsed() = "' . $this->session->getMetadataBag()->getLastUsed() . '"');
-        // return ( (time() - $this->session->getMetadataBag()->getLastUsed()) > 10000);
-        return false;
+        return $this->lastQuizAccess;
     }
-    */
+
+    public function setLastQuizAccess(?\DateTimeInterface $lastQuizAccess): self
+    {
+        $this->lastQuizAccess = $lastQuizAccess;
+
+        return $this;
+    }
+
+    public function isReady(): ?bool
+    {
+        if (isset($this->lastQuizAccess)) {
+            $now = new \DateTime();
+            $lastQuizAccessMinutes = ($now->diff($this->lastQuizAccess))->format('%s');  
+            dump($lastQuizAccessMinutes);                      
+            return ($lastQuizAccessMinutes < 70);
+        } else {
+            return false;
+        }      
+    }    
 
 }

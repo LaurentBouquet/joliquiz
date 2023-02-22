@@ -1109,9 +1109,9 @@
         <source>Save my password</source>
         <target>Enregistrer mon mot de passe</target>
       </trans-unit>
-      <trans-unit id="AhrxYRe" resname="isConnected">
-        <source>isConnected</source>
-        <target>Connecté</target>
+      <trans-unit id="AhrxYRe" resname="isReady">
+        <source>isReady</source>
+        <target>Prêt</target>
       </trans-unit>
     </body>
   </file>

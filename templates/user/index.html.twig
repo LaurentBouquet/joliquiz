@@ -36,7 +36,7 @@
                 {% if is_granted('ROLE_ADMIN') %}
                 {# <th>{{ 'IsActive'|trans }}</th> #}
                 <th>{{ 'isVerified'|trans }}</th>
-                {# <th>{{ 'isConnected'|trans }}</th>  #}
+                <th>{{ 'isReady'|trans }}</th> 
                 <th>{{ 'Roles'|trans }}</th>
                 {% endif %}
                 <th>{{ 'Groups'|trans }}</th>
@@ -63,7 +63,7 @@
                 {% if is_granted('ROLE_ADMIN') %}
                 {# <td>{{ user.isActive ? 'Yes' : 'No' }}</td> #}
                 <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>                
-                {# <td>{{ user.isConnected ? 'Yes' : 'No' }}</td>                 #}
+                <td>{{ user.isReady ? 'Yes' : 'No' }}</td>                
                 <td>{{ user.roles ? user.roles|join(', ') : '' }}</td>
                 {% endif %}                
                 <td>

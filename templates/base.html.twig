@@ -99,10 +99,10 @@
                             {% endif %}
                         {% endif %}                        
                         <li>
-                            <a class="nav-link" href="{{ path('app_logout') }}">
+                            <a class="nav-link" href="{{ path('app_logout2') }}">
                                 <i class="fas fa-sign-out-alt"></i> {{'Logout'|trans}}
                             </a>
-                        </li>
+                        </li> 
                     {% else %}
                         <li>
                             <a class="nav-link {% if '/register' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('app_register') }}">
