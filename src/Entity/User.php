@@ -599,7 +599,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if (isset($this->lastQuizAccess)) {
             $now = new \DateTime();
             $lastQuizAccessMinutes = ($now->diff($this->lastQuizAccess))->format('%s');  
-            dump($lastQuizAccessMinutes);                      
             return ($lastQuizAccessMinutes < 70);
         } else {
             return false;
