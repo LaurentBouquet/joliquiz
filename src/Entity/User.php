@@ -17,6 +17,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -251,12 +252,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function isIsActive(): ?bool
+    public function isActive(): ?bool
     {
         return $this->isActive;
     }
 
-    public function setIsActive(bool $isActive): self
+    public function setActive(bool $isActive): self
     {
         $this->isActive = $isActive;
 
@@ -577,4 +578,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    /* essai pour savoir si un utilisateur est connecté
+    public function isConnected(): ?bool
+    {
+        dump('time() = "' . time() . '"');
+        // dump('$session->getMetadataBag()->getLastUsed() = "' . $this->session->getMetadataBag()->getLastUsed() . '"');
+        // return ( (time() - $this->session->getMetadataBag()->getLastUsed()) > 10000);
+        return false;
+    }
+    */
+
 }

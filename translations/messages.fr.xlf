@@ -1088,7 +1088,7 @@
       <trans-unit id="Kii0BBR" resname="Email address verified">
         <source>Email address verified</source>
         <target>Adresse email vérifée</target>
-      </trans-unit>      
+      </trans-unit>
       <trans-unit id="v3a9Mpi" resname="Check my email address">
         <source>Check my email address</source>
         <target>Vérifier mon adresse email</target>
@@ -1108,6 +1108,10 @@
       <trans-unit id="2gqST6H" resname="Save my password">
         <source>Save my password</source>
         <target>Enregistrer mon mot de passe</target>
+      </trans-unit>
+      <trans-unit id="AhrxYRe" resname="isConnected">
+        <source>isConnected</source>
+        <target>Connecté</target>
       </trans-unit>
     </body>
   </file>

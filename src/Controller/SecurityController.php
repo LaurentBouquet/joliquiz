@@ -143,7 +143,6 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('app_register');
         }
 
-        // @TODO Change the redirect on success and handle or remove the flash message in your templates
         $this->addFlash('success', $translator->trans('Your email address has been verified.'));
 
         return $this->redirectToRoute('quiz_index');

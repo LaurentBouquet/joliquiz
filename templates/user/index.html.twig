@@ -34,8 +34,9 @@
                 <th>{{ 'Username'|trans }}</th>
                 <th>{{ 'Email'|trans }}</th>                
                 {% if is_granted('ROLE_ADMIN') %}
-                <th>{{ 'IsActive'|trans }}</th>
+                {# <th>{{ 'IsActive'|trans }}</th> #}
                 <th>{{ 'isVerified'|trans }}</th>
+                {# <th>{{ 'isConnected'|trans }}</th>  #}
                 <th>{{ 'Roles'|trans }}</th>
                 {% endif %}
                 <th>{{ 'Groups'|trans }}</th>
@@ -46,14 +47,23 @@
         </thead>
         <tbody>
         {% for user in users %}
-            <tr {{ 'ROLE_SUPER_ADMIN' in user.roles ? 'class="table-danger"' : 'ROLE_ADMIN' in user.roles ? 'class="table-warning"' : 'ROLE_TEACHER' in user.roles ? 'class="table-primary"' : 'class="table-success"' }}>
+            <tr 
+                class="{{ 'ROLE_SUPER_ADMIN' in user.roles ? 'table-danger' : 'ROLE_ADMIN' in user.roles ? 'table-warning' : 'ROLE_TEACHER' in user.roles ? 'table-primary' : 'table-success' }}"
+                {% if not user.isActive %}
+                    style="text-decoration: line-through;"
+                {% endif %}
+            >
                 <td>{{ user.firstname }}</td>
                 <td>{{ user.lastname }}</td>
-                <td title="{{ 'LoginType'|trans }} : {{ user.loginType }}"><i class="fas fa-user"></i> {{ user.username }}</td>
+                <td title="{{ 'LoginType'|trans }} : {{ user.loginType }}">
+                    {# <i class="fas fa-user"></i>  #}
+                    {{ user.username }}
+                </td>
                 <td>{{ user.email }}</td>
                 {% if is_granted('ROLE_ADMIN') %}
-                <td>{{ user.isActive ? 'Yes' : 'No' }}</td>
+                {# <td>{{ user.isActive ? 'Yes' : 'No' }}</td> #}
                 <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>                
+                {# <td>{{ user.isConnected ? 'Yes' : 'No' }}</td>                 #}
                 <td>{{ user.roles ? user.roles|join(', ') : '' }}</td>
                 {% endif %}                
                 <td>

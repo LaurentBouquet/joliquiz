@@ -26,6 +26,14 @@
 
     <body>
 
+        {% if (not is_granted('ROLE_TEACHER')) %}
+            <script type="text/javascript">
+                setInterval(function () {
+                    window.location.assign("/logout/");
+                }, 600000);
+            </script>
+        {% endif %}
+
         <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
             <a class="navbar-brand text-warning" title="JoliQuiz" href="/"><img src="/images/logo_MENU.png" height="32" alt="JoliQuiz"></a>
             <div class="collapse navbar-collapse" id="navbar">

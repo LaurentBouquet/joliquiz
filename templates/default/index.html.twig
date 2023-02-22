@@ -3,6 +3,15 @@
 {% block title %}{{'Welcome!'|trans}}{% endblock %}
 
 {% block body %}
+
+    {% if (not is_granted('USER')) %}
+        <script type="text/javascript">
+            setInterval(function () {
+                window.location.assign("/login/");
+            }, 120000);
+        </script>
+    {% endif %}
+
     <div class="example-wrapper">
 
         <!-- <img src="/images/JoliQuiz-300x111.png" alt="JoliQuiz"> -->
