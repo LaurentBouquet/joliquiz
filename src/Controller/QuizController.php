@@ -669,7 +669,6 @@ class QuizController extends AbstractController
         }
 
         if ($this->getUser()) {
-            dump('$this->getUser() = Yes');
             $user->setLastQuizAccess($now);
             $em->persist($user);
             $em->flush();
@@ -680,7 +679,6 @@ class QuizController extends AbstractController
             }
         }
         else {
-            dump('$this->getUser() = No');
             $user->setLastQuizAccess(null);
             $em->persist($user);
             $em->flush();

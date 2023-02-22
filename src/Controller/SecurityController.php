@@ -236,7 +236,6 @@ class SecurityController extends AbstractController
         $message = $translator->trans('Your user account has been successfully created and we thank you :-)');
 
         $resent = $request->get('resent');
-        dump($resent);
         if ($resent) {
             $message = $translator->trans('Your request has been taken into account.');
         }        
