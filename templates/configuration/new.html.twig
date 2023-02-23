@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Configuration{% endblock %}
+
+{% block body %}
+    <h1>
+        <i class="fa fa-tools"></i>
+        {{'Create new Configuration'|trans}}
+    </h1>
+
+    {{ include('configuration/_form.html.twig') }}
+    
+{% endblock %}

@@ -79,7 +79,12 @@
                     {% endif %}                    
 
                 </ul>
-                <ul class="navbar-nav">                    
+                <ul class="navbar-nav">                
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <li>
+                            <a class="nav-link {% if '/configuration/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('app_configuration_index') }}" title="{{'Configuration'|trans}}"><i class="fas fa-tools"></i></a>
+                        </li>
+                    {% endif %}                      
                     {% if is_granted('ROLE_USER') %}
                         {% if app.user %}   
                             {% if (is_granted('ROLE_TEACHER')) %}

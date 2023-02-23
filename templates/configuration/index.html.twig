@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Configuration index{% endblock %}
+
+{% block body %}
+    <h1>
+        <i class="fa fa-tools"></i>
+        {{'Configuration index'|trans}}
+        ({{ configurations|length }})
+    </h1>    
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>{{'Id'|trans}}</th>
+                <th>{{'Const'|trans}}</th>
+                <th>{{'Type'|trans}}</th>
+                <th>{{'Description'|trans}}</th>
+                <th>{{'actions'|trans}}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for configuration in configurations %}
+            <tr>
+                <td>{{ configuration.id }}</td>
+                <td>{{ configuration.const }}</td>
+                <td>{{ configuration.type }}</td>
+                <td>{{ configuration.description }}</td>
+                <td>
+                    <div class="form-check-inline">
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                            <a class="btn btn-primary btn-sm mr-2" href="{{ path('app_configuration_edit', {'id': configuration.id}) }}" title="{{ 'Edit Configuration'|trans }}"><i class="fas fa-pencil-alt"></i></a>
+                            {{ include('configuration/_delete_form.html.twig') }}
+                        {% endif %}   
+                    </div>                                     
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">{{'no records found'|trans}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <div class="mb-3">
+            <a class="btn btn-warning" href="{{ path('app_configuration_new') }}"><i class="fas fa-plus"></i> {{'Create new configuration'|trans}}</a>
+        </div>
+    {% endif %}   
+
+{% endblock %}
