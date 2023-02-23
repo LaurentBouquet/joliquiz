@@ -380,7 +380,12 @@ class QuizController extends AbstractController
                             if ($user->isToReceiveMyResultByEmail()) {
                                 $email->addTo($user->getEmail());
                             }
-                            $mailer->send($email);
+                            try {
+                                $mailer->send($email);
+                            } catch (\Throwable $th) {
+                                $this->addFlash('error', $th->getMessage());
+                            }
+                            
 
                             $this->addFlash('danger', $comment);
                             $form = $this->createForm(QuizType::class, $quiz, array('form_type' => 'student_questioning'));
@@ -558,8 +563,9 @@ class QuizController extends AbstractController
 
             // TODO : Mettre l'envoi du mail dans un service
             $admin_email_address = $this->getParameter('ADMIN_EMAIL_ADDRESS');
+            $from_email_address = $this->getParameter('FROM_EMAIL_ADDRESS');
             $email = (new TemplatedEmail())
-                ->from($admin_email_address)
+                ->from(new Address($from_email_address, 'JoliQuiz'))    
                 ->to($admin_email_address)
                 ->subject('🙂 ' . $translator->trans('Quiz "%title%" by %username% = %score%% (%grade%/20)', ['%title%' => $quiz->getTitle(), '%username%' => $user->getName(), '%score%' => $score, '%grade%' => $grade]))
                 // path of the Twig template to render
@@ -577,7 +583,11 @@ class QuizController extends AbstractController
             if ($user->isToReceiveMyResultByEmail()) {
                 $email->addTo($user->getEmail());
             }
-            $mailer->send($email);
+            try {
+                $mailer->send($email);
+            } catch (\Throwable $th) {
+                $this->addFlash('error', $th->getMessage());
+            }
 
             $form = $this->createForm(QuizType::class, $quiz, array('form_type' => 'student_questioning'));
 

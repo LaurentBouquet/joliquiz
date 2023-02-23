@@ -75,7 +75,7 @@ class SecurityController extends AbstractController
 
             // generate a signed url and email it to the user
             $from_email_address = $this->getParameter('FROM_EMAIL_ADDRESS');
-            $admin_email_address = $this->getParameter('ADMIN_EMAIL_ADDRESS');
+            // $admin_email_address = $this->getParameter('ADMIN_EMAIL_ADDRESS');
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
                     ->from(new Address($from_email_address, 'JoliQuiz'))                                
@@ -107,7 +107,7 @@ class SecurityController extends AbstractController
 
         // generate a signed url and email it to the user
         $from_email_address = $this->getParameter('FROM_EMAIL_ADDRESS');
-        $admin_email_address = $this->getParameter('ADMIN_EMAIL_ADDRESS');
+        // $admin_email_address = $this->getParameter('ADMIN_EMAIL_ADDRESS');
         $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
             (new TemplatedEmail())
                 ->from(new Address($from_email_address, 'JoliQuiz'))                                
@@ -346,7 +346,7 @@ class SecurityController extends AbstractController
         }
 
         $from_email_address = $this->getParameter('FROM_EMAIL_ADDRESS');
-        $admin_email_address = $this->getParameter('ADMIN_EMAIL_ADDRESS');
+        // $admin_email_address = $this->getParameter('ADMIN_EMAIL_ADDRESS');
         $email = (new TemplatedEmail())
             ->from(new Address($from_email_address, 'JoliQuiz'))
             // ->bcc($admin_email_address)
@@ -358,7 +358,11 @@ class SecurityController extends AbstractController
             ])
         ;
 
-        $mailer->send($email);
+        try {
+            $mailer->send($email);
+        } catch (\Throwable $th) {
+            $this->addFlash('error', $th->getMessage());
+        }
 
         // Store the token object in session for retrieval in check-email route.
         $this->setTokenObjectInSession($resetToken);

@@ -35,7 +35,11 @@ class EmailVerifier
 
         $email->context($context);
 
-        $this->mailer->send($email);
+        try {
+            $this->mailer->send($email);
+        } catch (\Throwable $th) {
+            $this->addFlash('error', $th->getMessage());
+        }
     }
 
     /**
