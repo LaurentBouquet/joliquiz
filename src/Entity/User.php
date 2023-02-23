@@ -255,12 +255,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function isActive(): ?bool
+    public function isIsActive(): ?bool
     {
         return $this->isActive;
     }
 
-    public function setActive(bool $isActive): self
+    public function setIsActive(bool $isActive): self
     {
         $this->isActive = $isActive;
 
