@@ -47,7 +47,11 @@ class ConfigurationRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult()
         ;
-        return $const->getValue();
+        if (isset($const)) {
+            return $const->getValue();
+        } else {
+            return null;
+        }               
     }
 
 //    /**
