@@ -41,10 +41,15 @@
 
 		</div>
 
-        <h6 class="text-center">
-            {% trans %}Sign up if you do not have an account. It's simple and fast.{% endtrans %}
-            <a href="{{ path('app_register') }}">{{'I create my free account...'|trans}}</a>
-        </h6>
+
+		{% if MAIN_ALLOW_USER_ACCOUNT_CREATION is defined %}
+			{% if MAIN_ALLOW_USER_ACCOUNT_CREATION > 0 %}
+				<h6 class="text-center">
+					{% trans %}Sign up if you do not have an account. It's simple and fast.{% endtrans %}
+					<a href="{{ path('app_register') }}">{{'I create my free account...'|trans}}</a>
+				</h6>
+			{% endif %}    
+		{% endif %}   
 		
 	</div>
 

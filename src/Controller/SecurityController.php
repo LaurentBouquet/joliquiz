@@ -10,6 +10,7 @@ use Symfony\Component\Mime\Address;
 use App\Form\ChangePasswordFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\ResetPasswordRequestFormType;
+use App\Repository\ConfigurationRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
@@ -40,12 +41,17 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, TranslatorInterface $translator, ConfigurationRepository $configurationRepository): Response
     {
         if ($this->isGranted('ROLE_USER')) {
             return $this->redirectToRoute('quiz_index');
         }      
-        
+
+        // $this->addFlash('warning', "MAIN_ALLOW_USER_ACCOUNT_CREATION = " . intval($configurationRepository->getValue('MAIN_ALLOW_USER_ACCOUNT_CREATION')));        
+        if (intval($configurationRepository->getValue('MAIN_ALLOW_USER_ACCOUNT_CREATION')) < 1) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -150,7 +156,7 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/login', name:'app_login')]
-    public function login(AuthenticationUtils $authenticationUtils, TranslatorInterface $translator): Response
+    public function login(AuthenticationUtils $authenticationUtils, TranslatorInterface $translator, ConfigurationRepository $configurationRepository): Response
         {
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -164,6 +170,7 @@ class SecurityController extends AbstractController
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
+            'MAIN_ALLOW_USER_ACCOUNT_CREATION' => intval($configurationRepository->getValue('MAIN_ALLOW_USER_ACCOUNT_CREATION')),
         ]);
 
     }

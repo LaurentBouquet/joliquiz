@@ -109,11 +109,26 @@
                             </a>
                         </li> 
                     {% else %}
-                        <li>
-                            <a class="nav-link {% if '/register' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('app_register') }}">
-                                <i class="fas fa-user"></i> {{'Sign up'|trans}}
-                            </a>
-                        </li>
+                        {% if app.user %}
+                            {% if quiz is not defined %}
+                                <li>                                             
+                                    <a class="nav-link" href="{{ path('user_profile') }}">
+                                        <span><i class="fas fa-user"></i> <strong>{{ app.user.username }}</strong></span>
+                                    </a>
+                                </li>
+                            {% endif %} 
+                        {% endif %}                         
+                        
+                        {% if MAIN_ALLOW_USER_ACCOUNT_CREATION is defined %}
+                            {% if MAIN_ALLOW_USER_ACCOUNT_CREATION > 0 %}
+                                <li>
+                                    <a class="nav-link {% if '/register' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('app_register') }}">
+                                        <i class="fas fa-user"></i> {{'Sign up'|trans}}
+                                    </a>
+                                </li>
+                            {% endif %}    
+                        {% endif %}   
+                        
                         <li>
                             <a class="nav-link {% if '/login' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('app_login') }}">
                                 <i class="fas fa-lock"></i> {{'Sign in'|trans}}

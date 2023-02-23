@@ -1109,9 +1109,41 @@
         <source>Save my password</source>
         <target>Enregistrer mon mot de passe</target>
       </trans-unit>
-      <trans-unit id="AhrxYRe" resname="isReady">
+      <trans-unit id="OKA9SZE" resname="isReady">
         <source>isReady</source>
         <target>Prêt</target>
+      </trans-unit>
+      <trans-unit id="szLDSS1" resname="Configuration">
+        <source>Configuration</source>
+        <target>Configuration</target>
+      </trans-unit>
+      <trans-unit id="CjlzJqA" resname="Edit Configuration">
+        <source>Edit Configuration</source>
+        <target>Modifier la cnfiguration</target>
+      </trans-unit>
+      <trans-unit id="1QI2U8Z" resname="Configuration index">
+        <source>Configuration index</source>
+        <target>Configurations</target>
+      </trans-unit>
+      <trans-unit id="EHHnrmb" resname="Const">
+        <source>Const</source>
+        <target>Paramètre</target>
+      </trans-unit>
+      <trans-unit id="jjeVPSP" resname="Value">
+        <source>Value</source>
+        <target>Valeur</target>
+      </trans-unit>
+      <trans-unit id="9HHwSO0" resname="Create new configuration">
+        <source>Create new configuration</source>
+        <target>Créer une configuration</target>
+      </trans-unit>
+      <trans-unit id="DkNN6k." resname="Create new Configuration">
+        <source>Create new Configuration</source>
+        <target>Créer une configuration</target>
+      </trans-unit>
+      <trans-unit id="PT0rAFr" resname="Are you sure you want to delete this configuration?">
+        <source>Are you sure you want to delete this configuration?</source>
+        <target>Êtes-vous sûr de vouloir supprimer cette configuration ?</target>
       </trans-unit>
     </body>
   </file>

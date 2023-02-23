@@ -39,6 +39,17 @@ class ConfigurationRepository extends ServiceEntityRepository
         }
     }
 
+    public function getValue($value): ?String
+    {
+        $const = $this->createQueryBuilder('c')
+            ->andWhere('c.const = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+        return $const->getValue();
+    }
+
 //    /**
 //     * @return Configuration[] Returns an array of Configuration objects
 //     */

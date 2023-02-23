@@ -13,8 +13,9 @@ class ConfigurationType extends AbstractType
     {
         $builder
             ->add('const')
-            ->add('type')
+            // ->add('type')
             ->add('description')
+            ->add('value')
         ;
     }
 
