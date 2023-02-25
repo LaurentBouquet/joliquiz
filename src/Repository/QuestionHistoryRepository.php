@@ -77,7 +77,7 @@ class QuestionHistoryRepository extends ServiceEntityRepository
                 
                 $builder->andWhere('qh.question_success IS NOT NULL');            
 
-                // TODO select only questions of this $quiz
+                // select only questions of this $quiz
                 $builder->innerJoin('App\Entity\Workout', 'w', 'WITH', 'qh.workout = w.id');
                 $builder->andWhere('w.quiz = :quiz_id');
                 $builder->setParameter('quiz_id', $quiz->getId());

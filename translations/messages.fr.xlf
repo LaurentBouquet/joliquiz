@@ -975,23 +975,23 @@
       </trans-unit>
       <trans-unit id="M1KE6la" resname="Answer #%s is deleted.">
         <source>Answer #%s is deleted.</source>
-        <target>La réponse #%s a été supprimée.</target>
+        <target>La réponse a été supprimée.</target>
       </trans-unit>
       <trans-unit id="w19Gjw6" resname="Category &quot;%s&quot; is deleted.">
         <source>Category "%s" is deleted.</source>
-        <target>La catégorie "%s" a été supprimée.</target>
+        <target>La catégorie a été supprimée.</target>
       </trans-unit>
       <trans-unit id="UYIu6oU" resname="Question #%s is deleted.">
         <source>Question #%s is deleted.</source>
-        <target>La question #%s a été supprimée.</target>
+        <target>La question a été supprimée.</target>
       </trans-unit>
       <trans-unit id="Tu1nWMz" resname="Quiz &quot;%s&quot; is deleted.">
         <source>Quiz "%s" is deleted.</source>
-        <target>Le questionnaire "%s" a été supprimé.</target>
+        <target>Le questionnaire a été supprimé.</target>
       </trans-unit>
       <trans-unit id="0ukKxbN" resname="User &quot;%s&quot; is deleted.">
         <source>User "%s" is deleted.</source>
-        <target>L'utilisateur "%s" a été supprimé.</target>
+        <target>L'utilisateur a été supprimé.</target>
       </trans-unit>
       <trans-unit id="qr0aiUo" resname="Invalid credentials.">
         <source>Invalid credentials.</source>
@@ -1152,6 +1152,14 @@
       <trans-unit id="TlFukE6" resname="The question has been recorded.">
         <source>The question has been recorded.</source>
         <target>La question a bien été enregistrée.</target>
+      </trans-unit>
+      <trans-unit id="2vQqjwP" resname="Show questions without category">
+        <source>Show questions without category</source>
+        <target>Afficher les questions sans catégorie</target>
+      </trans-unit>
+      <trans-unit id="6gMgE3J" resname="Uncategorized question index">
+        <source>Uncategorized question index</source>
+        <target>Questions sans catégorie</target>
       </trans-unit>
     </body>
   </file>

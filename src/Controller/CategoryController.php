@@ -81,7 +81,7 @@ class CategoryController extends AbstractController
     /**
      * @Route("/{id}", name="category_delete", methods="POST")
      */
-    public function delete(Request $request, Category $category, EntityManagerInterface $em): Response
+    public function delete(Request $request, Category $category, EntityManagerInterface $em, TranslatorInterface $translator): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Access not allowed');
 

@@ -15,6 +15,9 @@
     {% if is_granted('ROLE_TEACHER') %}
         <div class="mb-3">
             <a class="btn btn-warning" href="{{ path('question_new', {'category': category_id}) }}"><i class="fas fa-plus"></i> {{'Create new question'|trans}}</a>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a class="btn btn-light" href="{{ path('question_index', {'only-orphan': 1}) }}"><i class="fas fa-tasks"></i> {{'Show questions without category'|trans}}</a>
+            {% endif %}
             {% if category_id %}
                 <a class="btn btn-primary" href="{{ path('category_edit', {'id': category_id}) }}"><i class="fas fa-pencil-alt"></i> {{'Edit Category'|trans}}</a>
                 {% if (questions|length) > 3 %}
@@ -80,6 +83,15 @@
         {% if is_granted('ROLE_TEACHER') %}
             <div class="mb-3">
                 <a class="btn btn-warning" href="{{ path('question_new', {'category': category_id}) }}"><i class="fas fa-plus"></i> {{'Create new question'|trans}}</a>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a class="btn btn-light" href="{{ path('question_index', {'only-orphan': 1}) }}"><i class="fas fa-tasks"></i> {{'Show questions without category'|trans}}</a>
+                {% endif %}
+                {% if category_id %}
+                    <a class="btn btn-primary" href="{{ path('category_edit', {'id': category_id}) }}"><i class="fas fa-pencil-alt"></i> {{'Edit Category'|trans}}</a>
+                    {% if (questions|length) > 3 %}
+                        <a class="btn btn-warning" href="{{ path('quiz_new', {'category': category_id}) }}"><i class="fas fa-plus"></i> {{'Create new quiz'|trans}}</a>
+                    {% endif %}
+                {% endif %}
             </div>
         {% endif %}
     {% endif %}

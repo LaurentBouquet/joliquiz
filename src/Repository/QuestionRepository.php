@@ -7,6 +7,7 @@ use App\Entity\Language;
 use App\Entity\Question;
 use Pagerfanta\Pagerfanta;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ManagerRegistry;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;

@@ -22,7 +22,7 @@ class QuestionController extends AbstractController
      * @Route("/", defaults={"page": "1"}, name="question_index", methods="GET")
      * @Route("/page/{page}", requirements={"page": "[1-9]\d*"}, methods={"GET"}, name="question_index_paginated")
      */
-    public function index(int $page, QuestionRepository $questionRepository, CategoryRepository $categoryRepository, Request $request): Response
+    public function index(int $page, QuestionRepository $questionRepository, CategoryRepository $categoryRepository, Request $request, EntityManagerInterface $em): Response
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
@@ -37,11 +37,20 @@ class QuestionController extends AbstractController
             $categoryShortName =  $category->getShortName();
         }
         else {
-            $questions = $questionRepository->findAll($page, $this->isGranted('ROLE_TEACHER'), $this->isGranted('ROLE_ADMIN'));
-        }
+            $onlyOrphan = $request->query->get('only-orphan');
+            if ( ($this->isGranted('ROLE_ADMIN')) && (intval($onlyOrphan) > 0) ) {
 
-        return $this->render('question/index.html.twig', ['page' => $page, 'questions' => $questions, 'category_id' => $categoryId, 'category_long_name' => $categoryLongName, 'category_short_name' => $categoryShortName]);
-
+                $RAW_QUERY = 'SELECT tbl_question.* FROM tbl_question WHERE id NOT IN (SELECT question_id as id FROM tbl_question_category);';
+                $statement = $em->getConnection()->prepare($RAW_QUERY);
+                $questions = $statement->executeQuery()->fetchAllAssociative();
+                
+                // dump($questions);
+                return $this->render('question/index_onlyorphan.html.twig', ['page' => $page, 'questions' => $questions, 'category_id' => $categoryId, 'category_long_name' => $categoryLongName, 'category_short_name' => $categoryShortName]);
+            } else {
+                $questions = $questionRepository->findAll($page, $this->isGranted('ROLE_TEACHER'), $this->isGranted('ROLE_ADMIN'));
+                return $this->render('question/index.html.twig', ['page' => $page, 'questions' => $questions, 'category_id' => $categoryId, 'category_long_name' => $categoryLongName, 'category_short_name' => $categoryShortName]);
+            }                                 
+        } 
     }
 
     /**
