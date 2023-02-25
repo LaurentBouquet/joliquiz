@@ -14,10 +14,13 @@
 
     {% if is_granted('ROLE_TEACHER') %}
         <div class="mb-3">
+            <a class="btn btn-warning" href="{{ path('question_new', {'category': category_id}) }}"><i class="fas fa-plus"></i> {{'Create new question'|trans}}</a>
             {% if category_id %}
                 <a class="btn btn-primary" href="{{ path('category_edit', {'id': category_id}) }}"><i class="fas fa-pencil-alt"></i> {{'Edit Category'|trans}}</a>
+                {% if (questions|length) > 3 %}
+                    <a class="btn btn-warning" href="{{ path('quiz_new', {'category': category_id}) }}"><i class="fas fa-plus"></i> {{'Create new quiz'|trans}}</a>
+                {% endif %}
             {% endif %}
-            <a class="btn btn-warning" href="{{ path('question_new', {'category': category_id}) }}"><i class="fas fa-plus"></i> {{'Create new question'|trans}}</a>
         </div>
     {% endif %}
 
