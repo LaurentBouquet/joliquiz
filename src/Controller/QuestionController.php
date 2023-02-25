@@ -147,7 +147,7 @@ class QuestionController extends AbstractController
     /**
      * @Route("/{id}", name="question_delete", methods="POST")
      */
-    public function delete(Request $request, Question $question, EntityManagerInterface $em): Response
+    public function delete(Request $request, Question $question, EntityManagerInterface $em, TranslatorInterface $translator): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Access not allowed');
 
@@ -158,6 +158,7 @@ class QuestionController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', sprintf($translator->trans('Question #%s is deleted.'), $question->getId()));
+            $question = null;
         }
 
         if ($categoryId > 0) {            
