@@ -713,7 +713,8 @@ class QuizController extends AbstractController
         }
         if ($categoryId > 0) {            
             $quiz->addCategory($category);
-            $quiz->setTitle($category->getLongname());
+            $quiz->setTitle($category->getShortname());
+            $quiz->setSummary($category->getLongname());
             $quiz->setNumberOfQuestions(sizeof($category->getQuestions()));
         }
 
