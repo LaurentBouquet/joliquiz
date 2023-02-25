@@ -80,7 +80,15 @@ class QuestionController extends AbstractController
 
             $em->flush();
 
-            $this->addFlash('success', sprintf($translator->trans('Question #%s is created.'), $question->getId()));
+            //$flashMessage = sprintf($translator->trans('Question #%s is created.'), $question->getId());
+            $flashMessage = sprintf($translator->trans('The question has been recorded.'));            
+            if ($categoryId > 0) {     
+                $categoryCount = sizeof($category->getQuestions());
+                if ($categoryCount > 1) {
+                    $flashMessage .= ' ' . sprintf($translator->trans('Now there are  %s questions in the category "%s".'), $categoryCount, $category->getShortname());                
+                }                
+            }   
+            $this->addFlash('success', $flashMessage);         
 
             //return $this->redirectToRoute('question_index');
             $newQuestion = new Question();

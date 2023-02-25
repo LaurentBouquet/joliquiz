@@ -967,7 +967,7 @@
       </trans-unit>
       <trans-unit id="YodMghw" resname="Question #%s is created.">
         <source>Question #%s is created.</source>
-        <target>La question #%s a été créé.</target>
+        <target>La question n°%s a été créé.</target>
       </trans-unit>
       <trans-unit id="VWSQbPp" resname="Quiz &quot;%s&quot; is created.">
         <source>Quiz "%s" is created.</source>
@@ -1144,6 +1144,14 @@
       <trans-unit id="PT0rAFr" resname="Are you sure you want to delete this configuration?">
         <source>Are you sure you want to delete this configuration?</source>
         <target>Êtes-vous sûr de vouloir supprimer cette configuration ?</target>
+      </trans-unit>
+      <trans-unit id="2N02nVK" resname="Now there are  %s questions in the category &quot;%s&quot;.">
+        <source>Now there are  %s questions in the category "%s".</source>
+        <target>Il y a maintenant %s questions dans la catégorie "%s".</target>
+      </trans-unit>
+      <trans-unit id="TlFukE6" resname="The question has been recorded.">
+        <source>The question has been recorded.</source>
+        <target>La question a bien été enregistrée.</target>
       </trans-unit>
     </body>
   </file>

@@ -46,7 +46,8 @@ class CategoryController extends AbstractController
             $em->persist($category);
             $em->flush();
             $this->addFlash('success', sprintf($translator->trans('Category "%s" is created.'), $category->getShortname()));
-            return $this->redirectToRoute('category_index');
+            // return $this->redirectToRoute('category_index');
+            return $this->redirectToRoute('question_new', ['category' => $category->getId()]);
         }
 
         return $this->render('category/new.html.twig', [
