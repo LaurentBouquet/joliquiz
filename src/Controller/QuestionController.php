@@ -35,6 +35,7 @@ class QuestionController extends AbstractController
             $category = $categoryRepository->find($categoryId);
             $categoryLongName = $category->getLongName();
             $categoryShortName =  $category->getShortName();
+            return $this->render('question/index.html.twig', ['page' => $page, 'questions' => $questions, 'category_id' => $categoryId, 'category_long_name' => $categoryLongName, 'category_short_name' => $categoryShortName]);
         }
         else {
             $onlyOrphan = $request->query->get('only-orphan');
