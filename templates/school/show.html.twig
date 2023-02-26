@@ -23,7 +23,7 @@
     </table>
 
     {% if is_granted('ROLE_SUPER_ADMIN') %}
-        <a class="btn btn-primary mr-2" href="{{ path('school_index') }}"><i class="fas fa-arrow-circle-left"></i> {{'Back to list'|trans}}</a>
+        <a class="btn btn-secondary mr-2" href="{{ path('school_index') }}"><i class="fas fa-arrow-circle-left"></i> {{'Back to list'|trans}}</a>
         <a class="btn btn-primary" href="{{ path('school_edit', {'id': school.id}) }}"><i class="fas fa-pencil-alt"></i> {{'Edit'|trans}}</a>
     {% endif %}
 

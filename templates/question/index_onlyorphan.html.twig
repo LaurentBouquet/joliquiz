@@ -14,6 +14,7 @@
 
     {% if is_granted('ROLE_TEACHER') %}
         <div class="mb-3">
+            <a class="btn btn-secondary mr-2" href="{{ path('question_index') }}"><i class="fas fa-arrow-circle-left"></i> {{'Back to list'|trans}}</a>
             {% if category_id %}
                 <a class="btn btn-primary" href="{{ path('category_edit', {'id': category_id}) }}"><i class="fas fa-pencil-alt"></i> {{'Edit Category'|trans}}</a>
                 {% if (questions|length) > 3 %}
