@@ -84,7 +84,7 @@ class Quiz
         $this->setShowResultQuestion(false);
         $this->setShowResultQuiz(false);
         $this->setNumberOfQuestions(5);
-        $this->setDefaultQuestionMaxDuration(180);
+        $this->setDefaultQuestionMaxDuration(60); //180
         $this->categories = new ArrayCollection();
         $this->workouts = new ArrayCollection();
         $this->setAllowAnonymousWorkout(false);

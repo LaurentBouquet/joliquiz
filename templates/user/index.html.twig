@@ -37,7 +37,7 @@
                 {# <th>{{ 'IsActive'|trans }}</th> #}
                 <th>{{ 'isVerified'|trans }}</th>
                 <th>{{ 'isReady'|trans }}</th> 
-                <th>{{ 'Roles'|trans }}</th>
+                {# <th>{{ 'Roles'|trans }}</th> #}
                 {% endif %}
                 <th>{{ 'Groups'|trans }}</th>
                 {% if is_granted('ROLE_SUPER_ADMIN') %}
@@ -47,37 +47,41 @@
         </thead>
         <tbody>
         {% for user in users %}
-            <tr 
+            <tr
                 class="{{ 'ROLE_SUPER_ADMIN' in user.roles ? 'table-danger' : 'ROLE_ADMIN' in user.roles ? 'table-warning' : 'ROLE_TEACHER' in user.roles ? 'table-primary' : 'table-success' }}"
                 {% if not user.isActive %}
                     style="text-decoration: line-through;"                    
                 {% endif %}
             >
-                <td>{{ user.firstname }}</td>
-                <td>{{ user.lastname }}</td>
+                <td title="{{ user.roles ? user.roles|join(', ') : '' }}">{{ user.firstname }}</td>
+                <td title="{{ user.roles ? user.roles|join(', ') : '' }}">{{ user.lastname }}</td>
                 <td title="{{ 'LoginType'|trans }} : {{ user.loginType }}">
                     {# <i class="fas fa-user"></i>  #}
                     {{ user.username }}
                 </td>
-                <td>{{ user.email }}</td>
+                <td title="{{ user.roles ? user.roles|join(', ') : '' }}">{{ user.email }}</td>
                 {% if is_granted('ROLE_ADMIN') %}
                 {# <td>{{ user.isActive ? 'Yes' : 'No' }}</td> #}
 
 
                 {# <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>  #}
                 {% if user.isVerified%}       
-                    <td class="text-center"><i class="fa fa-at text-success"></i></td> 
+                    <td class="text-center">
+                        <i class="fa fa-at text-success"></i>
+                    </td> 
                 {% else %}   
-                    <td class="text-center"><i class="fa fa-at text-danger"></i></td>                          
+                    <td class="text-center">                        
+                        <a class="btn btn-danger btn-sm" href="{{ path('app_send_verif_email', {'id': user.id, 'route': 'user_index', 'group': group_id}) }}" title="{{'Check their email address'|trans}}"><i class="fas fa-at"></i></a>                      
+                    </td>
                 {% endif %}
 
                 {% if user.isReady%}       
-                    <td class="text-center"><i class="fa fa-unlock text-success"></i></td> 
+                    <td class="text-center"><i class="fa fa-unlock text-success"></i></td>
                 {% else %}   
                     <td class="text-center"><i class="fa fa-lock text-danger"></i></td>                          
                 {% endif %}
 
-                <td>{{ user.roles ? user.roles|join(', ') : '' }}</td>
+                {# <td>{{ user.roles ? user.roles|join(', ') : '' }}</td> #}
                 {% endif %}                
                 <td>
                     {# {{ user.groups ? user.groups|join(', ') : '' }} #}
@@ -94,7 +98,8 @@
                         <a class="btn btn-primary btn-sm mr-2" href="{{ path('user_edit', {'id': user.id}) }}" title="{{'Edit'|trans}}"><i class="fas fa-pencil-alt"></i></a>
                         {% if group_name %}
                             <a class="btn btn-warning btn-sm mr-2" href="{{ path('group_remove_user', {'id': group_id, 'user': user.id}) }}" title="{{'Remove from group'|trans}}"><i class="fas fa-user-times"></i></a>
-                        {% endif %}                        
+                        {% endif %}                                                
+                        <a class="btn btn-primary btn-sm mr-2" href="{{ path('app_send_resetpassword_email', {'id': user.id, 'route': 'user_index', 'group': group_id}) }}" title="{{'Change their password'|trans}}"><i class="fas fa-lock"></i></a>
                         {{ include('user/_delete_form.html.twig') }}
                     </div>
                     {% endif %}

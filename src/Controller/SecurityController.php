@@ -3,36 +3,35 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Security\EmailVerifier;
-use App\Form\RegistrationFormType;
-use App\Repository\UserRepository;
-use Symfony\Component\Mime\Address;
 use App\Form\ChangePasswordFormType;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Form\RegistrationFormType;
 use App\Form\ResetPasswordRequestFormType;
 use App\Repository\ConfigurationRepository;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Contracts\Translation\TranslatorInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use App\Repository\UserRepository;
+use App\Security\EmailVerifier;
+use Doctrine\ORM\EntityManagerInterface;
 use SymfonyCasts\Bundle\ResetPassword\Controller\ResetPasswordControllerTrait;
 use SymfonyCasts\Bundle\ResetPassword\Exception\ResetPasswordExceptionInterface;
+use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
+use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SecurityController extends AbstractController
 {
     use ResetPasswordControllerTrait;
-    
+
     private EmailVerifier $emailVerifier;
     private ResetPasswordHelperInterface $resetPasswordHelper;
-    
 
     public function __construct(EmailVerifier $emailVerifier, ResetPasswordHelperInterface $resetPasswordHelper)
     {
@@ -41,13 +40,13 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, TranslatorInterface $translator, ConfigurationRepository $configurationRepository): Response
+    function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, TranslatorInterface $translator, ConfigurationRepository $configurationRepository): Response
     {
         if ($this->isGranted('ROLE_USER')) {
             return $this->redirectToRoute('quiz_index');
-        }      
+        }
 
-        // $this->addFlash('warning', "MAIN_ALLOW_USER_ACCOUNT_CREATION = " . intval($configurationRepository->getValue('MAIN_ALLOW_USER_ACCOUNT_CREATION')));        
+        // $this->addFlash('warning', "MAIN_ALLOW_USER_ACCOUNT_CREATION = " . intval($configurationRepository->getValue('MAIN_ALLOW_USER_ACCOUNT_CREATION')));
         if (intval($configurationRepository->getValue('MAIN_ALLOW_USER_ACCOUNT_CREATION')) < 1) {
             return $this->redirectToRoute('app_login');
         }
@@ -76,9 +75,11 @@ class SecurityController extends AbstractController
             // generate a signed url and email it to the user
             $from_email_address = $this->getParameter('FROM_EMAIL_ADDRESS');
             // $admin_email_address = $this->getParameter('ADMIN_EMAIL_ADDRESS');
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+            $this->emailVerifier->sendEmailConfirmation(
+                'app_verify_email',
+                $user,
                 (new TemplatedEmail())
-                    ->from(new Address($from_email_address, 'JoliQuiz'))                                
+                    ->from(new Address($from_email_address, 'JoliQuiz'))
                     ->to($user->getEmail())
                     ->subject('🙂 ' . $translator->trans('I confirm my email address'))
                     // path of the Twig template to render
@@ -87,7 +88,7 @@ class SecurityController extends AbstractController
                     ->context([
                         'username' => $user->getName(),
                         'useremail' => $user->getEmail(),
-                    ])                
+                    ])
             );
 
             return $this->redirectToRoute('app_invit_verify_email', ['id' => $user->getId()]);
@@ -98,19 +99,53 @@ class SecurityController extends AbstractController
         ]);
     }
 
+    /**
+     * Send a mail to user to reset their password.
+     */
+    #[Route('/{id}/resetpassword/send-email', name: 'app_send_resetpassword_email', methods: 'GET')]
+    function resetpassword_email(User $user, MailerInterface $mailer, TranslatorInterface $translator, EntityManagerInterface $entityManager, Request $request): Response
+    {
+        $form = $this->createForm(ResetPasswordRequestFormType::class);       
+
+        $this->processSendingPasswordResetEmail(
+            $user->getEmail(),
+            $mailer,
+            $translator,
+            $entityManager
+        );
+
+        $this->addFlash('success', sprintf($translator->trans('an email has been sent to %s.'), $user->getName()));
+
+        $route = $request->get('route');
+        if (isset($route) && !empty($route)) {
+            $group = $request->get('group');
+            return $this->redirectToRoute($route, ['group' => $group]);
+        } else {
+            return $this->redirectToRoute('app_home');
+        }
+    }
+
     #[Route('/{id}/verify/send-email', name: 'app_send_verif_email', methods: 'GET')]
-    public function sendVerificationEmail(User $user, TranslatorInterface $translator): Response
+    function sendVerificationEmail(User $user, TranslatorInterface $translator, Request $request): Response
     {
         if ($user->isVerified()) {
-            return $this->redirectToRoute('quiz_index');
-        }     
+            $route = $request->get('route');
+            if (isset($route) && !empty($route)) {
+                $group = $request->get('group');
+                return $this->redirectToRoute($route, ['group' => $group]);
+            } else {
+                return $this->redirectToRoute('quiz_index');
+            }
+        }
 
         // generate a signed url and email it to the user
         $from_email_address = $this->getParameter('FROM_EMAIL_ADDRESS');
         // $admin_email_address = $this->getParameter('ADMIN_EMAIL_ADDRESS');
-        $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+        $this->emailVerifier->sendEmailConfirmation(
+            'app_verify_email',
+            $user,
             (new TemplatedEmail())
-                ->from(new Address($from_email_address, 'JoliQuiz'))                                
+                ->from(new Address($from_email_address, 'JoliQuiz'))
                 ->to($user->getEmail())
                 ->subject('🙂 ' . $translator->trans('I confirm my email address'))
                 // path of the Twig template to render
@@ -119,14 +154,22 @@ class SecurityController extends AbstractController
                 ->context([
                     'username' => $user->getName(),
                     'useremail' => $user->getEmail(),
-                ])                
+                ])
         );
 
-        return $this->redirectToRoute('app_invit_verify_email', ['id' => $user->getId(), 'resent' => true]);
+        $this->addFlash('success', sprintf($translator->trans('An email has been sent to %s.'), $user->getName()));
+
+        $route = $request->get('route');
+        if (isset($route) && !empty($route)) {
+            $group = $request->get('group');
+            return $this->redirectToRoute($route, ['group' => $group]);
+        } else {
+            return $this->redirectToRoute('app_invit_verify_email', ['id' => $user->getId(), 'resent' => true]);
+        }
     }
 
     #[Route('/verify/email', name: 'app_verify_email')]
-    public function verifyUserEmail(Request $request, TranslatorInterface $translator, UserRepository $userRepository): Response
+    function verifyUserEmail(Request $request, TranslatorInterface $translator, UserRepository $userRepository): Response
     {
         $id = $request->get('id');
 
@@ -152,12 +195,11 @@ class SecurityController extends AbstractController
         $this->addFlash('success', $translator->trans('Your email address has been verified.'));
 
         return $this->redirectToRoute('quiz_index');
-
     }
 
-    #[Route('/login', name:'app_login')]
-    public function login(AuthenticationUtils $authenticationUtils, TranslatorInterface $translator, ConfigurationRepository $configurationRepository): Response
-        {
+    #[Route('/login', name: 'app_login')]
+    function login(AuthenticationUtils $authenticationUtils, TranslatorInterface $translator, ConfigurationRepository $configurationRepository): Response
+    {
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         if ($error) {
@@ -172,23 +214,22 @@ class SecurityController extends AbstractController
             'error' => $error,
             'MAIN_ALLOW_USER_ACCOUNT_CREATION' => intval($configurationRepository->getValue('MAIN_ALLOW_USER_ACCOUNT_CREATION')),
         ]);
-
     }
 
     #[Route('/logout2', name: 'app_logout2', methods: ['GET'])]
-    public function logout2(EntityManagerInterface $em)
+    function logout2(EntityManagerInterface $em)
     {
         $user = $this->getUser();
         if ($user) {
             $user->setLastQuizAccess(null);
             $em->persist($user);
             $em->flush();
-        }   
+        }
         return $this->redirectToRoute('app_logout');
     }
 
     #[Route('/logout', name: 'app_logout', methods: ['GET'])]
-    public function logout()
+    function logout()
     {
         throw new \Exception('This should never be reached!');
     }
@@ -197,7 +238,7 @@ class SecurityController extends AbstractController
      * Display & process form to request a password reset.
      */
     #[Route('forgot_password_request', name: 'app_forgot_password_request')]
-    public function request(Request $request, MailerInterface $mailer, TranslatorInterface $translator, EntityManagerInterface $entityManager): Response
+    function request(Request $request, MailerInterface $mailer, TranslatorInterface $translator, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(ResetPasswordRequestFormType::class);
         $form->handleRequest($request);
@@ -214,13 +255,13 @@ class SecurityController extends AbstractController
         return $this->render('security/reset_password/request.html.twig', [
             'requestForm' => $form->createView(),
         ]);
-    }    
+    }
 
     /**
      * Confirmation page after a user has requested a password reset.
      */
     #[Route('/check-email', name: 'app_check_email')]
-    public function checkEmail(): Response
+    function checkEmail(): Response
     {
         // Generate a fake token if the user does not exist or someone hit this page directly.
         // This prevents exposing whether or not a user was found with the given email address or not
@@ -231,13 +272,13 @@ class SecurityController extends AbstractController
         return $this->render('security/reset_password/check_email.html.twig', [
             'resetToken' => $resetToken,
         ]);
-    }    
-    
+    }
+
     /**
      * Information page after a user registers.
      */
     #[Route('/{id}/invit-email', name: 'app_invit_verify_email', methods: 'GET')]
-    public function inviteEmail(Request $request, User $user, TranslatorInterface $translator): Response
+    function inviteEmail(Request $request, User $user, TranslatorInterface $translator): Response
     {
 
         $message = $translator->trans('Your user account has been successfully created and we thank you :-)');
@@ -245,7 +286,7 @@ class SecurityController extends AbstractController
         $resent = $request->get('resent');
         if ($resent) {
             $message = $translator->trans('Your request has been taken into account.');
-        }        
+        }
 
         if (null === ($resetToken = $this->getTokenObjectFromSession())) {
             $resetToken = $this->resetPasswordHelper->generateFakeResetToken();
@@ -258,12 +299,11 @@ class SecurityController extends AbstractController
         ]);
     }
 
-
     /**
      * Validates and process the reset URL that the user clicked in their email.
      */
     #[Route('/reset/{token}', name: 'app_reset_password')]
-    public function reset(Request $request, UserPasswordHasherInterface $passwordHasher, TranslatorInterface $translator, EntityManagerInterface $entityManager, string $token = null): Response
+    function reset(Request $request, UserPasswordHasherInterface $passwordHasher, TranslatorInterface $translator, EntityManagerInterface $entityManager, string $token = null): Response
     {
         if ($token) {
             // We store the token in session and remove it from the URL, to avoid the URL being
@@ -318,7 +358,7 @@ class SecurityController extends AbstractController
         ]);
     }
 
-    private function processSendingPasswordResetEmail(string $emailFormData, MailerInterface $mailer, TranslatorInterface $translator, EntityManagerInterface $entityManager): RedirectResponse
+    function processSendingPasswordResetEmail(string $emailFormData, MailerInterface $mailer, TranslatorInterface $translator, EntityManagerInterface $entityManager): RedirectResponse
     {
         $user = $entityManager->getRepository(User::class)->findOneBy([
             'email' => $emailFormData,
@@ -336,13 +376,13 @@ class SecurityController extends AbstractController
             // the lines below and change the redirect to 'app_forgot_password_request'.
             // Caution: This may reveal if a user is registered or not.
             //
-            // $this->addFlash('reset_password_error', sprintf(
-            //     '%s - %s',
-            //     $translator->trans(ResetPasswordExceptionInterface::MESSAGE_PROBLEM_HANDLE, [], 'ResetPasswordBundle'),
-            //     $translator->trans($e->getReason(), [], 'ResetPasswordBundle')
-            // ));
+            $this->addFlash('reset_password_error', sprintf(
+                '%s - %s',
+                $translator->trans(ResetPasswordExceptionInterface::MESSAGE_PROBLEM_HANDLE, [], 'ResetPasswordBundle'),
+                $translator->trans($e->getReason(), [], 'ResetPasswordBundle')
+            ));
 
-            return $this->redirectToRoute('app_check_email');
+            return $this->redirectToRoute('app_forgot_password_request');
         }
 
         $from_email_address = $this->getParameter('FROM_EMAIL_ADDRESS');
@@ -355,8 +395,7 @@ class SecurityController extends AbstractController
             ->htmlTemplate('emails/passwordresetting.html.twig')
             ->context([
                 'resetToken' => $resetToken,
-            ])
-        ;
+            ]);
 
         try {
             $mailer->send($email);
@@ -369,5 +408,4 @@ class SecurityController extends AbstractController
 
         return $this->redirectToRoute('app_check_email');
     }
-   
 }
