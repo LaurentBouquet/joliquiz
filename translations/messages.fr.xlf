@@ -1181,6 +1181,14 @@
         <source>Send him an email so that he can change his password</source>
         <target>Lui envoyer un mail pour qu'il puisse modifier son mot de passe</target>
       </trans-unit>
+      <trans-unit id="cpLixIa" resname="Disallow user account creation">
+        <source>Disallow user account creation</source>
+        <target>Interdire la création de comptes d'utilisateurs</target>
+      </trans-unit>
+      <trans-unit id="3S7nuhL" resname="Allow user account creation">
+        <source>Allow user account creation</source>
+        <target>Autoriser la création de comptes d'utilisateurs</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

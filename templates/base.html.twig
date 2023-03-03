@@ -90,7 +90,7 @@
                             <a class="nav-link {% if '/configuration/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('app_configuration_allow_account_creation') }}" title="{{'Allow user account creation'|trans}}"><i class="fas fa-user-plus"></i></a>
                         </li> #}
                         <li>
-                            <a class="nav-link {% if '/configuration/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('app_configuration_allow_account_creation', {'value': 0}) }}" title="{{'Allow user account creation'|trans}}"><i class="fas fa-user-plus text-danger"></i></a>                            
+                            <a class="nav-link {% if '/configuration/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('app_configuration_allow_account_creation', {'value': 0}) }}" title="{{'Disallow user account creation'|trans}}"><i class="fas fa-user-plus text-danger"></i></a>                            
                         </li>
                         <li>
                             <a class="nav-link {% if '/configuration/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('app_configuration_allow_account_creation', {'value': 1}) }}" title="{{'Allow user account creation'|trans}}"><i class="fas fa-user-plus text-success"></i></a>                            
