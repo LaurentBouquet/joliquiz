@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\ResetPasswordRequestRepository;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -217,11 +218,20 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}", name="user_delete", methods="POST")
      */
-    public function delete(Request $request, EntityManagerInterface $em, User $user, TranslatorInterface $translator): Response
+    public function delete(Request $request, EntityManagerInterface $em, User $user, ResetPasswordRequestRepository $resetPasswordRequestRepository, TranslatorInterface $translator): Response
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN', null, 'Access not allowed');
 
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
+
+            $resetPasswordRequests = $resetPasswordRequestRepository->findByUserId($user->getId());
+
+            if (isset($resetPasswordRequests)) {
+                foreach ($resetPasswordRequests as $resetPasswordRequest) {
+                    $resetPasswordRequestRepository->remove($resetPasswordRequest);
+                }
+            }
+
             $em->remove($user);
             $em->flush();
             $this->addFlash('success', sprintf($translator->trans('User "%s" is deleted.'), $user->getUsername()));

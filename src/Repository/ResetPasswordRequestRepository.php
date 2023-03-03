@@ -48,4 +48,12 @@ class ResetPasswordRequestRepository extends ServiceEntityRepository implements 
     {
         return new ResetPasswordRequest($user, $expiresAt, $selector, $hashedToken);
     }
+
+    public function findByUserId($user_id)
+    {
+        $builder = $this->createQueryBuilder('rpr');
+        $builder->andWhere('rpr.user = :val')->setParameter('val', $user_id);
+        return $builder->getQuery()->getResult();
+    }
+
 }
