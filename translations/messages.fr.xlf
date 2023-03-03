@@ -475,7 +475,7 @@
       </trans-unit>
       <trans-unit id="WBeEQsI" resname="An email will be sent to you so you can renew your password. The link you receive will be valid 24h.">
         <source>An email will be sent to you so you can renew your password. The link you receive will be valid 24h.</source>
-        <target>Un courriel vous sera envoyé afin que vous puissiez renouveler votre mot de passe. Le lien que vous recevrez sera valide pendant 24 heures.</target>
+        <target>Un mail vous sera envoyé afin que vous puissiez renouveler votre mot de passe. Le lien que vous recevrez sera valide pendant 24 heures.</target>
       </trans-unit>
       <trans-unit id="vFCURyP" resname="Hi,">
         <source>Hi,</source>
@@ -1163,7 +1163,7 @@
       </trans-unit>
       <trans-unit id="WpnxUvr" resname="An email has been sent to %s (%s).">
         <source>An email has been sent to %s (%s).</source>
-        <target>Un courriel a été envoyé à %s (%s).</target>
+        <target>Un mail a été envoyé à %s (%s).</target>
       </trans-unit>
       <trans-unit id="pYOeI02" resname="Check their email address">
         <source>Check their email address</source>
