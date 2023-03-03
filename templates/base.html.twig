@@ -86,9 +86,19 @@
                 </ul>
                 <ul class="navbar-nav">                
                     {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        {# <li>
+                            <a class="nav-link {% if '/configuration/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('app_configuration_allow_account_creation') }}" title="{{'Allow user account creation'|trans}}"><i class="fas fa-user-plus"></i></a>
+                        </li> #}
+                        <li>
+                            <a class="nav-link {% if '/configuration/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('app_configuration_allow_account_creation', {'value': 0}) }}" title="{{'Allow user account creation'|trans}}"><i class="fas fa-user-plus text-danger"></i></a>                            
+                        </li>
+                        <li>
+                            <a class="nav-link {% if '/configuration/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('app_configuration_allow_account_creation', {'value': 1}) }}" title="{{'Allow user account creation'|trans}}"><i class="fas fa-user-plus text-success"></i></a>                            
+                        </li>
                         <li>
                             <a class="nav-link {% if '/configuration/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('app_configuration_index') }}" title="{{'Configuration'|trans}}"><i class="fas fa-tools"></i></a>
                         </li>
+
                     {% endif %}                      
                     {% if is_granted('ROLE_USER') %}
                         {% if app.user %}   
@@ -108,10 +118,11 @@
                                 {% endif %}                            
                             {% endif %}
                         {% endif %}                        
-                        <li>
+                        <li>                        
                             <a class="nav-link" href="{{ path('app_logout2') }}">
-                                <i class="fas fa-sign-out-alt"></i> {{'Logout'|trans}}
-                            </a>
+                                <i class="fas fa-sign-out-alt"></i> 
+                                {% if '/quiz/' not in app.request.server.get('REQUEST_URI') %} {{'Logout'|trans}}{% endif %}
+                            </a>                                                
                         </li> 
                     {% else %}
                         {% if app.user %}
@@ -127,7 +138,7 @@
                         {% if MAIN_ALLOW_USER_ACCOUNT_CREATION is defined %}
                             {% if MAIN_ALLOW_USER_ACCOUNT_CREATION > 0 %}
                                 <li>
-                                    <a class="nav-link {% if '/register' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('app_register') }}">
+                                    <a class="nav-link text-success {% if '/register' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('app_register') }}">
                                         <i class="fas fa-user"></i> {{'Sign up'|trans}}
                                     </a>
                                 </li>
@@ -135,7 +146,7 @@
                         {% endif %}   
                         
                         <li>
-                            <a class="nav-link {% if '/login' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('app_login') }}">
+                            <a class="nav-link text-primary {% if '/login' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('app_login') }}">
                                 <i class="fas fa-lock"></i> {{'Sign in'|trans}}
                             </a>
                         </li>

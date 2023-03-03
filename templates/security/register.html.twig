@@ -9,7 +9,7 @@
 	<img src="/images/JoliQuiz-300x111_smiley.png" alt="JoliQuiz">
 
     <div class="jumbotron">
-        <h1><i class="fa fa-user"></i> {{'Sign up'|trans}}</h1>
+        <h1 class="text-success"><i class="fa fa-user"></i> {{'Sign up'|trans}}</h1>
 
         {{ form_start(registrationForm) }}
             {{ form_row(registrationForm.email) }}
@@ -19,7 +19,7 @@
             {{ form_row(registrationForm.agreeTerms) }}
 
             <a href="terms_and_conditions.pdf" target="_blank">{{ 'To consult terms and conditions'|trans }}</a>
-            <button class="btn btn-primary float-md-right" type="submit"><i class="fas fa-user-plus"></i> {{'Register'|trans}}</button>
+            <button class="btn btn-success float-md-right" type="submit"><i class="fas fa-user-plus"></i> {{'Register'|trans}}</button>
         {{ form_end(registrationForm) }}
 
     </div>

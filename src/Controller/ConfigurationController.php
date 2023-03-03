@@ -13,6 +13,24 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/configuration')]
 class ConfigurationController extends AbstractController
 {
+    
+    #[Route('/allow_account_creation', name: 'app_configuration_allow_account_creation', methods: ['GET'])]
+    public function allow_account_creation(Request $request, ConfigurationRepository $configurationRepository): Response
+    {
+        $value = $request->query->get('value');     
+        $configuration = $configurationRepository->findOneBy(['const' => 'MAIN_ALLOW_USER_ACCOUNT_CREATION']);  
+        if (isset($value)) {
+            $configuration->setValue(intval($value));     
+        } else {
+            
+            $configuration->setValue(abs($configuration->getValue() -1));            
+        }
+        $configurationRepository->save($configuration, true);     
+
+        $route = $request->headers->get('referer');
+        return $this->redirect($route);
+    }
+
     #[Route('/', name: 'app_configuration_index', methods: ['GET'])]
     public function index(ConfigurationRepository $configurationRepository): Response
     {
