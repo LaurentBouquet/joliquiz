@@ -71,7 +71,7 @@
                     </td> 
                 {% else %}   
                     <td class="text-center">                        
-                        <a class="btn btn-danger btn-sm" href="{{ path('app_send_verif_email', {'id': user.id, 'route': 'user_index', 'group': group_id}) }}" title="{{'Check their email address'|trans}}"><i class="fas fa-at"></i></a>                      
+                        <a class="btn btn-danger btn-sm" href="{{ path('app_send_verif_email', {'id': user.id, 'route': 'user_index', 'group': group_id}) }}" title="{{'Send him an email to confirm his email address'|trans}}"><i class="fas fa-at"></i></a>                      
                     </td>
                 {% endif %}
 
@@ -99,7 +99,7 @@
                         {% if group_name %}
                             <a class="btn btn-warning btn-sm mr-2" href="{{ path('group_remove_user', {'id': group_id, 'user': user.id}) }}" title="{{'Remove from group'|trans}}"><i class="fas fa-user-times"></i></a>
                         {% endif %}                                                
-                        <a class="btn btn-primary btn-sm mr-2" href="{{ path('app_send_resetpassword_email', {'id': user.id, 'route': 'user_index', 'group': group_id}) }}" title="{{'Change their password'|trans}}"><i class="fas fa-lock"></i></a>
+                        <a class="btn btn-primary btn-sm mr-2" href="{{ path('app_send_resetpassword_email', {'id': user.id, 'route': 'user_index', 'group': group_id}) }}" title="{{'Send him an email so that he can change his password'|trans}}"><i class="fas fa-lock"></i></a>
                         {{ include('user/_delete_form.html.twig') }}
                     </div>
                     {% endif %}

@@ -19,6 +19,17 @@ class SessionRepository extends ServiceEntityRepository
         parent::__construct($registry, Session::class);
     }
 
+    public function removeDuplicateWorkouts(int $session_id, int $quiz_id)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "DELETE FROM tbl_workout WHERE session_id = :session_id AND quiz_id = :quiz_id AND number_of_questions < 1 
+                    AND student_id IN (SELECT student_id AS id FROM tbl_workout WHERE session_id = :session_id AND quiz_id = :quiz_id AND number_of_questions > 0);";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam('session_id', $session_id);
+        $stmt->bindParam('quiz_id', $quiz_id);
+        $stmt->executeStatement();
+    }
+
     public function cleanByQuizId(int $quiz_id)
     {
         $conn = $this->getEntityManager()->getConnection();

@@ -1119,7 +1119,7 @@
       </trans-unit>
       <trans-unit id="CjlzJqA" resname="Edit Configuration">
         <source>Edit Configuration</source>
-        <target>Modifier la cnfiguration</target>
+        <target>Modifier la configuration</target>
       </trans-unit>
       <trans-unit id="1QI2U8Z" resname="Configuration index">
         <source>Configuration index</source>
@@ -1160,6 +1160,26 @@
       <trans-unit id="6gMgE3J" resname="Uncategorized question index">
         <source>Uncategorized question index</source>
         <target>Questions sans catégorie</target>
+      </trans-unit>
+      <trans-unit id="WpnxUvr" resname="An email has been sent to %s (%s).">
+        <source>An email has been sent to %s (%s).</source>
+        <target>Un courriel a été envoyé à %s (%s).</target>
+      </trans-unit>
+      <trans-unit id="pYOeI02" resname="Check their email address">
+        <source>Check their email address</source>
+        <target>Vérifier son adresse email</target>
+      </trans-unit>
+      <trans-unit id="GHUFni1" resname="Change their password">
+        <source>Change their password</source>
+        <target>Changer son mot de passe</target>
+      </trans-unit>
+      <trans-unit id="xD4J_1Y" resname="Send him an email to confirm his email address">
+        <source>Send him an email to confirm his email address</source>
+        <target>Lui envoyer un mail pour confirmer son adresse email</target>
+      </trans-unit>
+      <trans-unit id="DAv8Or_" resname="Send him an email so that he can change his password">
+        <source>Send him an email so that he can change his password</source>
+        <target>Lui envoyer un mail pour qu'il puisse modifier son mot de passe</target>
       </trans-unit>
     </body>
   </file>

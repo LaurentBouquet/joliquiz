@@ -251,7 +251,8 @@ class QuizController extends AbstractController
             $session = $sessionRepository->find($session_id);
         }
         if (isset($session)) {
-            $workouts = $session->getWorkouts();
+            $sessionRepository->removeDuplicateWorkouts($session->getId(), $quiz->getId());
+            $workouts = $session->getWorkouts();            
             // $workouts = $workoutRepository->findByQuizAndSession($quiz, $session);
         } else {
             $workouts = $workoutRepository->findByQuizAndDate($quiz, $startedAt);

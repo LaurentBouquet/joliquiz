@@ -114,7 +114,7 @@ class SecurityController extends AbstractController
             $entityManager
         );
 
-        $this->addFlash('success', sprintf($translator->trans('an email has been sent to %s.'), $user->getName()));
+        $this->addFlash('success', sprintf($translator->trans('An email has been sent to %s (%s).'), $user->getName(), $user->getEmail()));
 
         $route = $request->get('route');
         if (isset($route) && !empty($route)) {
@@ -157,7 +157,7 @@ class SecurityController extends AbstractController
                 ])
         );
 
-        $this->addFlash('success', sprintf($translator->trans('An email has been sent to %s.'), $user->getName()));
+        $this->addFlash('success', sprintf($translator->trans('An email has been sent to %s (%s).'), $user->getName(), $user->getEmail()));
 
         $route = $request->get('route');
         if (isset($route) && !empty($route)) {
