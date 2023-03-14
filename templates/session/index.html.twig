@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Session index
+{% endblock %}
+
+{% block body %}
+	<h1>
+		<i class="fa fa-history"></i>
+		{{ 'Quiz "%quiz-title%" history'|trans({'%quiz-title%': quiz.title}) }}
+	</h1>
+
+	{% set show_clean_button = false %}
+
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>{{ 'Started_at'|trans }}</th>
+				<th>{{ 'Ended_at'|trans }}</th>
+				<th class="text-center">{{ 'Students'|trans }}</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for session in sessions %}
+				{% if session.workouts|length < 1 %}
+					{% set show_clean_button = true %}
+				{% endif %}
+				{% if quiz.active %}
+					<tr class="text-warning font-weight-bold" id="session-{{ session.id }}">
+					{% else %}
+						<tr id="quiz-{{ quiz.id }}">
+						{% endif %}
+						<td class="align-middle">{{ session.startedAt ? session.startedAt|date('d/m/Y H:i') : '' }}</td>
+						<td class="align-middle">{{ session.endedAt ? session.endedAt|date('d/m/Y H:i') : '' }}</td>
+						<td class="text-center align-middle">{{ session.workouts|length }}</td>
+						<td class="align-middle">
+							<div class="form-check-inline">
+								{% if is_granted('ROLE_TEACHER') %}
+									{{ include('session/_delete_form.html.twig') }}
+								{% endif %}
+								{% if session.workouts|length > 0 %}
+									<a class="btn btn-primary mx-1" href="{{ path('quiz_monitor', {'id': quiz.id, 'session': session.id}) }}">
+										<i class="fas fa-chalkboard-teacher"></i> {{ 'Follow the progress'|trans }}										
+									</a>
+								{% endif %}
+								{% if session.workouts|length > 2 %}
+									<a class="btn btn-warning mx-1" href="{{ path('quiz_podium', {'id': quiz.id, 'session': session.id}) }}">
+										<i class="fas fa-poll"></i> {{ 'Podium'|trans }}										
+									</a>
+								{% endif %}
+								{% if session.workouts|length > 0 %}
+									<a class="btn btn-info mx-1" href="{{ path('quiz_analyse', {'id': quiz.id, 'session': session.id}) }}">
+										<i class="fas fa-chart-line"></i> {{ 'Answers analyse'|trans }}										
+									</a>
+								{% endif %}
+							</div>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="4">{{'no records found'|trans}}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</tbody>
+	</table>
+
+	<a class="btn btn-secondary" href="{{ path('quiz_index') }}"><i class="fas fa-arrow-circle-left"></i> {{'Back to list'|trans}}</a>    
+
+	{% if (is_granted('ROLE_TEACHER')) %}
+		{% if not quiz.active and show_clean_button %}
+			<a class="btn btn-danger" href="{{ path('session_clean', {'id': quiz.id}) }}" title="{{'Delete inactive sessions that are without learners and/or not completed'|trans}}">
+				<i class="fas fa-trash-alt"></i>
+				{{'Clean history'|trans}}</a>
+		{% endif %}
+	{% endif %}
+
+{% endblock %}

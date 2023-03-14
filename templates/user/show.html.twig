@@ -8,7 +8,7 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>{{ 'Id'|trans }}</th>
+                <th>{{ 'N°'|trans }}</th>
                 <td>{{ user.id }}</td>
             </tr>
             <tr>
@@ -20,20 +20,36 @@
                 <td>{{ user.email }}</td>
             </tr>
             <tr>
-                <th>{{ 'IsActive'|trans }}</th>
+                <th>{{ 'Firstname'|trans }}</th>
+                <td>{{ user.firstname }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Lastname'|trans }}</th>
+                <td>{{ user.lastname }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Is active'|trans }}</th>
                 <td>{{ user.isActive ? 'Yes' : 'No' }}</td>
             </tr>
             <tr>
-                <th>{{ 'Roles'|trans }}</th>
-                <td>{{ user.roles ? user.roles|join(', ') : '' }}</td>
+                <th>{{ 'To receive result by email'|trans }}</th>
+                <td>{{ user.toReceiveMyResultByEmail ? 'Yes' : 'No' }}</td>
             </tr>
+            <tr>
+                <th>{{ 'Group(s)'|trans }}</th>
+                <td>{{ user.groups ? user.groups|join(', ') : '' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Role(s)'|trans }}</th>
+                <td>{{ user.roles ? user.roles|join(', ') : '' }}</td>
+            </tr>            
         </tbody>
     </table>
 
-    <a class="btn btn-primary mr-2" href="{{ path('user_index') }}"><i class="fas fa-arrow-circle-left"></i> {{'Back to list'|trans}}</a>
 
     {% if is_granted('ROLE_SUPER_ADMIN') %}
-        <a class="btn btn-info" href="{{ path('user_sendmail', {'id': user.id}) }}"><i class="fas fa-pencil-alt"></i> {{'Send confirmation mail'|trans}}</a>
+        <a class="btn btn-secondary mr-2" href="{{ path('user_index') }}"><i class="fas fa-arrow-circle-left"></i> {{'Back to list'|trans}}</a>
+        {# <a class="btn btn-info" href="{{ path('user_sendmail', {'id': user.id}) }}"><i class="fas fa-pencil-alt"></i> {{'Send confirmation mail'|trans}}</a> #}
         <a class="btn btn-primary" href="{{ path('user_edit', {'id': user.id}) }}"><i class="fas fa-pencil-alt"></i> {{'Edit'|trans}}</a>
     {% endif %}
 

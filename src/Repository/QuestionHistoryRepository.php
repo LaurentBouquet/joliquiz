@@ -69,6 +69,32 @@ class QuestionHistoryRepository extends ServiceEntityRepository
             ;
         }        
 
+        public function findAllByQuizAndSession($quiz, $session)
+        {
+            $builder = $this->createQueryBuilder('qh');
+
+                $builder->addSelect("qh.question_id, count(qh.id) as question_count, avg(qh.question_success) as question_success, qh.question_text as question_text");
+                
+                $builder->andWhere('qh.question_success IS NOT NULL');            
+
+                // select only questions of this $quiz
+                $builder->innerJoin('App\Entity\Workout', 'w', 'WITH', 'qh.workout = w.id');
+                $builder->andWhere('w.quiz = :quiz_id');
+                $builder->setParameter('quiz_id', $quiz->getId());
+         
+                $builder->andWhere('w.session >= :session');
+                $builder->setParameter('session', $session);
+
+                $builder->groupBy('qh.question_id');
+
+                $builder->orderBy('question_success', 'ASC');
+                $builder->addOrderBy('question_count', 'DESC');
+                
+                return $builder->getQuery()->getResult();
+
+            ;
+        }        
+
 
 
 //    /**

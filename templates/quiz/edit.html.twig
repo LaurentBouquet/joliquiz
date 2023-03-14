@@ -3,10 +3,10 @@
 {% block title %}{{'Edit Quiz'|trans}} "{{ quiz.title }}"{% endblock %}
 
 {% block body %}
-    <h1>{{'Edit Quiz'|trans}} "{{ quiz.title }}"</h1>
+    <h1><i class="fa fa-graduation-cap"></i> {{'Edit Quiz'|trans}} "<span style="background-color: #ffff00;" }}>{{ quiz.title }}</span>"</h1>
 
     {% if is_granted('ROLE_TEACHER') %}
-        {{ include('quiz/_form.html.twig', {'button_label': 'Update'|trans}) }}
+        {{ include('quiz/_form.html.twig', {'button_label': 'Save'|trans}) }}
     {% endif %}
 
 {% endblock %}

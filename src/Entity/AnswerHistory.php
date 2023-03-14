@@ -3,52 +3,37 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\AnswerHistoryRepository;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\AnswerHistoryRepository")
- * @ORM\Table(name="tbl_history_answer")
- */
+#[ORM\Entity(repositoryClass: AnswerHistoryRepository::class)]
+#[ORM\Table(name: 'tbl_history_answer')]
 class AnswerHistory
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: 'integer')]
     private $answer_id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\QuestionHistory", inversedBy="answersHistory")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: QuestionHistory::class, inversedBy:'answersHistory')]
+    #[ORM\JoinColumn(nullable: false)]
     private $question_history;
 
-    /**
-     * @ORM\Column(type="text")
-     */
+    #[ORM\Column(type: 'text')]
     private $answer_text;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $answer_correct;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $correct_given;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $answer_succes;
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }

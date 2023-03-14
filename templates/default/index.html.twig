@@ -3,9 +3,19 @@
 {% block title %}{{'Welcome!'|trans}}{% endblock %}
 
 {% block body %}
+
+    {% if (not is_granted('USER')) %}
+        <script type="text/javascript">
+            setInterval(function () {
+                window.location.assign("/login/");
+            }, 120000);
+        </script>
+    {% endif %}
+
     <div class="example-wrapper">
 
-        <img src="https://raw.githubusercontent.com/LaurentBouquet/joliquiz/assets/JoliQuiz-300x111.png" alt="JoliQuiz">
+        <!-- <img src="/images/JoliQuiz-300x111.png" alt="JoliQuiz"> -->
+        <img src="/images/JoliQuiz-300x111_smiley.png" alt="JoliQuiz">        
 
         <div class="jumbotron">
             <h3>{{'Need to check on students’ performance?'|trans}}</h3>
@@ -39,7 +49,7 @@
             </ul>
             <p>{{'License:'|trans}} {{'It is free software that you can copy and modify.'|trans}}</p>
 
-            <a class="btn btn-primary float-md-right" href="{{ path('login') }}" role="button">{{ 'Let\'s start now'|trans}} <i class="fas fa-arrow-circle-right"></i></a>
+            <a class="btn btn-primary float-md-right" href="{{ path('app_login') }}" role="button">{{ 'Let\'s start now'|trans}} <i class="fas fa-arrow-circle-right"></i></a>
         </div>
 
     </div>

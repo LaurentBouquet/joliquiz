@@ -1,11 +1,9 @@
 ![JoliQuiz](https://raw.githubusercontent.com/LaurentBouquet/joliquiz/assets/JoliQuiz.png?raw=true)
 
-[![Build Status](https://travis-ci.com/LaurentBouquet/joliquiz.svg?branch=master)](https://travis-ci.com/LaurentBouquet/joliquiz)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ffbbae0ffc224808a43894742a79df91)](https://www.codacy.com/app/LaurentBouquet/joliquiz?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=LaurentBouquet/joliquiz&amp;utm_campaign=Badge_Grade)
 [![CodeFactor](https://www.codefactor.io/repository/github/laurentbouquet/joliquiz/badge)](https://www.codefactor.io/repository/github/laurentbouquet/joliquiz)
 
 ## Description
-Joliquiz is an online quiz software, a PHP web application developed using the [Symfony framework (version 4)](https://symfony.com/).
+Joliquiz is an online quiz software, a PHP web application developed using the [Symfony framework (version 6)](https://symfony.com/).
 
 
 ## Screenshots
@@ -158,17 +156,6 @@ Administrator
 Superadministrator
  - Username : superadmin
  - Password : superadmin
-
-
-
-## Live Demo
-
-[https://joliquiz.herokuapp.com/](https://joliquiz.herokuapp.com/)
-
-Thanks to [Heroku](https://www.heroku.com/)
-
-<!-- French version of JoliQuiz : [https://joliquiz.joliciel.fr/](https://joliquiz.joliciel.fr/) -->
-
 
 
 

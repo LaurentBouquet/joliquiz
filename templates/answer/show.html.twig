@@ -8,7 +8,7 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>{{ 'Id'|trans }}</th>
+                <th>{{ 'N°'|trans }}</th>
                 <td>{{ answer.id }}</td>
             </tr>
             <tr>
@@ -22,7 +22,7 @@
         </tbody>
     </table>
 
-    <a class="btn btn-primary mr-2" href="{{ path('answer_index') }}"><i class="fas fa-arrow-circle-left"></i> {{'Back to list'|trans}}</a>
+    <a class="btn btn-secondary mr-2" href="{{ path('answer_index') }}"><i class="fas fa-arrow-circle-left"></i> {{'Back to list'|trans}}</a>
 
     {% if is_granted('ROLE_TEACHER') %}
         <a class="btn btn-primary" href="{{ path('answer_edit', {'id': answer.id}) }}"><i class="fas fa-pencil-alt"></i> {{'Edit'|trans}}</a>

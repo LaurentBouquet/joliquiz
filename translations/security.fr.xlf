@@ -19,7 +19,7 @@
       </trans-unit>
       <trans-unit id="qr0aiUo" resname="Invalid credentials.">
         <source>Invalid credentials.</source>
-        <target>Identifiants invalides.</target>
+        <target>Informations d'identification non valides.</target>
       </trans-unit>
       <trans-unit id="zrJWK0F" resname="Cookie has already been used by someone else.">
         <source>Cookie has already been used by someone else.</source>
@@ -64,6 +64,26 @@
       <trans-unit id="O5ZyxHr" resname="Account is locked.">
         <source>Account is locked.</source>
         <target>Le compte est bloqué.</target>
+      </trans-unit>
+      <trans-unit id="gd.MOnZ" resname="Too many failed login attempts, please try again later.">
+        <source>Too many failed login attempts, please try again later.</source>
+        <target>Plusieurs tentatives de connexion ont échoué, veuillez réessayer plus tard.</target>
+      </trans-unit>
+      <trans-unit id="l9VYRj0" resname="Invalid or expired login link.">
+        <source>Invalid or expired login link.</source>
+        <target>Lien de connexion invalide ou expiré.</target>
+      </trans-unit>
+      <trans-unit id="9qGC3hG" resname="Too many failed login attempts, please try again in %minutes% minute.">
+        <source>Too many failed login attempts, please try again in %minutes% minute.</source>
+        <target>Plusieurs tentatives de connexion ont échoué, veuillez réessayer dans %minutes% minute.</target>
+      </trans-unit>
+      <trans-unit id="AJR3lMs" resname="Too many failed login attempts, please try again in %minutes% minutes.">
+        <source>Too many failed login attempts, please try again in %minutes% minutes.</source>
+        <target>Plusieurs tentatives de connexion ont échoué, veuillez réessayer dans %minutes% minutes.</target>
+      </trans-unit>
+      <trans-unit id="fEUeD0N" resname="New Password">
+        <source>New Password</source>
+        <target>Nouveau mot de passe</target>
       </trans-unit>
     </body>
   </file>

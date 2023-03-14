@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{'Uncategorized question index'|trans}}{% endblock %}
+
+{% block body %}
+    <h1>
+        <i class="fa fa-tasks"></i>
+        {{'Uncategorized question index'|trans}} 
+        {% if category_short_name %}
+            {% trans %}of the category{% endtrans %} "<span style="background-color: #ffff00;" }}>{{ category_short_name }}</span>"
+        {% endif %}
+        ({{ questions|length }})
+    </h1>    
+
+    {% if is_granted('ROLE_TEACHER') %}
+        <div class="mb-3">
+            <a class="btn btn-secondary mr-2" href="{{ path('question_index') }}"><i class="fas fa-arrow-circle-left"></i> {{'Back to list'|trans}}</a>
+            {% if category_id %}
+                <a class="btn btn-primary" href="{{ path('category_edit', {'id': category_id}) }}"><i class="fas fa-pencil-alt"></i> {{'Edit Category'|trans}}</a>
+                {% if (questions|length) > 3 %}
+                    <a class="btn btn-warning" href="{{ path('quiz_new', {'category': category_id}) }}"><i class="fas fa-plus"></i> {{'Create new quiz'|trans}}</a>
+                {% endif %}
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>{{ 'Label'|trans }}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for question in questions %}
+            <tr>
+                <td>
+                    {{ question.text[:60] }} {{ question.text|length>60 ? '...' : '' }}
+                </td>
+            {% if is_granted('ROLE_TEACHER') %}
+                <td>
+                    <div class="form-check-inline">
+                        {% if is_granted('ROLE_TEACHER') %}
+                            <a class="btn btn-primary btn-sm mr-2" href="{{ path('question_edit', {'id': question.id}) }}" title="{{'Edit'|trans}}"><i class="fas fa-pencil-alt"></i></a>
+                            {{ include('question/_delete_form.html.twig') }}
+                        {% else %}
+                            <a class="btn btn-primary btn-sm mr-2" href="{{ path('question_show', {'id': question.id}) }}" title="{{'Show'|trans}}"><i class="fas fa-eye"></i></a>
+                        {% endif %}
+                    </div>
+                </td>
+            {% endif %}
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">{{'no records found'|trans}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

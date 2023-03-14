@@ -5,27 +5,67 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
-        <link rel="icon" href="../../../../favicon.ico">
+        <link rel="icon" href="/images/favicon.ico">
 
-        <title>JoliQuiz -
-            {% block title %}{% endblock %}
-        </title>
+        <title>JoliQuiz</title>
 
         {% block stylesheets %}{% endblock %}
 
         <!-- Bootstrap core CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
 
         <!-- Custom styles for this template -->
-        <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+        <link rel="stylesheet" href="/css/style.css">
 
         <!-- Fonts Awesome CSS -->
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+        <link rel="stylesheet" href="/css/fontawesome.css">
 
     </head>
 
     <body>
-        {# <main role="main" class="container"> #}
+
+        <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">           
+            <a class="navbar-brand text-warning" title="JoliQuiz"><img src="/images/logo_MENU.png" height="32" alt="JoliQuiz"></a>
+            <div class="collapse navbar-collapse" id="navbar">
+                <ul class="navbar-nav mr-auto">
+
+                    {# <li>                                             
+                        <a class="nav-link text-warning switch" id="test" href="#">
+                            <i id="light-dark-mode-toggle-button" class="fas fa-toggle-off"></i>
+                        </a>
+                    </li>   #} 
+                            
+                    {# <li>
+                        <span class="nav-link active text-dark">{{ (locale ?? 'en')|upper }}</span>
+                    </li> #}
+
+                    <li>
+                        <span class="nav-link text-dark">{% block title %}{% endblock %}</span>
+                    </li>                     
+                </ul>
+                <ul class="navbar-nav">
+                    {% if is_granted('ROLE_USER') %}
+                        <li>
+                            <a class="nav-link" title="{{ 'LoginType'|trans }} : {{ app.user.loginType }}">
+                                <i class="fas fa-user"></i>
+                                {% if app.user %}
+                                    <strong>{{ app.user.username }}</strong>
+                                {% endif %}
+                            </a>
+                        </li>
+                        <!-- if (app.request.attributes.get('_route') in ['quiz_result']) -->
+                        {% if (score is defined) %}
+                            <li>
+                                <a class="nav-link" href="{{ path('app_logout') }}">{{'Logout'|trans}}</a>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                </ul>
+            </div>
+
+        </nav>
+
+        <main role="main" class="">
 
             <div class="header">
                 <div class="col-sm-12">
@@ -33,7 +73,7 @@
                 </div>
             </div>
             
-            <div class="starter-template">
+            <div class="starter-template"> 
                 <div class="col-md-12 col-lg-12 col-xl-12">
                     {% for label, messages in app.flashes %}
                         {% for message in messages %}
@@ -47,17 +87,19 @@
                 <div class="col-sm-12">
                     {% block body %}{% endblock %}
                 </div>
-            </div>
+            </div> 
 
-        {# </main> #}
+        </main>
+
+        <br/>
         <!-- /.container -->
 
         <!-- Bootstrap core JavaScript ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
-
+        <script src="/js/jquery-3.3.1.slim.min.js"></script>
+        <script src="/js/popper.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        
         {% block javascripts %}{% endblock %}
 
     </body>

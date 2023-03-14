@@ -5,11 +5,12 @@ namespace App\Controller;
 use App\Entity\Category;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/category")
@@ -23,13 +24,15 @@ class CategoryController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_USER', null, 'Access not allowed');
 
-        return $this->render('category/index.html.twig', ['categories' => $categoryRepository->findAll()]);
+        $categories = $categoryRepository->findAll($this->isGranted('ROLE_TEACHER'), $this->isGranted('ROLE_ADMIN'));
+
+        return $this->render('category/index.html.twig', ['categories' => $categories]);
     }
 
     /**
      * @Route("/new", name="category_new", methods="GET|POST")
      */
-    public function new(Request $request, EntityManagerInterface $em): Response
+    public function new(Request $request, EntityManagerInterface $em, TranslatorInterface $translator): Response
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
@@ -39,19 +42,56 @@ class CategoryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //$em = $this->getDoctrine()->getManager();
+            $category->setCreatedBy($this->getUser());
             $em->persist($category);
             $em->flush();
-
-            $this->addFlash('success', sprintf('Category "%s" is created.', $category->getShortname()));
-
-            return $this->redirectToRoute('category_index');
+            $this->addFlash('success', sprintf($translator->trans('Category "%s" is created.'), $category->getShortname()));
+            // return $this->redirectToRoute('category_index');
+            return $this->redirectToRoute('question_new', ['category' => $category->getId()]);
         }
 
         return $this->render('category/new.html.twig', [
             'category' => $category,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/{id}/edit", name="category_edit", methods="GET|POST")
+     */
+    public function edit(Request $request, Category $category, EntityManagerInterface $em, TranslatorInterface $translator): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
+
+        $form = $this->createForm(CategoryType::class, $category);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->flush();
+            $this->addFlash('success', sprintf($translator->trans('Category "%s" is updated.'), $category->getShortname()));
+            return $this->redirectToRoute('category_edit', ['id' => $category->getId()]);
+        }
+
+        return $this->render('category/edit.html.twig', [
+            'category' => $category,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}", name="category_delete", methods="POST")
+     */
+    public function delete(Request $request, Category $category, EntityManagerInterface $em, TranslatorInterface $translator): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Access not allowed');
+
+        if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
+            $em->remove($category);
+            $em->flush();
+            $this->addFlash('success', sprintf($translator->trans('Category "%s" is deleted.'), $category->getShortname()));
+        }
+
+        return $this->redirectToRoute('category_index');
     }
 
     /**
@@ -64,47 +104,4 @@ class CategoryController extends AbstractController
         return $this->render('category/show.html.twig', ['category' => $category]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="category_edit", methods="GET|POST")
-     */
-    public function edit(Request $request, Category $category, EntityManagerInterface $em): Response
-    {
-        $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
-
-        $form = $this->createForm(CategoryType::class, $category);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            
-            //$this->getDoctrine()->getManager()->flush();
-            $em->flush();
-
-            $this->addFlash('success', sprintf('Category "%s" is updated.', $category->getShortname()));
-
-            return $this->redirectToRoute('category_edit', ['id' => $category->getId()]);
-        }
-
-        return $this->render('category/edit.html.twig', [
-            'category' => $category,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="category_delete", methods="DELETE")
-     */
-    public function delete(Request $request, Category $category, EntityManagerInterface $em): Response
-    {
-        $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
-
-        if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
-            //$em = $this->getDoctrine()->getManager();
-            $em->remove($category);
-            $em->flush();
-
-            $this->addFlash('success', sprintf('Category "%s" is deleted.', $category->getShortname()));
-        }
-
-        return $this->redirectToRoute('category_index');
-    }
 }

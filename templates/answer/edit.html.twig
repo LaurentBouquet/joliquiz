@@ -6,7 +6,7 @@
     <h1>{{'Edit Answer'|trans}}</h1>
 
     {% if is_granted('ROLE_TEACHER') %}
-        {{ include('answer/_form.html.twig', {'button_label': 'Update'|trans}) }}
+        {{ include('answer/_form.html.twig', {'button_label': 'Save'|trans}) }}
     {% endif %}
 
 {% endblock %}

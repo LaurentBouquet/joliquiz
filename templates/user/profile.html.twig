@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{'My user account'|trans}}{% endblock %}
+
+{% block body %}
+
+	{% if (not is_granted('ROLE_TEACHER')) %}
+        <script type="text/javascript">
+            setInterval(function () {
+                window.location.assign("/quiz/");
+            }, 60000);
+        </script>
+	{% endif %}
+
+    <a class="float-right m-2" href="{{ path('user_password') }}">
+        <button class="btn btn-primary"><i class="fas fa-lock"></i> {{ button_label|default('Change my password'|trans) }}</button>
+    </a>
+    {% if not user.isVerified %}
+    <a class="float-right m-2" href="{{ path('app_send_verif_email', {'id': user.id}) }}">
+        <button class="btn btn-danger"><i class="fas fa-at"></i> {{ button_label|default('Check my email address'|trans) }}</button>
+    </a>
+    {% endif %}
+
+    <h1><i class="fas fa-user"></i> {{'My user account'|trans}}</h1>
+
+    {{ form_start(form) }}
+        
+        {{ form_row(form.firstname) }}
+        {{ form_row(form.lastname) }}            
+        {{ form_row(form.username) }}
+        {% if user.isVerified %}
+            {{ form_row(form.email, {'attr': {'class': 'text-success'}}) }}  
+        {% else %}
+            {{ form_row(form.email, {'attr': {'class': 'text-danger'}}) }}  
+        {% endif %}
+        {# <div class="form-group">
+            <label class="required" for="user_roles">{{'Roles'|trans}}</label>
+            <div class="alert alert-warning" role="alert">
+                {% for role in user.roles %}
+                    {{ role }} <br/>
+                {% endfor %}
+            </div>
+        </div>         #}
+        <div class="form-group">
+            <label class="required" for="user_groups">{{'Groups'|trans}}</label>
+            <div class="alert alert-warning" role="alert">
+                {% for group in user.groups %}
+                    {{ group.name }} <br/>
+                {% endfor %}
+            </div>
+        </div>   
+        {# {{ form_row(form.plainPassword) }} #}
+        {{ form_row(form.toReceiveMyResultByEmail) }}      
+    
+        <button class="btn btn-primary">
+            <i class="fas fa-check"></i> {{ button_label|default('Save my profile'|trans) }}
+        </button>
+
+    {{ form_end(form) }}
+
+{% endblock %}

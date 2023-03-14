@@ -5,11 +5,12 @@ namespace App\Controller;
 use App\Entity\Answer;
 use App\Form\AnswerType;
 use App\Repository\AnswerRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/answer")
@@ -29,7 +30,7 @@ class AnswerController extends AbstractController
     /**
      * @Route("/new", name="answer_new", methods="GET|POST")
      */
-    public function new(Request $request, EntityManagerInterface $em): Response
+    public function new(Request $request, EntityManagerInterface $em, TranslatorInterface $translator): Response
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
@@ -38,11 +39,10 @@ class AnswerController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //$em = $this->getDoctrine()->getManager();
             $em->persist($answer);
             $em->flush();
 
-            $this->addFlash('success', sprintf('Answer #%s is created.', $answer->getId()));
+            $this->addFlash('success', sprintf($translator->trans('Answer #%s is created.'), $answer->getId()));
 
             return $this->redirectToRoute('answer_index');
         }
@@ -54,19 +54,9 @@ class AnswerController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="answer_show", methods="GET")
-     */
-    public function show(Answer $answer): Response
-    {
-        $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
-
-        return $this->render('answer/show.html.twig', ['answer' => $answer]);
-    }
-
-    /**
      * @Route("/{id}/edit", name="answer_edit", methods="GET|POST")
      */
-    public function edit(Request $request, Answer $answer, EntityManagerInterface $em): Response
+    public function edit(Request $request, Answer $answer, EntityManagerInterface $em, TranslatorInterface $translator): Response
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
@@ -75,10 +65,9 @@ class AnswerController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             
-            //$this->getDoctrine()->getManager()->flush();
             $em->flush();
             
-            $this->addFlash('success', sprintf('Answer #%s is updated.', $answer->getId()));
+            $this->addFlash('success', sprintf($translator->trans('Answer #%s is updated.'), $answer->getId()));
 
             return $this->redirectToRoute('answer_edit', ['id' => $answer->getId()]);
         }
@@ -90,20 +79,30 @@ class AnswerController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="answer_delete", methods="DELETE")
+     * @Route("/{id}", name="answer_delete", methods="POST")
      */
     public function delete(Request $request, Answer $answer, EntityManagerInterface $em): Response
     {
         $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
 
         if ($this->isCsrfTokenValid('delete'.$answer->getId(), $request->request->get('_token'))) {
-            //$em = $this->getDoctrine()->getManager();
             $em->remove($answer);
             $em->flush();
 
-            $this->addFlash('success', sprintf('Answer #%s is deleted.', $answer->getId()));
+            $this->addFlash('success', sprintf($translator->trans('Answer #%s is deleted.'), $answer->getId()));
         }
 
         return $this->redirectToRoute('answer_index');
     }
+    
+    /**
+     * @Route("/{id}", name="answer_show", methods="GET")
+     */
+    public function show(Answer $answer): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_TEACHER', null, 'Access not allowed');
+
+        return $this->render('answer/show.html.twig', ['answer' => $answer]);
+    }
+
 }

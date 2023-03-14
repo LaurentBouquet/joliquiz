@@ -2,38 +2,27 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\Table;
+use App\Repository\AnswerRepository;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\AnswerRepository")
- * @ORM\Table(name="tbl_answer")
- */
+
+#[ORM\Entity(repositoryClass: AnswerRepository::class)]
+#[ORM\Table(name: 'tbl_answer')]
 class Answer
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="text")
-     */
+    #[ORM\Column(type: 'text')]
     private $text;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $correct;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Question", inversedBy="answers")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: Question::class, inversedBy:'answers')]
+    #[ORM\JoinColumn(nullable: false)]
     private $question;
 
     /**
@@ -45,10 +34,10 @@ class Answer
 
     public function __construct()
     {
-        $this->questions = new ArrayCollection();
+        //$this->questions = new ArrayCollection();
     }
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }

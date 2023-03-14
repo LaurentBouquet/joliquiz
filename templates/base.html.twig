@@ -1,11 +1,15 @@
 <!DOCTYPE html>
+<<<<<<< HEAD
 <html lang="{{ (locale ?? 'en') }}">
+=======
+<html lang="{{ (locale ?? 'en')|upper }}">
+>>>>>>> develop-mysql-symf6
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
-        <link rel="icon" href="../../../../favicon.ico">
+        <link rel="icon" href="/images/favicon.ico">
 
         <title>JoliQuiz -
             {% block title %}{% endblock %}
@@ -14,65 +18,141 @@
         {% block stylesheets %}{% endblock %}
 
         <!-- Bootstrap core CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
 
         <!-- Custom styles for this template -->
-        <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+        <link rel="stylesheet" href="/css/style.css">
 
         <!-- Fonts Awesome CSS -->
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+        <link rel="stylesheet" href="/css/fontawesome.css">
 
     </head>
 
     <body>
 
-        <nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
-            <a class="navbar-brand text-warning" title="JoliQuiz" href="/"><img src="https://raw.githubusercontent.com/LaurentBouquet/joliquiz/assets/JoliQuiz_logo-30x30_transparent_bold.png" alt="JoliQuiz"></a>
+        {% if (not is_granted('ROLE_TEACHER')) %}
+            <script type="text/javascript">
+                setInterval(function () {
+                    window.location.assign("/logout/");
+                }, 600000);
+            </script>
+        {% endif %}
+
+        <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+            <a class="navbar-brand text-warning" title="JoliQuiz" href="/"><img src="/images/logo_MENU.png" height="32" alt="JoliQuiz"></a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="navbar-nav mr-auto">
-                    <!-- <li>
+
+                    {# <li>                                             
+                        <a class="nav-link text-warning switch" id="test" href="#">
+                            <i id="light-dark-mode-toggle-button" class="fas fa-toggle-off"></i>
+                        </a>
+                    </li>   #}
+                            
+                    <li>
                         <span class="nav-link active text-dark">{{ (locale ?? 'en')|upper }}</span>
-                    </li> -->
+                    </li>
+                    
                     {% if is_granted('ROLE_USER') %}
                         <li>
-                            <a class="nav-link {% if '/quiz/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('quiz_index') }}">{{'Quizzes'|trans}}</a>
+                            <a class="nav-link {% if '/quiz/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('quiz_index') }}"><i class="fa fa-graduation-cap"></i> {{'Quizzes'|trans}}</a>
                         </li>
                     {% endif %}
                     {% if is_granted('ROLE_TEACHER') %}
-                        <li>
+                        {# <li>
                             <a class="nav-link {% if '/question/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('question_index') }}">{{'Questions'|trans}}</a>
+                        </li> #}
+                        <li>
+                            <a class="nav-link {% if '/category/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('category_index') }}"><i class="fa fa-tag"></i> {{'Categories'|trans}}</a>
                         </li>
                     {% endif %}
                     {% if is_granted('ROLE_ADMIN') %}
                         <li>
-                            <a class="nav-link {% if '/category/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('category_index') }}">{{'Categories'|trans}}</a>
+                            <a class="nav-link {% if '/group/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('group_index') }}"><i class="fa fa-users"></i> {{'Groups'|trans}}</a>
+                        </li>
+                        <li>
+                            <a class="nav-link {% if '/user/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('user_index') }}"><i class="fa fa-user"></i> {{'Users'|trans}}</a>
                         </li>
                     {% endif %}
                     {% if is_granted('ROLE_SUPER_ADMIN') %}
+                    <!--
                         <li>
-                            <a class="nav-link {% if '/user/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('user_index') }}">{{'Users'|trans}}</a>
+                            <a class="nav-link {% if '/school/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('school_index') }}">{{'Schools'|trans}}</a>
                         </li>
-                    {% endif %}
+                    -->
+                    {% endif %}                    
+
                 </ul>
-                <ul class="navbar-nav">
+                <ul class="navbar-nav">                
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        {# <li>
+                            <a class="nav-link {% if '/configuration/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('app_configuration_allow_account_creation') }}" title="{{'Allow user account creation'|trans}}"><i class="fas fa-user-plus"></i></a>
+                        </li> #}
+                        <li>
+                            <a class="nav-link {% if '/configuration/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('app_configuration_allow_account_creation', {'value': 0}) }}" title="{{'Disallow user account creation'|trans}}"><i class="fas fa-user-plus text-danger"></i></a>                            
+                        </li>
+                        <li>
+                            <a class="nav-link {% if '/configuration/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('app_configuration_allow_account_creation', {'value': 1}) }}" title="{{'Allow user account creation'|trans}}"><i class="fas fa-user-plus text-success"></i></a>                            
+                        </li>
+                        <li>
+                            <a class="nav-link {% if '/configuration/' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('app_configuration_index') }}" title="{{'Configuration'|trans}}"><i class="fas fa-tools"></i></a>
+                        </li>
+
+                    {% endif %}                      
                     {% if is_granted('ROLE_USER') %}
-                        <li>
-                            <div class="nav-link disabled">
-                                <i class="fas fa-user"></i>
-                                {% if app.user %}
-                                    <strong>{{ app.user.username }}</strong>
-                                {% endif %}
-                            </div>
-                        </li>
-                        <li>
-                            <a class="nav-link" href="{{ path('logout') }}">{{'Logout'|trans}}</a>
-                        </li>
+                        {% if app.user %}   
+                            {% if (is_granted('ROLE_TEACHER')) %}
+                                    <li>                                             
+                                        <a title="{{ app.user.email }}" class="nav-link" href="{{ path('user_profile') }}">
+                                            <span><i class="fas fa-user"></i> <strong>{{ app.user.username }}</strong></span>
+                                        </a>
+                                    </li>
+                            {% else %}
+                                {% if quiz is not defined %}
+                                    <li>                                             
+                                        <a title="{{ app.user.email }}" class="nav-link" href="{{ path('user_profile') }}">
+                                            <span><i class="fas fa-user"></i> <strong>{{ app.user.username }}</strong></span>
+                                        </a>
+                                    </li>
+                                {% endif %}                            
+                            {% endif %}
+                        {% endif %}                        
+                        <li>                        
+                            <a class="nav-link" href="{{ path('app_logout2') }}">
+                                <i class="fas fa-sign-out-alt"></i> 
+                                {% if '/quiz/' not in app.request.server.get('REQUEST_URI') %} {{'Logout'|trans}}{% endif %}
+                            </a>                                                
+                        </li> 
                     {% else %}
+                        {% if app.user %}
+                            {% if quiz is not defined %}
+                                <li>                                             
+                                    <a title="{{ app.user.email }}" class="nav-link" href="{{ path('user_profile') }}">
+                                        <span><i class="fas fa-user"></i> <strong>{{ app.user.username }}</strong></span>
+                                    </a>
+                                </li>
+                            {% endif %} 
+                        {% endif %}                         
+                        
+                        {% if MAIN_ALLOW_USER_ACCOUNT_CREATION is defined %}
+                            {% if MAIN_ALLOW_USER_ACCOUNT_CREATION > 0 %}
+                                <li>
+                                    <a class="nav-link text-success {% if '/register' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('app_register') }}">
+                                        <i class="fas fa-user"></i> {{'Sign up'|trans}}
+                                    </a>
+                                </li>
+                            {% endif %}    
+                        {% endif %}   
+                        
                         <li>
-                            <a class="nav-link {% if '/register' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('register') }}">{{'Sign up'|trans}}</a>
-                        </li>
-                        <li>
-                            <a class="nav-link {% if '/login' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('login') }}">{{'Sign in'|trans}}</a>
+                            <a class="nav-link text-primary {% if '/login' in app.request.server.get('REQUEST_URI') %} active {% endif %}" href="{{ path('app_login') }}">
+                                <i class="fas fa-lock"></i> {{'Sign in'|trans}}
+                            </a>
                         </li>
                     {% endif %}
                 </ul>
@@ -80,7 +160,7 @@
 
         </nav>
 
-        <main role="main" class="container">
+        <main role="main" class=""> <!-- class="container" -->
 
             <div class="starter-template">
                 <div class="col-md-12 col-lg-12 col-xl-12 py-4">
@@ -88,7 +168,7 @@
                         {% for message in messages %}
                             <div class="alert alert-{{ label }}" role="alert">
                                 <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                                {{ message }}
+                                {{ message|trans }}
                             </div>
                         {% endfor %}
                     {% endfor %}
@@ -104,9 +184,10 @@
 
         <!-- Bootstrap core JavaScript ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+        <script src="/js/jquery-3.3.1.slim.min.js"></script>
+        <script src="/js/popper.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/darkmode.js"></script>
 
         {% block javascripts %}{% endblock %}
 

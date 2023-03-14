@@ -1,0 +1,23 @@
+{% extends 'base_without_menu.html.twig' %}
+
+{% block title %}{{ 'Email address confirmation email sent'|trans }}{% endblock %}
+
+{% block body %}
+
+	{% if (not is_granted('ROLE_TEACHER')) %}
+        <script type="text/javascript">
+            setInterval(function () {
+                window.location.assign("/quiz/");
+            }, 60000);
+        </script>
+	{% endif %}
+    
+    <p>
+        {{ message }} 
+    </p>
+    <p>     
+        {{ 'An email has just been sent containing a link for you to confirm your email address: %user_email%.'|trans({'%user_email%': user_email}) }}<br/>
+        {{ 'This link will expire in'|trans }} {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.            
+    </p>
+    <p>{{ "If you don't receive an email please check your spam folder."|trans }}</p>
+{% endblock %}

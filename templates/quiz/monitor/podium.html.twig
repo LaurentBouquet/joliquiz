@@ -1,7 +1,8 @@
 {% extends 'base_without_menu.html.twig' %}
 
-{% block title %}{{ quiz.title }}
-    "{{ quiz.title }}"{% endblock %}
+{% block title %}
+{{'Quiz'|trans}} "{{ quiz.title }}" {{'started on'|trans}} {{ startedAt|date('d/m/Y') }} {{'at'|trans}} {{ startedAt|date('H:i:s') }}
+{% endblock %}
 
 {% block stylesheets %}
 	<style>
@@ -66,16 +67,12 @@
 			top: 75%; /* Adjust this value to move the positioned div up and down */
 			text-align: center;
 			width: 100%; /* Set the width of the positioned div */
-		}
+		}	
 	</style>
 {% endblock %}
 
 {% block header %}
-<h6>{{'Quiz'|trans}}
-	"{{ quiz.title }}"
-	<span>{{'started at'|trans}}
-		{{ startedAt|date('m/d/Y H:i:s') }}</span>
-</h6>
+<h6>{{'Quiz'|trans}} "{{ quiz.title }}" {{'started on'|trans}} {{ startedAt|date('d/m/Y') }} {{'at'|trans}} {{ startedAt|date('H:i:s') }}</h6>
 {% endblock header %}
 
 {% block body %}
@@ -84,34 +81,34 @@
 
 	{% if is_granted('ROLE_TEACHER') %}
         <div class="podium">
-            <a class="" href="{{ path('quiz_analyse', {'id': quiz.id}) }}">
+            <a class="" href="{{ path('quiz_analyse', {'id': quiz.id, 'session': session_id}) }}">
                 <img src="/images/podium.gif" alt="Podium" id="podium">
             </a>
             <div class="firstStudent">
-                <h4 class="font-weight-bold">{{ firstStudent.username }}</h4>
-                {{ firstStudentScore }} %</div>
+                <h4 class="font-weight-bold">{{ firstStudent.name }}</h4>
+				<h7>&nbsp; {{ firstStudentDuration }}</h7>
+                {{ firstStudentScore }} %
+				</div>
             <div class="secondStudent">
                 {% if secondStudentScore > 0 %}
-                <h5 class="">{{ secondStudent.username }}</h5>
-                {{ secondStudentScore }} %
+                <h5 class="">{{ secondStudent.name }}</h5>                
+				<h7>&nbsp; {{ secondStudentDuration }}</h7>
+				{{ secondStudentScore }} %
                 {% else %}
                 ?
                 {% endif %}
             </div>
             <div class="thirdStudent">
                 {% if thirdStudentScore > 0 %}
-                <h6 class="">{{ thirdStudent.username }}</h6>
-                {{ thirdStudentScore }} %
+                <h6 class="">{{ thirdStudent.name }}</h6>                
+				<h7>&nbsp; {{ thirdStudentDuration }}</h7>
+				{{ thirdStudentScore }} %
                 {% else %}
                 ?
                 {% endif %}
             </div>
             <div class="title">
-                <h6>{{'Quiz'|trans}}
-                    "{{ quiz.title }}"
-                    <span>{{'started at'|trans}}
-                        {{ startedAt|date('m/d/Y H:i:s') }}</span>
-                </h6>
+                <h6>{{'Quiz'|trans}} "{{ quiz.title }}" {{'started on'|trans}} {{ startedAt|date('d/m/Y') }} {{'at'|trans}} {{ startedAt|date('H:i:s') }}</h6>
             </div>
         </div>
 	{% else %}

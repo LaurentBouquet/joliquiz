@@ -1,0 +1,10 @@
+{{ form_start(form) }}
+
+    {{ form_widget(form) }}
+
+    <a class="btn btn-secondary" href="{{ path('group_index') }}"><i class="fas fa-arrow-circle-left"></i> {{'Back to list'|trans}}</a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <button class="btn btn-primary"><i class="fas fa-check"></i> {{ button_label|default('Save'|trans) }}</button>
+    {% endif %}
+    
+{{ form_end(form) }}

@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Configuration{% endblock %}
+
+{% block body %}
+    <h1>
+        <i class="fa fa-tools"></i>
+        {{'Edit Configuration'|trans}}
+    </h1>
+    
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        {{ include('configuration/_form.html.twig', {'button_label': 'Update'}) }}
+    {% endif %}    
+
+{% endblock %}

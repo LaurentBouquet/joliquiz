@@ -3,11 +3,14 @@
 {% block title %}{{'Answer index'|trans}}{% endblock %}
 
 {% block body %}
-    <h1>{{'Answer index'|trans}}</h1>
+    <h1>
+        {{'Answer index'|trans}}
+        ({{ answers|length }})
+    </h1>
 
     {% if is_granted('ROLE_TEACHER') %}
         <div class="mb-3">
-            <a class="btn btn-primary" href="{{ path('answer_new') }}"><i class="fas fa-plus"></i> {{'Create new answer'|trans}}</a>
+            <a class="btn btn-warning" href="{{ path('answer_new') }}"><i class="fas fa-plus"></i> {{'Create new answer'|trans}}</a>
         </div>
     {% endif %}
 
@@ -17,7 +20,7 @@
                 <th>{{ 'Label'|trans }}</th>
                 {% if is_granted('ROLE_TEACHER') %}
                     <th>{{ 'Correct'|trans }}</th>
-                    <th>{{ 'Actions'|trans }}</th>
+                    <th></th>
                 {% endif %}
             </tr>
         </thead>
@@ -43,5 +46,11 @@
         {% endfor %}
         </tbody>
     </table>
+
+    {% if is_granted('ROLE_TEACHER') %}
+        <div class="mb-3">
+            <a class="btn btn-warning" href="{{ path('answer_new') }}"><i class="fas fa-plus"></i> {{'Create new answer'|trans}}</a>
+        </div>
+    {% endif %}
 
 {% endblock %}

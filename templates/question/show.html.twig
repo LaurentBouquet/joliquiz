@@ -3,12 +3,12 @@
 {% block title %}{{'Question'|trans}}{% endblock %}
 
 {% block body %}
-    <h1>{{'Question'|trans}}</h1>
+    <h1><i class="fa fa-tasks"></i> {{'Question'|trans}}</h1>
 
     <table class="table">
         <tbody>
             <tr>
-                <th>{{ 'Id'|trans }}</th>
+                <th>{{ 'N°'|trans }}</th>
                 <td>{{ question.id }}</td>
             </tr>
             <tr>
@@ -46,7 +46,7 @@
         </tbody>
     </table>
 
-    <a class="btn btn-primary mr-2" href="{{ path('question_index') }}"><i class="fas fa-arrow-circle-left"></i> {{'Back to list'|trans}}</a>
+    <a class="btn btn-secondary mr-2" href="{{ path('question_index') }}"><i class="fas fa-arrow-circle-left"></i> {{'Back to list'|trans}}</a>
 
     {% if is_granted('ROLE_TEACHER') %}
         <a class="btn btn-primary" href="{{ path('question_edit', {'id': question.id}) }}"><i class="fas fa-pencil-alt"></i> {{'Edit'|trans}}</a>

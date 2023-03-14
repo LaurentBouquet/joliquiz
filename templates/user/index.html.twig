@@ -1,43 +1,106 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{'User index'|trans}}{% endblock %}
+{% block title %}
+    {{'User index'|trans}}
+        {% if group_name %}
+            {% trans %}of the "%group_name%" group{% endtrans %}
+        {% endif %}
+{% endblock %}
 
 {% block body %}
-    <h1>{{'User index'|trans}}</h1>
+    <h1>
+        <i class="fa fa-user"></i>
+        {{'User index'|trans}}
+        {% if group_name %}
+            {% trans %}of the "%group_name%" group{% endtrans %} <span style="background-color: #ffff00;" }}>{{ group_shortname }}</span>
+        {% endif %}
+        ({{ users|length }})
+    </h1>
 
     {% if is_granted('ROLE_SUPER_ADMIN') %}
         <div class="mb-3">
-            <a class="btn btn-primary" href="{{ path('user_new') }}"><i class="fas fa-plus"></i> {{'Create new user'|trans}}</a>
+            {% if group_id %}
+                <a class="btn btn-primary" href="{{ path('group_edit', {'id': group_id}) }}"><i class="fas fa-pencil-alt"></i> {{'Edit Group'|trans}}</a>
+            {% endif %}
+            <a class="btn btn-warning" href="{{ path('user_new') }}"><i class="fas fa-plus"></i> {{'Create new user'|trans}}</a>
         </div>
     {% endif %}
 
-    <table class="table">
+    <table class="table table-hover">
         <thead>
             <tr>
+                <th>{{ 'Firstname'|trans }}</th>
+                <th>{{ 'Lastname'|trans }}</th>
                 <th>{{ 'Username'|trans }}</th>
-                <th>{{ 'Email'|trans }}</th>
-                <th>{{ 'IsActive'|trans }}</th>
-                <th>{{ 'Roles'|trans }}</th>
+                <th>{{ 'Email'|trans }}</th>                
+                {% if is_granted('ROLE_ADMIN') %}
+                {# <th>{{ 'IsActive'|trans }}</th> #}
+                <th>{{ 'isVerified'|trans }}</th>
+                <th>{{ 'isReady'|trans }}</th> 
+                {# <th>{{ 'Roles'|trans }}</th> #}
+                {% endif %}
+                <th>{{ 'Groups'|trans }}</th>
                 {% if is_granted('ROLE_SUPER_ADMIN') %}
-                <th>{{ 'Actions'|trans }}</th>
+                <th></th>
                 {% endif %}
             </tr>
         </thead>
         <tbody>
         {% for user in users %}
-            <tr {{ 'ROLE_SUPER_ADMIN' in user.roles ? 'class="table-danger"' : 'ROLE_ADMIN' in user.roles ? 'class="table-warning"' : 'ROLE_TEACHER' in user.roles ? 'class="table-primary"' : 'class="table-success"' }}>
-                <td>{{ user.username }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.isActive ? 'Yes' : 'No' }}</td>
-                <td>{{ user.roles ? user.roles|join(', ') : '' }}</td>
+            <tr
+                class="{{ 'ROLE_SUPER_ADMIN' in user.roles ? 'table-danger' : 'ROLE_ADMIN' in user.roles ? 'table-warning' : 'ROLE_TEACHER' in user.roles ? 'table-primary' : 'table-success' }}"
+                {% if not user.isActive %}
+                    style="text-decoration: line-through;"                    
+                {% endif %}
+            >
+                <td title="{{ user.roles ? user.roles|join(', ') : '' }}">{{ user.firstname }}</td>
+                <td title="{{ user.roles ? user.roles|join(', ') : '' }}">{{ user.lastname }}</td>
+                <td title="{{ 'LoginType'|trans }} : {{ user.loginType }}">
+                    {# <i class="fas fa-user"></i>  #}
+                    {{ user.username }}
+                </td>
+                <td title="{{ user.roles ? user.roles|join(', ') : '' }}">{{ user.email }}</td>
+                {% if is_granted('ROLE_ADMIN') %}
+                {# <td>{{ user.isActive ? 'Yes' : 'No' }}</td> #}
+
+
+                {# <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>  #}
+                {% if user.isVerified%}       
+                    <td class="text-center">
+                        <i class="fa fa-at text-success"></i>
+                    </td> 
+                {% else %}   
+                    <td class="text-center">                        
+                        <a class="btn btn-danger btn-sm" href="{{ path('app_send_verif_email', {'id': user.id, 'route': 'user_index', 'group': group_id}) }}" title="{{'Send him an email to confirm his email address'|trans}}"><i class="fas fa-at"></i></a>                      
+                    </td>
+                {% endif %}
+
+                {% if user.isReady%}       
+                    <td class="text-center"><i class="fa fa-unlock text-success"></i></td>
+                {% else %}   
+                    <td class="text-center"><i class="fa fa-lock text-danger"></i></td>                          
+                {% endif %}
+
+                {# <td>{{ user.roles ? user.roles|join(', ') : '' }}</td> #}
+                {% endif %}                
+                <td>
+                    {# {{ user.groups ? user.groups|join(', ') : '' }} #}
+                    {% for group in user.groups %}
+                        <span {{ group.id == group_id ? 'style="background-color: #ffff00;"' : '' }}>
+                        <a href="{{ path('group_edit', {'id': group.id}) }}">{{ group.shortname }}</a><br/>
+                        </span>
+                    {% endfor %}
+                </td>
                 <td>
                     {% if is_granted('ROLE_SUPER_ADMIN') %}
                     <div class="form-check-inline">
-                        <a class="btn btn-primary btn-sm mr-2" href="{{ path('user_show', {'id': user.id}) }}"><i class="fas fa-eye"></i> {{'Show'|trans}}</a>
-                        {% if 'ROLE_SUPER_ADMIN' not in user.roles %}
-                            <a class="btn btn-primary btn-sm mr-2" href="{{ path('user_edit', {'id': user.id}) }}"><i class="fas fa-pencil-alt"></i> {{'Edit'|trans}}</a>
-                            {{ include('user/_delete_form.html.twig') }}
-                        {% endif %}
+                        <a class="btn btn-primary btn-sm mr-2" href="{{ path('user_show', {'id': user.id}) }}" title="{{'Show'|trans}}"><i class="fas fa-eye"></i></a>
+                        <a class="btn btn-primary btn-sm mr-2" href="{{ path('user_edit', {'id': user.id}) }}" title="{{'Edit'|trans}}"><i class="fas fa-pencil-alt"></i></a>
+                        {% if group_name %}
+                            <a class="btn btn-warning btn-sm mr-2" href="{{ path('group_remove_user', {'id': group_id, 'user': user.id}) }}" title="{{'Remove from group'|trans}}"><i class="fas fa-user-times"></i></a>
+                        {% endif %}                                                
+                        <a class="btn btn-primary btn-sm mr-2" href="{{ path('app_send_resetpassword_email', {'id': user.id, 'route': 'user_index', 'group': group_id}) }}" title="{{'Send him an email so that he can change his password'|trans}}"><i class="fas fa-lock"></i></a>
+                        {{ include('user/_delete_form.html.twig') }}
                     </div>
                     {% endif %}
                 </td>
@@ -49,5 +112,16 @@
         {% endfor %}
         </tbody>
     </table>
+
+    {% if users|length > 10 %}
+        {% if is_granted('ROLE_SUPER_ADMIN') %}
+            <div class="mb-3">
+                {% if group_id %}
+                    <a class="btn btn-primary" href="{{ path('group_edit', {'id': group_id}) }}"><i class="fas fa-pencil-alt"></i> {{'Edit Group'|trans}}</a>
+                {% endif %}
+                <a class="btn btn-warning" href="{{ path('user_new') }}"><i class="fas fa-plus"></i> {{'Create new user'|trans}}</a>
+            </div>
+        {% endif %}
+    {% endif %}    
 
 {% endblock %}

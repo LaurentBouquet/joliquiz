@@ -2,25 +2,22 @@
 
 namespace App\Controller;
 
+use App\Repository\ConfigurationRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/**
- * @Route("/")
- */
 class DefaultController extends AbstractController
 {
-    /**
-     * @Route("/", name="index")
-     */
-    public function index()
+
+    #[Route('/', name: 'app_home')]
+    public function index(ConfigurationRepository $configurationRepository)
     {
         if ($this->getUser()) {
-            if ( !in_array('ROLE_TEACHER', $this->getUser()->getRoles()) ) {
-                return $this->redirectToRoute('quiz_index');
-            }
+            return $this->redirectToRoute('quiz_index');
         }
 
-        return $this->render('default/index.html.twig');
+        return $this->render('default/index.html.twig', [
+            'MAIN_ALLOW_USER_ACCOUNT_CREATION' => intval($configurationRepository->getValue('MAIN_ALLOW_USER_ACCOUNT_CREATION')),
+        ]);
     }
 }

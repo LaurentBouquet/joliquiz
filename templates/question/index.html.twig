@@ -4,56 +4,72 @@
 
 {% block body %}
     <h1>
-        {{'Questions'|trans}} 
-        {% if category_long_name %}
-            {% trans %}of the "%category_long_name%" category{% endtrans %}
+        <i class="fa fa-tasks"></i>
+        {{'Question index'|trans}} 
+        {% if category_short_name %}
+            {% trans %}of the category{% endtrans %} "<span style="background-color: #ffff00;" }}>{{ category_short_name }}</span>"
         {% endif %}
         ({{ questions|length }})
     </h1>    
 
     {% if is_granted('ROLE_TEACHER') %}
         <div class="mb-3">
-            <a class="btn btn-primary" href="{{ path('question_new') }}"><i class="fas fa-plus"></i> {{'Create new question'|trans}}</a>
+            <a class="btn btn-warning" href="{{ path('question_new', {'category': category_id}) }}"><i class="fas fa-plus"></i> {{'Create new question'|trans}}</a>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a class="btn btn-secondary" href="{{ path('question_index', {'only-orphan': 1}) }}"><i class="fas fa-tasks"></i> {{'Show questions without category'|trans}}</a>
+            {% endif %}
+            {% if category_id %}
+                <a class="btn btn-primary" href="{{ path('category_edit', {'id': category_id}) }}"><i class="fas fa-pencil-alt"></i> {{'Edit Category'|trans}}</a>
+                {% if (questions|length) > 3 %}
+                    <a class="btn btn-warning" href="{{ path('quiz_new', {'category': category_id}) }}"><i class="fas fa-plus"></i> {{'Create new quiz'|trans}}</a>
+                {% endif %}
+            {% endif %}
         </div>
     {% endif %}
 
-    <table class="table">
+    <table class="table table-hover">
         <thead>
             <tr>
-                <th>{{ 'Categories'|trans }}</th>
                 <th>{{ 'Label'|trans }}</th>
+                <th>{{ 'Categories'|trans }}</th>
                 {% if is_granted('ROLE_TEACHER') %}
                     <th>{{ 'Answers'|trans }}</th>
                 {% endif %}
-                <th>{{ 'Actions'|trans }}</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
         {% for question in questions %}
             <tr>
                 <td>
-                  {% for category in question.categories %}
-                     - <a href="{{ path('question_index', {'category': category.id}) }}">{{ category.longname }}</a> <br>                     
-                  {% endfor %}
+                    {{ question.text[:60] }} {{ question.text|length>60 ? '...' : '' }}
                 </td>
-                <td>{{ question.text[:60] }} {{ question.text|length>60 ? '...' : '' }}</td>
-                {% if is_granted('ROLE_TEACHER') %}
-                    <td>
-                      {% for answer in question.answers %}
-                         {% if answer.correct %}+{% else %}-{% endif %} {{ answer.text[:30] }} {{ answer.text|length>30 ? '...' : '' }}<br>
-                      {% endfor %}
-                    </td>
-                    <td>
-                        <div class="form-check-inline">
-                            {% if is_granted('ROLE_TEACHER') %}
-                                <a class="btn btn-primary btn-sm mr-2" href="{{ path('question_edit', {'id': question.id}) }}" title="{{'Edit'|trans}}"><i class="fas fa-pencil-alt"></i></a>
-                                {{ include('question/_delete_form.html.twig') }}
-                            {% else %}
-                                <a class="btn btn-primary btn-sm mr-2" href="{{ path('question_show', {'id': question.id}) }}" title="{{'Show'|trans}}"><i class="fas fa-eye"></i></a>
-                            {% endif %}
-                        </div>
-                    </td>
-                {% endif %}
+                <td>
+                  {% for category in question.categories %}
+                     - 
+                     <span {{ category.id == category_id ? 'style="background-color: #ffff00;"' : '' }}>
+                     <a href="{{ path('question_index', {'category': category.id}) }}">{{ category.shortname }}</a>
+                     </span>
+                     <br>                     
+                  {% endfor %}
+                </td>                
+            {% if is_granted('ROLE_TEACHER') %}
+                <td>
+                    {% for answer in question.answers %}
+                        {% if answer.correct %}+{% else %}-{% endif %} {{ answer.text[:30] }} {{ answer.text|length>30 ? '...' : '' }}<br>
+                    {% endfor %}
+                </td>
+                <td>
+                    <div class="form-check-inline">
+                        {% if is_granted('ROLE_TEACHER') %}
+                            <a class="btn btn-primary btn-sm mr-2" href="{{ path('question_edit', {'id': question.id}) }}" title="{{'Edit'|trans}}"><i class="fas fa-pencil-alt"></i></a>
+                            {{ include('question/_delete_form.html.twig') }}
+                        {% else %}
+                            <a class="btn btn-primary btn-sm mr-2" href="{{ path('question_show', {'id': question.id}) }}" title="{{'Show'|trans}}"><i class="fas fa-eye"></i></a>
+                        {% endif %}
+                    </div>
+                </td>
+            {% endif %}
             </tr>
         {% else %}
             <tr>
@@ -63,10 +79,21 @@
         </tbody>
     </table>
 
-    {% if questions.haveToPaginate %}
-        <div class="navigation text-center">
-            {{ pagerfanta(questions, 'twitter_bootstrap4_translated', {routeName: 'question_index_paginated', 'routeParams': {category: category_id } }) }}
-        </div>
+    {% if questions|length > 10 %}
+        {% if is_granted('ROLE_TEACHER') %}
+            <div class="mb-3">
+                <a class="btn btn-warning" href="{{ path('question_new', {'category': category_id}) }}"><i class="fas fa-plus"></i> {{'Create new question'|trans}}</a>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a class="btn btn-secondary" href="{{ path('question_index', {'only-orphan': 1}) }}"><i class="fas fa-tasks"></i> {{'Show questions without category'|trans}}</a>
+                {% endif %}
+                {% if category_id %}
+                    <a class="btn btn-primary" href="{{ path('category_edit', {'id': category_id}) }}"><i class="fas fa-pencil-alt"></i> {{'Edit Category'|trans}}</a>
+                    {% if (questions|length) > 3 %}
+                        <a class="btn btn-warning" href="{{ path('quiz_new', {'category': category_id}) }}"><i class="fas fa-plus"></i> {{'Create new quiz'|trans}}</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+        {% endif %}
     {% endif %}
 
 {% endblock %}

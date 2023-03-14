@@ -5,118 +5,76 @@ namespace App\Entity;
 use DateTime;
 use App\Entity\Session;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\QuizRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\QuizRepository")
- * @ORM\Table(name="tbl_quiz")
- */
+#[ORM\Entity(repositoryClass: QuizRepository::class)]
+#[ORM\Table(name: 'tbl_quiz')]
 class Quiz
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(length: 255)]
     private $title;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $summary;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: 'integer')]
     private $number_of_questions;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $active;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $created_at;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $updated_at;
 
-    // /**
-    //  * @var Category One or more category(ies) of this quiz.
-    //  *
-    //  * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="quizzes")
-    //  * @ORM\JoinColumn()
-    //  */
-    // private $categories;
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="quizzes")
-     * @ORM\JoinTable(name="tbl_quiz_category")
-     */
+    #[ORM\ManyToOne(inversedBy: 'quizzes')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?User $created_by = null;
+    
+    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy:'quizzes')]
+    #[ORM\JoinTable(name: 'tbl_quiz_category')]
     private $categories;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Workout", mappedBy="quiz", orphanRemoval=true)
-     */
+    #[ORM\OneToMany(targetEntity: Workout::class, mappedBy: 'quiz', orphanRemoval: true)]
     private $workouts;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $show_result_question;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $show_result_quiz;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Language", inversedBy="quizzes")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: Language::class, inversedBy:'quizzes')]
+    #[ORM\JoinColumn(nullable: false)]
     private $language;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $allow_anonymous_workout;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $result_quiz_comment;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $start_quiz_comment;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $default_question_max_duration;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $actived_at;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Session", mappedBy="quiz", orphanRemoval=true)
-     */
+    #[ORM\OneToMany(targetEntity: Session::class, mappedBy: 'quiz', orphanRemoval: true)]
     private $sessions;
-
 
     public function __construct()
     {
@@ -125,14 +83,15 @@ class Quiz
         $this->setUpdatedAt(new \DateTime());
         $this->setShowResultQuestion(false);
         $this->setShowResultQuiz(false);
-        $this->setNumberOfQuestions(10);
+        $this->setNumberOfQuestions(5);
+        $this->setDefaultQuestionMaxDuration(60); //180
         $this->categories = new ArrayCollection();
         $this->workouts = new ArrayCollection();
         $this->setAllowAnonymousWorkout(false);
         $this->sessions = new ArrayCollection();
     }
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -178,7 +137,25 @@ class Quiz
         return $this->active;
     }
 
-    public function setActive(bool $active, EntityManager $em): self
+    public function setActive(bool $active): self
+    {
+        $now = new DateTime();
+
+        if ($active) {
+            if (!$this->getActive()) {
+                $this->actived_at = $now;
+            }
+        } else {
+            $this->actived_at = null;
+            $session = $this->getLastSession();
+        }
+
+        $this->active = $active;
+
+        return $this;
+    }
+
+    public function setActiveInSession(bool $active, EntityManager $em): self
     {
         $now = new DateTime();
 
@@ -223,7 +200,7 @@ class Quiz
 
         return $this;
     }
-
+   
     /**
      * @return Collection|Category[]
      */
@@ -390,7 +367,11 @@ class Quiz
      */
     public function getLastSession(): Session
     {
-        return $this->sessions->last();
+        if ($this->sessions->last()) {
+            return $this->sessions->last();
+        } else {
+            return new Session($this, new DateTime());
+        }             
     }
 
     public function addSession(Session $session): self
@@ -415,4 +396,18 @@ class Quiz
 
         return $this;
     }
+
+    public function getCreatedBy(): ?User
+    {
+        return $this->created_by;
+    }
+
+    public function setCreatedBy(?User $created_by): self
+    {
+        $this->created_by = $created_by;
+
+        return $this;
+    }
+
+
 }

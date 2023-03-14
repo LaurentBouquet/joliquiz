@@ -2,51 +2,42 @@
 
 namespace App\Entity;
 
+use App\Entity\Quiz;
+use App\Entity\User;
+use App\Entity\Category;
+use App\Entity\Question;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\LanguageRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
-/**
- * @ORM\Table(name="tbl_language")
- * @ORM\Entity(repositoryClass="App\Repository\LanguageRepository")
- */
+#[ORM\Entity(repositoryClass: LanguageRepository::class)]
+#[ORM\Table(name: 'tbl_language')]
 class Language
 {
-    /**
-     * @ORM\Id()
-     * @ORM\Column(type="string", length=2)
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\Column(length: 2)]
+    private ?string $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=50, unique=true, nullable=false)
-     */
+    #[ORM\Column(length: 50, unique:true, nullable:false)]
     private $english_name;
 
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
+    #[ORM\Column(length: 50)]
     private $native_name;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="language")
-     */
+    #[ORM\OneToMany(targetEntity: Question::class, mappedBy: 'language')]
     private $questions;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Quiz", mappedBy="language")
-     */
+    #[ORM\OneToMany(targetEntity: Quiz::class, mappedBy: 'language')]
     private $quizzes;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="prefered_language")
-     */
-    private $users;
+    #[ORM\OneToMany(mappedBy: 'prefered_language', targetEntity: User::class)]
+    private Collection $users;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Category", mappedBy="language")
-     */
+    #[ORM\OneToMany(targetEntity: Category::class, mappedBy: 'language')]
     private $categories;
+
+
 
     public function __construct()
     {
@@ -56,15 +47,20 @@ class Language
         $this->categories = new ArrayCollection();
     }
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
     public function __toString(): string
     {
         return $this->getNativeName();
     }
 
-    public function getCode(): ?string
-    {
-        return $this->code;
-    }
+    // public function getCode(): ?string
+    // {
+    //     return $this->code;
+    // }
 
     // public function setCode(string $code): self
     // {

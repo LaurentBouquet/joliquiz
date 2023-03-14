@@ -3,12 +3,12 @@
 {% block title %}{{'Category'|trans}} "{{ category.shortname }}"{% endblock %}
 
 {% block body %}
-    <h1>{{'Category'|trans}} "{{ category.shortname }}"</h1>
+    <h1><i class="fa fa-tag"></i> {{'Category'|trans}} "{{ category.shortname }}"</h1>
 
     <table class="table">
         <tbody>
             <tr>
-                <th>{{ 'Id'|trans }}</th>
+                <th>{{ 'N°'|trans }}</th>
                 <td>{{ category.id }}</td>
             </tr>
             <tr>
@@ -16,11 +16,11 @@
                 <td>{{ category.language }}</td>
             </tr>
             <tr>
-                <th>{{ 'Shortname'|trans }}</th>
+                <th>{{ 'Name'|trans }}</th>
                 <td>{{ category.shortname }}</td>
             </tr>
             <tr>
-                <th>{{ 'Longname'|trans }}</th>
+                <th>{{ 'Description'|trans }}</th>
                 <td>{{ category.longname }}</td>
             </tr>
             <tr>
@@ -37,8 +37,10 @@
     <a class="btn btn-secondary mr-2" href="{{ path('category_index') }}"><i class="fas fa-arrow-circle-left"></i> {{'Back to list'|trans}}</a>
 
     {% if is_granted('ROLE_TEACHER') %}
-    <a class="btn btn-info" href="{{ path('quiz_index', {'category': category.id}) }}"><i class="fas fa-list-ul"></i> {{'Quizzes'|trans}}</a>
-    <a class="btn btn-info" href="{{ path('question_index', {'category': category.id}) }}"><i class="fas fa-list-ul"></i> {{'Questions'|trans}}</a>
+    <a class="btn btn-info" href="{{ path('quiz_index', {'category': category.id}) }}"><i class="fas fa-question-ul"></i> {{'Quizzes'|trans}}</a>
+    <a class="btn btn-warning" href="{{ path('quiz_new', {'category': category.id}) }}"><i class="fas fa-plus"></i> {{'Create new quiz'|trans}}</a>
+    <a class="btn btn-info" href="{{ path('question_index', {'category': category.id}) }}"><i class="fas fa-tasks"></i> {{'Questions'|trans}}</a>
+    <a class="btn btn-warning" href="{{ path('question_new', {'category': category.id}) }}"><i class="fas fa-plus"></i> {{'Create new question'|trans}}</a>
     <a class="btn btn-primary" href="{{ path('category_edit', {'id': category.id}) }}"><i class="fas fa-pencil-alt"></i> {{'Edit'|trans}}</a>
     {% endif %}
 

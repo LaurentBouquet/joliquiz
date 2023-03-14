@@ -2,63 +2,52 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\Table;
-use App\Repository\LanguageRepository;
-/**
- * @ORM\Entity(repositoryClass="App\Repository\QuestionRepository")
- * @ORM\Table(name="tbl_question")
- */
+use App\Repository\QuestionRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+
+#[ORM\Entity(repositoryClass: QuestionRepository::class)]
+#[ORM\Table(name: 'tbl_question')]
 class Question
 {
 
     public const NUM_ITEMS = 10;
 
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="text")
-     */
+    #[ORM\Column(type: 'text')]
     private $text;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $created_at;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $updated_at;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="questions")
-     * @ORM\JoinTable(name="tbl_question_category")
-     */
-    private $categories;
+    // #[ORM\ManyToOne(targetEntity: User::class, inversedBy:'questions')]
+    // private $created_by;
+    #[ORM\ManyToOne(inversedBy: 'questions')]
+    private ?User $created_by = null;
+    
+    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'questions')]
+    #[ORM\JoinTable(name: 'tbl_question_category')]
+    private Collection $categories;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Answer", mappedBy="question", orphanRemoval=true)
-     */
+    #[ORM\OneToMany(targetEntity: Answer::class, mappedBy: 'question', orphanRemoval: true)]
     private $answers;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Language", inversedBy="questions")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: Language::class, inversedBy: 'questions')]
+    #[ORM\JoinColumn(nullable: false)]
     private $language;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $max_duration;
+
+
 
 
     public function __construct()
@@ -69,7 +58,7 @@ class Question
         $this->answers = new ArrayCollection();
     }
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -110,6 +99,18 @@ class Question
         return $this;
     }
 
+    public function getCreatedBy(): ?User
+    {
+        return $this->created_by;
+    }
+
+    public function setCreatedBy(?User $created_by): self
+    {
+        $this->created_by = $created_by;
+
+        return $this;
+    }
+
     /**
      * @return Collection|Category[]
      */
@@ -117,6 +118,20 @@ class Question
     {
         return $this->categories;
     }
+
+    /**
+     * @return Category
+     */
+    public function getFirstCategory(): ?Category
+    {
+        if (sizeof($this->categories) > 0) {
+            return $this->categories[0];
+        }
+        else {
+            return null;
+        }        
+    }
+    
 
     public function addCategory(Category $category): self
     {
@@ -135,7 +150,7 @@ class Question
 
         return $this;
     }
-
+  
     /**
      * @return Collection|Answer[]
      */

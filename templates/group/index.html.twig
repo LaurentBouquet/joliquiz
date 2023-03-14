@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{'Group index'|trans}}{% endblock %}
+
+{% block body %}
+    <h1>
+        {# <i class="fa fa-chalkboard-teacher"></i> #}
+        <i class="fa fa-users"></i>
+        {{'Group index'|trans}}
+        ({{ groups|length }})
+    </h1>
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="mb-3">
+            <a class="btn btn-warning" href="{{ path('group_new') }}"><i class="fas fa-plus"></i> {{'Create new group'|trans}}</a>
+        </div>
+    {% endif %}
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                {# <th>{{'N°'|trans}}</th> #}
+                <th>{{'Name'|trans}}</th>
+                <th>{{'Description'|trans}}</th>
+                <th>{{'Code'|trans}}</th>
+                <th>{{'Actions'|trans}}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for group in groups %}
+            <tr>
+                {# <td>{{ group.id }}</td> #}
+                <td>{{ group.shortname }}</td>
+                <td>{{ group.name }}</td>
+                <td>{{ group.code }}</td>
+                <td>
+                    <div class="form-check-inline">
+                    <a class="btn btn-primary btn-sm mr-2" href="{{ path('group_show', {'id': group.id}) }}"><i class="fas fa-eye"></i></a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a class="btn btn-primary btn-sm mr-2" href="{{ path('group_edit', {'id': group.id}) }}" title="{{ 'Edit Group'|trans }}"><i class="fas fa-pencil-alt"></i></a>
+                        <a class="btn btn-warning btn-sm mr-2" href="{{ path('user_index', {'group': group.id}) }}" title="{{ 'User index of the group'|trans }}"><i class="fas fa-user"></i></a>
+                        {{ include('group/_delete_form.html.twig') }}
+                    </div>
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">{{'no records found'|trans}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% if groups|length > 10 %}
+        {% if is_granted('ROLE_TEACHER') %}
+            <div class="mb-3">
+                <a class="btn btn-warning" href="{{ path('group_new') }}"><i class="fas fa-plus"></i> {{'Create new group'|trans}}</a>
+            </div>
+        {% endif %}
+    {% endif %}
+
+{% endblock %}

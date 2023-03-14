@@ -14,44 +14,41 @@
                                     <tr>
                                         <td>
 
-                                            <img src="https://raw.githubusercontent.com/LaurentBouquet/joliquiz/assets/JoliQuiz-300x111.png"
+                                            <img src="{{ absolute_url(path('app_home')) }}/images/JoliQuiz-300x111_smiley.png"
                                                 alt="JoliQuiz" />
 
                                             <h1 style="font-size: 30px; padding-right: 30px; padding-left: 30px;">
-                                                A quiz has just been completed!</h1>
+                                                {{ 'A quiz has just been completed!'|trans }}</h1>
 
                                             <p style="font-size: 17px; padding-right: 30px; padding-left: 30px;">
                                                 <br/>
-                                                Hi ! <br/>
+                                                {{ 'Hi!'|trans }}  <br/>
                                                 <br/>                                    
-                                                A quiz has just been completed by <strong>{{ username }}</strong>, <br/>
-                                                with {{ useremail }} email, <br/>
-                                                got the following result : <strong>{{ score }}%</strong> <br/>
-                                                for the quiz "<strong>{{quiz.title}}</strong>". <br/>
+                                                {{ 'The quiz'|trans }} "<strong>{{quiz.title}}</strong>" {{ 'has just been completed,'|trans }} <br/>
+                                                {{ 'by'|trans }} <strong>{{ username }}</strong>, 
+                                                {{ 'got the following result'|trans }} : <strong>{{ score }}%</strong> ({{ grade }}/20). <br/>
                                                 <br/>
                                                 
-                                                Pour suivre la réalisation de ce questionnaire, go to: <br/>
-                                                <a href="{{ app.request.schemeAndHttpHost }}{{ path('quiz_workout', {'id':quiz.id}) }}">
+                                                {{ 'To consult quiz results, goto:'|trans }} <br/>
+                                                <a href="{{ app.request.schemeAndHttpHost }}{{ path('quiz_result', {'id':quiz.id, 'workout':workout_id, 'token':workout_token}) }}">
                                                     {{ app.request.schemeAndHttpHost  }}</a>.                                        
 
                                                 <p
                                                     style="font-size: 17px; padding-right: 30px; padding-left: 30px; margin-bottom: 20px;">
-                                                    or press the button below :</p>
+                                                    {{ 'or press the button below'|trans }} :</p>
 
                                                 <div
-                                                    style="padding-right: 30px; padding-left: 30px; margin-top: 40px; margin-bottom: 30px;">
-
-
+                                                    style="padding-right: 30px; padding-left: 30px; margin-top: 5px; margin-bottom: 30px;">
                                                     <table style="width: 100%; " class="sm_table">
                                                         <tr style="width: 100%;">
                                                             <td style="width: 100%;">
                                                                 <span
-                                                                    style="display: inline-block; position:relative; border-radius:4px; background-color:#2ea664; "
+                                                                    style="display: inline-block; position:relative; border-radius:4px; background-color:#007BFF; "
                                                                     class="sm_full_width">
                                                                     <a class="button_link sm_full_width sm_border_box"
-                                                                        href="{{ app.request.schemeAndHttpHost }}{{ path('quiz_workout', {'id':quiz.id}) }}"
-                                                                        style="min-width:196px; border-top:13px solid; border-bottom:13px solid; border-right:24px solid; border-left:24px solid; border-color:#2ea664; border-radius:4px; background-color:#2ea664; color:#ffffff; font-size:18px; line-height:18px; word-break:break-word; text-shadow:0 1px 1px #2e9a5f;  display: inline-block; text-align: center; font-weight: 900; text-decoration: none !important;">
-                                                                        Suivre la réalisation du questionnaire
+                                                                        href="{{ app.request.schemeAndHttpHost }}{{ path('quiz_result', {'id':quiz.id, 'workout':workout_id, 'token':workout_token}) }}"
+                                                                        style="min-width:196px; border-top:13px solid; border-bottom:13px solid; border-right:24px solid; border-left:24px solid; border-color:#007BFF; border-radius:4px; background-color:#007BFF; color:#ffffff; font-size:18px; line-height:18px; word-break:break-word; text-shadow:0 1px 1px #2e9a5f;  display: inline-block; text-align: center; font-weight: 900; text-decoration: none !important;">
+                                                                        {{ 'View results'|trans }}
                                                                     </a>
                                                                 </span>
                                                             </td>
@@ -61,15 +58,14 @@
 
                                                 <p
                                                 style="font-size: 17px; padding-right: 30px; padding-left: 30px; margin-bottom: 20px;">
-                                                Thanks!</p>
+                                                {{ 'Thanks!'|trans }}</p>
                                                 
 
                                                 <p
                                                     style="font-size: 17px; padding-right: 30px; padding-left: 30px; margin-top: 40px; margin-bottom: 30px;">
-                                                    <strong>Vous n'avez pas demandé recevoir cet e-mail ?</strong><br />
-                                                    Aucun problème ! Votre adresse a probablement été saisie par erreur.
-                                                    Vous pouvez ignorer ou supprimer cet e-mail.</p>
-
+                                                    <strong>{{ 'You did not request to receive this email?'|trans }}</strong><br />
+                                                    {{ 'No problem! Your address was probably entered by mistake.'|trans }}
+                                                    {{ 'You can ignore or delete this email.'|trans }}</p>
 
                                         </td>
                                     </tr>

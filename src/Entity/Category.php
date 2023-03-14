@@ -2,60 +2,54 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\Language;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\CategoryRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
-/**
- * @ORM\Table(name="tbl_category")
- * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
- */
+#[ORM\Entity(repositoryClass: CategoryRepository::class)]
+#[ORM\Table(name: 'tbl_category')] 
 class Category
 {
-    /**
-     * @var int The id of this category
-     * @ORM\Id()
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(type="integer")
-     */
-    private $id;
 
-    /**
-     * @var string The shortname of the category
-     * @ORM\Column(type="string", length=50)
-     */
+    #[ORM\Id()]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[ORM\Column(type: 'integer')]
+    private ?int $id = null;
+
+    #[ORM\Column(length: 50)]
     private $shortname;
 
-    /**
-     * @var string The longname of the category
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(length: 255)]
     private $longname;
 
-    // /**
-    //  * @var string The quizzes list in this category
-    //  *
-    //  * @ORM\ManyToMany(targetEntity="App\Entity\Quiz", mappedBy="category", cascade={"persist", "remove"})
-    //  */
-    // private $quizzes;
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Quiz", mappedBy="categories")
-     */
-    private $quizzes;
+    #[ORM\ManyToMany(targetEntity: Quiz::class, mappedBy: 'categories')]
+    private Collection $quizzes;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Question", mappedBy="categories")
-     */
-    private $questions;
+    #[ORM\ManyToMany(targetEntity: Question::class, mappedBy: 'categories')]
+    private Collection $questions;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Language", inversedBy="categories")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: Language::class, inversedBy:'categories')]
+    #[ORM\JoinColumn(nullable: false)]
     private $language;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private $created_at;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private $updated_at;
+
+    #[ORM\ManyToOne(inversedBy: 'categories')]
+    private ?User $created_by = null;
+
+    // #[ORM\ManyToOne(targetEntity: User::class, inversedBy:'categories')]
+    // private $created_by;
 
     public function __construct($shortname = null)
     {
+        $this->setCreatedAt(new \DateTime());
+        $this->setUpdatedAt(new \DateTime());
         $this->quizzes = new ArrayCollection();
         $this->questions = new ArrayCollection();
         if ($shortname) {
@@ -64,7 +58,7 @@ class Category
         }
     }
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -157,6 +151,42 @@ class Category
     public function setLanguage(?Language $language): self
     {
         $this->language = $language;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(?\DateTimeInterface $created_at): self
+    {
+        $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
+    {
+        $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    public function getCreatedBy(): ?User
+    {
+        return $this->created_by;
+    }
+
+    public function setCreatedBy(?User $created_by): self
+    {
+        $this->created_by = $created_by;
 
         return $this;
     }

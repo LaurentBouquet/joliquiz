@@ -1,7 +1,0 @@
-FROM nginx:1.13-alpine
-
-COPY docker/nginx/nginx.conf /etc/nginx/conf.d/default.conf
-COPY ./public /var/www/public
-# docker build -f Dockerfile.nginx -t lbouquet/joliquiz-nginx .
-# docker login
-# docker push lbouquet/joliquiz-nginx
