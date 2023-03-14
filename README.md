@@ -118,7 +118,7 @@ cp .env .env.local
 ```
 Remove migrations files in `migrations` folder and enter the following command :
 ```bash
-php bin/console make:migrations
+php bin/console make:migration
 ```
 
 Then, enter the following command :
