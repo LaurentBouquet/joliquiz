@@ -68,7 +68,7 @@ Uncomment and update the password in this line of **.env.local** file :
 
 Enter this commands in a terminal prompt :
 ```bash
-bin/console doctrine:migrations:latest
+php bin/console doctrine:database:create
 ```
 
 
@@ -116,8 +116,12 @@ Copy then the `.env` file to `.env.local`
 ```bash
 cp .env .env.local
 ```
+Remove migrations files in `migrations` folder and enter the following command :
+```bash
+php bin/console make:migrations
+```
 
-Then, enter the following commands :
+Then, enter the following command :
 ```bash
 php bin/console doctrine:database:create
 ```
@@ -127,7 +131,6 @@ php bin/console doctrine:database:create
 
 Migrate and start the server with the following commands :
 ```bash
-php bin/console doctrine:migrations:diff
 php bin/console doctrine:migrations:migrate
 php bin/console doctrine:fixtures:load
 php bin/console server:start
